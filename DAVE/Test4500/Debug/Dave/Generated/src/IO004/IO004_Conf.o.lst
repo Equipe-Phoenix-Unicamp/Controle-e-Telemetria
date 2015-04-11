@@ -1,0 +1,144 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"IO004_Conf.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	IO004_Handle1
+  20              		.section	.rodata
+  21              		.align	2
+  24              	IO004_Handle1:
+  25 0000 00       		.byte	0
+  26 0001 04       		.byte	4
+  27 0002 0000     		.space	2
+  28 0004 00800248 		.word	1208123392
+  29              		.global	IO004_Handle10
+  30              		.align	2
+  33              	IO004_Handle10:
+  34 0008 00       		.byte	0
+  35 0009 00       		.byte	0
+  36 000a 0000     		.space	2
+  37 000c 00800248 		.word	1208123392
+  38              		.global	IO004_Handle11
+  39              		.align	2
+  42              	IO004_Handle11:
+  43 0010 03       		.byte	3
+  44 0011 00       		.byte	0
+  45 0012 0000     		.space	2
+  46 0014 00830248 		.word	1208124160
+  47              		.global	IO004_Handle12
+  48              		.align	2
+  51              	IO004_Handle12:
+  52 0018 00       		.byte	0
+  53 0019 01       		.byte	1
+  54 001a 0000     		.space	2
+  55 001c 00800248 		.word	1208123392
+  56              		.global	IO004_Handle2
+  57              		.align	2
+  60              	IO004_Handle2:
+  61 0020 00       		.byte	0
+  62 0021 02       		.byte	2
+  63 0022 0000     		.space	2
+  64 0024 00800248 		.word	1208123392
+  65              		.global	IO004_Handle4
+  66              		.align	2
+  69              	IO004_Handle4:
+  70 0028 00       		.byte	0
+  71 0029 06       		.byte	6
+  72 002a 0000     		.space	2
+  73 002c 00800248 		.word	1208123392
+  74              		.global	IO004_Handle5
+  75              		.align	2
+  78              	IO004_Handle5:
+  79 0030 00       		.byte	0
+  80 0031 0C       		.byte	12
+  81 0032 0000     		.space	2
+  82 0034 00800248 		.word	1208123392
+  83              		.global	IO004_Handle6
+  84              		.align	2
+  87              	IO004_Handle6:
+  88 0038 03       		.byte	3
+  89 0039 04       		.byte	4
+  90 003a 0000     		.space	2
+  91 003c 00830248 		.word	1208124160
+  92              		.global	IO004_Handle7
+  93              		.align	2
+  96              	IO004_Handle7:
+  97 0040 01       		.byte	1
+  98 0041 00       		.byte	0
+  99 0042 0000     		.space	2
+ 100 0044 00810248 		.word	1208123648
+ 101              		.global	IO004_Handle8
+ 102              		.align	2
+ 105              	IO004_Handle8:
+ 106 0048 01       		.byte	1
+ 107 0049 01       		.byte	1
+ 108 004a 0000     		.space	2
+ 109 004c 00810248 		.word	1208123648
+ 110              		.global	IO004_Handle9
+ 111              		.align	2
+ 114              	IO004_Handle9:
+ 115 0050 03       		.byte	3
+ 116 0051 02       		.byte	2
+ 117 0052 0000     		.space	2
+ 118 0054 00830248 		.word	1208124160
+ 119              		.text
+ 120              	.Letext0:
+ 121              		.file 1 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 122              		.file 2 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/IO00
+ 123              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 124              		.file 4 "../Dave/Generated/src/IO004/IO004_Conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 IO004_Conf.c
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:24     .rodata:00000000 IO004_Handle1
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:21     .rodata:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:33     .rodata:00000008 IO004_Handle10
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:42     .rodata:00000010 IO004_Handle11
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:51     .rodata:00000018 IO004_Handle12
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:60     .rodata:00000020 IO004_Handle2
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:69     .rodata:00000028 IO004_Handle4
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:78     .rodata:00000030 IO004_Handle5
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:87     .rodata:00000038 IO004_Handle6
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:96     .rodata:00000040 IO004_Handle7
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:105    .rodata:00000048 IO004_Handle8
+C:\Users\Carlos\AppData\Local\Temp\ccAksqps.s:114    .rodata:00000050 IO004_Handle9
+                           .group:00000000 wm4.1.6730aed6a8e49268c462cbcb73e91a8e
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.uc_id.h.35.91819d6149ee56f9404d69053d48d018
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
+                           .group:00000000 wm4.Usic.h.54.8af9f733ba5771eeb374435d205ea54b
+                           .group:00000000 wm4.UART001_Conf.h.53.ec21866ed24322af6d30be63c4791501
+                           .group:00000000 wm4.UART001.h.109.3e835815a7a59791d8bd39655f4d4cc9
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,2600 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	psxDado,24,4
+  20              		.comm	configuration,15,4
+  21              		.global	data_R
+  22              		.data
+  25              	data_R:
+  26 0000 30       		.byte	48
+  27              		.comm	data_E,4,4
+  28              		.section	.text.read_R,"ax",%progbits
+  29              		.align	2
+  30              		.global	read_R
+  31              		.thumb
+  32              		.thumb_func
+  34              	read_R:
+  35              	.LFB112:
+  36              		.file 1 "../Main.c"
+   1:../Main.c     **** /*
+   2:../Main.c     ****  * Main.c
+   3:../Main.c     ****  *
+   4:../Main.c     ****  *  Created on: 20/11/2014
+   5:../Main.c     ****  *      Author: Carlos
+   6:../Main.c     ****  */
+   7:../Main.c     **** 
+   8:../Main.c     **** 
+   9:../Main.c     **** 
+  10:../Main.c     **** 
+  11:../Main.c     **** 
+  12:../Main.c     **** #include <DAVE3.h>			//Declarations from DAVE3 Code Generation (includes SFR declaration)
+  13:../Main.c     **** 
+  14:../Main.c     **** 
+  15:../Main.c     **** /* DADO3:
+  16:../Main.c     **** BIT 0: BLAH2
+  17:../Main.c     **** BIT 1: BUZINA
+  18:../Main.c     **** BIT 2: ENABLE
+  19:../Main.c     **** BIT 3: ALBH2
+  20:../Main.c     **** BIT 4: BLAH1
+  21:../Main.c     **** BIT 5: ALBH1
+  22:../Main.c     **** */
+  23:../Main.c     **** #define PWM_LIM 60
+  24:../Main.c     **** 
+  25:../Main.c     **** #define	BLAH2		0
+  26:../Main.c     **** #define	BUZINA		1
+  27:../Main.c     **** #define	ENABLE		2
+  28:../Main.c     **** #define	ALBH2		3
+  29:../Main.c     **** #define	BLAH1		4
+  30:../Main.c     **** #define	ALBH1		5
+  31:../Main.c     **** 
+  32:../Main.c     **** #define CS	 	IO004_Handle1
+  33:../Main.c     **** #define CLK1 	IO004_Handle2
+  34:../Main.c     **** #define DATA 	IO004_Handle4
+  35:../Main.c     **** #define DR1		IO004_Handle5
+  36:../Main.c     **** #define CE 		IO004_Handle6
+  37:../Main.c     **** 
+  38:../Main.c     **** #define ATT 		IO004_Handle11 //Amarelo
+  39:../Main.c     **** #define CMD			IO004_Handle12 //Laranja
+  40:../Main.c     **** #define CONT_DADO 	IO004_Handle9 //Marrom
+  41:../Main.c     **** #define CONT_CLK 	IO004_Handle10 //Azul
+  42:../Main.c     **** 
+  43:../Main.c     **** #define tempoInicio     300
+  44:../Main.c     **** #define tempoClk        300
+  45:../Main.c     **** #define tempoEntreByte  100
+  46:../Main.c     **** 
+  47:../Main.c     **** #define LED1 IO004_Handle7
+  48:../Main.c     **** #define LED2 IO004_Handle8
+  49:../Main.c     **** 
+  50:../Main.c     **** int psxDado[6];
+  51:../Main.c     **** char configuration[15];
+  52:../Main.c     **** char data_R = '0';
+  53:../Main.c     **** char data_E[4];
+  54:../Main.c     **** 
+  55:../Main.c     **** void psxLeControle();
+  56:../Main.c     **** void psxGravaByte(int byteDado);
+  57:../Main.c     **** int psxLeByte();
+  58:../Main.c     **** 
+  59:../Main.c     **** void delay(long unsigned int i);
+  60:../Main.c     **** void delay_R();
+  61:../Main.c     **** void configure_R();
+  62:../Main.c     **** void configure_E();
+  63:../Main.c     **** void write_E();
+  64:../Main.c     **** void read_R()
+  65:../Main.c     **** {
+  37              		.loc 1 65 0
+  38              		.cfi_startproc
+  39              		@ args = 0, pretend = 0, frame = 8
+  40              		@ frame_needed = 1, uses_anonymous_args = 0
+  41 0000 80B5     		push	{r7, lr}
+  42              	.LCFI0:
+  43              		.cfi_def_cfa_offset 8
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46 0002 82B0     		sub	sp, sp, #8
+  47              	.LCFI1:
+  48              		.cfi_def_cfa_offset 16
+  49 0004 00AF     		add	r7, sp, #0
+  50              	.LCFI2:
+  51              		.cfi_def_cfa_register 7
+  66:../Main.c     ****   int i;
+  67:../Main.c     ****   IO004_ResetPin(CE);
+  52              		.loc 1 67 0
+  53 0006 40F20003 		movw	r3, #:lower16:IO004_Handle6
+  54 000a C0F20003 		movt	r3, #:upper16:IO004_Handle6
+  55 000e 5A68     		ldr	r2, [r3, #4]
+  56 0010 40F20003 		movw	r3, #:lower16:IO004_Handle6
+  57 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+  58 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  59 001a 4FF48031 		mov	r1, #65536
+  60 001e 01FA03F3 		lsl	r3, r1, r3
+  61 0022 5360     		str	r3, [r2, #4]
+  68:../Main.c     ****   delay(50000);
+  62              		.loc 1 68 0
+  63 0024 4CF25030 		movw	r0, #50000
+  64 0028 FFF7FEFF 		bl	delay
+  69:../Main.c     ****   uint8_t temp = 0;
+  65              		.loc 1 69 0
+  66 002c 4FF00003 		mov	r3, #0
+  67 0030 FB70     		strb	r3, [r7, #3]
+  70:../Main.c     **** 
+  71:../Main.c     ****   for (i = 7; i > -1; i --)
+  68              		.loc 1 71 0
+  69 0032 4FF00703 		mov	r3, #7
+  70 0036 7B60     		str	r3, [r7, #4]
+  71 0038 20E0     		b	.L2
+  72              	.L4:
+  72:../Main.c     ****   {
+  73:../Main.c     ****     if (IO004_ReadPin(DATA)) temp |= (1<<i); //(digitalRead(DATA_R) == HIGH) temp |= (1<<i);
+  73              		.loc 1 73 0
+  74 003a 40F20003 		movw	r3, #:lower16:IO004_Handle4
+  75 003e C0F20003 		movt	r3, #:upper16:IO004_Handle4
+  76 0042 5B68     		ldr	r3, [r3, #4]
+  77 0044 5A6A     		ldr	r2, [r3, #36]
+  78 0046 40F20003 		movw	r3, #:lower16:IO004_Handle4
+  79 004a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+  80 004e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  81 0050 22FA03F3 		lsr	r3, r2, r3
+  82 0054 03F00103 		and	r3, r3, #1
+  83 0058 002B     		cmp	r3, #0
+  84 005a 09D0     		beq	.L3
+  85              		.loc 1 73 0 is_stmt 0 discriminator 1
+  86 005c 4FF00102 		mov	r2, #1
+  87 0060 7B68     		ldr	r3, [r7, #4]
+  88 0062 02FA03F3 		lsl	r3, r2, r3
+  89 0066 DAB2     		uxtb	r2, r3
+  90 0068 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+  91 006a 1343     		orrs	r3, r3, r2
+  92 006c DBB2     		uxtb	r3, r3
+  93 006e FB70     		strb	r3, [r7, #3]
+  94              	.L3:
+  74:../Main.c     ****     delay_R();
+  95              		.loc 1 74 0 is_stmt 1
+  96 0070 FFF7FEFF 		bl	delay_R
+  71:../Main.c     ****   for (i = 7; i > -1; i --)
+  97              		.loc 1 71 0
+  98 0074 7B68     		ldr	r3, [r7, #4]
+  99 0076 03F1FF33 		add	r3, r3, #-1
+ 100 007a 7B60     		str	r3, [r7, #4]
+ 101              	.L2:
+  71:../Main.c     ****   for (i = 7; i > -1; i --)
+ 102              		.loc 1 71 0 is_stmt 0 discriminator 1
+ 103 007c 7B68     		ldr	r3, [r7, #4]
+ 104 007e 002B     		cmp	r3, #0
+ 105 0080 DBDA     		bge	.L4
+  75:../Main.c     ****   }
+  76:../Main.c     ****   data_R = temp;
+ 106              		.loc 1 76 0 is_stmt 1
+ 107 0082 40F20003 		movw	r3, #:lower16:data_R
+ 108 0086 C0F20003 		movt	r3, #:upper16:data_R
+ 109 008a FA78     		ldrb	r2, [r7, #3]
+ 110 008c 1A70     		strb	r2, [r3, #0]
+  77:../Main.c     ****   IO004_SetPin(CE); //digitalWrite(CE_R, HIGH);
+ 111              		.loc 1 77 0
+ 112 008e 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 113 0092 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 114 0096 5A68     		ldr	r2, [r3, #4]
+ 115 0098 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 116 009c C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 117 00a0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 118 00a2 4FF00101 		mov	r1, #1
+ 119 00a6 01FA03F3 		lsl	r3, r1, r3
+ 120 00aa 5360     		str	r3, [r2, #4]
+  78:../Main.c     ****   delay(50000);
+ 121              		.loc 1 78 0
+ 122 00ac 4CF25030 		movw	r0, #50000
+ 123 00b0 FFF7FEFF 		bl	delay
+  79:../Main.c     **** }
+ 124              		.loc 1 79 0
+ 125 00b4 07F10807 		add	r7, r7, #8
+ 126 00b8 BD46     		mov	sp, r7
+ 127 00ba 80BD     		pop	{r7, pc}
+ 128              		.cfi_endproc
+ 129              	.LFE112:
+ 131              		.section	.text.delay,"ax",%progbits
+ 132              		.align	2
+ 133              		.global	delay
+ 134              		.thumb
+ 135              		.thumb_func
+ 137              	delay:
+ 138              	.LFB113:
+  80:../Main.c     **** void delay(long unsigned int i)
+  81:../Main.c     **** {
+ 139              		.loc 1 81 0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 8
+ 142              		@ frame_needed = 1, uses_anonymous_args = 0
+ 143              		@ link register save eliminated.
+ 144 0000 80B4     		push	{r7}
+ 145              	.LCFI3:
+ 146              		.cfi_def_cfa_offset 4
+ 147              		.cfi_offset 7, -4
+ 148 0002 83B0     		sub	sp, sp, #12
+ 149              	.LCFI4:
+ 150              		.cfi_def_cfa_offset 16
+ 151 0004 00AF     		add	r7, sp, #0
+ 152              	.LCFI5:
+ 153              		.cfi_def_cfa_register 7
+ 154 0006 7860     		str	r0, [r7, #4]
+  82:../Main.c     **** 	while(i--)
+ 155              		.loc 1 82 0
+ 156 0008 00E0     		b	.L6
+ 157              	.L7:
+ 158              	.LBB4:
+ 159              	.LBB5:
+ 160              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+   1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
+   2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
+   3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
+   4:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @version  V3.20
+   5:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @date     05. March 2013
+   6:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   7:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @note
+   8:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   9:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  ******************************************************************************/
+  10:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Copyright (c) 2009 - 2013 ARM LIMITED
+  11:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  12:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    All rights reserved.
+  13:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    Redistribution and use in source and binary forms, with or without
+  14:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    modification, are permitted provided that the following conditions are met:
+  15:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions of source code must retain the above copyright
+  16:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer.
+  17:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer in the
+  19:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      documentation and/or other materials provided with the distribution.
+  20:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  21:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      to endorse or promote products derived from this software without
+  22:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      specific prior written permission.
+  23:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    *
+  24:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  27:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  28:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  29:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  30:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  31:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  32:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  33:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  34:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    POSSIBILITY OF SUCH DAMAGE.
+  35:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ---------------------------------------------------------------------------*/
+  36:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  37:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  38:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __CORE_CMINSTR_H
+  39:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CORE_CMINSTR_H
+  40:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  41:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  42:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ##########################  Core Instruction Access  ######################### */
+  43:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  44:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   Access to dedicated instructions
+  45:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   @{
+  46:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** */
+  47:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  48:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  49:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ARM armcc specific functions */
+  50:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  51:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if (__ARMCC_VERSION < 400677)
+  52:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  53:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+  54:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  55:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  56:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+  57:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  58:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+  59:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  60:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __NOP                             __nop
+  61:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  62:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  63:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Interrupt
+  64:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  65:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+  66:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     until one of a number of events occurs.
+  67:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  68:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFI                             __wfi
+  69:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  70:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  71:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Event
+  72:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  73:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+  74:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+  75:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  76:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFE                             __wfe
+  77:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  78:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  79:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Send Event
+  80:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  81:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+  82:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  83:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SEV                             __sev
+  84:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  85:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  86:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+  87:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  88:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+  89:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+  90:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     memory, after the instruction has been completed.
+  91:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  92:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ISB()                           __isb(0xF)
+  93:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  94:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  95:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+  96:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  97:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+  98:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+  99:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 100:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DSB()                           __dsb(0xF)
+ 101:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 102:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 103:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 104:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 105:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 106:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 107:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 108:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DMB()                           __dmb(0xF)
+ 109:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 110:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 111:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 112:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 113:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 114:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 115:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 116:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 117:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 118:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __REV                             __rev
+ 119:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 120:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 121:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (16 bit)
+ 122:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 123:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in two unsigned short values.
+ 124:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 125:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 126:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 127:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 128:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 129:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+ 130:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 131:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   rev16 r0, r0
+ 132:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 133:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 134:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 135:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 136:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order in signed short value
+ 137:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 138:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in a signed short value with sign extension to integer.
+ 139:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 140:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 141:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 142:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 143:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 144:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+ 145:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 146:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   revsh r0, r0
+ 147:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 148:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 149:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 150:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 151:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 152:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Rotate Right in unsigned value (32 bit)
+ 153:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 154:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function Rotate Right (immediate) provides the value of the contents of a register rotated
+ 155:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 156:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 157:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Number of Bits to rotate
+ 158:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Rotated value
+ 159:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 160:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ROR                             __ror
+ 161:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 162:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 163:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Breakpoint
+ 164:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 165:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function causes the processor to enter Debug state.
+ 166:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Debug tools can use this to investigate system state when the instruction at a particular addre
+ 167:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 168:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  is ignored by the processor.
+ 169:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****                    If required, a debugger can use it to store additional information about the bre
+ 170:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 171:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __BKPT(value)                       __breakpoint(value)
+ 172:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 173:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 174:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if       (__CORTEX_M >= 0x03)
+ 175:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 176:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse bit order of value
+ 177:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 178:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the bit order of the given value.
+ 179:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 180:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 181:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 182:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 183:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __RBIT                            __rbit
+ 184:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 185:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 186:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (8 bit)
+ 187:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 188:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 8 bit value.
+ 189:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 190:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 191:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 192:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 193:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXB(ptr)                     ((uint8_t ) __ldrex(ptr))
+ 194:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 195:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 196:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (16 bit)
+ 197:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 198:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 16 bit values.
+ 199:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 200:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 201:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 202:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 203:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXH(ptr)                     ((uint16_t) __ldrex(ptr))
+ 204:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 205:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 206:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (32 bit)
+ 207:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 208:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 32 bit values.
+ 209:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 210:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 211:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 212:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 213:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXW(ptr)                     ((uint32_t ) __ldrex(ptr))
+ 214:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 215:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 216:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (8 bit)
+ 217:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 218:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 8 bit values.
+ 219:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 220:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 221:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 222:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 223:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 224:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 225:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXB(value, ptr)              __strex(value, ptr)
+ 226:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 227:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 228:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (16 bit)
+ 229:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 230:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 16 bit values.
+ 231:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 232:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 233:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 234:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 235:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 236:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 237:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXH(value, ptr)              __strex(value, ptr)
+ 238:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 239:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 240:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (32 bit)
+ 241:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 242:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 32 bit values.
+ 243:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 244:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 245:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 246:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 247:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 248:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 249:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXW(value, ptr)              __strex(value, ptr)
+ 250:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 251:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 252:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Remove the exclusive lock
+ 253:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 254:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function removes the exclusive lock which is created by LDREX.
+ 255:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 256:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 257:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLREX                           __clrex
+ 258:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 259:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 260:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Signed Saturate
+ 261:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 262:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates a signed value.
+ 263:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 264:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 265:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (1..32)
+ 266:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 267:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 268:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SSAT                            __ssat
+ 269:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 270:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 271:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Unsigned Saturate
+ 272:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 273:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates an unsigned value.
+ 274:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 275:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 276:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (0..31)
+ 277:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 278:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 279:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __USAT                            __usat
+ 280:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 281:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 282:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Count leading zeros
+ 283:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 284:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function counts the number of leading zeros of a data value.
+ 285:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 286:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to count the leading zeros
+ 287:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             number of leading zeros in value
+ 288:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 289:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLZ                             __clz
+ 290:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 291:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif /* (__CORTEX_M >= 0x03) */
+ 292:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 293:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 294:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 295:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+ 296:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* IAR iccarm specific functions */
+ 297:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 298:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_iar.h>
+ 299:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 300:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 301:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+ 302:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* TI CCS specific functions */
+ 303:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 304:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_ccs.h>
+ 305:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 306:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 307:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 308:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* GNU gcc specific functions */
+ 309:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 310:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 311:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * For thumb1, use low register (r0-r7), specified by constrant "l"
+ 312:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * Otherwise, use general registers, specified by constrant "r" */
+ 313:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 314:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 315:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 316:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #else
+ 317:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 318:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 319:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 320:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 321:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+ 322:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 323:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+ 324:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
+ 326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
+ 161              		.loc 2 327 0
+ 162              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 163 000a 00BF     		nop
+ 164              	@ 0 "" 2
+ 165              		.thumb
+ 166              	.L6:
+ 167              	.LBE5:
+ 168              	.LBE4:
+ 169              		.loc 1 82 0 discriminator 1
+ 170 000c 7B68     		ldr	r3, [r7, #4]
+ 171 000e 002B     		cmp	r3, #0
+ 172 0010 0CBF     		ite	eq
+ 173 0012 0023     		moveq	r3, #0
+ 174 0014 0123     		movne	r3, #1
+ 175 0016 DBB2     		uxtb	r3, r3
+ 176 0018 7A68     		ldr	r2, [r7, #4]
+ 177 001a 02F1FF32 		add	r2, r2, #-1
+ 178 001e 7A60     		str	r2, [r7, #4]
+ 179 0020 002B     		cmp	r3, #0
+ 180 0022 F2D1     		bne	.L7
+  83:../Main.c     **** 	{
+  84:../Main.c     **** 		__NOP();
+  85:../Main.c     **** 	}
+  86:../Main.c     **** }
+ 181              		.loc 1 86 0
+ 182 0024 07F10C07 		add	r7, r7, #12
+ 183 0028 BD46     		mov	sp, r7
+ 184 002a 80BC     		pop	{r7}
+ 185 002c 7047     		bx	lr
+ 186              		.cfi_endproc
+ 187              	.LFE113:
+ 189 002e 00BF     		.section	.text.main,"ax",%progbits
+ 190              		.align	2
+ 191              		.global	main
+ 192              		.thumb
+ 193              		.thumb_func
+ 195              	main:
+ 196              	.LFB114:
+  87:../Main.c     **** void printByteToInt(char a);
+  88:../Main.c     **** int main(void)
+  89:../Main.c     **** {
+ 197              		.loc 1 89 0
+ 198              		.cfi_startproc
+ 199              		@ args = 0, pretend = 0, frame = 16
+ 200              		@ frame_needed = 1, uses_anonymous_args = 0
+ 201 0000 80B5     		push	{r7, lr}
+ 202              	.LCFI6:
+ 203              		.cfi_def_cfa_offset 8
+ 204              		.cfi_offset 7, -8
+ 205              		.cfi_offset 14, -4
+ 206 0002 84B0     		sub	sp, sp, #16
+ 207              	.LCFI7:
+ 208              		.cfi_def_cfa_offset 24
+ 209 0004 00AF     		add	r7, sp, #0
+ 210              	.LCFI8:
+ 211              		.cfi_def_cfa_register 7
+  90:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+  91:../Main.c     **** 	configuration[0] = 0xC5;//RF_CH# e OP_MODE 0b11011110
+ 212              		.loc 1 91 0
+ 213 0006 40F20003 		movw	r3, #:lower16:configuration
+ 214 000a C0F20003 		movt	r3, #:upper16:configuration
+ 215 000e 4FF0C502 		mov	r2, #197
+ 216 0012 1A70     		strb	r2, [r3, #0]
+  92:../Main.c     **** 	configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+ 217              		.loc 1 92 0
+ 218 0014 40F20003 		movw	r3, #:lower16:configuration
+ 219 0018 C0F20003 		movt	r3, #:upper16:configuration
+ 220 001c 4FF04F02 		mov	r2, #79
+ 221 0020 5A70     		strb	r2, [r3, #1]
+  93:../Main.c     **** 	configuration[2] = 0xA3;//addr_w
+ 222              		.loc 1 93 0
+ 223 0022 40F20003 		movw	r3, #:lower16:configuration
+ 224 0026 C0F20003 		movt	r3, #:upper16:configuration
+ 225 002a 4FF0A302 		mov	r2, #163
+ 226 002e 9A70     		strb	r2, [r3, #2]
+  94:../Main.c     **** 	configuration[3] = 0xEE;//Comeco enderco CH1 00000001
+ 227              		.loc 1 94 0
+ 228 0030 40F20003 		movw	r3, #:lower16:configuration
+ 229 0034 C0F20003 		movt	r3, #:upper16:configuration
+ 230 0038 4FF0EE02 		mov	r2, #238
+ 231 003c DA70     		strb	r2, [r3, #3]
+  95:../Main.c     **** 	configuration[4] = 0xDD;//0b00000000
+ 232              		.loc 1 95 0
+ 233 003e 40F20003 		movw	r3, #:lower16:configuration
+ 234 0042 C0F20003 		movt	r3, #:upper16:configuration
+ 235 0046 4FF0DD02 		mov	r2, #221
+ 236 004a 1A71     		strb	r2, [r3, #4]
+  96:../Main.c     **** 	configuration[5] = 0xCC;//0b11010100
+ 237              		.loc 1 96 0
+ 238 004c 40F20003 		movw	r3, #:lower16:configuration
+ 239 0050 C0F20003 		movt	r3, #:upper16:configuration
+ 240 0054 4FF0CC02 		mov	r2, #204
+ 241 0058 5A71     		strb	r2, [r3, #5]
+  97:../Main.c     **** 	configuration[6] = 0xBB;//0b11011111
+ 242              		.loc 1 97 0
+ 243 005a 40F20003 		movw	r3, #:lower16:configuration
+ 244 005e C0F20003 		movt	r3, #:upper16:configuration
+ 245 0062 4FF0BB02 		mov	r2, #187
+ 246 0066 9A71     		strb	r2, [r3, #6]
+  98:../Main.c     **** 	configuration[7] = 0xAA;//Fim enderco CH1 0b11101010
+ 247              		.loc 1 98 0
+ 248 0068 40F20003 		movw	r3, #:lower16:configuration
+ 249 006c C0F20003 		movt	r3, #:upper16:configuration
+ 250 0070 4FF0AA02 		mov	r2, #170
+ 251 0074 DA71     		strb	r2, [r3, #7]
+  99:../Main.c     **** 	configuration[8] = 0b00000000;//Comeco enderco CH2
+ 252              		.loc 1 99 0
+ 253 0076 40F20003 		movw	r3, #:lower16:configuration
+ 254 007a C0F20003 		movt	r3, #:upper16:configuration
+ 255 007e 4FF00002 		mov	r2, #0
+ 256 0082 1A72     		strb	r2, [r3, #8]
+ 100:../Main.c     **** 	configuration[9] = 0b00000000;
+ 257              		.loc 1 100 0
+ 258 0084 40F20003 		movw	r3, #:lower16:configuration
+ 259 0088 C0F20003 		movt	r3, #:upper16:configuration
+ 260 008c 4FF00002 		mov	r2, #0
+ 261 0090 5A72     		strb	r2, [r3, #9]
+ 101:../Main.c     **** 	configuration[10] = 0b00000000;
+ 262              		.loc 1 101 0
+ 263 0092 40F20003 		movw	r3, #:lower16:configuration
+ 264 0096 C0F20003 		movt	r3, #:upper16:configuration
+ 265 009a 4FF00002 		mov	r2, #0
+ 266 009e 9A72     		strb	r2, [r3, #10]
+ 102:../Main.c     **** 	configuration[11] = 0b00000000;
+ 267              		.loc 1 102 0
+ 268 00a0 40F20003 		movw	r3, #:lower16:configuration
+ 269 00a4 C0F20003 		movt	r3, #:upper16:configuration
+ 270 00a8 4FF00002 		mov	r2, #0
+ 271 00ac DA72     		strb	r2, [r3, #11]
+ 103:../Main.c     **** 	configuration[12] = 0b00000000;//Fim enderco CH2
+ 272              		.loc 1 103 0
+ 273 00ae 40F20003 		movw	r3, #:lower16:configuration
+ 274 00b2 C0F20003 		movt	r3, #:upper16:configuration
+ 275 00b6 4FF00002 		mov	r2, #0
+ 276 00ba 1A73     		strb	r2, [r3, #12]
+ 104:../Main.c     **** 	configuration[13] = 0x20;//num bits enviados (1 byte nesse ex)
+ 277              		.loc 1 104 0
+ 278 00bc 40F20003 		movw	r3, #:lower16:configuration
+ 279 00c0 C0F20003 		movt	r3, #:upper16:configuration
+ 280 00c4 4FF02002 		mov	r2, #32
+ 281 00c8 5A73     		strb	r2, [r3, #13]
+ 105:../Main.c     **** 	configuration[14] = 0b00000000;
+ 282              		.loc 1 105 0
+ 283 00ca 40F20003 		movw	r3, #:lower16:configuration
+ 284 00ce C0F20003 		movt	r3, #:upper16:configuration
+ 285 00d2 4FF00002 		mov	r2, #0
+ 286 00d6 9A73     		strb	r2, [r3, #14]
+ 106:../Main.c     **** 
+ 107:../Main.c     **** 	DAVE_Init();			// Initialization of DAVE Apps
+ 287              		.loc 1 107 0
+ 288 00d8 FFF7FEFF 		bl	DAVE_Init
+ 108:../Main.c     **** 
+ 109:../Main.c     **** 	configure_E();
+ 289              		.loc 1 109 0
+ 290 00dc FFF7FEFF 		bl	configure_E
+ 110:../Main.c     **** 	IO004_SetPin(LED1);
+ 291              		.loc 1 110 0
+ 292 00e0 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 293 00e4 C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 294 00e8 5A68     		ldr	r2, [r3, #4]
+ 295 00ea 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 296 00ee C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 297 00f2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 298 00f4 4FF00101 		mov	r1, #1
+ 299 00f8 01FA03F3 		lsl	r3, r1, r3
+ 300 00fc 5360     		str	r3, [r2, #4]
+ 111:../Main.c     **** 	IO004_SetPin(LED2);
+ 301              		.loc 1 111 0
+ 302 00fe 40F20003 		movw	r3, #:lower16:IO004_Handle8
+ 303 0102 C0F20003 		movt	r3, #:upper16:IO004_Handle8
+ 304 0106 5A68     		ldr	r2, [r3, #4]
+ 305 0108 40F20003 		movw	r3, #:lower16:IO004_Handle8
+ 306 010c C0F20003 		movt	r3, #:upper16:IO004_Handle8
+ 307 0110 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 308 0112 4FF00101 		mov	r1, #1
+ 309 0116 01FA03F3 		lsl	r3, r1, r3
+ 310 011a 5360     		str	r3, [r2, #4]
+ 112:../Main.c     **** 	psxLeControle();
+ 311              		.loc 1 112 0
+ 312 011c FFF7FEFF 		bl	psxLeControle
+ 113:../Main.c     **** 	BOOLType flipped = 0;
+ 313              		.loc 1 113 0
+ 314 0120 4FF00003 		mov	r3, #0
+ 315 0124 FB73     		strb	r3, [r7, #15]
+ 114:../Main.c     **** 	BOOLType isPressed = 0;
+ 316              		.loc 1 114 0
+ 317 0126 4FF00003 		mov	r3, #0
+ 318 012a BB73     		strb	r3, [r7, #14]
+ 115:../Main.c     **** 	BOOLType lastIsPressed = 0;
+ 319              		.loc 1 115 0
+ 320 012c 4FF00003 		mov	r3, #0
+ 321 0130 7B73     		strb	r3, [r7, #13]
+ 322              	.L32:
+ 323              	.LBB6:
+ 116:../Main.c     **** 	//uint16_t pow_max = 255*PWM_LIM/100;
+ 117:../Main.c     **** 	while(1)
+ 118:../Main.c     **** 	{
+ 119:../Main.c     **** 		BOOLType blah2 = 1;
+ 324              		.loc 1 119 0
+ 325 0132 4FF00103 		mov	r3, #1
+ 326 0136 3B73     		strb	r3, [r7, #12]
+ 120:../Main.c     **** 		BOOLType buzina = 1;
+ 327              		.loc 1 120 0
+ 328 0138 4FF00103 		mov	r3, #1
+ 329 013c 3B72     		strb	r3, [r7, #8]
+ 121:../Main.c     **** 		BOOLType enable = 0;
+ 330              		.loc 1 121 0
+ 331 013e 4FF00003 		mov	r3, #0
+ 332 0142 FB71     		strb	r3, [r7, #7]
+ 122:../Main.c     **** 		BOOLType albh2 = 1;
+ 333              		.loc 1 122 0
+ 334 0144 4FF00103 		mov	r3, #1
+ 335 0148 FB72     		strb	r3, [r7, #11]
+ 123:../Main.c     **** 		BOOLType blah1 = 1;
+ 336              		.loc 1 123 0
+ 337 014a 4FF00103 		mov	r3, #1
+ 338 014e BB72     		strb	r3, [r7, #10]
+ 124:../Main.c     **** 		BOOLType albh1 = 1;
+ 339              		.loc 1 124 0
+ 340 0150 4FF00103 		mov	r3, #1
+ 341 0154 7B72     		strb	r3, [r7, #9]
+ 125:../Main.c     **** 		int16_t pow1, pow2;
+ 126:../Main.c     **** 		//127
+ 127:../Main.c     **** 		psxLeControle();
+ 342              		.loc 1 127 0
+ 343 0156 FFF7FEFF 		bl	psxLeControle
+ 128:../Main.c     **** 		if (psxDado[1]&1<<3) isPressed = 1;
+ 344              		.loc 1 128 0
+ 345 015a 40F20003 		movw	r3, #:lower16:psxDado
+ 346 015e C0F20003 		movt	r3, #:upper16:psxDado
+ 347 0162 5B68     		ldr	r3, [r3, #4]
+ 348 0164 03F00803 		and	r3, r3, #8
+ 349 0168 002B     		cmp	r3, #0
+ 350 016a 03D0     		beq	.L9
+ 351              		.loc 1 128 0 is_stmt 0 discriminator 1
+ 352 016c 4FF00103 		mov	r3, #1
+ 353 0170 BB73     		strb	r3, [r7, #14]
+ 354 0172 02E0     		b	.L10
+ 355              	.L9:
+ 129:../Main.c     **** 		else isPressed = 0;
+ 356              		.loc 1 129 0 is_stmt 1
+ 357 0174 4FF00003 		mov	r3, #0
+ 358 0178 BB73     		strb	r3, [r7, #14]
+ 359              	.L10:
+ 130:../Main.c     **** 		if (lastIsPressed == 0 && isPressed == 1) flipped = !flipped;
+ 360              		.loc 1 130 0
+ 361 017a 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 362 017c 002B     		cmp	r3, #0
+ 363 017e 09D1     		bne	.L11
+ 364              		.loc 1 130 0 is_stmt 0 discriminator 1
+ 365 0180 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 366 0182 012B     		cmp	r3, #1
+ 367 0184 06D1     		bne	.L11
+ 368 0186 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 369 0188 002B     		cmp	r3, #0
+ 370 018a 14BF     		ite	ne
+ 371 018c 0023     		movne	r3, #0
+ 372 018e 0123     		moveq	r3, #1
+ 373 0190 DBB2     		uxtb	r3, r3
+ 374 0192 FB73     		strb	r3, [r7, #15]
+ 375              	.L11:
+ 131:../Main.c     **** 		data_E[0] = 173;
+ 376              		.loc 1 131 0 is_stmt 1
+ 377 0194 40F20003 		movw	r3, #:lower16:data_E
+ 378 0198 C0F20003 		movt	r3, #:upper16:data_E
+ 379 019c 4FF0AD02 		mov	r2, #173
+ 380 01a0 1A70     		strb	r2, [r3, #0]
+ 132:../Main.c     **** 		if (psxDado[5] == 0 && psxDado[3] == 0) continue;
+ 381              		.loc 1 132 0
+ 382 01a2 40F20003 		movw	r3, #:lower16:psxDado
+ 383 01a6 C0F20003 		movt	r3, #:upper16:psxDado
+ 384 01aa 5B69     		ldr	r3, [r3, #20]
+ 385 01ac 002B     		cmp	r3, #0
+ 386 01ae 07D1     		bne	.L12
+ 387              		.loc 1 132 0 is_stmt 0 discriminator 1
+ 388 01b0 40F20003 		movw	r3, #:lower16:psxDado
+ 389 01b4 C0F20003 		movt	r3, #:upper16:psxDado
+ 390 01b8 DB68     		ldr	r3, [r3, #12]
+ 391 01ba 002B     		cmp	r3, #0
+ 392 01bc 00F04D81 		beq	.L34
+ 393              	.L12:
+ 133:../Main.c     **** 		pow1 = (psxDado[5]-127);//<<1; //Analog esq //Subtrai 127 para saber o sentido
+ 394              		.loc 1 133 0 is_stmt 1
+ 395 01c0 40F20003 		movw	r3, #:lower16:psxDado
+ 396 01c4 C0F20003 		movt	r3, #:upper16:psxDado
+ 397 01c8 5B69     		ldr	r3, [r3, #20]
+ 398 01ca 9BB2     		uxth	r3, r3
+ 399 01cc A3F17F03 		sub	r3, r3, #127
+ 400 01d0 9BB2     		uxth	r3, r3
+ 401 01d2 BB80     		strh	r3, [r7, #4]	@ movhi
+ 134:../Main.c     **** 		pow2 = (psxDado[3]-127);//<<1;
+ 402              		.loc 1 134 0
+ 403 01d4 40F20003 		movw	r3, #:lower16:psxDado
+ 404 01d8 C0F20003 		movt	r3, #:upper16:psxDado
+ 405 01dc DB68     		ldr	r3, [r3, #12]
+ 406 01de 9BB2     		uxth	r3, r3
+ 407 01e0 A3F17F03 		sub	r3, r3, #127
+ 408 01e4 9BB2     		uxth	r3, r3
+ 409 01e6 7B80     		strh	r3, [r7, #2]	@ movhi
+ 135:../Main.c     **** 		data_E[3] = 0;
+ 410              		.loc 1 135 0
+ 411 01e8 40F20003 		movw	r3, #:lower16:data_E
+ 412 01ec C0F20003 		movt	r3, #:upper16:data_E
+ 413 01f0 4FF00002 		mov	r2, #0
+ 414 01f4 DA70     		strb	r2, [r3, #3]
+ 136:../Main.c     **** 		if (!flipped)
+ 415              		.loc 1 136 0
+ 416 01f6 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 417 01f8 002B     		cmp	r3, #0
+ 418 01fa 20D1     		bne	.L14
+ 137:../Main.c     **** 		{
+ 138:../Main.c     **** 			if (pow1 < -30) albh2 = 0; //ok
+ 419              		.loc 1 138 0
+ 420 01fc B7F90430 		ldrsh	r3, [r7, #4]
+ 421 0200 13F11E0F 		cmn	r3, #30
+ 422 0204 03DA     		bge	.L15
+ 423              		.loc 1 138 0 is_stmt 0 discriminator 1
+ 424 0206 4FF00003 		mov	r3, #0
+ 425 020a FB72     		strb	r3, [r7, #11]
+ 426 020c 06E0     		b	.L16
+ 427              	.L15:
+ 139:../Main.c     **** 			else if (pow1 > 30) blah2 = 0; //ok
+ 428              		.loc 1 139 0 is_stmt 1
+ 429 020e B7F90430 		ldrsh	r3, [r7, #4]
+ 430 0212 1E2B     		cmp	r3, #30
+ 431 0214 02DD     		ble	.L16
+ 432              		.loc 1 139 0 is_stmt 0 discriminator 1
+ 433 0216 4FF00003 		mov	r3, #0
+ 434 021a 3B73     		strb	r3, [r7, #12]
+ 435              	.L16:
+ 140:../Main.c     **** 			if (pow2 < -30) albh1 = 0;
+ 436              		.loc 1 140 0 is_stmt 1
+ 437 021c B7F90230 		ldrsh	r3, [r7, #2]
+ 438 0220 13F11E0F 		cmn	r3, #30
+ 439 0224 03DA     		bge	.L17
+ 440              		.loc 1 140 0 is_stmt 0 discriminator 1
+ 441 0226 4FF00003 		mov	r3, #0
+ 442 022a 7B72     		strb	r3, [r7, #9]
+ 443 022c 27E0     		b	.L18
+ 444              	.L17:
+ 141:../Main.c     **** 			else if (pow2 > 30) blah1 = 0;
+ 445              		.loc 1 141 0 is_stmt 1
+ 446 022e B7F90230 		ldrsh	r3, [r7, #2]
+ 447 0232 1E2B     		cmp	r3, #30
+ 448 0234 23DD     		ble	.L18
+ 449              		.loc 1 141 0 is_stmt 0 discriminator 1
+ 450 0236 4FF00003 		mov	r3, #0
+ 451 023a BB72     		strb	r3, [r7, #10]
+ 452 023c 1FE0     		b	.L18
+ 453              	.L14:
+ 142:../Main.c     **** 		}
+ 143:../Main.c     **** 		else
+ 144:../Main.c     **** 		{
+ 145:../Main.c     **** 			if (pow2 > 30) albh2 = 0; //ok
+ 454              		.loc 1 145 0 is_stmt 1
+ 455 023e B7F90230 		ldrsh	r3, [r7, #2]
+ 456 0242 1E2B     		cmp	r3, #30
+ 457 0244 03DD     		ble	.L19
+ 458              		.loc 1 145 0 is_stmt 0 discriminator 1
+ 459 0246 4FF00003 		mov	r3, #0
+ 460 024a FB72     		strb	r3, [r7, #11]
+ 461 024c 07E0     		b	.L20
+ 462              	.L19:
+ 146:../Main.c     **** 			else if (pow2 < -30) blah2 = 0; //ok
+ 463              		.loc 1 146 0 is_stmt 1
+ 464 024e B7F90230 		ldrsh	r3, [r7, #2]
+ 465 0252 13F11E0F 		cmn	r3, #30
+ 466 0256 02DA     		bge	.L20
+ 467              		.loc 1 146 0 is_stmt 0 discriminator 1
+ 468 0258 4FF00003 		mov	r3, #0
+ 469 025c 3B73     		strb	r3, [r7, #12]
+ 470              	.L20:
+ 147:../Main.c     **** 			if (pow1 > 30) albh1 = 0;
+ 471              		.loc 1 147 0 is_stmt 1
+ 472 025e B7F90430 		ldrsh	r3, [r7, #4]
+ 473 0262 1E2B     		cmp	r3, #30
+ 474 0264 03DD     		ble	.L21
+ 475              		.loc 1 147 0 is_stmt 0 discriminator 1
+ 476 0266 4FF00003 		mov	r3, #0
+ 477 026a 7B72     		strb	r3, [r7, #9]
+ 478 026c 07E0     		b	.L18
+ 479              	.L21:
+ 148:../Main.c     **** 			else if (pow1 < -30) blah1 = 0;
+ 480              		.loc 1 148 0 is_stmt 1
+ 481 026e B7F90430 		ldrsh	r3, [r7, #4]
+ 482 0272 13F11E0F 		cmn	r3, #30
+ 483 0276 02DA     		bge	.L18
+ 484              		.loc 1 148 0 is_stmt 0 discriminator 1
+ 485 0278 4FF00003 		mov	r3, #0
+ 486 027c BB72     		strb	r3, [r7, #10]
+ 487              	.L18:
+ 149:../Main.c     **** 		}
+ 150:../Main.c     **** 		int16_t temp;
+ 151:../Main.c     **** 		/*temp = pow1>0?pow1*2:(-pow1)*2;
+ 152:../Main.c     **** 		data_E[1] = (temp)>pow?220:temp;
+ 153:../Main.c     **** 		temp = pow2>0?pow2*2:(-pow2)*2;
+ 154:../Main.c     **** 		data_E[2] = (temp)>220?220:temp;*/
+ 155:../Main.c     **** 		if (!flipped)
+ 488              		.loc 1 155 0 is_stmt 1
+ 489 027e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 490 0280 002B     		cmp	r3, #0
+ 491 0282 5CD1     		bne	.L22
+ 156:../Main.c     **** 		{
+ 157:../Main.c     **** 			temp = pow1>0?pow1*2:(-pow1)*2;
+ 492              		.loc 1 157 0
+ 493 0284 B7F90430 		ldrsh	r3, [r7, #4]
+ 494 0288 002B     		cmp	r3, #0
+ 495 028a 05DD     		ble	.L23
+ 496              		.loc 1 157 0 is_stmt 0 discriminator 1
+ 497 028c BB88     		ldrh	r3, [r7, #4]
+ 498 028e 4FEA4303 		lsl	r3, r3, #1
+ 499 0292 9BB2     		uxth	r3, r3
+ 500 0294 9BB2     		uxth	r3, r3
+ 501 0296 08E0     		b	.L24
+ 502              	.L23:
+ 503              		.loc 1 157 0 discriminator 2
+ 504 0298 BB88     		ldrh	r3, [r7, #4]
+ 505 029a 1A46     		mov	r2, r3	@ movhi
+ 506 029c 4FEAC232 		lsl	r2, r2, #15
+ 507 02a0 D31A     		subs	r3, r2, r3
+ 508 02a2 4FEA4303 		lsl	r3, r3, #1
+ 509 02a6 9BB2     		uxth	r3, r3
+ 510 02a8 9BB2     		uxth	r3, r3
+ 511              	.L24:
+ 512              		.loc 1 157 0 discriminator 3
+ 513 02aa 3B80     		strh	r3, [r7, #0]	@ movhi
+ 158:../Main.c     **** 			data_E[1] = temp*PWM_LIM/100;
+ 514              		.loc 1 158 0 is_stmt 1 discriminator 3
+ 515 02ac B7F90020 		ldrsh	r2, [r7, #0]
+ 516 02b0 1346     		mov	r3, r2
+ 517 02b2 4FEA0313 		lsl	r3, r3, #4
+ 518 02b6 9B1A     		subs	r3, r3, r2
+ 519 02b8 4FEA8303 		lsl	r3, r3, #2
+ 520 02bc 1A46     		mov	r2, r3
+ 521 02be 48F21F53 		movw	r3, #34079
+ 522 02c2 C5F2EB13 		movt	r3, 20971
+ 523 02c6 83FB0213 		smull	r1, r3, r3, r2
+ 524 02ca 4FEA6311 		asr	r1, r3, #5
+ 525 02ce 4FEAE273 		asr	r3, r2, #31
+ 526 02d2 CB1A     		subs	r3, r1, r3
+ 527 02d4 DAB2     		uxtb	r2, r3
+ 528 02d6 40F20003 		movw	r3, #:lower16:data_E
+ 529 02da C0F20003 		movt	r3, #:upper16:data_E
+ 530 02de 5A70     		strb	r2, [r3, #1]
+ 159:../Main.c     **** 			temp = pow2>0?pow2*2:(-pow2)*2;
+ 531              		.loc 1 159 0 discriminator 3
+ 532 02e0 B7F90230 		ldrsh	r3, [r7, #2]
+ 533 02e4 002B     		cmp	r3, #0
+ 534 02e6 05DD     		ble	.L25
+ 535              		.loc 1 159 0 is_stmt 0 discriminator 1
+ 536 02e8 7B88     		ldrh	r3, [r7, #2]
+ 537 02ea 4FEA4303 		lsl	r3, r3, #1
+ 538 02ee 9BB2     		uxth	r3, r3
+ 539 02f0 9BB2     		uxth	r3, r3
+ 540 02f2 08E0     		b	.L26
+ 541              	.L25:
+ 542              		.loc 1 159 0 discriminator 2
+ 543 02f4 7B88     		ldrh	r3, [r7, #2]
+ 544 02f6 1A46     		mov	r2, r3	@ movhi
+ 545 02f8 4FEAC232 		lsl	r2, r2, #15
+ 546 02fc D31A     		subs	r3, r2, r3
+ 547 02fe 4FEA4303 		lsl	r3, r3, #1
+ 548 0302 9BB2     		uxth	r3, r3
+ 549 0304 9BB2     		uxth	r3, r3
+ 550              	.L26:
+ 551              		.loc 1 159 0 discriminator 3
+ 552 0306 3B80     		strh	r3, [r7, #0]	@ movhi
+ 160:../Main.c     **** 			data_E[2] = temp*PWM_LIM/100;
+ 553              		.loc 1 160 0 is_stmt 1 discriminator 3
+ 554 0308 B7F90020 		ldrsh	r2, [r7, #0]
+ 555 030c 1346     		mov	r3, r2
+ 556 030e 4FEA0313 		lsl	r3, r3, #4
+ 557 0312 9B1A     		subs	r3, r3, r2
+ 558 0314 4FEA8303 		lsl	r3, r3, #2
+ 559 0318 1A46     		mov	r2, r3
+ 560 031a 48F21F53 		movw	r3, #34079
+ 561 031e C5F2EB13 		movt	r3, 20971
+ 562 0322 83FB0213 		smull	r1, r3, r3, r2
+ 563 0326 4FEA6311 		asr	r1, r3, #5
+ 564 032a 4FEAE273 		asr	r3, r2, #31
+ 565 032e CB1A     		subs	r3, r1, r3
+ 566 0330 DAB2     		uxtb	r2, r3
+ 567 0332 40F20003 		movw	r3, #:lower16:data_E
+ 568 0336 C0F20003 		movt	r3, #:upper16:data_E
+ 569 033a 9A70     		strb	r2, [r3, #2]
+ 570 033c 5BE0     		b	.L27
+ 571              	.L22:
+ 161:../Main.c     **** 		}
+ 162:../Main.c     **** 		else
+ 163:../Main.c     **** 		{
+ 164:../Main.c     **** 			temp = pow1>0?pow1*2:(-pow1)*2;
+ 572              		.loc 1 164 0
+ 573 033e B7F90430 		ldrsh	r3, [r7, #4]
+ 574 0342 002B     		cmp	r3, #0
+ 575 0344 05DD     		ble	.L28
+ 576              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 577 0346 BB88     		ldrh	r3, [r7, #4]
+ 578 0348 4FEA4303 		lsl	r3, r3, #1
+ 579 034c 9BB2     		uxth	r3, r3
+ 580 034e 9BB2     		uxth	r3, r3
+ 581 0350 08E0     		b	.L29
+ 582              	.L28:
+ 583              		.loc 1 164 0 discriminator 2
+ 584 0352 BB88     		ldrh	r3, [r7, #4]
+ 585 0354 1A46     		mov	r2, r3	@ movhi
+ 586 0356 4FEAC232 		lsl	r2, r2, #15
+ 587 035a D31A     		subs	r3, r2, r3
+ 588 035c 4FEA4303 		lsl	r3, r3, #1
+ 589 0360 9BB2     		uxth	r3, r3
+ 590 0362 9BB2     		uxth	r3, r3
+ 591              	.L29:
+ 592              		.loc 1 164 0 discriminator 3
+ 593 0364 3B80     		strh	r3, [r7, #0]	@ movhi
+ 165:../Main.c     **** 			data_E[2] = temp*PWM_LIM/100;
+ 594              		.loc 1 165 0 is_stmt 1 discriminator 3
+ 595 0366 B7F90020 		ldrsh	r2, [r7, #0]
+ 596 036a 1346     		mov	r3, r2
+ 597 036c 4FEA0313 		lsl	r3, r3, #4
+ 598 0370 9B1A     		subs	r3, r3, r2
+ 599 0372 4FEA8303 		lsl	r3, r3, #2
+ 600 0376 1A46     		mov	r2, r3
+ 601 0378 48F21F53 		movw	r3, #34079
+ 602 037c C5F2EB13 		movt	r3, 20971
+ 603 0380 83FB0213 		smull	r1, r3, r3, r2
+ 604 0384 4FEA6311 		asr	r1, r3, #5
+ 605 0388 4FEAE273 		asr	r3, r2, #31
+ 606 038c CB1A     		subs	r3, r1, r3
+ 607 038e DAB2     		uxtb	r2, r3
+ 608 0390 40F20003 		movw	r3, #:lower16:data_E
+ 609 0394 C0F20003 		movt	r3, #:upper16:data_E
+ 610 0398 9A70     		strb	r2, [r3, #2]
+ 166:../Main.c     **** 			temp = pow2>0?pow2*2:(-pow2)*2;
+ 611              		.loc 1 166 0 discriminator 3
+ 612 039a B7F90230 		ldrsh	r3, [r7, #2]
+ 613 039e 002B     		cmp	r3, #0
+ 614 03a0 05DD     		ble	.L30
+ 615              		.loc 1 166 0 is_stmt 0 discriminator 1
+ 616 03a2 7B88     		ldrh	r3, [r7, #2]
+ 617 03a4 4FEA4303 		lsl	r3, r3, #1
+ 618 03a8 9BB2     		uxth	r3, r3
+ 619 03aa 9BB2     		uxth	r3, r3
+ 620 03ac 08E0     		b	.L31
+ 621              	.L30:
+ 622              		.loc 1 166 0 discriminator 2
+ 623 03ae 7B88     		ldrh	r3, [r7, #2]
+ 624 03b0 1A46     		mov	r2, r3	@ movhi
+ 625 03b2 4FEAC232 		lsl	r2, r2, #15
+ 626 03b6 D31A     		subs	r3, r2, r3
+ 627 03b8 4FEA4303 		lsl	r3, r3, #1
+ 628 03bc 9BB2     		uxth	r3, r3
+ 629 03be 9BB2     		uxth	r3, r3
+ 630              	.L31:
+ 631              		.loc 1 166 0 discriminator 3
+ 632 03c0 3B80     		strh	r3, [r7, #0]	@ movhi
+ 167:../Main.c     **** 			data_E[1] = temp*PWM_LIM/100;
+ 633              		.loc 1 167 0 is_stmt 1 discriminator 3
+ 634 03c2 B7F90020 		ldrsh	r2, [r7, #0]
+ 635 03c6 1346     		mov	r3, r2
+ 636 03c8 4FEA0313 		lsl	r3, r3, #4
+ 637 03cc 9B1A     		subs	r3, r3, r2
+ 638 03ce 4FEA8303 		lsl	r3, r3, #2
+ 639 03d2 1A46     		mov	r2, r3
+ 640 03d4 48F21F53 		movw	r3, #34079
+ 641 03d8 C5F2EB13 		movt	r3, 20971
+ 642 03dc 83FB0213 		smull	r1, r3, r3, r2
+ 643 03e0 4FEA6311 		asr	r1, r3, #5
+ 644 03e4 4FEAE273 		asr	r3, r2, #31
+ 645 03e8 CB1A     		subs	r3, r1, r3
+ 646 03ea DAB2     		uxtb	r2, r3
+ 647 03ec 40F20003 		movw	r3, #:lower16:data_E
+ 648 03f0 C0F20003 		movt	r3, #:upper16:data_E
+ 649 03f4 5A70     		strb	r2, [r3, #1]
+ 650              	.L27:
+ 168:../Main.c     **** 		}
+ 169:../Main.c     **** 		//if (data_E[1] > 20 || data_E[2] > 20) enable = 1;
+ 170:../Main.c     **** 		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2) | (albh1 << ALBH1) | (albh2 << ALBH2)
+ 651              		.loc 1 170 0
+ 652 03f6 40F20003 		movw	r3, #:lower16:data_E
+ 653 03fa C0F20003 		movt	r3, #:upper16:data_E
+ 654 03fe DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 655 0400 DAB2     		uxtb	r2, r3
+ 656 0402 BB7A     		ldrb	r3, [r7, #10]	@ zero_extendqisi2
+ 657 0404 4FEA0313 		lsl	r3, r3, #4
+ 658 0408 DBB2     		uxtb	r3, r3
+ 659 040a 1343     		orrs	r3, r3, r2
+ 660 040c DAB2     		uxtb	r2, r3
+ 661 040e 3B7B     		ldrb	r3, [r7, #12]	@ zero_extendqisi2
+ 662 0410 1343     		orrs	r3, r3, r2
+ 663 0412 DAB2     		uxtb	r2, r3
+ 664 0414 7B7A     		ldrb	r3, [r7, #9]	@ zero_extendqisi2
+ 665 0416 4FEA4313 		lsl	r3, r3, #5
+ 666 041a DBB2     		uxtb	r3, r3
+ 667 041c 1343     		orrs	r3, r3, r2
+ 668 041e DAB2     		uxtb	r2, r3
+ 669 0420 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 670 0422 4FEAC303 		lsl	r3, r3, #3
+ 671 0426 DBB2     		uxtb	r3, r3
+ 672 0428 1343     		orrs	r3, r3, r2
+ 673 042a DAB2     		uxtb	r2, r3
+ 674 042c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 675 042e 4FEA8303 		lsl	r3, r3, #2
+ 676 0432 DBB2     		uxtb	r3, r3
+ 677 0434 1343     		orrs	r3, r3, r2
+ 678 0436 DAB2     		uxtb	r2, r3
+ 679 0438 3B7A     		ldrb	r3, [r7, #8]	@ zero_extendqisi2
+ 680 043a 4FEA4303 		lsl	r3, r3, #1
+ 681 043e DBB2     		uxtb	r3, r3
+ 682 0440 1343     		orrs	r3, r3, r2
+ 683 0442 DBB2     		uxtb	r3, r3
+ 684 0444 DAB2     		uxtb	r2, r3
+ 685 0446 40F20003 		movw	r3, #:lower16:data_E
+ 686 044a C0F20003 		movt	r3, #:upper16:data_E
+ 687 044e DA70     		strb	r2, [r3, #3]
+ 171:../Main.c     **** 		write_E();
+ 688              		.loc 1 171 0
+ 689 0450 FFF7FEFF 		bl	write_E
+ 172:../Main.c     **** 		lastIsPressed = isPressed;
+ 690              		.loc 1 172 0
+ 691 0454 BB7B     		ldrb	r3, [r7, #14]
+ 692 0456 7B73     		strb	r3, [r7, #13]
+ 693              	.LBE6:
+ 173:../Main.c     **** 		//IO004_TogglePin(LED1);
+ 174:../Main.c     **** //		printByteToInt(psxDado[0]);
+ 175:../Main.c     **** 		//UART001_WriteData(UART001_Handle0, 'o');
+ 176:../Main.c     **** 		//UART001_WriteData(UART001_Handle0, 'i');
+ 177:../Main.c     **** //		printByteToInt(psxDado[1]);
+ 178:../Main.c     **** //		UART001_WriteData(UART001_Handle0, ' ');
+ 179:../Main.c     **** //		printByteToInt(psxDado[2]);
+ 180:../Main.c     **** //		UART001_WriteData(UART001_Handle0, ' ');
+ 181:../Main.c     **** //		printByteToInt(psxDado[3]);
+ 182:../Main.c     **** //		UART001_WriteData(UART001_Handle0, ' ');
+ 183:../Main.c     **** //		printByteToInt(psxDado[4]);
+ 184:../Main.c     **** //		UART001_WriteData(UART001_Handle0, ' ');
+ 185:../Main.c     **** //		printByteToInt(psxDado[5]);
+ 186:../Main.c     **** //		UART001_WriteData(UART001_Handle0, '\r');
+ 187:../Main.c     **** //		UART001_WriteData(UART001_Handle0, '\n');
+ 188:../Main.c     **** 	}
+ 694              		.loc 1 188 0
+ 695 0458 6BE6     		b	.L32
+ 696              	.L34:
+ 697              	.LBB7:
+ 132:../Main.c     **** 		if (psxDado[5] == 0 && psxDado[3] == 0) continue;
+ 698              		.loc 1 132 0
+ 699 045a 00BF     		nop
+ 700              	.L33:
+ 701              	.LBE7:
+ 702              		.loc 1 188 0
+ 703 045c 69E6     		b	.L32
+ 704              		.cfi_endproc
+ 705              	.LFE114:
+ 707 045e 00BF     		.section	.text.printByteToInt,"ax",%progbits
+ 708              		.align	2
+ 709              		.global	printByteToInt
+ 710              		.thumb
+ 711              		.thumb_func
+ 713              	printByteToInt:
+ 714              	.LFB115:
+ 189:../Main.c     **** 	return 0;
+ 190:../Main.c     **** }
+ 191:../Main.c     **** void printByteToInt(char a)
+ 192:../Main.c     **** {
+ 715              		.loc 1 192 0
+ 716              		.cfi_startproc
+ 717              		@ args = 0, pretend = 0, frame = 16
+ 718              		@ frame_needed = 1, uses_anonymous_args = 0
+ 719              		@ link register save eliminated.
+ 720 0000 80B4     		push	{r7}
+ 721              	.LCFI9:
+ 722              		.cfi_def_cfa_offset 4
+ 723              		.cfi_offset 7, -4
+ 724 0002 85B0     		sub	sp, sp, #20
+ 725              	.LCFI10:
+ 726              		.cfi_def_cfa_offset 24
+ 727 0004 00AF     		add	r7, sp, #0
+ 728              	.LCFI11:
+ 729              		.cfi_def_cfa_register 7
+ 730 0006 0346     		mov	r3, r0
+ 731 0008 FB71     		strb	r3, [r7, #7]
+ 193:../Main.c     **** 	char c = a%10 + '0';
+ 732              		.loc 1 193 0
+ 733 000a FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 734 000c 4CF6CD43 		movw	r3, #52429
+ 735 0010 CCF6CC43 		movt	r3, 52428
+ 736 0014 A3FB0213 		umull	r1, r3, r3, r2
+ 737 0018 4FEAD301 		lsr	r1, r3, #3
+ 738 001c 0B46     		mov	r3, r1
+ 739 001e 4FEA8303 		lsl	r3, r3, #2
+ 740 0022 5B18     		adds	r3, r3, r1
+ 741 0024 4FEA4303 		lsl	r3, r3, #1
+ 742 0028 D31A     		subs	r3, r2, r3
+ 743 002a DBB2     		uxtb	r3, r3
+ 744 002c 03F13003 		add	r3, r3, #48
+ 745 0030 FB73     		strb	r3, [r7, #15]
+ 194:../Main.c     **** 	a /=10;
+ 746              		.loc 1 194 0
+ 747 0032 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 748 0034 4CF6CD43 		movw	r3, #52429
+ 749 0038 CCF6CC43 		movt	r3, 52428
+ 750 003c A3FB0213 		umull	r1, r3, r3, r2
+ 751 0040 4FEAD303 		lsr	r3, r3, #3
+ 752 0044 FB71     		strb	r3, [r7, #7]
+ 195:../Main.c     **** 	char d = a%10 + '0';
+ 753              		.loc 1 195 0
+ 754 0046 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 755 0048 4CF6CD43 		movw	r3, #52429
+ 756 004c CCF6CC43 		movt	r3, 52428
+ 757 0050 A3FB0213 		umull	r1, r3, r3, r2
+ 758 0054 4FEAD301 		lsr	r1, r3, #3
+ 759 0058 0B46     		mov	r3, r1
+ 760 005a 4FEA8303 		lsl	r3, r3, #2
+ 761 005e 5B18     		adds	r3, r3, r1
+ 762 0060 4FEA4303 		lsl	r3, r3, #1
+ 763 0064 D31A     		subs	r3, r2, r3
+ 764 0066 DBB2     		uxtb	r3, r3
+ 765 0068 03F13003 		add	r3, r3, #48
+ 766 006c BB73     		strb	r3, [r7, #14]
+ 196:../Main.c     **** 	a /=10;
+ 767              		.loc 1 196 0
+ 768 006e FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 769 0070 4CF6CD43 		movw	r3, #52429
+ 770 0074 CCF6CC43 		movt	r3, 52428
+ 771 0078 A3FB0213 		umull	r1, r3, r3, r2
+ 772 007c 4FEAD303 		lsr	r3, r3, #3
+ 773 0080 FB71     		strb	r3, [r7, #7]
+ 197:../Main.c     **** 	char e = a%10 + '0';
+ 774              		.loc 1 197 0
+ 775 0082 FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 776 0084 4CF6CD43 		movw	r3, #52429
+ 777 0088 CCF6CC43 		movt	r3, 52428
+ 778 008c A3FB0213 		umull	r1, r3, r3, r2
+ 779 0090 4FEAD301 		lsr	r1, r3, #3
+ 780 0094 0B46     		mov	r3, r1
+ 781 0096 4FEA8303 		lsl	r3, r3, #2
+ 782 009a 5B18     		adds	r3, r3, r1
+ 783 009c 4FEA4303 		lsl	r3, r3, #1
+ 784 00a0 D31A     		subs	r3, r2, r3
+ 785 00a2 DBB2     		uxtb	r3, r3
+ 786 00a4 03F13003 		add	r3, r3, #48
+ 787 00a8 7B73     		strb	r3, [r7, #13]
+ 198:../Main.c     **** 	UART001_WriteData(UART001_Handle0, e);
+ 788              		.loc 1 198 0
+ 789 00aa 40F20003 		movw	r3, #:lower16:UART001_Handle0
+ 790 00ae C0F20003 		movt	r3, #:upper16:UART001_Handle0
+ 791 00b2 1B68     		ldr	r3, [r3, #0]
+ 792 00b4 7A7B     		ldrb	r2, [r7, #13]	@ zero_extendqisi2
+ 793 00b6 C3F88021 		str	r2, [r3, #384]
+ 199:../Main.c     **** 	UART001_WriteData(UART001_Handle0, d);
+ 794              		.loc 1 199 0
+ 795 00ba 40F20003 		movw	r3, #:lower16:UART001_Handle0
+ 796 00be C0F20003 		movt	r3, #:upper16:UART001_Handle0
+ 797 00c2 1B68     		ldr	r3, [r3, #0]
+ 798 00c4 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 799 00c6 C3F88021 		str	r2, [r3, #384]
+ 200:../Main.c     **** 	UART001_WriteData(UART001_Handle0, c);
+ 800              		.loc 1 200 0
+ 801 00ca 40F20003 		movw	r3, #:lower16:UART001_Handle0
+ 802 00ce C0F20003 		movt	r3, #:upper16:UART001_Handle0
+ 803 00d2 1B68     		ldr	r3, [r3, #0]
+ 804 00d4 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 805 00d6 C3F88021 		str	r2, [r3, #384]
+ 201:../Main.c     **** 
+ 202:../Main.c     **** }
+ 806              		.loc 1 202 0
+ 807 00da 07F11407 		add	r7, r7, #20
+ 808 00de BD46     		mov	sp, r7
+ 809 00e0 80BC     		pop	{r7}
+ 810 00e2 7047     		bx	lr
+ 811              		.cfi_endproc
+ 812              	.LFE115:
+ 814              		.section	.text.delay_R,"ax",%progbits
+ 815              		.align	2
+ 816              		.global	delay_R
+ 817              		.thumb
+ 818              		.thumb_func
+ 820              	delay_R:
+ 821              	.LFB116:
+ 203:../Main.c     **** 
+ 204:../Main.c     **** void delay_R()
+ 205:../Main.c     **** {
+ 822              		.loc 1 205 0
+ 823              		.cfi_startproc
+ 824              		@ args = 0, pretend = 0, frame = 0
+ 825              		@ frame_needed = 1, uses_anonymous_args = 0
+ 826 0000 80B5     		push	{r7, lr}
+ 827              	.LCFI12:
+ 828              		.cfi_def_cfa_offset 8
+ 829              		.cfi_offset 7, -8
+ 830              		.cfi_offset 14, -4
+ 831 0002 00AF     		add	r7, sp, #0
+ 832              	.LCFI13:
+ 833              		.cfi_def_cfa_register 7
+ 206:../Main.c     **** 	delay(300);
+ 834              		.loc 1 206 0
+ 835 0004 4FF49670 		mov	r0, #300
+ 836 0008 FFF7FEFF 		bl	delay
+ 207:../Main.c     **** 	IO004_SetPin(CLK1);  //digitalWrite(CLK_R, HIGH);
+ 837              		.loc 1 207 0
+ 838 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 839 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 840 0014 5A68     		ldr	r2, [r3, #4]
+ 841 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 842 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 843 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 844 0020 4FF00101 		mov	r1, #1
+ 845 0024 01FA03F3 		lsl	r3, r1, r3
+ 846 0028 5360     		str	r3, [r2, #4]
+ 208:../Main.c     **** 	delay(300);
+ 847              		.loc 1 208 0
+ 848 002a 4FF49670 		mov	r0, #300
+ 849 002e FFF7FEFF 		bl	delay
+ 209:../Main.c     **** 	IO004_ResetPin(CLK1); //digitalWrite(CLK_R, LOW);
+ 850              		.loc 1 209 0
+ 851 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 852 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 853 003a 5A68     		ldr	r2, [r3, #4]
+ 854 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 855 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 856 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 857 0046 4FF48031 		mov	r1, #65536
+ 858 004a 01FA03F3 		lsl	r3, r1, r3
+ 859 004e 5360     		str	r3, [r2, #4]
+ 210:../Main.c     **** }
+ 860              		.loc 1 210 0
+ 861 0050 80BD     		pop	{r7, pc}
+ 862              		.cfi_endproc
+ 863              	.LFE116:
+ 865 0052 00BF     		.section	.text.configure_E,"ax",%progbits
+ 866              		.align	2
+ 867              		.global	configure_E
+ 868              		.thumb
+ 869              		.thumb_func
+ 871              	configure_E:
+ 872              	.LFB117:
+ 211:../Main.c     **** 
+ 212:../Main.c     **** void configure_E()
+ 213:../Main.c     **** {
+ 873              		.loc 1 213 0
+ 874              		.cfi_startproc
+ 875              		@ args = 0, pretend = 0, frame = 8
+ 876              		@ frame_needed = 1, uses_anonymous_args = 0
+ 877 0000 80B5     		push	{r7, lr}
+ 878              	.LCFI14:
+ 879              		.cfi_def_cfa_offset 8
+ 880              		.cfi_offset 7, -8
+ 881              		.cfi_offset 14, -4
+ 882 0002 82B0     		sub	sp, sp, #8
+ 883              	.LCFI15:
+ 884              		.cfi_def_cfa_offset 16
+ 885 0004 00AF     		add	r7, sp, #0
+ 886              	.LCFI16:
+ 887              		.cfi_def_cfa_register 7
+ 214:../Main.c     ****   configuration[0] &= ~1;
+ 888              		.loc 1 214 0
+ 889 0006 40F20003 		movw	r3, #:lower16:configuration
+ 890 000a C0F20003 		movt	r3, #:upper16:configuration
+ 891 000e 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 892 0010 23F00103 		bic	r3, r3, #1
+ 893 0014 DAB2     		uxtb	r2, r3
+ 894 0016 40F20003 		movw	r3, #:lower16:configuration
+ 895 001a C0F20003 		movt	r3, #:upper16:configuration
+ 896 001e 1A70     		strb	r2, [r3, #0]
+ 215:../Main.c     ****   IO004_ResetPin(CE);
+ 897              		.loc 1 215 0
+ 898 0020 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 899 0024 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 900 0028 5A68     		ldr	r2, [r3, #4]
+ 901 002a 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 902 002e C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 903 0032 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 904 0034 4FF48031 		mov	r1, #65536
+ 905 0038 01FA03F3 		lsl	r3, r1, r3
+ 906 003c 5360     		str	r3, [r2, #4]
+ 216:../Main.c     ****   IO004_SetPin(CS);
+ 907              		.loc 1 216 0
+ 908 003e 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 909 0042 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 910 0046 5A68     		ldr	r2, [r3, #4]
+ 911 0048 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 912 004c C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 913 0050 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 914 0052 4FF00101 		mov	r1, #1
+ 915 0056 01FA03F3 		lsl	r3, r1, r3
+ 916 005a 5360     		str	r3, [r2, #4]
+ 217:../Main.c     ****   int i, j;
+ 218:../Main.c     ****   for (i = 14; i > -1; i--)
+ 917              		.loc 1 218 0
+ 918 005c 4FF00E03 		mov	r3, #14
+ 919 0060 7B60     		str	r3, [r7, #4]
+ 920 0062 3FE0     		b	.L38
+ 921              	.L43:
+ 219:../Main.c     ****   {
+ 220:../Main.c     ****     for (j = 7; j > -1; j--)
+ 922              		.loc 1 220 0
+ 923 0064 4FF00703 		mov	r3, #7
+ 924 0068 3B60     		str	r3, [r7, #0]
+ 925 006a 34E0     		b	.L39
+ 926              	.L42:
+ 221:../Main.c     ****     {
+ 222:../Main.c     ****       if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
+ 927              		.loc 1 222 0
+ 928 006c 40F20003 		movw	r3, #:lower16:configuration
+ 929 0070 C0F20003 		movt	r3, #:upper16:configuration
+ 930 0074 7A68     		ldr	r2, [r7, #4]
+ 931 0076 9B18     		adds	r3, r3, r2
+ 932 0078 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 933 007a 1A46     		mov	r2, r3
+ 934 007c 4FF00101 		mov	r1, #1
+ 935 0080 3B68     		ldr	r3, [r7, #0]
+ 936 0082 01FA03F3 		lsl	r3, r1, r3
+ 937 0086 1340     		ands	r3, r3, r2
+ 938 0088 002B     		cmp	r3, #0
+ 939 008a 0FDD     		ble	.L40
+ 940              		.loc 1 222 0 is_stmt 0 discriminator 1
+ 941 008c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 942 0090 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 943 0094 5A68     		ldr	r2, [r3, #4]
+ 944 0096 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 945 009a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 946 009e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 947 00a0 4FF00101 		mov	r1, #1
+ 948 00a4 01FA03F3 		lsl	r3, r1, r3
+ 949 00a8 5360     		str	r3, [r2, #4]
+ 950 00aa 0EE0     		b	.L41
+ 951              	.L40:
+ 223:../Main.c     ****       else IO004_ResetPin(DATA);;
+ 952              		.loc 1 223 0 is_stmt 1
+ 953 00ac 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 954 00b0 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 955 00b4 5A68     		ldr	r2, [r3, #4]
+ 956 00b6 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 957 00ba C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 958 00be 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 959 00c0 4FF48031 		mov	r1, #65536
+ 960 00c4 01FA03F3 		lsl	r3, r1, r3
+ 961 00c8 5360     		str	r3, [r2, #4]
+ 962              	.L41:
+ 224:../Main.c     ****       delay_R();
+ 963              		.loc 1 224 0
+ 964 00ca FFF7FEFF 		bl	delay_R
+ 220:../Main.c     ****     for (j = 7; j > -1; j--)
+ 965              		.loc 1 220 0
+ 966 00ce 3B68     		ldr	r3, [r7, #0]
+ 967 00d0 03F1FF33 		add	r3, r3, #-1
+ 968 00d4 3B60     		str	r3, [r7, #0]
+ 969              	.L39:
+ 220:../Main.c     ****     for (j = 7; j > -1; j--)
+ 970              		.loc 1 220 0 is_stmt 0 discriminator 1
+ 971 00d6 3B68     		ldr	r3, [r7, #0]
+ 972 00d8 002B     		cmp	r3, #0
+ 973 00da C7DA     		bge	.L42
+ 218:../Main.c     ****   for (i = 14; i > -1; i--)
+ 974              		.loc 1 218 0 is_stmt 1
+ 975 00dc 7B68     		ldr	r3, [r7, #4]
+ 976 00de 03F1FF33 		add	r3, r3, #-1
+ 977 00e2 7B60     		str	r3, [r7, #4]
+ 978              	.L38:
+ 218:../Main.c     ****   for (i = 14; i > -1; i--)
+ 979              		.loc 1 218 0 is_stmt 0 discriminator 1
+ 980 00e4 7B68     		ldr	r3, [r7, #4]
+ 981 00e6 002B     		cmp	r3, #0
+ 982 00e8 BCDA     		bge	.L43
+ 225:../Main.c     ****     }
+ 226:../Main.c     ****   }
+ 227:../Main.c     ****   IO004_ResetPin(CS);
+ 983              		.loc 1 227 0 is_stmt 1
+ 984 00ea 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 985 00ee C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 986 00f2 5A68     		ldr	r2, [r3, #4]
+ 987 00f4 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 988 00f8 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 989 00fc 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 990 00fe 4FF48031 		mov	r1, #65536
+ 991 0102 01FA03F3 		lsl	r3, r1, r3
+ 992 0106 5360     		str	r3, [r2, #4]
+ 228:../Main.c     ****   delay(50000);
+ 993              		.loc 1 228 0
+ 994 0108 4CF25030 		movw	r0, #50000
+ 995 010c FFF7FEFF 		bl	delay
+ 229:../Main.c     **** }
+ 996              		.loc 1 229 0
+ 997 0110 07F10807 		add	r7, r7, #8
+ 998 0114 BD46     		mov	sp, r7
+ 999 0116 80BD     		pop	{r7, pc}
+ 1000              		.cfi_endproc
+ 1001              	.LFE117:
+ 1003              		.section	.text.configure_R,"ax",%progbits
+ 1004              		.align	2
+ 1005              		.global	configure_R
+ 1006              		.thumb
+ 1007              		.thumb_func
+ 1009              	configure_R:
+ 1010              	.LFB118:
+ 230:../Main.c     **** void configure_R()
+ 231:../Main.c     **** {
+ 1011              		.loc 1 231 0
+ 1012              		.cfi_startproc
+ 1013              		@ args = 0, pretend = 0, frame = 8
+ 1014              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1015 0000 80B5     		push	{r7, lr}
+ 1016              	.LCFI17:
+ 1017              		.cfi_def_cfa_offset 8
+ 1018              		.cfi_offset 7, -8
+ 1019              		.cfi_offset 14, -4
+ 1020 0002 82B0     		sub	sp, sp, #8
+ 1021              	.LCFI18:
+ 1022              		.cfi_def_cfa_offset 16
+ 1023 0004 00AF     		add	r7, sp, #0
+ 1024              	.LCFI19:
+ 1025              		.cfi_def_cfa_register 7
+ 232:../Main.c     **** 	configuration[0] |= 1;
+ 1026              		.loc 1 232 0
+ 1027 0006 40F20003 		movw	r3, #:lower16:configuration
+ 1028 000a C0F20003 		movt	r3, #:upper16:configuration
+ 1029 000e 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1030 0010 43F00103 		orr	r3, r3, #1
+ 1031 0014 DAB2     		uxtb	r2, r3
+ 1032 0016 40F20003 		movw	r3, #:lower16:configuration
+ 1033 001a C0F20003 		movt	r3, #:upper16:configuration
+ 1034 001e 1A70     		strb	r2, [r3, #0]
+ 233:../Main.c     **** 	IO004_ResetPin(CE);
+ 1035              		.loc 1 233 0
+ 1036 0020 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1037 0024 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1038 0028 5A68     		ldr	r2, [r3, #4]
+ 1039 002a 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1040 002e C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1041 0032 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1042 0034 4FF48031 		mov	r1, #65536
+ 1043 0038 01FA03F3 		lsl	r3, r1, r3
+ 1044 003c 5360     		str	r3, [r2, #4]
+ 234:../Main.c     **** 	IO004_SetPin(CS);
+ 1045              		.loc 1 234 0
+ 1046 003e 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1047 0042 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1048 0046 5A68     		ldr	r2, [r3, #4]
+ 1049 0048 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1050 004c C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1051 0050 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1052 0052 4FF00101 		mov	r1, #1
+ 1053 0056 01FA03F3 		lsl	r3, r1, r3
+ 1054 005a 5360     		str	r3, [r2, #4]
+ 235:../Main.c     **** 	int i, j;
+ 236:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 1055              		.loc 1 236 0
+ 1056 005c 4FF00E03 		mov	r3, #14
+ 1057 0060 7B60     		str	r3, [r7, #4]
+ 1058 0062 3FE0     		b	.L45
+ 1059              	.L50:
+ 237:../Main.c     **** 	{
+ 238:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 1060              		.loc 1 238 0
+ 1061 0064 4FF00703 		mov	r3, #7
+ 1062 0068 3B60     		str	r3, [r7, #0]
+ 1063 006a 34E0     		b	.L46
+ 1064              	.L49:
+ 239:../Main.c     **** 			{
+ 240:../Main.c     **** 				if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA); //digitalWrite(DATA_R, HIGH);
+ 1065              		.loc 1 240 0
+ 1066 006c 40F20003 		movw	r3, #:lower16:configuration
+ 1067 0070 C0F20003 		movt	r3, #:upper16:configuration
+ 1068 0074 7A68     		ldr	r2, [r7, #4]
+ 1069 0076 9B18     		adds	r3, r3, r2
+ 1070 0078 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1071 007a 1A46     		mov	r2, r3
+ 1072 007c 4FF00101 		mov	r1, #1
+ 1073 0080 3B68     		ldr	r3, [r7, #0]
+ 1074 0082 01FA03F3 		lsl	r3, r1, r3
+ 1075 0086 1340     		ands	r3, r3, r2
+ 1076 0088 002B     		cmp	r3, #0
+ 1077 008a 0FDD     		ble	.L47
+ 1078              		.loc 1 240 0 is_stmt 0 discriminator 1
+ 1079 008c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1080 0090 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1081 0094 5A68     		ldr	r2, [r3, #4]
+ 1082 0096 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1083 009a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1084 009e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1085 00a0 4FF00101 		mov	r1, #1
+ 1086 00a4 01FA03F3 		lsl	r3, r1, r3
+ 1087 00a8 5360     		str	r3, [r2, #4]
+ 1088 00aa 0EE0     		b	.L48
+ 1089              	.L47:
+ 241:../Main.c     **** 				else IO004_ResetPin(DATA); //digitalWrite(DATA_R, LOW);
+ 1090              		.loc 1 241 0 is_stmt 1
+ 1091 00ac 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1092 00b0 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1093 00b4 5A68     		ldr	r2, [r3, #4]
+ 1094 00b6 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1095 00ba C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1096 00be 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1097 00c0 4FF48031 		mov	r1, #65536
+ 1098 00c4 01FA03F3 		lsl	r3, r1, r3
+ 1099 00c8 5360     		str	r3, [r2, #4]
+ 1100              	.L48:
+ 242:../Main.c     **** 				delay_R();
+ 1101              		.loc 1 242 0
+ 1102 00ca FFF7FEFF 		bl	delay_R
+ 238:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 1103              		.loc 1 238 0
+ 1104 00ce 3B68     		ldr	r3, [r7, #0]
+ 1105 00d0 03F1FF33 		add	r3, r3, #-1
+ 1106 00d4 3B60     		str	r3, [r7, #0]
+ 1107              	.L46:
+ 238:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 1108              		.loc 1 238 0 is_stmt 0 discriminator 1
+ 1109 00d6 3B68     		ldr	r3, [r7, #0]
+ 1110 00d8 002B     		cmp	r3, #0
+ 1111 00da C7DA     		bge	.L49
+ 236:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 1112              		.loc 1 236 0 is_stmt 1
+ 1113 00dc 7B68     		ldr	r3, [r7, #4]
+ 1114 00de 03F1FF33 		add	r3, r3, #-1
+ 1115 00e2 7B60     		str	r3, [r7, #4]
+ 1116              	.L45:
+ 236:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 1117              		.loc 1 236 0 is_stmt 0 discriminator 1
+ 1118 00e4 7B68     		ldr	r3, [r7, #4]
+ 1119 00e6 002B     		cmp	r3, #0
+ 1120 00e8 BCDA     		bge	.L50
+ 243:../Main.c     **** 			}
+ 244:../Main.c     **** 	}
+ 245:../Main.c     **** 	IO004_ResetPin(CS); // digitalWrite(CS_R, LOW);
+ 1121              		.loc 1 245 0 is_stmt 1
+ 1122 00ea 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1123 00ee C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1124 00f2 5A68     		ldr	r2, [r3, #4]
+ 1125 00f4 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1126 00f8 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1127 00fc 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1128 00fe 4FF48031 		mov	r1, #65536
+ 1129 0102 01FA03F3 		lsl	r3, r1, r3
+ 1130 0106 5360     		str	r3, [r2, #4]
+ 246:../Main.c     **** 	IO004_SetPin(CE); // digitalWrite(CE_R, HIGH); //Deixa pronto para ler
+ 1131              		.loc 1 246 0
+ 1132 0108 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1133 010c C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1134 0110 5A68     		ldr	r2, [r3, #4]
+ 1135 0112 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1136 0116 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1137 011a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1138 011c 4FF00101 		mov	r1, #1
+ 1139 0120 01FA03F3 		lsl	r3, r1, r3
+ 1140 0124 5360     		str	r3, [r2, #4]
+ 247:../Main.c     **** 	delay(50000);
+ 1141              		.loc 1 247 0
+ 1142 0126 4CF25030 		movw	r0, #50000
+ 1143 012a FFF7FEFF 		bl	delay
+ 248:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
+ 1144              		.loc 1 248 0
+ 1145 012e 40F20000 		movw	r0, #:lower16:IO004_Handle4
+ 1146 0132 C0F20000 		movt	r0, #:upper16:IO004_Handle4
+ 1147 0136 4FF00301 		mov	r1, #3
+ 1148 013a FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 249:../Main.c     **** }
+ 1149              		.loc 1 249 0
+ 1150 013e 07F10807 		add	r7, r7, #8
+ 1151 0142 BD46     		mov	sp, r7
+ 1152 0144 80BD     		pop	{r7, pc}
+ 1153              		.cfi_endproc
+ 1154              	.LFE118:
+ 1156 0146 00BF     		.section	.text.write_E,"ax",%progbits
+ 1157              		.align	2
+ 1158              		.global	write_E
+ 1159              		.thumb
+ 1160              		.thumb_func
+ 1162              	write_E:
+ 1163              	.LFB119:
+ 250:../Main.c     **** void write_E()
+ 251:../Main.c     **** {
+ 1164              		.loc 1 251 0
+ 1165              		.cfi_startproc
+ 1166              		@ args = 0, pretend = 0, frame = 8
+ 1167              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1168 0000 80B5     		push	{r7, lr}
+ 1169              	.LCFI20:
+ 1170              		.cfi_def_cfa_offset 8
+ 1171              		.cfi_offset 7, -8
+ 1172              		.cfi_offset 14, -4
+ 1173 0002 82B0     		sub	sp, sp, #8
+ 1174              	.LCFI21:
+ 1175              		.cfi_def_cfa_offset 16
+ 1176 0004 00AF     		add	r7, sp, #0
+ 1177              	.LCFI22:
+ 1178              		.cfi_def_cfa_register 7
+ 252:../Main.c     ****   int i, j;
+ 253:../Main.c     ****   IO004_SetPin(CE);
+ 1179              		.loc 1 253 0
+ 1180 0006 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1181 000a C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1182 000e 5A68     		ldr	r2, [r3, #4]
+ 1183 0010 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1184 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1185 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1186 001a 4FF00101 		mov	r1, #1
+ 1187 001e 01FA03F3 		lsl	r3, r1, r3
+ 1188 0022 5360     		str	r3, [r2, #4]
+ 254:../Main.c     ****   delay(1000);
+ 1189              		.loc 1 254 0
+ 1190 0024 4FF47A70 		mov	r0, #1000
+ 1191 0028 FFF7FEFF 		bl	delay
+ 255:../Main.c     ****   for (i = 7; i > 2 ; i --)
+ 1192              		.loc 1 255 0
+ 1193 002c 4FF00703 		mov	r3, #7
+ 1194 0030 7B60     		str	r3, [r7, #4]
+ 1195 0032 3FE0     		b	.L52
+ 1196              	.L57:
+ 256:../Main.c     ****   {
+ 257:../Main.c     ****     for (j = 7; j > -1; j --)
+ 1197              		.loc 1 257 0
+ 1198 0034 4FF00703 		mov	r3, #7
+ 1199 0038 3B60     		str	r3, [r7, #0]
+ 1200 003a 34E0     		b	.L53
+ 1201              	.L56:
+ 258:../Main.c     ****     {
+ 259:../Main.c     ****       //Serial.print((configuration[i]&(1<<j))>0?1:0);
+ 260:../Main.c     ****       if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);//digitalWrite(DATA_E, HIGH);
+ 1202              		.loc 1 260 0
+ 1203 003c 40F20003 		movw	r3, #:lower16:configuration
+ 1204 0040 C0F20003 		movt	r3, #:upper16:configuration
+ 1205 0044 7A68     		ldr	r2, [r7, #4]
+ 1206 0046 9B18     		adds	r3, r3, r2
+ 1207 0048 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1208 004a 1A46     		mov	r2, r3
+ 1209 004c 4FF00101 		mov	r1, #1
+ 1210 0050 3B68     		ldr	r3, [r7, #0]
+ 1211 0052 01FA03F3 		lsl	r3, r1, r3
+ 1212 0056 1340     		ands	r3, r3, r2
+ 1213 0058 002B     		cmp	r3, #0
+ 1214 005a 0FDD     		ble	.L54
+ 1215              		.loc 1 260 0 is_stmt 0 discriminator 1
+ 1216 005c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1217 0060 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1218 0064 5A68     		ldr	r2, [r3, #4]
+ 1219 0066 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1220 006a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1221 006e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1222 0070 4FF00101 		mov	r1, #1
+ 1223 0074 01FA03F3 		lsl	r3, r1, r3
+ 1224 0078 5360     		str	r3, [r2, #4]
+ 1225 007a 0EE0     		b	.L55
+ 1226              	.L54:
+ 261:../Main.c     ****       else IO004_ResetPin(DATA);//digitalWrite(DATA_E, LOW);
+ 1227              		.loc 1 261 0 is_stmt 1
+ 1228 007c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1229 0080 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1230 0084 5A68     		ldr	r2, [r3, #4]
+ 1231 0086 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1232 008a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1233 008e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1234 0090 4FF48031 		mov	r1, #65536
+ 1235 0094 01FA03F3 		lsl	r3, r1, r3
+ 1236 0098 5360     		str	r3, [r2, #4]
+ 1237              	.L55:
+ 262:../Main.c     ****       delay_R();
+ 1238              		.loc 1 262 0
+ 1239 009a FFF7FEFF 		bl	delay_R
+ 257:../Main.c     ****     for (j = 7; j > -1; j --)
+ 1240              		.loc 1 257 0
+ 1241 009e 3B68     		ldr	r3, [r7, #0]
+ 1242 00a0 03F1FF33 		add	r3, r3, #-1
+ 1243 00a4 3B60     		str	r3, [r7, #0]
+ 1244              	.L53:
+ 257:../Main.c     ****     for (j = 7; j > -1; j --)
+ 1245              		.loc 1 257 0 is_stmt 0 discriminator 1
+ 1246 00a6 3B68     		ldr	r3, [r7, #0]
+ 1247 00a8 002B     		cmp	r3, #0
+ 1248 00aa C7DA     		bge	.L56
+ 255:../Main.c     ****   for (i = 7; i > 2 ; i --)
+ 1249              		.loc 1 255 0 is_stmt 1
+ 1250 00ac 7B68     		ldr	r3, [r7, #4]
+ 1251 00ae 03F1FF33 		add	r3, r3, #-1
+ 1252 00b2 7B60     		str	r3, [r7, #4]
+ 1253              	.L52:
+ 255:../Main.c     ****   for (i = 7; i > 2 ; i --)
+ 1254              		.loc 1 255 0 is_stmt 0 discriminator 1
+ 1255 00b4 7B68     		ldr	r3, [r7, #4]
+ 1256 00b6 022B     		cmp	r3, #2
+ 1257 00b8 BCDC     		bgt	.L57
+ 263:../Main.c     ****     }
+ 264:../Main.c     ****     //Serial.println();
+ 265:../Main.c     ****   }//Endereco destino enviado
+ 266:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1258              		.loc 1 266 0 is_stmt 1
+ 1259 00ba 4FF00703 		mov	r3, #7
+ 1260 00be 3B60     		str	r3, [r7, #0]
+ 1261 00c0 32E0     		b	.L58
+ 1262              	.L61:
+ 267:../Main.c     ****   {
+ 268:../Main.c     ****     //Serial.print((data & (1<<j))>0?1:0);
+ 269:../Main.c     ****     if ((data_E[0] & (1<<j))>0) IO004_SetPin(DATA);//digitalWrite(DATA_E, HIGH);
+ 1263              		.loc 1 269 0
+ 1264 00c2 40F20003 		movw	r3, #:lower16:data_E
+ 1265 00c6 C0F20003 		movt	r3, #:upper16:data_E
+ 1266 00ca 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1267 00cc 1A46     		mov	r2, r3
+ 1268 00ce 4FF00101 		mov	r1, #1
+ 1269 00d2 3B68     		ldr	r3, [r7, #0]
+ 1270 00d4 01FA03F3 		lsl	r3, r1, r3
+ 1271 00d8 1340     		ands	r3, r3, r2
+ 1272 00da 002B     		cmp	r3, #0
+ 1273 00dc 0FDD     		ble	.L59
+ 1274              		.loc 1 269 0 is_stmt 0 discriminator 1
+ 1275 00de 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1276 00e2 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1277 00e6 5A68     		ldr	r2, [r3, #4]
+ 1278 00e8 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1279 00ec C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1280 00f0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1281 00f2 4FF00101 		mov	r1, #1
+ 1282 00f6 01FA03F3 		lsl	r3, r1, r3
+ 1283 00fa 5360     		str	r3, [r2, #4]
+ 1284 00fc 0EE0     		b	.L60
+ 1285              	.L59:
+ 270:../Main.c     ****     else IO004_ResetPin(DATA);//digitalWrite(DATA_E, LOW);
+ 1286              		.loc 1 270 0 is_stmt 1
+ 1287 00fe 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1288 0102 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1289 0106 5A68     		ldr	r2, [r3, #4]
+ 1290 0108 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1291 010c C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1292 0110 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1293 0112 4FF48031 		mov	r1, #65536
+ 1294 0116 01FA03F3 		lsl	r3, r1, r3
+ 1295 011a 5360     		str	r3, [r2, #4]
+ 1296              	.L60:
+ 271:../Main.c     ****     delay_R();
+ 1297              		.loc 1 271 0
+ 1298 011c FFF7FEFF 		bl	delay_R
+ 266:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1299              		.loc 1 266 0
+ 1300 0120 3B68     		ldr	r3, [r7, #0]
+ 1301 0122 03F1FF33 		add	r3, r3, #-1
+ 1302 0126 3B60     		str	r3, [r7, #0]
+ 1303              	.L58:
+ 266:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1304              		.loc 1 266 0 is_stmt 0 discriminator 1
+ 1305 0128 3B68     		ldr	r3, [r7, #0]
+ 1306 012a 002B     		cmp	r3, #0
+ 1307 012c C9DA     		bge	.L61
+ 272:../Main.c     ****   }
+ 273:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1308              		.loc 1 273 0 is_stmt 1
+ 1309 012e 4FF00703 		mov	r3, #7
+ 1310 0132 3B60     		str	r3, [r7, #0]
+ 1311 0134 32E0     		b	.L62
+ 1312              	.L65:
+ 274:../Main.c     ****     {
+ 275:../Main.c     ****       //Serial.print((data & (1<<j))>0?1:0);
+ 276:../Main.c     ****       if ((data_E[1] & (1<<j))>0) IO004_SetPin(DATA);//digitalWrite(DATA_E, HIGH);
+ 1313              		.loc 1 276 0
+ 1314 0136 40F20003 		movw	r3, #:lower16:data_E
+ 1315 013a C0F20003 		movt	r3, #:upper16:data_E
+ 1316 013e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1317 0140 1A46     		mov	r2, r3
+ 1318 0142 4FF00101 		mov	r1, #1
+ 1319 0146 3B68     		ldr	r3, [r7, #0]
+ 1320 0148 01FA03F3 		lsl	r3, r1, r3
+ 1321 014c 1340     		ands	r3, r3, r2
+ 1322 014e 002B     		cmp	r3, #0
+ 1323 0150 0FDD     		ble	.L63
+ 1324              		.loc 1 276 0 is_stmt 0 discriminator 1
+ 1325 0152 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1326 0156 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1327 015a 5A68     		ldr	r2, [r3, #4]
+ 1328 015c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1329 0160 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1330 0164 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1331 0166 4FF00101 		mov	r1, #1
+ 1332 016a 01FA03F3 		lsl	r3, r1, r3
+ 1333 016e 5360     		str	r3, [r2, #4]
+ 1334 0170 0EE0     		b	.L64
+ 1335              	.L63:
+ 277:../Main.c     ****       else IO004_ResetPin(DATA);//digitalWrite(DATA_E, LOW);
+ 1336              		.loc 1 277 0 is_stmt 1
+ 1337 0172 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1338 0176 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1339 017a 5A68     		ldr	r2, [r3, #4]
+ 1340 017c 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1341 0180 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1342 0184 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1343 0186 4FF48031 		mov	r1, #65536
+ 1344 018a 01FA03F3 		lsl	r3, r1, r3
+ 1345 018e 5360     		str	r3, [r2, #4]
+ 1346              	.L64:
+ 278:../Main.c     ****       delay_R();
+ 1347              		.loc 1 278 0
+ 1348 0190 FFF7FEFF 		bl	delay_R
+ 273:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1349              		.loc 1 273 0
+ 1350 0194 3B68     		ldr	r3, [r7, #0]
+ 1351 0196 03F1FF33 		add	r3, r3, #-1
+ 1352 019a 3B60     		str	r3, [r7, #0]
+ 1353              	.L62:
+ 273:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1354              		.loc 1 273 0 is_stmt 0 discriminator 1
+ 1355 019c 3B68     		ldr	r3, [r7, #0]
+ 1356 019e 002B     		cmp	r3, #0
+ 1357 01a0 C9DA     		bge	.L65
+ 279:../Main.c     ****     }
+ 280:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1358              		.loc 1 280 0 is_stmt 1
+ 1359 01a2 4FF00703 		mov	r3, #7
+ 1360 01a6 3B60     		str	r3, [r7, #0]
+ 1361 01a8 32E0     		b	.L66
+ 1362              	.L69:
+ 281:../Main.c     ****     {
+ 282:../Main.c     ****       //Serial.print((data & (1<<j))>0?1:0);
+ 283:../Main.c     ****       if ((data_E[2] & (1<<j))>0) IO004_SetPin(DATA);//digitalWrite(DATA_E, HIGH);
+ 1363              		.loc 1 283 0
+ 1364 01aa 40F20003 		movw	r3, #:lower16:data_E
+ 1365 01ae C0F20003 		movt	r3, #:upper16:data_E
+ 1366 01b2 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 1367 01b4 1A46     		mov	r2, r3
+ 1368 01b6 4FF00101 		mov	r1, #1
+ 1369 01ba 3B68     		ldr	r3, [r7, #0]
+ 1370 01bc 01FA03F3 		lsl	r3, r1, r3
+ 1371 01c0 1340     		ands	r3, r3, r2
+ 1372 01c2 002B     		cmp	r3, #0
+ 1373 01c4 0FDD     		ble	.L67
+ 1374              		.loc 1 283 0 is_stmt 0 discriminator 1
+ 1375 01c6 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1376 01ca C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1377 01ce 5A68     		ldr	r2, [r3, #4]
+ 1378 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1379 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1380 01d8 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1381 01da 4FF00101 		mov	r1, #1
+ 1382 01de 01FA03F3 		lsl	r3, r1, r3
+ 1383 01e2 5360     		str	r3, [r2, #4]
+ 1384 01e4 0EE0     		b	.L68
+ 1385              	.L67:
+ 284:../Main.c     ****       else IO004_ResetPin(DATA);//digitalWrite(DATA_E, LOW);
+ 1386              		.loc 1 284 0 is_stmt 1
+ 1387 01e6 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1388 01ea C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1389 01ee 5A68     		ldr	r2, [r3, #4]
+ 1390 01f0 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1391 01f4 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1392 01f8 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1393 01fa 4FF48031 		mov	r1, #65536
+ 1394 01fe 01FA03F3 		lsl	r3, r1, r3
+ 1395 0202 5360     		str	r3, [r2, #4]
+ 1396              	.L68:
+ 285:../Main.c     ****       delay_R();
+ 1397              		.loc 1 285 0
+ 1398 0204 FFF7FEFF 		bl	delay_R
+ 280:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1399              		.loc 1 280 0
+ 1400 0208 3B68     		ldr	r3, [r7, #0]
+ 1401 020a 03F1FF33 		add	r3, r3, #-1
+ 1402 020e 3B60     		str	r3, [r7, #0]
+ 1403              	.L66:
+ 280:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1404              		.loc 1 280 0 is_stmt 0 discriminator 1
+ 1405 0210 3B68     		ldr	r3, [r7, #0]
+ 1406 0212 002B     		cmp	r3, #0
+ 1407 0214 C9DA     		bge	.L69
+ 286:../Main.c     ****     }//termina de enviar dados
+ 287:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1408              		.loc 1 287 0 is_stmt 1
+ 1409 0216 4FF00703 		mov	r3, #7
+ 1410 021a 3B60     		str	r3, [r7, #0]
+ 1411 021c 32E0     		b	.L70
+ 1412              	.L73:
+ 288:../Main.c     ****     {
+ 289:../Main.c     ****       //Serial.print((data & (1<<j))>0?1:0);
+ 290:../Main.c     ****       if ((data_E[3] & (1<<j))>0) IO004_SetPin(DATA);//digitalWrite(DATA_E, HIGH);
+ 1413              		.loc 1 290 0
+ 1414 021e 40F20003 		movw	r3, #:lower16:data_E
+ 1415 0222 C0F20003 		movt	r3, #:upper16:data_E
+ 1416 0226 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 1417 0228 1A46     		mov	r2, r3
+ 1418 022a 4FF00101 		mov	r1, #1
+ 1419 022e 3B68     		ldr	r3, [r7, #0]
+ 1420 0230 01FA03F3 		lsl	r3, r1, r3
+ 1421 0234 1340     		ands	r3, r3, r2
+ 1422 0236 002B     		cmp	r3, #0
+ 1423 0238 0FDD     		ble	.L71
+ 1424              		.loc 1 290 0 is_stmt 0 discriminator 1
+ 1425 023a 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1426 023e C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1427 0242 5A68     		ldr	r2, [r3, #4]
+ 1428 0244 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1429 0248 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1430 024c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1431 024e 4FF00101 		mov	r1, #1
+ 1432 0252 01FA03F3 		lsl	r3, r1, r3
+ 1433 0256 5360     		str	r3, [r2, #4]
+ 1434 0258 0EE0     		b	.L72
+ 1435              	.L71:
+ 291:../Main.c     ****       else IO004_ResetPin(DATA);//digitalWrite(DATA_E, LOW);
+ 1436              		.loc 1 291 0 is_stmt 1
+ 1437 025a 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1438 025e C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1439 0262 5A68     		ldr	r2, [r3, #4]
+ 1440 0264 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1441 0268 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1442 026c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1443 026e 4FF48031 		mov	r1, #65536
+ 1444 0272 01FA03F3 		lsl	r3, r1, r3
+ 1445 0276 5360     		str	r3, [r2, #4]
+ 1446              	.L72:
+ 292:../Main.c     ****       delay_R();
+ 1447              		.loc 1 292 0
+ 1448 0278 FFF7FEFF 		bl	delay_R
+ 287:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1449              		.loc 1 287 0
+ 1450 027c 3B68     		ldr	r3, [r7, #0]
+ 1451 027e 03F1FF33 		add	r3, r3, #-1
+ 1452 0282 3B60     		str	r3, [r7, #0]
+ 1453              	.L70:
+ 287:../Main.c     ****   for (j = 7; j > -1; j --)
+ 1454              		.loc 1 287 0 is_stmt 0 discriminator 1
+ 1455 0284 3B68     		ldr	r3, [r7, #0]
+ 1456 0286 002B     		cmp	r3, #0
+ 1457 0288 C9DA     		bge	.L73
+ 293:../Main.c     ****     }
+ 294:../Main.c     ****   //Serial.println();
+ 295:../Main.c     ****   //digitalWrite(CE_E, LOW);
+ 296:../Main.c     ****   IO004_ResetPin(CE);
+ 1458              		.loc 1 296 0 is_stmt 1
+ 1459 028a 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1460 028e C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1461 0292 5A68     		ldr	r2, [r3, #4]
+ 1462 0294 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1463 0298 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1464 029c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1465 029e 4FF48031 		mov	r1, #65536
+ 1466 02a2 01FA03F3 		lsl	r3, r1, r3
+ 1467 02a6 5360     		str	r3, [r2, #4]
+ 297:../Main.c     ****   delay(5000);//delayMicroseconds(250);
+ 1468              		.loc 1 297 0
+ 1469 02a8 41F28830 		movw	r0, #5000
+ 1470 02ac FFF7FEFF 		bl	delay
+ 298:../Main.c     **** }
+ 1471              		.loc 1 298 0
+ 1472 02b0 07F10807 		add	r7, r7, #8
+ 1473 02b4 BD46     		mov	sp, r7
+ 1474 02b6 80BD     		pop	{r7, pc}
+ 1475              		.cfi_endproc
+ 1476              	.LFE119:
+ 1478              		.section	.text.psxLeControle,"ax",%progbits
+ 1479              		.align	2
+ 1480              		.global	psxLeControle
+ 1481              		.thumb
+ 1482              		.thumb_func
+ 1484              	psxLeControle:
+ 1485              	.LFB120:
+ 299:../Main.c     **** void psxLeControle()
+ 300:../Main.c     **** {
+ 1486              		.loc 1 300 0
+ 1487              		.cfi_startproc
+ 1488              		@ args = 0, pretend = 0, frame = 8
+ 1489              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1490 0000 80B5     		push	{r7, lr}
+ 1491              	.LCFI23:
+ 1492              		.cfi_def_cfa_offset 8
+ 1493              		.cfi_offset 7, -8
+ 1494              		.cfi_offset 14, -4
+ 1495 0002 82B0     		sub	sp, sp, #8
+ 1496              	.LCFI24:
+ 1497              		.cfi_def_cfa_offset 16
+ 1498 0004 00AF     		add	r7, sp, #0
+ 1499              	.LCFI25:
+ 1500              		.cfi_def_cfa_register 7
+ 301:../Main.c     **** 	int psxByte = 0;
+ 1501              		.loc 1 301 0
+ 1502 0006 4FF00003 		mov	r3, #0
+ 1503 000a 3B60     		str	r3, [r7, #0]
+ 302:../Main.c     **** 	int psxCont;
+ 303:../Main.c     **** 
+ 304:../Main.c     **** 	IO004_SetPin(CMD);
+ 1504              		.loc 1 304 0
+ 1505 000c 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1506 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1507 0014 5A68     		ldr	r2, [r3, #4]
+ 1508 0016 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1509 001a C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1510 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1511 0020 4FF00101 		mov	r1, #1
+ 1512 0024 01FA03F3 		lsl	r3, r1, r3
+ 1513 0028 5360     		str	r3, [r2, #4]
+ 305:../Main.c     **** 	IO004_SetPin(CONT_CLK);
+ 1514              		.loc 1 305 0
+ 1515 002a 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1516 002e C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1517 0032 5A68     		ldr	r2, [r3, #4]
+ 1518 0034 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1519 0038 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1520 003c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1521 003e 4FF00101 		mov	r1, #1
+ 1522 0042 01FA03F3 		lsl	r3, r1, r3
+ 1523 0046 5360     		str	r3, [r2, #4]
+ 306:../Main.c     **** 	IO004_ResetPin(ATT);
+ 1524              		.loc 1 306 0
+ 1525 0048 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 1526 004c C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 1527 0050 5A68     		ldr	r2, [r3, #4]
+ 1528 0052 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 1529 0056 C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 1530 005a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1531 005c 4FF48031 		mov	r1, #65536
+ 1532 0060 01FA03F3 		lsl	r3, r1, r3
+ 1533 0064 5360     		str	r3, [r2, #4]
+ 307:../Main.c     **** 	//digitalWrite(cmd,HIGH);
+ 308:../Main.c     **** 	//digitalWrite(clk,HIGH);
+ 309:../Main.c     **** 	//digitalWrite(att,LOW);
+ 310:../Main.c     **** 	delay(tempoInicio);
+ 1534              		.loc 1 310 0
+ 1535 0066 4FF49670 		mov	r0, #300
+ 1536 006a FFF7FEFF 		bl	delay
+ 311:../Main.c     **** 	//delayMicroseconds(tempoInicio);
+ 312:../Main.c     **** 
+ 313:../Main.c     **** 	psxByte = 1;
+ 1537              		.loc 1 313 0
+ 1538 006e 4FF00103 		mov	r3, #1
+ 1539 0072 3B60     		str	r3, [r7, #0]
+ 314:../Main.c     **** 	psxGravaByte(psxByte);
+ 1540              		.loc 1 314 0
+ 1541 0074 3868     		ldr	r0, [r7, #0]
+ 1542 0076 FFF7FEFF 		bl	psxGravaByte
+ 315:../Main.c     **** 
+ 316:../Main.c     **** 	psxByte = 66;
+ 1543              		.loc 1 316 0
+ 1544 007a 4FF04203 		mov	r3, #66
+ 1545 007e 3B60     		str	r3, [r7, #0]
+ 317:../Main.c     **** 	psxGravaByte(psxByte);
+ 1546              		.loc 1 317 0
+ 1547 0080 3868     		ldr	r0, [r7, #0]
+ 1548 0082 FFF7FEFF 		bl	psxGravaByte
+ 318:../Main.c     **** 
+ 319:../Main.c     **** 	psxByte = 0;
+ 1549              		.loc 1 319 0
+ 1550 0086 4FF00003 		mov	r3, #0
+ 1551 008a 3B60     		str	r3, [r7, #0]
+ 320:../Main.c     **** 	psxGravaByte(psxByte);
+ 1552              		.loc 1 320 0
+ 1553 008c 3868     		ldr	r0, [r7, #0]
+ 1554 008e FFF7FEFF 		bl	psxGravaByte
+ 321:../Main.c     **** 
+ 322:../Main.c     **** 	for (psxCont = 0; psxCont<6; psxCont++)
+ 1555              		.loc 1 322 0
+ 1556 0092 4FF00003 		mov	r3, #0
+ 1557 0096 7B60     		str	r3, [r7, #4]
+ 1558 0098 0DE0     		b	.L75
+ 1559              	.L76:
+ 323:../Main.c     **** 		psxDado[psxCont] = psxLeByte();
+ 1560              		.loc 1 323 0 discriminator 2
+ 1561 009a FFF7FEFF 		bl	psxLeByte
+ 1562 009e 0146     		mov	r1, r0
+ 1563 00a0 40F20003 		movw	r3, #:lower16:psxDado
+ 1564 00a4 C0F20003 		movt	r3, #:upper16:psxDado
+ 1565 00a8 7A68     		ldr	r2, [r7, #4]
+ 1566 00aa 43F82210 		str	r1, [r3, r2, lsl #2]
+ 322:../Main.c     **** 	for (psxCont = 0; psxCont<6; psxCont++)
+ 1567              		.loc 1 322 0 discriminator 2
+ 1568 00ae 7B68     		ldr	r3, [r7, #4]
+ 1569 00b0 03F10103 		add	r3, r3, #1
+ 1570 00b4 7B60     		str	r3, [r7, #4]
+ 1571              	.L75:
+ 322:../Main.c     **** 	for (psxCont = 0; psxCont<6; psxCont++)
+ 1572              		.loc 1 322 0 is_stmt 0 discriminator 1
+ 1573 00b6 7B68     		ldr	r3, [r7, #4]
+ 1574 00b8 052B     		cmp	r3, #5
+ 1575 00ba EEDD     		ble	.L76
+ 324:../Main.c     **** 
+ 325:../Main.c     **** 	IO004_SetPin(ATT);
+ 1576              		.loc 1 325 0 is_stmt 1
+ 1577 00bc 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 1578 00c0 C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 1579 00c4 5A68     		ldr	r2, [r3, #4]
+ 1580 00c6 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 1581 00ca C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 1582 00ce 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1583 00d0 4FF00101 		mov	r1, #1
+ 1584 00d4 01FA03F3 		lsl	r3, r1, r3
+ 1585 00d8 5360     		str	r3, [r2, #4]
+ 326:../Main.c     **** 	//digitalWrite(att,HIGH);
+ 327:../Main.c     **** }
+ 1586              		.loc 1 327 0
+ 1587 00da 07F10807 		add	r7, r7, #8
+ 1588 00de BD46     		mov	sp, r7
+ 1589 00e0 80BD     		pop	{r7, pc}
+ 1590              		.cfi_endproc
+ 1591              	.LFE120:
+ 1593 00e2 00BF     		.section	.text.psxGravaByte,"ax",%progbits
+ 1594              		.align	2
+ 1595              		.global	psxGravaByte
+ 1596              		.thumb
+ 1597              		.thumb_func
+ 1599              	psxGravaByte:
+ 1600              	.LFB121:
+ 328:../Main.c     **** 
+ 329:../Main.c     **** void psxGravaByte(int byteDado)
+ 330:../Main.c     **** {
+ 1601              		.loc 1 330 0
+ 1602              		.cfi_startproc
+ 1603              		@ args = 0, pretend = 0, frame = 16
+ 1604              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1605 0000 80B5     		push	{r7, lr}
+ 1606              	.LCFI26:
+ 1607              		.cfi_def_cfa_offset 8
+ 1608              		.cfi_offset 7, -8
+ 1609              		.cfi_offset 14, -4
+ 1610 0002 84B0     		sub	sp, sp, #16
+ 1611              	.LCFI27:
+ 1612              		.cfi_def_cfa_offset 24
+ 1613 0004 00AF     		add	r7, sp, #0
+ 1614              	.LCFI28:
+ 1615              		.cfi_def_cfa_register 7
+ 1616 0006 7860     		str	r0, [r7, #4]
+ 331:../Main.c     **** 	int c;
+ 332:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1617              		.loc 1 332 0
+ 1618 0008 4FF00003 		mov	r3, #0
+ 1619 000c FB60     		str	r3, [r7, #12]
+ 1620 000e 50E0     		b	.L78
+ 1621              	.L81:
+ 333:../Main.c     **** 	{
+ 334:../Main.c     **** 		if(byteDado & (0x01<<c))
+ 1622              		.loc 1 334 0
+ 1623 0010 7A68     		ldr	r2, [r7, #4]
+ 1624 0012 FB68     		ldr	r3, [r7, #12]
+ 1625 0014 42FA03F3 		asr	r3, r2, r3
+ 1626 0018 03F00103 		and	r3, r3, #1
+ 1627 001c 002B     		cmp	r3, #0
+ 1628 001e 0FD0     		beq	.L79
+ 335:../Main.c     **** 			IO004_SetPin(CMD);
+ 1629              		.loc 1 335 0
+ 1630 0020 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1631 0024 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1632 0028 5A68     		ldr	r2, [r3, #4]
+ 1633 002a 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1634 002e C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1635 0032 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1636 0034 4FF00101 		mov	r1, #1
+ 1637 0038 01FA03F3 		lsl	r3, r1, r3
+ 1638 003c 5360     		str	r3, [r2, #4]
+ 1639 003e 0EE0     		b	.L80
+ 1640              	.L79:
+ 336:../Main.c     **** 		  //digitalWrite(cmd,HIGH);
+ 337:../Main.c     **** 		else
+ 338:../Main.c     **** 			IO004_ResetPin(CMD);
+ 1641              		.loc 1 338 0
+ 1642 0040 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1643 0044 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1644 0048 5A68     		ldr	r2, [r3, #4]
+ 1645 004a 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1646 004e C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1647 0052 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1648 0054 4FF48031 		mov	r1, #65536
+ 1649 0058 01FA03F3 		lsl	r3, r1, r3
+ 1650 005c 5360     		str	r3, [r2, #4]
+ 1651              	.L80:
+ 339:../Main.c     **** 		  //digitalWrite(cmd,LOW);
+ 340:../Main.c     **** 		IO004_ResetPin(CONT_CLK);
+ 1652              		.loc 1 340 0
+ 1653 005e 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1654 0062 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1655 0066 5A68     		ldr	r2, [r3, #4]
+ 1656 0068 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1657 006c C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1658 0070 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1659 0072 4FF48031 		mov	r1, #65536
+ 1660 0076 01FA03F3 		lsl	r3, r1, r3
+ 1661 007a 5360     		str	r3, [r2, #4]
+ 341:../Main.c     **** 		//digitalWrite(clk,LOW);
+ 342:../Main.c     **** 		delay(tempoClk);
+ 1662              		.loc 1 342 0
+ 1663 007c 4FF49670 		mov	r0, #300
+ 1664 0080 FFF7FEFF 		bl	delay
+ 343:../Main.c     **** 		//delayMicroseconds(tempoClk);
+ 344:../Main.c     **** 		IO004_SetPin(CONT_CLK);
+ 1665              		.loc 1 344 0
+ 1666 0084 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1667 0088 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1668 008c 5A68     		ldr	r2, [r3, #4]
+ 1669 008e 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1670 0092 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1671 0096 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1672 0098 4FF00101 		mov	r1, #1
+ 1673 009c 01FA03F3 		lsl	r3, r1, r3
+ 1674 00a0 5360     		str	r3, [r2, #4]
+ 345:../Main.c     **** 		//digitalWrite(clk,HIGH);
+ 346:../Main.c     **** 		delay(tempoClk);
+ 1675              		.loc 1 346 0
+ 1676 00a2 4FF49670 		mov	r0, #300
+ 1677 00a6 FFF7FEFF 		bl	delay
+ 332:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1678              		.loc 1 332 0
+ 1679 00aa FB68     		ldr	r3, [r7, #12]
+ 1680 00ac 03F10103 		add	r3, r3, #1
+ 1681 00b0 FB60     		str	r3, [r7, #12]
+ 1682              	.L78:
+ 332:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1683              		.loc 1 332 0 is_stmt 0 discriminator 1
+ 1684 00b2 FB68     		ldr	r3, [r7, #12]
+ 1685 00b4 072B     		cmp	r3, #7
+ 1686 00b6 ABDD     		ble	.L81
+ 347:../Main.c     **** 		//delayMicroseconds(tempoClk);
+ 348:../Main.c     **** 	}
+ 349:../Main.c     **** 	IO004_SetPin(CMD);
+ 1687              		.loc 1 349 0 is_stmt 1
+ 1688 00b8 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1689 00bc C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1690 00c0 5A68     		ldr	r2, [r3, #4]
+ 1691 00c2 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 1692 00c6 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 1693 00ca 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1694 00cc 4FF00101 		mov	r1, #1
+ 1695 00d0 01FA03F3 		lsl	r3, r1, r3
+ 1696 00d4 5360     		str	r3, [r2, #4]
+ 350:../Main.c     ****   //digitalWrite(cmd,HIGH);
+ 351:../Main.c     **** 	delay(tempoEntreByte);
+ 1697              		.loc 1 351 0
+ 1698 00d6 4FF06400 		mov	r0, #100
+ 1699 00da FFF7FEFF 		bl	delay
+ 352:../Main.c     ****   //delayMicroseconds(tempoEntreByte);
+ 353:../Main.c     **** }
+ 1700              		.loc 1 353 0
+ 1701 00de 07F11007 		add	r7, r7, #16
+ 1702 00e2 BD46     		mov	sp, r7
+ 1703 00e4 80BD     		pop	{r7, pc}
+ 1704              		.cfi_endproc
+ 1705              	.LFE121:
+ 1707 00e6 00BF     		.section	.text.psxLeByte,"ax",%progbits
+ 1708              		.align	2
+ 1709              		.global	psxLeByte
+ 1710              		.thumb
+ 1711              		.thumb_func
+ 1713              	psxLeByte:
+ 1714              	.LFB122:
+ 354:../Main.c     **** 
+ 355:../Main.c     **** int psxLeByte()
+ 356:../Main.c     **** {
+ 1715              		.loc 1 356 0
+ 1716              		.cfi_startproc
+ 1717              		@ args = 0, pretend = 0, frame = 8
+ 1718              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1719 0000 80B5     		push	{r7, lr}
+ 1720              	.LCFI29:
+ 1721              		.cfi_def_cfa_offset 8
+ 1722              		.cfi_offset 7, -8
+ 1723              		.cfi_offset 14, -4
+ 1724 0002 82B0     		sub	sp, sp, #8
+ 1725              	.LCFI30:
+ 1726              		.cfi_def_cfa_offset 16
+ 1727 0004 00AF     		add	r7, sp, #0
+ 1728              	.LCFI31:
+ 1729              		.cfi_def_cfa_register 7
+ 357:../Main.c     **** 	int aux = 0;
+ 1730              		.loc 1 357 0
+ 1731 0006 4FF00003 		mov	r3, #0
+ 1732 000a 7B60     		str	r3, [r7, #4]
+ 358:../Main.c     **** 	int c;
+ 359:../Main.c     **** 
+ 360:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1733              		.loc 1 360 0
+ 1734 000c 4FF00003 		mov	r3, #0
+ 1735 0010 3B60     		str	r3, [r7, #0]
+ 1736 0012 42E0     		b	.L83
+ 1737              	.L85:
+ 361:../Main.c     **** 	{
+ 362:../Main.c     **** 		IO004_ResetPin(CONT_CLK);
+ 1738              		.loc 1 362 0
+ 1739 0014 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1740 0018 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1741 001c 5A68     		ldr	r2, [r3, #4]
+ 1742 001e 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1743 0022 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1744 0026 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1745 0028 4FF48031 		mov	r1, #65536
+ 1746 002c 01FA03F3 		lsl	r3, r1, r3
+ 1747 0030 5360     		str	r3, [r2, #4]
+ 363:../Main.c     ****     //digitalWrite(clk,LOW);
+ 364:../Main.c     **** 		delay(tempoClk);
+ 1748              		.loc 1 364 0
+ 1749 0032 4FF49670 		mov	r0, #300
+ 1750 0036 FFF7FEFF 		bl	delay
+ 365:../Main.c     ****     //delayMicroseconds(tempoClk);
+ 366:../Main.c     ****     //Serial.println(analogRead(dado));
+ 367:../Main.c     **** 		if (IO004_ReadPin(CONT_DADO))
+ 1751              		.loc 1 367 0
+ 1752 003a 40F20003 		movw	r3, #:lower16:IO004_Handle9
+ 1753 003e C0F20003 		movt	r3, #:upper16:IO004_Handle9
+ 1754 0042 5B68     		ldr	r3, [r3, #4]
+ 1755 0044 5A6A     		ldr	r2, [r3, #36]
+ 1756 0046 40F20003 		movw	r3, #:lower16:IO004_Handle9
+ 1757 004a C0F20003 		movt	r3, #:upper16:IO004_Handle9
+ 1758 004e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1759 0050 22FA03F3 		lsr	r3, r2, r3
+ 1760 0054 03F00103 		and	r3, r3, #1
+ 1761 0058 002B     		cmp	r3, #0
+ 1762 005a 07D1     		bne	.L84
+ 368:../Main.c     **** 	  	//if(analogRead(dado) > 400)
+ 369:../Main.c     **** 	  		  ;//aux = aux&(!c);
+ 370:../Main.c     ****       //bitClear(aux,c);
+ 371:../Main.c     **** 	  	else
+ 372:../Main.c     **** 	  		  aux = aux | (1 << c);
+ 1763              		.loc 1 372 0
+ 1764 005c 4FF00102 		mov	r2, #1
+ 1765 0060 3B68     		ldr	r3, [r7, #0]
+ 1766 0062 02FA03F3 		lsl	r3, r2, r3
+ 1767 0066 7A68     		ldr	r2, [r7, #4]
+ 1768 0068 1343     		orrs	r3, r3, r2
+ 1769 006a 7B60     		str	r3, [r7, #4]
+ 1770              	.L84:
+ 373:../Main.c     **** 	  //bitSet(aux,c);
+ 374:../Main.c     **** 	  	IO004_SetPin(CONT_CLK);
+ 1771              		.loc 1 374 0
+ 1772 006c 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1773 0070 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1774 0074 5A68     		ldr	r2, [r3, #4]
+ 1775 0076 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1776 007a C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1777 007e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1778 0080 4FF00101 		mov	r1, #1
+ 1779 0084 01FA03F3 		lsl	r3, r1, r3
+ 1780 0088 5360     		str	r3, [r2, #4]
+ 375:../Main.c     ****     //digitalWrite(clk,HIGH);
+ 376:../Main.c     **** 	  	delay(tempoClk);
+ 1781              		.loc 1 376 0
+ 1782 008a 4FF49670 		mov	r0, #300
+ 1783 008e FFF7FEFF 		bl	delay
+ 360:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1784              		.loc 1 360 0
+ 1785 0092 3B68     		ldr	r3, [r7, #0]
+ 1786 0094 03F10103 		add	r3, r3, #1
+ 1787 0098 3B60     		str	r3, [r7, #0]
+ 1788              	.L83:
+ 360:../Main.c     **** 	for (c=0;c<=7;c++)
+ 1789              		.loc 1 360 0 is_stmt 0 discriminator 1
+ 1790 009a 3B68     		ldr	r3, [r7, #0]
+ 1791 009c 072B     		cmp	r3, #7
+ 1792 009e B9DD     		ble	.L85
+ 377:../Main.c     ****     //delayMicroseconds(tempoClk);
+ 378:../Main.c     **** 	}
+ 379:../Main.c     **** 	delay(tempoEntreByte);
+ 1793              		.loc 1 379 0 is_stmt 1
+ 1794 00a0 4FF06400 		mov	r0, #100
+ 1795 00a4 FFF7FEFF 		bl	delay
+ 380:../Main.c     ****   //delayMicroseconds(tempoEntreByte);
+ 381:../Main.c     **** 	return (aux);
+ 1796              		.loc 1 381 0
+ 1797 00a8 7B68     		ldr	r3, [r7, #4]
+ 382:../Main.c     **** }
+ 1798              		.loc 1 382 0
+ 1799 00aa 1846     		mov	r0, r3
+ 1800 00ac 07F10807 		add	r7, r7, #8
+ 1801 00b0 BD46     		mov	sp, r7
+ 1802 00b2 80BD     		pop	{r7, pc}
+ 1803              		.cfi_endproc
+ 1804              	.LFE122:
+ 1806              		.text
+ 1807              	.Letext0:
+ 1808              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 1809              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 1810              		.file 5 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/LIBS
+ 1811              		.file 6 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/IO00
+ 1812              		.file 7 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/UART
+ 1813              		.file 8 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/UART
+ 1814              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 1815              		.file 10 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/IO0
+ 1816              		.file 11 "C:\\DAVE3_workspace\\ws3.1.10\\Test4500\\Dave\\Generated\\inc\\DAVESupport/../../inc/UAR
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+                            *COM*:00000018 psxDado
+                            *COM*:0000000f configuration
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:25     .data:00000000 data_R
+                            *COM*:00000004 data_E
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:29     .text.read_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:34     .text.read_R:00000000 read_R
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:137    .text.delay:00000000 delay
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:820    .text.delay_R:00000000 delay_R
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:132    .text.delay:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:190    .text.main:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:195    .text.main:00000000 main
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:871    .text.configure_E:00000000 configure_E
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1484   .text.psxLeControle:00000000 psxLeControle
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1162   .text.write_E:00000000 write_E
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:708    .text.printByteToInt:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:713    .text.printByteToInt:00000000 printByteToInt
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:815    .text.delay_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:866    .text.configure_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1004   .text.configure_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1009   .text.configure_R:00000000 configure_R
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1157   .text.write_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1479   .text.psxLeControle:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1599   .text.psxGravaByte:00000000 psxGravaByte
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1713   .text.psxLeByte:00000000 psxLeByte
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1594   .text.psxGravaByte:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc9O0Riy.s:1708   .text.psxLeByte:00000000 $t
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.6730aed6a8e49268c462cbcb73e91a8e
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.uc_id.h.35.91819d6149ee56f9404d69053d48d018
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
+                           .group:00000000 wm4.Usic.h.54.8af9f733ba5771eeb374435d205ea54b
+                           .group:00000000 wm4.UART001_Conf.h.53.ec21866ed24322af6d30be63c4791501
+                           .group:00000000 wm4.UART001.h.109.3e835815a7a59791d8bd39655f4d4cc9
+
+UNDEFINED SYMBOLS
+IO004_Handle6
+IO004_Handle4
+DAVE_Init
+IO004_Handle7
+IO004_Handle8
+UART001_Handle0
+IO004_Handle2
+IO004_Handle1
+IO004_DisableOutputDriver
+IO004_Handle12
+IO004_Handle10
+IO004_Handle11
+IO004_Handle9
