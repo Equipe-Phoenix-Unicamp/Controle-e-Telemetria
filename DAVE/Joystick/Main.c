@@ -57,6 +57,23 @@ BIT 5: ALBH1
 //Defines referentes aos LEDS da Relax kit (debug only)
 #define LED1 IO004_Handle7
 #define LED2 IO004_Handle8
+//Defines dos botoes para realizar as callbacks
+#define L_UM (psxDado[1] & (1<<2))
+#define L_DOIS (psxDado[1] & (1<<0))
+#define L_TRES (psxDado[0] & (1<<2))
+#define R_UM (psxDado[1] & (1<<3))
+#define R_DOIS (psxDado[1] & (1<<1))
+#define R_TRES (psxDado[0] & (1<<1))
+#define CROSS (psxDado[1] & (1<<6))
+#define SQR (psxDado[1] & (1<<7))
+#define TRIANGLE (psxDado[1] & (1<<4))
+#define CIRCLE (psxDado[1] & (1<<5))
+#define LEFT (psxDado[0] & (1<<7))
+#define RIGHT (psxDado[0] & (1<<5))
+#define UP (psxDado[0] & (1<<4))
+#define DOWN (psxDado[0] & (1<<6))
+#define START (psxDado[0] & (1<<3))
+#define SELECT (psxDado[0] & (1<<0))
 
 /***************************************************/
 /**************DECLARACAO DAS FUNCOES***************/
@@ -83,20 +100,22 @@ void psxHandShake();
 /*********CALLBACK PARA BOTOES DO CONTROLE**********/
 /***************************************************/
 
-void * l1 = NULL;
-void * l2 = NULL;
-void * r1 = NULL;
-void * r2 = NULL;
-void * cross = NULL;
-void * sqr = NULL;
-void * triangle = NULL;
-void * circle = NULL;
-void * left = NULL;
-void * right = NULL;
-void * up = NULL;
-void * down = NULL;
-void * start = NULL;
-void * select = NULL;
+void (*l_um)(void) = NULL;
+void (*l_dois)(void) = NULL;
+void (*l_tres)(void) = NULL;
+void (*r_um)(void) = NULL;
+void (*r_dois)(void) = NULL;
+void (*r_tres)(void) = NULL;
+void (*cross)(void) = NULL;
+void (*sqr)(void) = NULL;
+void (*triangle)(void) = NULL;
+void (*circle)(void) = NULL;
+void (*left)(void) = NULL;
+void (*right)(void) = NULL;
+void (*up)(void) = NULL;
+void (*down)(void) = NULL;
+void (*start)(void) = NULL;
+void (*select)(void) = NULL;
 
 /***************************************************/
 /*********************INCLUDES**********************/
@@ -113,6 +132,10 @@ char configuration[15];
 char data_R = '0';
 char data_E[BYTES_TO_SEND];
 uint8_t psx_status;
+/*Booleanos de controle para estados do robo*/
+BOOLType flipped = 0;
+BOOLType isPressed = 0;
+BOOLType lastIsPressed = 0;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -129,10 +152,6 @@ int main(void)
 	//VER COMOFAS pra ligar analog do controle aqui ja
 	psxHandShake();
 	psxConfiguraControle();
-	/*Booleanos de controle para estados do robo*/
-	BOOLType flipped = 0;
-	BOOLType isPressed = 0;
-	BOOLType lastIsPressed = 0;
 	/*Loop do controle*/
 	while(1)
 	{
@@ -146,7 +165,29 @@ int main(void)
 		int16_t pow1, pow2;
 		/*Le controle*/
 		psxLeControle();
+		if (psx_status != 140)//Nao ta analogico
+		{
+			psxConfiguraControle();
+			continue;
+		}
 		/*Com dados do controle atribui valores e chama callbacks*/
+		if (START && start) start();
+		if (SELECT && select) select();
+		if (L_DOIS && l_dois) l_dois();
+		if (L_UM && l_um) l_um();
+		if (L_TRES && l_tres) l_tres();
+		if (R_UM && r_um) r_um();
+		if (R_DOIS && r_dois) r_dois();
+		if (R_TRES && r_tres) r_tres();
+		if (SQR && sqr) sqr();
+		if (TRIANGLE && triangle) triangle();
+		if (CIRCLE && circle) circle();
+		if (CROSS && cross) cross();
+		if (LEFT && left) left();
+		if (RIGHT && right) right();
+		if (UP && up) up();
+		if (DOWN && down) down();
+
 		if (psxDado[1]&1<<3) isPressed = 1;
 		else isPressed = 0;
 		if (lastIsPressed == 0 && isPressed == 1) flipped = !flipped;
@@ -415,7 +456,6 @@ void psxLeControle()
 void psxHandShake()
 {
 	int psxByte = 0;
-	int psxCont;
 
 	IO004_SetPin(CMD);
 	IO004_SetPin(CONT_CLK);
@@ -446,6 +486,7 @@ int psxTrocaByte(int byteDado)
 	int aux = 0;
 	for (c=0;c<=7;c++)
 	{
+
 		if(byteDado & (0x01<<c))
 			IO004_SetPin(CMD);
 		else

@@ -588,7 +588,7 @@ LOAD c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-n
 END GROUP
                 0x00000800                stack_size = 0x800
 
-.text           0x08000000     0x401c load address 0x0c000000
+.text           0x08000000     0x4328 load address 0x0c000000
                 0x08000000                sText = .
  *(.Xmc4500.reset)
  .Xmc4500.reset
@@ -832,189 +832,189 @@ END GROUP
  .text.SystemClockSetup
                 0x08000cd8      0x4cc Startup/system_XMC4500.o
  .text          0x080011a4        0x0 Main.o
- .text.main     0x080011a4      0x388 Main.o
+ .text.main     0x080011a4      0x694 Main.o
                 0x080011a4                main
- .text.read_R   0x0800152c       0xbc Main.o
-                0x0800152c                read_R
- .text.pulse_R  0x080015e8       0x54 Main.o
-                0x080015e8                pulse_R
+ .text.read_R   0x08001838       0xbc Main.o
+                0x08001838                read_R
+ .text.pulse_R  0x080018f4       0x54 Main.o
+                0x080018f4                pulse_R
  .text.configure_E
-                0x0800163c      0x1d0 Main.o
-                0x0800163c                configure_E
- .text.write_E  0x0800180c      0x178 Main.o
-                0x0800180c                write_E
+                0x08001948      0x1d0 Main.o
+                0x08001948                configure_E
+ .text.write_E  0x08001b18      0x178 Main.o
+                0x08001b18                write_E
  .text.psxConfiguraControle
-                0x08001984       0x14 Main.o
-                0x08001984                psxConfiguraControle
+                0x08001c90       0x14 Main.o
+                0x08001c90                psxConfiguraControle
  .text.psxEnterConfigMode
-                0x08001998       0xd0 Main.o
-                0x08001998                psxEnterConfigMode
+                0x08001ca4       0xd0 Main.o
+                0x08001ca4                psxEnterConfigMode
  .text.psxSetAnalogMode
-                0x08001a68      0x100 Main.o
-                0x08001a68                psxSetAnalogMode
+                0x08001d74      0x100 Main.o
+                0x08001d74                psxSetAnalogMode
  .text.psxExitConfigMode
-                0x08001b68      0x100 Main.o
-                0x08001b68                psxExitConfigMode
+                0x08001e74      0x100 Main.o
+                0x08001e74                psxExitConfigMode
  .text.psxLeControle
-                0x08001c68       0xf4 Main.o
-                0x08001c68                psxLeControle
+                0x08001f74       0xf4 Main.o
+                0x08001f74                psxLeControle
  .text.psxHandShake
-                0x08001d5c       0xe0 Main.o
-                0x08001d5c                psxHandShake
+                0x08002068       0xe0 Main.o
+                0x08002068                psxHandShake
  .text.psxTrocaByte
-                0x08001e3c      0x124 Main.o
-                0x08001e3c                psxTrocaByte
- .text.delay    0x08001f60       0x30 Main.o
-                0x08001f60                delay
+                0x08002148      0x124 Main.o
+                0x08002148                psxTrocaByte
+ .text.delay    0x0800226c       0x30 Main.o
+                0x0800226c                delay
  .text.printByteToInt
-                0x08001f90       0xe4 Main.o
-                0x08001f90                printByteToInt
- .text          0x08002074        0x0 Lib/System_LibcStubs.o
- .text._open    0x08002074       0x1c Lib/System_LibcStubs.o
-                0x08002074                _open
- .text._lseek   0x08002090       0x1c Lib/System_LibcStubs.o
-                0x08002090                _lseek
- .text._read    0x080020ac       0x1c Lib/System_LibcStubs.o
-                0x080020ac                _read
- .text._write   0x080020c8       0x1c Lib/System_LibcStubs.o
-                0x080020c8                _write
- .text._close   0x080020e4       0x10 Lib/System_LibcStubs.o
-                0x080020e4                _close
- .text._fstat   0x080020f4       0x28 Lib/System_LibcStubs.o
-                0x080020f4                _fstat
- .text._link    0x0800211c       0x28 Lib/System_LibcStubs.o
-                0x0800211c                _link
- .text._unlink  0x08002144       0x18 Lib/System_LibcStubs.o
-                0x08002144                _unlink
- .text._sbrk    0x0800215c       0xa0 Lib/System_LibcStubs.o
-                0x0800215c                _sbrk
- .text._times   0x080021fc       0x18 Lib/System_LibcStubs.o
-                0x080021fc                _times
- .text._wait    0x08002214       0x18 Lib/System_LibcStubs.o
-                0x08002214                _wait
- .text._kill    0x0800222c       0x1c Lib/System_LibcStubs.o
-                0x0800222c                _kill
- .text._fork    0x08002248       0x10 Lib/System_LibcStubs.o
-                0x08002248                _fork
- .text._getpid  0x08002258       0x10 Lib/System_LibcStubs.o
-                0x08002258                _getpid
- .text._exit    0x08002268        0xc Lib/System_LibcStubs.o
-                0x08002268                _exit
- .text._init    0x08002274        0xc Lib/System_LibcStubs.o
-                0x08002274                _init
- .text._isatty  0x08002280       0x18 Lib/System_LibcStubs.o
-                0x08002280                _isatty
- .text          0x08002298        0x0 Dave/Generated/src/UART001/UART001.o
+                0x0800229c       0xe4 Main.o
+                0x0800229c                printByteToInt
+ .text          0x08002380        0x0 Lib/System_LibcStubs.o
+ .text._open    0x08002380       0x1c Lib/System_LibcStubs.o
+                0x08002380                _open
+ .text._lseek   0x0800239c       0x1c Lib/System_LibcStubs.o
+                0x0800239c                _lseek
+ .text._read    0x080023b8       0x1c Lib/System_LibcStubs.o
+                0x080023b8                _read
+ .text._write   0x080023d4       0x1c Lib/System_LibcStubs.o
+                0x080023d4                _write
+ .text._close   0x080023f0       0x10 Lib/System_LibcStubs.o
+                0x080023f0                _close
+ .text._fstat   0x08002400       0x28 Lib/System_LibcStubs.o
+                0x08002400                _fstat
+ .text._link    0x08002428       0x28 Lib/System_LibcStubs.o
+                0x08002428                _link
+ .text._unlink  0x08002450       0x18 Lib/System_LibcStubs.o
+                0x08002450                _unlink
+ .text._sbrk    0x08002468       0xa0 Lib/System_LibcStubs.o
+                0x08002468                _sbrk
+ .text._times   0x08002508       0x18 Lib/System_LibcStubs.o
+                0x08002508                _times
+ .text._wait    0x08002520       0x18 Lib/System_LibcStubs.o
+                0x08002520                _wait
+ .text._kill    0x08002538       0x1c Lib/System_LibcStubs.o
+                0x08002538                _kill
+ .text._fork    0x08002554       0x10 Lib/System_LibcStubs.o
+                0x08002554                _fork
+ .text._getpid  0x08002564       0x10 Lib/System_LibcStubs.o
+                0x08002564                _getpid
+ .text._exit    0x08002574        0xc Lib/System_LibcStubs.o
+                0x08002574                _exit
+ .text._init    0x08002580        0xc Lib/System_LibcStubs.o
+                0x08002580                _init
+ .text._isatty  0x0800258c       0x18 Lib/System_LibcStubs.o
+                0x0800258c                _isatty
+ .text          0x080025a4        0x0 Dave/Generated/src/UART001/UART001.o
  .text.UART001_lInit
-                0x08002298      0x1a8 Dave/Generated/src/UART001/UART001.o
-                0x08002298                UART001_lInit
+                0x080025a4      0x1a8 Dave/Generated/src/UART001/UART001.o
+                0x080025a4                UART001_lInit
  .text.UART001_lConfigTXPin
-                0x08002440       0xfc Dave/Generated/src/UART001/UART001.o
-                0x08002440                UART001_lConfigTXPin
+                0x0800274c       0xfc Dave/Generated/src/UART001/UART001.o
+                0x0800274c                UART001_lConfigTXPin
  .text.UART001_labsRealType
-                0x0800253c       0x38 Dave/Generated/src/UART001/UART001.o
-                0x0800253c                UART001_labsRealType
+                0x08002848       0x38 Dave/Generated/src/UART001/UART001.o
+                0x08002848                UART001_labsRealType
  .text.UART001_lConfigureBaudRate
-                0x08002574      0x4e8 Dave/Generated/src/UART001/UART001.o
-                0x08002574                UART001_lConfigureBaudRate
+                0x08002880      0x4e8 Dave/Generated/src/UART001/UART001.o
+                0x08002880                UART001_lConfigureBaudRate
  .text.UART001_Init
-                0x08002a5c       0x6c Dave/Generated/src/UART001/UART001.o
-                0x08002a5c                UART001_Init
+                0x08002d68       0x6c Dave/Generated/src/UART001/UART001.o
+                0x08002d68                UART001_Init
  .text.UART001_DeInit
-                0x08002ac8       0x14 Dave/Generated/src/UART001/UART001.o
-                0x08002ac8                UART001_DeInit
+                0x08002dd4       0x14 Dave/Generated/src/UART001/UART001.o
+                0x08002dd4                UART001_DeInit
  .text.UART001_Configure
-                0x08002adc      0x114 Dave/Generated/src/UART001/UART001.o
-                0x08002adc                UART001_Configure
+                0x08002de8      0x114 Dave/Generated/src/UART001/UART001.o
+                0x08002de8                UART001_Configure
  .text.UART001_ReadDataMultiple
-                0x08002bf0       0x80 Dave/Generated/src/UART001/UART001.o
-                0x08002bf0                UART001_ReadDataMultiple
+                0x08002efc       0x80 Dave/Generated/src/UART001/UART001.o
+                0x08002efc                UART001_ReadDataMultiple
  .text.UART001_ReadDataBytes
-                0x08002c70       0x80 Dave/Generated/src/UART001/UART001.o
-                0x08002c70                UART001_ReadDataBytes
+                0x08002f7c       0x80 Dave/Generated/src/UART001/UART001.o
+                0x08002f7c                UART001_ReadDataBytes
  .text.UART001_WriteDataMultiple
-                0x08002cf0       0x90 Dave/Generated/src/UART001/UART001.o
-                0x08002cf0                UART001_WriteDataMultiple
+                0x08002ffc       0x90 Dave/Generated/src/UART001/UART001.o
+                0x08002ffc                UART001_WriteDataMultiple
  .text.UART001_WriteDataBytes
-                0x08002d80       0x90 Dave/Generated/src/UART001/UART001.o
-                0x08002d80                UART001_WriteDataBytes
+                0x0800308c       0x90 Dave/Generated/src/UART001/UART001.o
+                0x0800308c                UART001_WriteDataBytes
  .text.UART001_GetFlagStatus
-                0x08002e10       0x98 Dave/Generated/src/UART001/UART001.o
-                0x08002e10                UART001_GetFlagStatus
+                0x0800311c       0x98 Dave/Generated/src/UART001/UART001.o
+                0x0800311c                UART001_GetFlagStatus
  .text.UART001_ClearFlag
-                0x08002ea8       0x78 Dave/Generated/src/UART001/UART001.o
-                0x08002ea8                UART001_ClearFlag
- .text          0x08002f20        0x0 Dave/Generated/src/UART001/UART001_Conf.o
- .text          0x08002f20        0x0 Dave/Generated/src/RESET001/RESET001.o
+                0x080031b4       0x78 Dave/Generated/src/UART001/UART001.o
+                0x080031b4                UART001_ClearFlag
+ .text          0x0800322c        0x0 Dave/Generated/src/UART001/UART001_Conf.o
+ .text          0x0800322c        0x0 Dave/Generated/src/RESET001/RESET001.o
  .text.RESET001_AssertReset
-                0x08002f20       0x54 Dave/Generated/src/RESET001/RESET001.o
-                0x08002f20                RESET001_AssertReset
+                0x0800322c       0x54 Dave/Generated/src/RESET001/RESET001.o
+                0x0800322c                RESET001_AssertReset
  .text.RESET001_DeassertReset
-                0x08002f74       0x54 Dave/Generated/src/RESET001/RESET001.o
-                0x08002f74                RESET001_DeassertReset
+                0x08003280       0x54 Dave/Generated/src/RESET001/RESET001.o
+                0x08003280                RESET001_DeassertReset
  .text.RESET001_GetResetInfo
-                0x08002fc8       0x2c Dave/Generated/src/RESET001/RESET001.o
-                0x08002fc8                RESET001_GetResetInfo
+                0x080032d4       0x2c Dave/Generated/src/RESET001/RESET001.o
+                0x080032d4                RESET001_GetResetInfo
  .text.RESET001_GetStatus
-                0x08002ff4       0x7c Dave/Generated/src/RESET001/RESET001.o
-                0x08002ff4                RESET001_GetStatus
+                0x08003300       0x7c Dave/Generated/src/RESET001/RESET001.o
+                0x08003300                RESET001_GetStatus
  .text.RESET001_ClearResetInfo
-                0x08003070       0x28 Dave/Generated/src/RESET001/RESET001.o
-                0x08003070                RESET001_ClearResetInfo
- .text          0x08003098        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .text          0x08003098        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
- .text          0x08003098        0x0 Dave/Generated/src/IO004/IO004.o
+                0x0800337c       0x28 Dave/Generated/src/RESET001/RESET001.o
+                0x0800337c                RESET001_ClearResetInfo
+ .text          0x080033a4        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .text          0x080033a4        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
+ .text          0x080033a4        0x0 Dave/Generated/src/IO004/IO004.o
  .text.IO004_Init
-                0x08003098      0x434 Dave/Generated/src/IO004/IO004.o
-                0x08003098                IO004_Init
+                0x080033a4      0x434 Dave/Generated/src/IO004/IO004.o
+                0x080033a4                IO004_Init
  .text.IO004_DisableOutputDriver
-                0x080034cc      0x17c Dave/Generated/src/IO004/IO004.o
-                0x080034cc                IO004_DisableOutputDriver
+                0x080037d8      0x17c Dave/Generated/src/IO004/IO004.o
+                0x080037d8                IO004_DisableOutputDriver
  .text.IO004_EnableOutputDriver
-                0x08003648      0x17c Dave/Generated/src/IO004/IO004.o
-                0x08003648                IO004_EnableOutputDriver
- .text          0x080037c4        0x0 Dave/Generated/src/IO004/IO004_Conf.o
- .text          0x080037c4        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003954      0x17c Dave/Generated/src/IO004/IO004.o
+                0x08003954                IO004_EnableOutputDriver
+ .text          0x08003ad0        0x0 Dave/Generated/src/IO004/IO004_Conf.o
+ .text          0x08003ad0        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.NVIC_SetPriorityGrouping
-                0x080037c4       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003ad0       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.DAVE_Init
-                0x08003814       0x24 Dave/Generated/src/DAVESupport/DAVE3.o
-                0x08003814                DAVE_Init
+                0x08003b20       0x24 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003b20                DAVE_Init
  .text.SystemInit_DAVE3
-                0x08003838        0xc Dave/Generated/src/DAVESupport/DAVE3.o
-                0x08003838                SystemInit_DAVE3
- .text          0x08003844        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003b44        0xc Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003b44                SystemInit_DAVE3
+ .text          0x08003b50        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
  .text.DAVE_MUX_Init
-                0x08003844      0x1f8 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08003844                DAVE_MUX_Init
+                0x08003b50      0x1f8 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003b50                DAVE_MUX_Init
  .text.DAVE_MUX_PreInit
-                0x08003a3c        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08003a3c                DAVE_MUX_PreInit
- .text          0x08003a48        0x0 Dave/Generated/src/CLK001/CLK001.o
+                0x08003d48        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003d48                DAVE_MUX_PreInit
+ .text          0x08003d54        0x0 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Delay
-                0x08003a48       0x34 Dave/Generated/src/CLK001/CLK001.o
+                0x08003d54       0x34 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SysClk_Valid
-                0x08003a7c       0x38 Dave/Generated/src/CLK001/CLK001.o
+                0x08003d88       0x38 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_BackupClkTrim
-                0x08003ab4       0x94 Dave/Generated/src/CLK001/CLK001.o
+                0x08003dc0       0x94 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SetMainPLLClkSrc
-                0x08003b48       0xf0 Dave/Generated/src/CLK001/CLK001.o
+                0x08003e54       0xf0 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_ConfigMainPLL
-                0x08003c38      0x15c Dave/Generated/src/CLK001/CLK001.o
+                0x08003f44      0x15c Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_FreqStepupMainPLL
-                0x08003d94      0x164 Dave/Generated/src/CLK001/CLK001.o
+                0x080040a0      0x164 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SysClk_Init
-                0x08003ef8       0x50 Dave/Generated/src/CLK001/CLK001.o
+                0x08004204       0x50 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Init
-                0x08003f48       0x30 Dave/Generated/src/CLK001/CLK001.o
-                0x08003f48                CLK001_Init
+                0x08004254       0x30 Dave/Generated/src/CLK001/CLK001.o
+                0x08004254                CLK001_Init
  .text.AllowPLLInitByStartup
-                0x08003f78       0x10 Dave/Generated/src/CLK001/CLK001.o
-                0x08003f78                AllowPLLInitByStartup
- .text          0x08003f88        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x08004284       0x10 Dave/Generated/src/CLK001/CLK001.o
+                0x08004284                AllowPLLInitByStartup
+ .text          0x08004294        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
  .text.__libc_init_array
-                0x08003f88       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
-                0x08003f88                __libc_init_array
+                0x08004294       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x08004294                __libc_init_array
  *(.glue*)
  .glue_7        0x00000000        0x0 linker stubs
  .glue_7t       0x00000000        0x0 linker stubs
@@ -1023,70 +1023,70 @@ END GROUP
  *(.vfp11_veneer)
  .vfp11_veneer  0x00000000        0x0 linker stubs
  *(.init)
-                0x0800401c                __preinit_array_start = .
+                0x08004328                __preinit_array_start = .
  *(.preinit_array)
-                0x0800401c                __preinit_array_end = .
-                0x0800401c                __init_array_start = .
+                0x08004328                __preinit_array_end = .
+                0x08004328                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
-                0x0800401c                __init_array_end = .
+                0x08004328                __init_array_end = .
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
  *(.fini)
-                0x0800401c                __fini_array_start = .
+                0x08004328                __fini_array_start = .
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0x0800401c                __fini_array_end = .
+                0x08004328                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x0800401c                __extab_start = .
+                0x08004328                __extab_start = .
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.Xmc4500.reset
-                0x0800401c        0x0 Startup/startup_XMC4500.o
+                0x08004328        0x0 Startup/startup_XMC4500.o
  .ARM.extab.Xmc4500.postreset
-                0x0800401c        0x0 Startup/startup_XMC4500.o
-                0x0800401c                . = ALIGN (0x4)
-                0x0800401c                __extab_end = ABSOLUTE (.)
+                0x08004328        0x0 Startup/startup_XMC4500.o
+                0x08004328                . = ALIGN (0x4)
+                0x08004328                __extab_end = ABSOLUTE (.)
 
-.iplt           0x0800401c        0x0 load address 0x0c00401c
+.iplt           0x08004328        0x0 load address 0x0c004328
  .iplt          0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ARM.exidx      0x0800401c       0x10 load address 0x0c00401c
-                0x0800401c                __exidx_start = .
+.ARM.exidx      0x08004328       0x10 load address 0x0c004328
+                0x08004328                __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.Xmc4500.reset
-                0x0800401c        0x8 Startup/startup_XMC4500.o
+                0x08004328        0x8 Startup/startup_XMC4500.o
  .ARM.exidx.Xmc4500.postreset
-                0x08004024        0x8 Startup/startup_XMC4500.o
-                0x0800402c                . = ALIGN (0x4)
-                0x0800402c                __exidx_end = ABSOLUTE (.)
+                0x08004330        0x8 Startup/startup_XMC4500.o
+                0x08004338                . = ALIGN (0x4)
+                0x08004338                __exidx_end = ABSOLUTE (.)
 
-.rodata         0x0800402c       0x8c load address 0x0c00402c
+.rodata         0x08004338       0x8c load address 0x0c004338
  *(.rodata .rodata.*)
- .rodata        0x0800402c       0x34 Dave/Generated/src/UART001/UART001_Conf.o
-                0x0800402c                UART001_Handle0
- .rodata        0x08004060       0x58 Dave/Generated/src/IO004/IO004_Conf.o
-                0x08004060                IO004_Handle1
-                0x08004068                IO004_Handle10
-                0x08004070                IO004_Handle11
-                0x08004078                IO004_Handle12
-                0x08004080                IO004_Handle2
-                0x08004088                IO004_Handle4
-                0x08004090                IO004_Handle5
-                0x08004098                IO004_Handle6
-                0x080040a0                IO004_Handle7
-                0x080040a8                IO004_Handle8
-                0x080040b0                IO004_Handle9
+ .rodata        0x08004338       0x34 Dave/Generated/src/UART001/UART001_Conf.o
+                0x08004338                UART001_Handle0
+ .rodata        0x0800436c       0x58 Dave/Generated/src/IO004/IO004_Conf.o
+                0x0800436c                IO004_Handle1
+                0x08004374                IO004_Handle10
+                0x0800437c                IO004_Handle11
+                0x08004384                IO004_Handle12
+                0x0800438c                IO004_Handle2
+                0x08004394                IO004_Handle4
+                0x0800439c                IO004_Handle5
+                0x080043a4                IO004_Handle6
+                0x080043ac                IO004_Handle7
+                0x080043b4                IO004_Handle8
+                0x080043bc                IO004_Handle9
  *(.gnu.linkonce.r*)
 
-.rel.dyn        0x080040b8        0x0 load address 0x0c0040b8
+.rel.dyn        0x080043c4        0x0 load address 0x0c0043c4
  .rel.iplt      0x00000000        0x0 Startup/startup_XMC4500.o
-                0x080040c0                . = ALIGN (0x10)
-                0x0c0040c0                eROData = (. | 0x4000000)
+                0x080043d0                . = ALIGN (0x10)
+                0x0c0043d0                eROData = (. | 0x4000000)
 
 Stack           0x10000000      0x800
                 0x10000800                . = (. + stack_size)
@@ -1099,7 +1099,7 @@ Stack           0x10000000      0x800
                 0x10000800                __data3_end = .
                 0x00000000                __data3_size = (__data3_end - __data3_start)
 
-.data           0x20000000        0xc load address 0x0c0040c0
+.data           0x20000000        0xc load address 0x0c0043d0
                 0x20000000                __Xmc4500_sData = .
  *(.data)
  .data          0x20000000        0x0 Startup/startup_XMC4500.o
@@ -1127,68 +1127,73 @@ Stack           0x10000000      0x800
                 0x2000000c                __Xmc4500_eData = ALIGN (0x4)
                 0x0000000c                __Xmc4500_Data_Size = (__Xmc4500_eData - __Xmc4500_sData)
 
-.igot.plt       0x2000000c        0x0 load address 0x0c0040cc
+.igot.plt       0x2000000c        0x0 load address 0x0c0043dc
  .igot.plt      0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ram_code       0x10000800        0x0 load address 0x0c0040cc
+.ram_code       0x10000800        0x0 load address 0x0c0043dc
                 0x10000800                __ram_code_start = .
  *(.ram_code)
                 0x10000800                __ram_code_end = .
-                0x0c0040cc                __ram_code_load = LOADADDR (.ram_code)
+                0x0c0043dc                __ram_code_load = LOADADDR (.ram_code)
                 0x00000000                __ram_code_size = (__ram_code_end - __ram_code_start)
 
-.bss            0x2000000c       0x78 load address 0x0c0040cc
+.bss            0x2000000c       0x84 load address 0x0c0043dc
                 0x2000000c                __Xmc4500_sBSS = .
  *(.bss)
  .bss           0x2000000c        0x0 Startup/startup_XMC4500.o
  .bss           0x2000000c        0x0 Startup/system_XMC4500.o
- .bss           0x2000000c       0x38 Main.o
-                0x2000000c                l1
-                0x20000010                l2
-                0x20000014                r1
-                0x20000018                r2
-                0x2000001c                cross
-                0x20000020                sqr
-                0x20000024                triangle
-                0x20000028                circle
-                0x2000002c                left
-                0x20000030                right
-                0x20000034                up
-                0x20000038                down
-                0x2000003c                start
-                0x20000040                select
- .bss           0x20000044        0xc Lib/System_LibcStubs.o
-                0x20000044                __dso_handle
- .bss           0x20000050        0x0 Dave/Generated/src/UART001/UART001.o
- .bss           0x20000050        0x0 Dave/Generated/src/UART001/UART001_Conf.o
- .bss           0x20000050        0x0 Dave/Generated/src/RESET001/RESET001.o
- .bss           0x20000050        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .bss           0x20000050        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
- .bss           0x20000050        0x0 Dave/Generated/src/IO004/IO004.o
- .bss           0x20000050        0x0 Dave/Generated/src/IO004/IO004_Conf.o
- .bss           0x20000050        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
- .bss           0x20000050        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .bss           0x20000050        0x8 Dave/Generated/src/CLK001/CLK001.o
- .bss           0x20000058        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+ .bss           0x2000000c       0x44 Main.o
+                0x2000000c                l_um
+                0x20000010                l_dois
+                0x20000014                l_tres
+                0x20000018                r_um
+                0x2000001c                r_dois
+                0x20000020                r_tres
+                0x20000024                cross
+                0x20000028                sqr
+                0x2000002c                triangle
+                0x20000030                circle
+                0x20000034                left
+                0x20000038                right
+                0x2000003c                up
+                0x20000040                down
+                0x20000044                start
+                0x20000048                select
+                0x2000004c                flipped
+                0x2000004d                isPressed
+                0x2000004e                lastIsPressed
+ .bss           0x20000050        0xc Lib/System_LibcStubs.o
+                0x20000050                __dso_handle
+ .bss           0x2000005c        0x0 Dave/Generated/src/UART001/UART001.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/UART001/UART001_Conf.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/RESET001/RESET001.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/IO004/IO004.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/IO004/IO004_Conf.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
+ .bss           0x2000005c        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .bss           0x2000005c        0x8 Dave/Generated/src/CLK001/CLK001.o
+ .bss           0x20000064        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
  *(.bss*)
  *(COMMON)
- COMMON         0x20000058       0x2c Main.o
-                0x20000058                configuration
-                0x20000067                psx_status
-                0x20000068                data_E
-                0x2000006c                psxDado
+ COMMON         0x20000064       0x2c Main.o
+                0x20000064                configuration
+                0x20000073                psx_status
+                0x20000074                data_E
+                0x20000078                psxDado
  *(.gnu.linkonce.b*)
-                0x20000084                __Xmc4500_eBSS = ALIGN (0x4)
-                0x20000084                . = ALIGN (0x4)
-                0x20000084                Heap_Bank1_Start = .
-                0x00000078                __Xmc4500_BSS_Size = (__Xmc4500_eBSS - __Xmc4500_sBSS)
+                0x20000090                __Xmc4500_eBSS = ALIGN (0x4)
+                0x20000090                . = ALIGN (0x4)
+                0x20000090                Heap_Bank1_Start = .
+                0x00000084                __Xmc4500_BSS_Size = (__Xmc4500_eBSS - __Xmc4500_sBSS)
 
 .data2          0x30000000        0x0
                 0x30000000                __data2_start = .
  *(ETH_RAM)
                 0x30000000                __data2_end = .
                 0x00000000                __data2_size = (__data2_end - __data2_start)
-                0x0000ff7c                Heap_Bank1_Size = (0x10000 - (Heap_Bank1_Start - ORIGIN (DSRAM_1_system)))
+                0x0000ff70                Heap_Bank1_Size = (0x10000 - (Heap_Bank1_Start - ORIGIN (DSRAM_1_system)))
 
 DSRAM2_Heap     0x30000000        0x0
                 0x30000000                Heap_Bank2_Start = .
@@ -1256,56 +1261,56 @@ PSRAM_Heap      0x10000800        0x0
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_info     0x00000000     0x586f
+.debug_info     0x00000000     0x58a3
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000       0x8c Startup/startup_XMC4500.o
  .debug_info    0x0000008c      0xaf0 Startup/system_XMC4500.o
- .debug_info    0x00000b7c      0xf01 Main.o
- .debug_info    0x00001a7d      0x65f Lib/System_LibcStubs.o
- .debug_info    0x000020dc      0xfc2 Dave/Generated/src/UART001/UART001.o
- .debug_info    0x0000309e      0x805 Dave/Generated/src/UART001/UART001_Conf.o
- .debug_info    0x000038a3      0x47c Dave/Generated/src/RESET001/RESET001.o
- .debug_info    0x00003d1f       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_info    0x00003db3       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_info    0x00003e47      0x422 Dave/Generated/src/IO004/IO004.o
- .debug_info    0x00004269      0x33a Dave/Generated/src/IO004/IO004_Conf.o
- .debug_info    0x000045a3      0x2e9 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_info    0x0000488c      0x95a Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_info    0x000051e6      0x689 Dave/Generated/src/CLK001/CLK001.o
+ .debug_info    0x00000b7c      0xf35 Main.o
+ .debug_info    0x00001ab1      0x65f Lib/System_LibcStubs.o
+ .debug_info    0x00002110      0xfc2 Dave/Generated/src/UART001/UART001.o
+ .debug_info    0x000030d2      0x805 Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_info    0x000038d7      0x47c Dave/Generated/src/RESET001/RESET001.o
+ .debug_info    0x00003d53       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_info    0x00003de7       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_info    0x00003e7b      0x422 Dave/Generated/src/IO004/IO004.o
+ .debug_info    0x0000429d      0x33a Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_info    0x000045d7      0x2e9 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_info    0x000048c0      0x95a Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_info    0x0000521a      0x689 Dave/Generated/src/CLK001/CLK001.o
 
-.debug_abbrev   0x00000000      0xffa
+.debug_abbrev   0x00000000      0xfed
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x12 Startup/startup_XMC4500.o
  .debug_abbrev  0x00000012      0x154 Startup/system_XMC4500.o
- .debug_abbrev  0x00000166      0x2cf Main.o
- .debug_abbrev  0x00000435      0x149 Lib/System_LibcStubs.o
- .debug_abbrev  0x0000057e      0x203 Dave/Generated/src/UART001/UART001.o
- .debug_abbrev  0x00000781      0x12c Dave/Generated/src/UART001/UART001_Conf.o
- .debug_abbrev  0x000008ad      0x122 Dave/Generated/src/RESET001/RESET001.o
- .debug_abbrev  0x000009cf       0x4e Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_abbrev  0x00000a1d       0x4e Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_abbrev  0x00000a6b      0x138 Dave/Generated/src/IO004/IO004.o
- .debug_abbrev  0x00000ba3       0xbb Dave/Generated/src/IO004/IO004_Conf.o
- .debug_abbrev  0x00000c5e       0xf3 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_abbrev  0x00000d51      0x123 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_abbrev  0x00000e74      0x186 Dave/Generated/src/CLK001/CLK001.o
+ .debug_abbrev  0x00000166      0x2c2 Main.o
+ .debug_abbrev  0x00000428      0x149 Lib/System_LibcStubs.o
+ .debug_abbrev  0x00000571      0x203 Dave/Generated/src/UART001/UART001.o
+ .debug_abbrev  0x00000774      0x12c Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_abbrev  0x000008a0      0x122 Dave/Generated/src/RESET001/RESET001.o
+ .debug_abbrev  0x000009c2       0x4e Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_abbrev  0x00000a10       0x4e Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_abbrev  0x00000a5e      0x138 Dave/Generated/src/IO004/IO004.o
+ .debug_abbrev  0x00000b96       0xbb Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_abbrev  0x00000c51       0xf3 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_abbrev  0x00000d44      0x123 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_abbrev  0x00000e67      0x186 Dave/Generated/src/CLK001/CLK001.o
 
-.debug_line     0x00000000     0x5b9f
+.debug_line     0x00000000     0x5c20
  *(.debug_line)
  .debug_line    0x00000000      0x1a1 Startup/startup_XMC4500.o
  .debug_line    0x000001a1      0x3b7 Startup/system_XMC4500.o
- .debug_line    0x00000558      0xb8e Main.o
- .debug_line    0x000010e6      0x3c1 Lib/System_LibcStubs.o
- .debug_line    0x000014a7      0x6d9 Dave/Generated/src/UART001/UART001.o
- .debug_line    0x00001b80      0x3f1 Dave/Generated/src/UART001/UART001_Conf.o
- .debug_line    0x00001f71      0x41e Dave/Generated/src/RESET001/RESET001.o
- .debug_line    0x0000238f      0x8e1 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_line    0x00002c70      0x8dd Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_line    0x0000354d      0x95c Dave/Generated/src/IO004/IO004.o
- .debug_line    0x00003ea9      0x8a8 Dave/Generated/src/IO004/IO004_Conf.o
- .debug_line    0x00004751      0x7d1 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_line    0x00004f22      0x7ce Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_line    0x000056f0      0x4af Dave/Generated/src/CLK001/CLK001.o
+ .debug_line    0x00000558      0xc0f Main.o
+ .debug_line    0x00001167      0x3c1 Lib/System_LibcStubs.o
+ .debug_line    0x00001528      0x6d9 Dave/Generated/src/UART001/UART001.o
+ .debug_line    0x00001c01      0x3f1 Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_line    0x00001ff2      0x41e Dave/Generated/src/RESET001/RESET001.o
+ .debug_line    0x00002410      0x8e1 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_line    0x00002cf1      0x8dd Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_line    0x000035ce      0x95c Dave/Generated/src/IO004/IO004.o
+ .debug_line    0x00003f2a      0x8a8 Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_line    0x000047d2      0x7d1 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_line    0x00004fa3      0x7ce Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_line    0x00005771      0x4af Dave/Generated/src/CLK001/CLK001.o
 
 .debug_frame    0x00000000      0x8a4
  *(.debug_frame)
@@ -1320,33 +1325,33 @@ PSRAM_Heap      0x10000800        0x0
  .debug_frame   0x00000754      0x120 Dave/Generated/src/CLK001/CLK001.o
  .debug_frame   0x00000874       0x30 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
 
-.debug_str      0x00000000    0x97255
+.debug_str      0x00000000    0x9743b
  *(.debug_str)
  .debug_str     0x00000000    0x90172 Startup/system_XMC4500.o
                               0x90489 (size before relaxing)
- .debug_str     0x00090172     0x3423 Main.o
-                              0x934e1 (size before relaxing)
- .debug_str     0x00093595     0x2e29 Lib/System_LibcStubs.o
+ .debug_str     0x00090172     0x3609 Main.o
+                              0x936c7 (size before relaxing)
+ .debug_str     0x0009377b     0x2e29 Lib/System_LibcStubs.o
                                0x58a9 (size before relaxing)
- .debug_str     0x000963be      0x7ca Dave/Generated/src/UART001/UART001.o
+ .debug_str     0x000965a4      0x7ca Dave/Generated/src/UART001/UART001.o
                               0x915dd (size before relaxing)
- .debug_str     0x00096b88       0x2d Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_str     0x00096d6e       0x2d Dave/Generated/src/UART001/UART001_Conf.o
                               0x90e29 (size before relaxing)
- .debug_str     0x00096bb5      0x225 Dave/Generated/src/RESET001/RESET001.o
+ .debug_str     0x00096d9b      0x225 Dave/Generated/src/RESET001/RESET001.o
                               0x907e8 (size before relaxing)
- .debug_str     0x00096dda       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_str     0x00096fc0       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
                               0x92da4 (size before relaxing)
- .debug_str     0x00096e02       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_str     0x00096fe8       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
                               0x92da2 (size before relaxing)
- .debug_str     0x00096e28      0x156 Dave/Generated/src/IO004/IO004.o
+ .debug_str     0x0009700e      0x156 Dave/Generated/src/IO004/IO004.o
                               0x9302a (size before relaxing)
- .debug_str     0x00096f7e       0x29 Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_str     0x00097164       0x29 Dave/Generated/src/IO004/IO004_Conf.o
                               0x92ef1 (size before relaxing)
- .debug_str     0x00096fa7       0x87 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_str     0x0009718d       0x87 Dave/Generated/src/DAVESupport/DAVE3.o
                               0x92e72 (size before relaxing)
- .debug_str     0x0009702e       0x87 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_str     0x00097214       0x87 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
                               0x92f82 (size before relaxing)
- .debug_str     0x000970b5      0x1a0 Dave/Generated/src/CLK001/CLK001.o
+ .debug_str     0x0009729b      0x1a0 Dave/Generated/src/CLK001/CLK001.o
                               0x90a71 (size before relaxing)
 
 .debug_loc      0x00000000      0xe96
@@ -1424,7 +1429,7 @@ PSRAM_Heap      0x10000800        0x0
                 0x0000030c       0x2e c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
 OUTPUT(Joystick.elf elf32-littlearm)
 
-.debug_macro    0x00000000    0x1953c
+.debug_macro    0x00000000    0x1959c
  .debug_macro   0x00000000      0x17e Startup/system_XMC4500.o
  .debug_macro   0x0000017e      0x814 Startup/system_XMC4500.o
  .debug_macro   0x00000992       0x3a Startup/system_XMC4500.o
@@ -1439,46 +1444,46 @@ OUTPUT(Joystick.elf elf32-littlearm)
  .debug_macro   0x00000dba       0x42 Startup/system_XMC4500.o
  .debug_macro   0x00000dfc      0xd39 Startup/system_XMC4500.o
  .debug_macro   0x00001b35    0x150f5 Startup/system_XMC4500.o
- .debug_macro   0x00016c2a      0x216 Main.o
- .debug_macro   0x00016e40       0x70 Main.o
- .debug_macro   0x00016eb0      0x16c Main.o
- .debug_macro   0x0001701c       0x22 Main.o
- .debug_macro   0x0001703e      0x54a Main.o
- .debug_macro   0x00017588       0x64 Main.o
- .debug_macro   0x000175ec       0x46 Main.o
- .debug_macro   0x00017632      0x160 Main.o
- .debug_macro   0x00017792       0x2d Main.o
- .debug_macro   0x000177bf      0x130 Main.o
- .debug_macro   0x000178ef       0x7f Main.o
- .debug_macro   0x0001796e       0xb4 Main.o
- .debug_macro   0x00017a22       0xb6 Main.o
- .debug_macro   0x00017ad8       0x34 Main.o
- .debug_macro   0x00017b0c       0x11 Main.o
- .debug_macro   0x00017b1d      0x119 Lib/System_LibcStubs.o
- .debug_macro   0x00017c36       0x3a Lib/System_LibcStubs.o
- .debug_macro   0x00017c70       0x52 Lib/System_LibcStubs.o
- .debug_macro   0x00017cc2       0x19 Lib/System_LibcStubs.o
- .debug_macro   0x00017cdb      0x16d Lib/System_LibcStubs.o
- .debug_macro   0x00017e48       0x10 Lib/System_LibcStubs.o
- .debug_macro   0x00017e58       0x16 Lib/System_LibcStubs.o
- .debug_macro   0x00017e6e       0x89 Lib/System_LibcStubs.o
- .debug_macro   0x00017ef7       0x10 Lib/System_LibcStubs.o
- .debug_macro   0x00017f07       0xf5 Lib/System_LibcStubs.o
- .debug_macro   0x00017ffc       0x22 Lib/System_LibcStubs.o
- .debug_macro   0x0001801e       0x91 Lib/System_LibcStubs.o
- .debug_macro   0x000180af       0x34 Lib/System_LibcStubs.o
- .debug_macro   0x000180e3      0x120 Lib/System_LibcStubs.o
- .debug_macro   0x00018203       0x16 Lib/System_LibcStubs.o
- .debug_macro   0x00018219       0x35 Lib/System_LibcStubs.o
- .debug_macro   0x0001824e      0x495 Lib/System_LibcStubs.o
- .debug_macro   0x000186e3      0x16e Dave/Generated/src/UART001/UART001.o
- .debug_macro   0x00018851       0xb0 Dave/Generated/src/UART001/UART001.o
- .debug_macro   0x00018901       0xfe Dave/Generated/src/UART001/UART001_Conf.o
- .debug_macro   0x000189ff       0xff Dave/Generated/src/RESET001/RESET001.o
- .debug_macro   0x00018afe      0x190 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_macro   0x00018c8e      0x190 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_macro   0x00018e1e      0x18c Dave/Generated/src/IO004/IO004.o
- .debug_macro   0x00018faa      0x18c Dave/Generated/src/IO004/IO004_Conf.o
- .debug_macro   0x00019136      0x18c Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_macro   0x000192c2      0x18c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_macro   0x0001944e       0xee Dave/Generated/src/CLK001/CLK001.o
+ .debug_macro   0x00016c2a      0x276 Main.o
+ .debug_macro   0x00016ea0       0x70 Main.o
+ .debug_macro   0x00016f10      0x16c Main.o
+ .debug_macro   0x0001707c       0x22 Main.o
+ .debug_macro   0x0001709e      0x54a Main.o
+ .debug_macro   0x000175e8       0x64 Main.o
+ .debug_macro   0x0001764c       0x46 Main.o
+ .debug_macro   0x00017692      0x160 Main.o
+ .debug_macro   0x000177f2       0x2d Main.o
+ .debug_macro   0x0001781f      0x130 Main.o
+ .debug_macro   0x0001794f       0x7f Main.o
+ .debug_macro   0x000179ce       0xb4 Main.o
+ .debug_macro   0x00017a82       0xb6 Main.o
+ .debug_macro   0x00017b38       0x34 Main.o
+ .debug_macro   0x00017b6c       0x11 Main.o
+ .debug_macro   0x00017b7d      0x119 Lib/System_LibcStubs.o
+ .debug_macro   0x00017c96       0x3a Lib/System_LibcStubs.o
+ .debug_macro   0x00017cd0       0x52 Lib/System_LibcStubs.o
+ .debug_macro   0x00017d22       0x19 Lib/System_LibcStubs.o
+ .debug_macro   0x00017d3b      0x16d Lib/System_LibcStubs.o
+ .debug_macro   0x00017ea8       0x10 Lib/System_LibcStubs.o
+ .debug_macro   0x00017eb8       0x16 Lib/System_LibcStubs.o
+ .debug_macro   0x00017ece       0x89 Lib/System_LibcStubs.o
+ .debug_macro   0x00017f57       0x10 Lib/System_LibcStubs.o
+ .debug_macro   0x00017f67       0xf5 Lib/System_LibcStubs.o
+ .debug_macro   0x0001805c       0x22 Lib/System_LibcStubs.o
+ .debug_macro   0x0001807e       0x91 Lib/System_LibcStubs.o
+ .debug_macro   0x0001810f       0x34 Lib/System_LibcStubs.o
+ .debug_macro   0x00018143      0x120 Lib/System_LibcStubs.o
+ .debug_macro   0x00018263       0x16 Lib/System_LibcStubs.o
+ .debug_macro   0x00018279       0x35 Lib/System_LibcStubs.o
+ .debug_macro   0x000182ae      0x495 Lib/System_LibcStubs.o
+ .debug_macro   0x00018743      0x16e Dave/Generated/src/UART001/UART001.o
+ .debug_macro   0x000188b1       0xb0 Dave/Generated/src/UART001/UART001.o
+ .debug_macro   0x00018961       0xfe Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_macro   0x00018a5f       0xff Dave/Generated/src/RESET001/RESET001.o
+ .debug_macro   0x00018b5e      0x190 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_macro   0x00018cee      0x190 Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_macro   0x00018e7e      0x18c Dave/Generated/src/IO004/IO004.o
+ .debug_macro   0x0001900a      0x18c Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_macro   0x00019196      0x18c Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_macro   0x00019322      0x18c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_macro   0x000194ae       0xee Dave/Generated/src/CLK001/CLK001.o
