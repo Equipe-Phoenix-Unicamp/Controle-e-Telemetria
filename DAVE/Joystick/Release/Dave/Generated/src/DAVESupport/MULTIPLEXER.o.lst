@@ -1,0 +1,106 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"MULTIPLEXER.c"
+  16              		.section	.text.DAVE_MUX_Init,"ax",%progbits
+  17              		.align	1
+  18              		.global	DAVE_MUX_Init
+  19              		.thumb
+  20              		.thumb_func
+  22              	DAVE_MUX_Init:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25              		@ link register save eliminated.
+  26 0000 304B     		ldr	r3, .L2
+  27 0002 1A6C     		ldr	r2, [r3, #64]
+  28 0004 196C     		ldr	r1, [r3, #64]
+  29 0006 21F00F00 		bic	r0, r1, #15
+  30 000a 1864     		str	r0, [r3, #64]
+  31 000c D969     		ldr	r1, [r3, #28]
+  32 000e 21F00700 		bic	r0, r1, #7
+  33 0012 40F00101 		orr	r1, r0, #1
+  34 0016 D961     		str	r1, [r3, #28]
+  35 0018 D3F80801 		ldr	r0, [r3, #264]
+  36 001c 20F0E061 		bic	r1, r0, #117440512
+  37 0020 21F03F00 		bic	r0, r1, #63
+  38 0024 40F08071 		orr	r1, r0, #16777216
+  39 0028 41F00200 		orr	r0, r1, #2
+  40 002c C3F80801 		str	r0, [r3, #264]
+  41 0030 D3F80C11 		ldr	r1, [r3, #268]
+  42 0034 21F0E060 		bic	r0, r1, #117440512
+  43 0038 20F03F01 		bic	r1, r0, #63
+  44 003c 41F08070 		orr	r0, r1, #16777216
+  45 0040 C3F80C01 		str	r0, [r3, #268]
+  46 0044 196C     		ldr	r1, [r3, #64]
+  47 0046 02F00F02 		and	r2, r2, #15
+  48 004a 21F00F00 		bic	r0, r1, #15
+  49 004e 40EA0201 		orr	r1, r0, r2
+  50 0052 1964     		str	r1, [r3, #64]
+  51 0054 03F50043 		add	r3, r3, #32768
+  52 0058 1869     		ldr	r0, [r3, #16]
+  53 005a 40F08002 		orr	r2, r0, #128
+  54 005e 1A61     		str	r2, [r3, #16]
+  55 0060 1969     		ldr	r1, [r3, #16]
+  56 0062 41F40040 		orr	r0, r1, #32768
+  57 0066 1861     		str	r0, [r3, #16]
+  58 0068 1A69     		ldr	r2, [r3, #16]
+  59 006a 42F40001 		orr	r1, r2, #8388608
+  60 006e 1961     		str	r1, [r3, #16]
+  61 0070 5869     		ldr	r0, [r3, #20]
+  62 0072 40F08002 		orr	r2, r0, #128
+  63 0076 5A61     		str	r2, [r3, #20]
+  64 0078 5969     		ldr	r1, [r3, #20]
+  65 007a 41F40000 		orr	r0, r1, #8388608
+  66 007e 5861     		str	r0, [r3, #20]
+  67 0080 D3F81021 		ldr	r2, [r3, #272]
+  68 0084 42F08001 		orr	r1, r2, #128
+  69 0088 C3F81011 		str	r1, [r3, #272]
+  70 008c D3F81001 		ldr	r0, [r3, #272]
+  71 0090 40F40042 		orr	r2, r0, #32768
+  72 0094 C3F81021 		str	r2, [r3, #272]
+  73 0098 D3F81C12 		ldr	r1, [r3, #540]
+  74 009c 21F43800 		bic	r0, r1, #12058624
+  75 00a0 40F41002 		orr	r2, r0, #9437184
+  76 00a4 C3F81C22 		str	r2, [r3, #540]
+  77 00a8 D3F81013 		ldr	r1, [r3, #784]
+  78 00ac 41F08000 		orr	r0, r1, #128
+  79 00b0 C3F81003 		str	r0, [r3, #784]
+  80 00b4 D3F81423 		ldr	r2, [r3, #788]
+  81 00b8 42F08001 		orr	r1, r2, #128
+  82 00bc C3F81413 		str	r1, [r3, #788]
+  83 00c0 7047     		bx	lr
+  84              	.L3:
+  85 00c2 00BF     		.align	2
+  86              	.L2:
+  87 00c4 00000248 		.word	1208090624
+  89              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
+  90              		.align	1
+  91              		.global	DAVE_MUX_PreInit
+  92              		.thumb
+  93              		.thumb_func
+  95              	DAVE_MUX_PreInit:
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98              		@ link register save eliminated.
+  99 0000 7047     		bx	lr
+ 101              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 MULTIPLEXER.c
+C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:17     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:87     .text.DAVE_MUX_Init:000000c4 $d
+C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:90     .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:95     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+
+NO UNDEFINED SYMBOLS
