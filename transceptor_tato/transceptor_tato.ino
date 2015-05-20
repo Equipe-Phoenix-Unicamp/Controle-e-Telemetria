@@ -36,7 +36,7 @@ void setup() {
   configuration[10] = B00000000;
   configuration[11] = B00000000;
   configuration[12] = B00000000;//Fim enderco CH2
-  configuration[13] = 0x20;//num bits enviados (1 byte nesse ex)
+  configuration[13] = 0x8;//num bits enviados (1 byte nesse ex)
   configuration[14] = B00000000;
   
   digitalWrite(CS_R, LOW);
@@ -61,12 +61,14 @@ void setup() {
   pinMode(CLK_E, OUTPUT);
   pinMode(CE_E, OUTPUT);
   
-  //configure_E();
+  configure_E();
   data = '0';
   configure_R();
 }
 int i = 0;
 void loop() {
+  write_E();
+  Serial.println("Enviando dados");
   //data = '0';
   //if (Serial.available() > 0)
     //data = Serial.read();
@@ -139,7 +141,7 @@ void read_R()
   //Serial.println((int)temp);
   data_R[0] = temp;
   temp = 0;
-  for (i = 7; i > -1; i --)
+  /*for (i = 7; i > -1; i --)
   {
     if (digitalRead(DATA_R) == HIGH) temp |= (1<<i);
     delay_R();
@@ -162,7 +164,7 @@ void read_R()
   }
   //Serial.println((int)temp);
   data_R[3] = temp;
-  temp = 0;
+  temp = 0;*/
   digitalWrite(CE_R, HIGH);
   delayMicroseconds(1);
 }
