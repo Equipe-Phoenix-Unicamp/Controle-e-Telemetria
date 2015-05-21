@@ -64,16 +64,6 @@
   <provided xsi:type="ResourceModel:SignalDeclaration" name="SWREG_OUT" URI="http://www.infineon.com/0.1.39/port/p/1/pad/0/swreg_out" signalType="SINGAL" direction="OUT" isVisible="true">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../IO004/1.0.22/io004_7.app#//@consumed.8"/>
   </provided>
-  <provided xsi:type="ResourceModel:BitField" name="HW0" URI="http://www.infineon.com/0.1.39/port/p/1/pad/0/hwsel_hw" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Port n Pin Hardware Select Bit x</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Software control only."/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="HW0 control path can override the software configuration."/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="HW1 control path can override the software configuration."/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Reserved."/>
-  </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P1.1 / #78" URI="http://www.infineon.com/0.1.39/port/p/1/pad/1">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../IO004/1.0.22/io004_8.app#//@consumed.0"/>
     <resourcesList name="out_p" requiredResourceUri="http://www.infineon.com/0.1.39/port/p/1/out/p1" isResolved="true"/>
@@ -139,6 +129,16 @@
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../IO004/1.0.22/io004_8.app#//@consumed.8"/>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="HW1" URI="http://www.infineon.com/0.1.39/port/p/1/pad/1/hwsel_hw" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Port n Pin Hardware Select Bit x</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Software control only."/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="HW0 control path can override the software configuration."/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="HW1 control path can override the software configuration."/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Reserved."/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="HW0" URI="http://www.infineon.com/0.1.39/port/p/1/pad/0/hwsel_hw" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>

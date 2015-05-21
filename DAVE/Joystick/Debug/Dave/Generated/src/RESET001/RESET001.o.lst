@@ -627,19 +627,19 @@
  328              		.file 6 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 RESET001.c
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:20     .text.RESET001_AssertReset:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:25     .text.RESET001_AssertReset:00000000 RESET001_AssertReset
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:85     .text.RESET001_DeassertReset:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:90     .text.RESET001_DeassertReset:00000000 RESET001_DeassertReset
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:149    .text.RESET001_GetResetInfo:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:154    .text.RESET001_GetResetInfo:00000000 RESET001_GetResetInfo
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:194    .text.RESET001_GetStatus:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:199    .text.RESET001_GetStatus:00000000 RESET001_GetStatus
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:282    .text.RESET001_ClearResetInfo:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccbeEb1n.s:287    .text.RESET001_ClearResetInfo:00000000 RESET001_ClearResetInfo
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:20     .text.RESET001_AssertReset:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:25     .text.RESET001_AssertReset:00000000 RESET001_AssertReset
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:85     .text.RESET001_DeassertReset:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:90     .text.RESET001_DeassertReset:00000000 RESET001_DeassertReset
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:149    .text.RESET001_GetResetInfo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:154    .text.RESET001_GetResetInfo:00000000 RESET001_GetResetInfo
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:194    .text.RESET001_GetStatus:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:199    .text.RESET001_GetStatus:00000000 RESET001_GetStatus
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:282    .text.RESET001_ClearResetInfo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccDjzDOV.s:287    .text.RESET001_ClearResetInfo:00000000 RESET001_ClearResetInfo
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.6730aed6a8e49268c462cbcb73e91a8e
-                           .group:00000000 wm4.uc_id.h.35.91819d6149ee56f9404d69053d48d018
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
                            .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
                            .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
                            .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c

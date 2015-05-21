@@ -23,7 +23,7 @@ char data = 0;
 char data_R[4];
 void setup() {
   Serial.begin(9600);
-  configuration[0] = 0xC5;//RF_CH# e OP_MODE
+  configuration[0] = 0xC4;//RF_CH# e OP_MODE
   configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR
   configuration[2] = 0xA3;//addr_w
   configuration[3] = 0xEE;//Comeco enderco CH1
@@ -61,14 +61,14 @@ void setup() {
   pinMode(CLK_E, OUTPUT);
   pinMode(CE_E, OUTPUT);
   
-  configure_E();
+  //configure_E();
   data = '0';
   configure_R();
 }
 int i = 0;
 void loop() {
-  write_E();
-  Serial.println("Enviando dados");
+  //write_E();
+  Serial.println("Esperando dados");
   //data = '0';
   //if (Serial.available() > 0)
     //data = Serial.read();

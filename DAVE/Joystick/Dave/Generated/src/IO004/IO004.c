@@ -131,13 +131,13 @@ void IO004_Init(void)
 
 	   
 
-  /* Configuration of 0 Port 4 based on User configuration */
-  IO004_Handle1.PortRegs->OMR = 0U<< 4;
+  /* Configuration of 2 Port 8 based on User configuration */
+  IO004_Handle1.PortRegs->OMR = 0U<< 8;
   
-  IO004_Handle1.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD4_Msk));
-  IO004_Handle1.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD4_Pos) & \
-                                          PORT0_PDR0_PD4_Msk);
-  IO004_Handle1.PortRegs->IOCR4 |= (0U << 3);   
+  IO004_Handle1.PortRegs->PDR1  &= (uint32_t)(~(PORT2_PDR1_PD8_Msk));
+  IO004_Handle1.PortRegs->PDR1  |= (uint32_t)((4UL << PORT2_PDR1_PD8_Pos) & \
+                                     PORT2_PDR1_PD8_Msk);
+  IO004_Handle1.PortRegs->IOCR8 |= (0U << 3);   
 
   /* Configuration of 0 Port 0 based on User configuration */
   IO004_Handle10.PortRegs->OMR = 0U<< 0;
@@ -163,37 +163,37 @@ void IO004_Init(void)
                                           PORT0_PDR0_PD1_Msk);
   IO004_Handle12.PortRegs->IOCR0 |= (0U << 11);   
 
-  /* Configuration of 0 Port 2 based on User configuration */
-  IO004_Handle2.PortRegs->OMR = 0U<< 2;
+  /* Configuration of 2 Port 5 based on User configuration */
+  IO004_Handle2.PortRegs->OMR = 0U<< 5;
   
-  IO004_Handle2.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD2_Msk));
-  IO004_Handle2.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD2_Pos) & \
-                                          PORT0_PDR0_PD2_Msk);
-  IO004_Handle2.PortRegs->IOCR0 |= (0U << 19);   
+  IO004_Handle2.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD5_Msk));
+  IO004_Handle2.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD5_Pos) & \
+                                          PORT2_PDR0_PD5_Msk);
+  IO004_Handle2.PortRegs->IOCR4 |= (0U << 11);   
 
-  /* Configuration of 0 Port 6 based on User configuration */
-  IO004_Handle4.PortRegs->OMR = 0U<< 6;
+  /* Configuration of 2 Port 4 based on User configuration */
+  IO004_Handle4.PortRegs->OMR = 0U<< 4;
   
-  IO004_Handle4.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD6_Msk));
-  IO004_Handle4.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD6_Pos) & \
-                                          PORT0_PDR0_PD6_Msk);
-  IO004_Handle4.PortRegs->IOCR4 |= (0U << 19);   
+  IO004_Handle4.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD4_Msk));
+  IO004_Handle4.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD4_Pos) & \
+                                          PORT2_PDR0_PD4_Msk);
+  IO004_Handle4.PortRegs->IOCR4 |= (0U << 3);   
 
-  /* Configuration of 0 Port 12 based on User configuration */
-  IO004_Handle5.PortRegs->OMR = 0U<< 12;
+  /* Configuration of 2 Port 3 based on User configuration */
+  IO004_Handle5.PortRegs->OMR = 0U<< 3;
   
-  IO004_Handle5.PortRegs->PDR1  &= (uint32_t)(~(PORT0_PDR1_PD12_Msk));
-  IO004_Handle5.PortRegs->PDR1  |= (uint32_t)((4UL << PORT0_PDR1_PD12_Pos) & \
-                                     PORT0_PDR1_PD12_Msk);
-  IO004_Handle5.PortRegs->IOCR12 |= (3U << 3);   
+  IO004_Handle5.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD3_Msk));
+  IO004_Handle5.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD3_Pos) & \
+                                          PORT2_PDR0_PD3_Msk);
+  IO004_Handle5.PortRegs->IOCR0 |= (3U << 27);   
 
-  /* Configuration of 3 Port 4 based on User configuration */
-  IO004_Handle6.PortRegs->OMR = 0U<< 4;
+  /* Configuration of 2 Port 2 based on User configuration */
+  IO004_Handle6.PortRegs->OMR = 0U<< 2;
   
-  IO004_Handle6.PortRegs->PDR0   &= (uint32_t)(~(PORT3_PDR0_PD4_Msk));
-  IO004_Handle6.PortRegs->PDR0   |= (uint32_t)((4UL << PORT3_PDR0_PD4_Pos) & \
-                                          PORT3_PDR0_PD4_Msk);
-  IO004_Handle6.PortRegs->IOCR4 |= (0U << 3);   
+  IO004_Handle6.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD2_Msk));
+  IO004_Handle6.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD2_Pos) & \
+                                          PORT2_PDR0_PD2_Msk);
+  IO004_Handle6.PortRegs->IOCR0 |= (0U << 19);   
 
   /* Configuration of 1 Port 0 based on User configuration */
   IO004_Handle7.PortRegs->OMR = 0U<< 0;

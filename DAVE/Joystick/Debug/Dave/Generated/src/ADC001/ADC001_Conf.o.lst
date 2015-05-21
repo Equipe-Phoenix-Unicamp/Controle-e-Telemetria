@@ -1,0 +1,154 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"ADC001_Conf.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	ADC001_DynamicHandle
+  20              		.bss
+  21              		.align	2
+  24              	ADC001_DynamicHandle:
+  25 0000 00000000 		.space	6
+  25      0000
+  26              		.global	ADC001_ChannelAAHandle
+  27 0006 0000     		.section	.rodata
+  28              		.align	2
+  31              	ADC001_ChannelAAHandle:
+  32 0000 00       		.byte	0
+  33 0001 00       		.byte	0
+  34 0002 01       		.byte	1
+  35              		.global	ADC001_ChannelHandlePtr
+  36              		.data
+  37              		.align	2
+  40              	ADC001_ChannelHandlePtr:
+  41 0000 00000000 		.word	ADC001_ChannelAAHandle
+  42              		.global	ADC001_Handle0
+  43              		.section	.rodata
+  44 0003 00       		.align	2
+  47              	ADC001_Handle0:
+  48 0004 00       		.space	1
+  49 0005 01       		.byte	1
+  50 0006 01       		.byte	1
+  51 0007 00       		.byte	0
+  52 0008 00       		.byte	0
+  53 0009 00       		.byte	0
+  54 000a 01       		.byte	1
+  55 000b 00       		.byte	0
+  56 000c 00       		.byte	0
+  57 000d 00       		.byte	0
+  58 000e 01       		.byte	1
+  59 000f 00       		.byte	0
+  60 0010 00       		.byte	0
+  61 0011 00       		.byte	0
+  62 0012 00       		.byte	0
+  63 0013 00       		.byte	0
+  64 0014 00       		.byte	0
+  65 0015 00       		.byte	0
+  66 0016 00       		.byte	0
+  67 0017 00       		.byte	0
+  68 0018 00       		.byte	0
+  69 0019 00       		.byte	0
+  70 001a 00       		.byte	0
+  71 001b 00       		.byte	0
+  72 001c 00       		.byte	0
+  73 001d 00       		.byte	0
+  74 001e 00       		.byte	0
+  75 001f 00       		.byte	0
+  76 0020 00       		.byte	0
+  77 0021 00       		.byte	0
+  78 0022 00       		.byte	0
+  79 0023 00       		.byte	0
+  80 0024 00       		.byte	0
+  81 0025 00       		.byte	0
+  82 0026 00       		.byte	0
+  83 0027 00       		.byte	0
+  84 0028 00       		.byte	0
+  85 0029 00       		.byte	0
+  86 002a 00       		.byte	0
+  87 002b 00       		.byte	0
+  88 002c 00       		.byte	0
+  89 002d 00       		.byte	0
+  90 002e 01       		.byte	1
+  91 002f 00       		.byte	0
+  92 0030 00       		.byte	0
+  93 0031 00       		.byte	0
+  94 0032 01       		.byte	1
+  95 0033 00       		.space	1
+  96 0034 00       		.byte	0
+  97 0035 00       		.byte	0
+  98 0036 00       		.byte	0
+  99 0037 01       		.byte	1
+ 100 0038 01       		.byte	1
+ 101 0039 00       		.byte	0
+ 102 003a 01       		.byte	1
+ 103 003b 00       		.byte	0
+ 104 003c 01       		.byte	1
+ 105 003d 00       		.byte	0
+ 106 003e 02       		.byte	2
+ 107 003f 00       		.space	1
+ 108 0040 00000000 		.word	ADC001_DynamicHandle
+ 109 0044 00400040 		.word	1073758208
+ 110 0048 00440040 		.word	1073759232
+ 111 004c 00480040 		.word	1073760256
+ 112 0050 004C0040 		.word	1073761280
+ 113 0054 00500040 		.word	1073762304
+ 114              		.text
+ 115              	.Letext0:
+ 116              		.file 1 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 117              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 118              		.file 3 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
+ 119              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 120              		.file 5 "../Dave/Generated/src/ADC001/ADC001_Conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ADC001_Conf.c
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:24     .bss:00000000 ADC001_DynamicHandle
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:21     .bss:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:31     .rodata:00000000 ADC001_ChannelAAHandle
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:28     .rodata:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:40     .data:00000000 ADC001_ChannelHandlePtr
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:37     .data:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\cc4YUk6c.s:47     .rodata:00000004 ADC001_Handle0
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
+                           .group:00000000 wm4.Usic.h.54.8af9f733ba5771eeb374435d205ea54b
+                           .group:00000000 wm4.UART001_Conf.h.53.ec21866ed24322af6d30be63c4791501
+                           .group:00000000 wm4.UART001.h.109.3e835815a7a59791d8bd39655f4d4cc9
+                           .group:00000000 wm4.ADCGROUP001.h.66.3ee81aba16709c201614af7d67499bdb
+                           .group:00000000 wm4.IO001.h.49.4efcabb368feaef60c65bd7504b48505
+                           .group:00000000 wm4.ADC001.h.72.a0f6b9479a18584b91fa95e6f862978d
+                           .group:00000000 wm4.NVIC002_Conf.h.63.2037966d607e03e4d09b45a6c3213a0d
+
+NO UNDEFINED SYMBOLS

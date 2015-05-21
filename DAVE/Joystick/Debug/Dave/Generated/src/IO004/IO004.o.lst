@@ -22,7 +22,7 @@
   22              		.thumb
   23              		.thumb_func
   25              	IO004_Init:
-  26              	.LFB112:
+  26              	.LFB117:
   27              		.file 1 "../Dave/Generated/src/IO004/IO004.c"
    1:../Dave/Generated/src/IO004/IO004.c **** /*******************************************************************************
    2:../Dave/Generated/src/IO004/IO004.c **** **  DAVE App Name : IO004       App Version: 1.0.22               
@@ -169,8 +169,8 @@
  131:../Dave/Generated/src/IO004/IO004.c **** 
  132:../Dave/Generated/src/IO004/IO004.c **** 	   
  133:../Dave/Generated/src/IO004/IO004.c **** 
- 134:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 0 Port 4 based on User configuration */
- 135:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->OMR = 0U<< 4;
+ 134:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 2 Port 8 based on User configuration */
+ 135:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->OMR = 0U<< 8;
   40              		.loc 1 135 0
   41 0004 40F20003 		movw	r3, #:lower16:IO004_Handle1
   42 0008 C0F20003 		movt	r3, #:upper16:IO004_Handle1
@@ -178,7 +178,7 @@
   44 000e 4FF00002 		mov	r2, #0
   45 0012 5A60     		str	r2, [r3, #4]
  136:../Dave/Generated/src/IO004/IO004.c ****   
- 137:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD4_Msk));
+ 137:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->PDR1  &= (uint32_t)(~(PORT2_PDR1_PD8_Msk));
   46              		.loc 1 137 0
   47 0014 40F20003 		movw	r3, #:lower16:IO004_Handle1
   48 0018 C0F20003 		movt	r3, #:upper16:IO004_Handle1
@@ -186,10 +186,10 @@
   50 001e 40F20003 		movw	r3, #:lower16:IO004_Handle1
   51 0022 C0F20003 		movt	r3, #:upper16:IO004_Handle1
   52 0026 5B68     		ldr	r3, [r3, #4]
-  53 0028 1B6C     		ldr	r3, [r3, #64]
-  54 002a 23F4E023 		bic	r3, r3, #458752
-  55 002e 1364     		str	r3, [r2, #64]
- 138:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD4_Pos) & \
+  53 0028 5B6C     		ldr	r3, [r3, #68]
+  54 002a 23F00703 		bic	r3, r3, #7
+  55 002e 5364     		str	r3, [r2, #68]
+ 138:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->PDR1  |= (uint32_t)((4UL << PORT2_PDR1_PD8_Pos) & \
   56              		.loc 1 138 0
   57 0030 40F20003 		movw	r3, #:lower16:IO004_Handle1
   58 0034 C0F20003 		movt	r3, #:upper16:IO004_Handle1
@@ -197,11 +197,11 @@
   60 003a 40F20003 		movw	r3, #:lower16:IO004_Handle1
   61 003e C0F20003 		movt	r3, #:upper16:IO004_Handle1
   62 0042 5B68     		ldr	r3, [r3, #4]
-  63 0044 1B6C     		ldr	r3, [r3, #64]
-  64 0046 43F48023 		orr	r3, r3, #262144
-  65 004a 1364     		str	r3, [r2, #64]
- 139:../Dave/Generated/src/IO004/IO004.c ****                                           PORT0_PDR0_PD4_Msk);
- 140:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->IOCR4 |= (0U << 3);   
+  63 0044 5B6C     		ldr	r3, [r3, #68]
+  64 0046 43F00403 		orr	r3, r3, #4
+  65 004a 5364     		str	r3, [r2, #68]
+ 139:../Dave/Generated/src/IO004/IO004.c ****                                      PORT2_PDR1_PD8_Msk);
+ 140:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle1.PortRegs->IOCR8 |= (0U << 3);   
   66              		.loc 1 140 0
   67 004c 40F20003 		movw	r3, #:lower16:IO004_Handle1
   68 0050 C0F20003 		movt	r3, #:upper16:IO004_Handle1
@@ -209,8 +209,8 @@
   70 0056 40F20003 		movw	r3, #:lower16:IO004_Handle1
   71 005a C0F20003 		movt	r3, #:upper16:IO004_Handle1
   72 005e 5B68     		ldr	r3, [r3, #4]
-  73 0060 5B69     		ldr	r3, [r3, #20]
-  74 0062 5361     		str	r3, [r2, #20]
+  73 0060 9B69     		ldr	r3, [r3, #24]
+  74 0062 9361     		str	r3, [r2, #24]
  141:../Dave/Generated/src/IO004/IO004.c **** 
  142:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 0 Port 0 based on User configuration */
  143:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle10.PortRegs->OMR = 0U<< 0;
@@ -341,8 +341,8 @@
  178 0180 1B69     		ldr	r3, [r3, #16]
  179 0182 1361     		str	r3, [r2, #16]
  165:../Dave/Generated/src/IO004/IO004.c **** 
- 166:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 0 Port 2 based on User configuration */
- 167:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->OMR = 0U<< 2;
+ 166:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 2 Port 5 based on User configuration */
+ 167:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->OMR = 0U<< 5;
  180              		.loc 1 167 0
  181 0184 40F20003 		movw	r3, #:lower16:IO004_Handle2
  182 0188 C0F20003 		movt	r3, #:upper16:IO004_Handle2
@@ -350,7 +350,7 @@
  184 018e 4FF00002 		mov	r2, #0
  185 0192 5A60     		str	r2, [r3, #4]
  168:../Dave/Generated/src/IO004/IO004.c ****   
- 169:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD2_Msk));
+ 169:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD5_Msk));
  186              		.loc 1 169 0
  187 0194 40F20003 		movw	r3, #:lower16:IO004_Handle2
  188 0198 C0F20003 		movt	r3, #:upper16:IO004_Handle2
@@ -359,9 +359,9 @@
  191 01a2 C0F20003 		movt	r3, #:upper16:IO004_Handle2
  192 01a6 5B68     		ldr	r3, [r3, #4]
  193 01a8 1B6C     		ldr	r3, [r3, #64]
- 194 01aa 23F4E063 		bic	r3, r3, #1792
+ 194 01aa 23F4E003 		bic	r3, r3, #7340032
  195 01ae 1364     		str	r3, [r2, #64]
- 170:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD2_Pos) & \
+ 170:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD5_Pos) & \
  196              		.loc 1 170 0
  197 01b0 40F20003 		movw	r3, #:lower16:IO004_Handle2
  198 01b4 C0F20003 		movt	r3, #:upper16:IO004_Handle2
@@ -370,10 +370,10 @@
  201 01be C0F20003 		movt	r3, #:upper16:IO004_Handle2
  202 01c2 5B68     		ldr	r3, [r3, #4]
  203 01c4 1B6C     		ldr	r3, [r3, #64]
- 204 01c6 43F48063 		orr	r3, r3, #1024
+ 204 01c6 43F48003 		orr	r3, r3, #4194304
  205 01ca 1364     		str	r3, [r2, #64]
- 171:../Dave/Generated/src/IO004/IO004.c ****                                           PORT0_PDR0_PD2_Msk);
- 172:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->IOCR0 |= (0U << 19);   
+ 171:../Dave/Generated/src/IO004/IO004.c ****                                           PORT2_PDR0_PD5_Msk);
+ 172:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle2.PortRegs->IOCR4 |= (0U << 11);   
  206              		.loc 1 172 0
  207 01cc 40F20003 		movw	r3, #:lower16:IO004_Handle2
  208 01d0 C0F20003 		movt	r3, #:upper16:IO004_Handle2
@@ -381,11 +381,11 @@
  210 01d6 40F20003 		movw	r3, #:lower16:IO004_Handle2
  211 01da C0F20003 		movt	r3, #:upper16:IO004_Handle2
  212 01de 5B68     		ldr	r3, [r3, #4]
- 213 01e0 1B69     		ldr	r3, [r3, #16]
- 214 01e2 1361     		str	r3, [r2, #16]
+ 213 01e0 5B69     		ldr	r3, [r3, #20]
+ 214 01e2 5361     		str	r3, [r2, #20]
  173:../Dave/Generated/src/IO004/IO004.c **** 
- 174:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 0 Port 6 based on User configuration */
- 175:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->OMR = 0U<< 6;
+ 174:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 2 Port 4 based on User configuration */
+ 175:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->OMR = 0U<< 4;
  215              		.loc 1 175 0
  216 01e4 40F20003 		movw	r3, #:lower16:IO004_Handle4
  217 01e8 C0F20003 		movt	r3, #:upper16:IO004_Handle4
@@ -393,7 +393,7 @@
  219 01ee 4FF00002 		mov	r2, #0
  220 01f2 5A60     		str	r2, [r3, #4]
  176:../Dave/Generated/src/IO004/IO004.c ****   
- 177:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD6_Msk));
+ 177:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD4_Msk));
  221              		.loc 1 177 0
  222 01f4 40F20003 		movw	r3, #:lower16:IO004_Handle4
  223 01f8 C0F20003 		movt	r3, #:upper16:IO004_Handle4
@@ -402,9 +402,9 @@
  226 0202 C0F20003 		movt	r3, #:upper16:IO004_Handle4
  227 0206 5B68     		ldr	r3, [r3, #4]
  228 0208 1B6C     		ldr	r3, [r3, #64]
- 229 020a 23F0E063 		bic	r3, r3, #117440512
+ 229 020a 23F4E023 		bic	r3, r3, #458752
  230 020e 1364     		str	r3, [r2, #64]
- 178:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD6_Pos) & \
+ 178:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD4_Pos) & \
  231              		.loc 1 178 0
  232 0210 40F20003 		movw	r3, #:lower16:IO004_Handle4
  233 0214 C0F20003 		movt	r3, #:upper16:IO004_Handle4
@@ -413,10 +413,10 @@
  236 021e C0F20003 		movt	r3, #:upper16:IO004_Handle4
  237 0222 5B68     		ldr	r3, [r3, #4]
  238 0224 1B6C     		ldr	r3, [r3, #64]
- 239 0226 43F08063 		orr	r3, r3, #67108864
+ 239 0226 43F48023 		orr	r3, r3, #262144
  240 022a 1364     		str	r3, [r2, #64]
- 179:../Dave/Generated/src/IO004/IO004.c ****                                           PORT0_PDR0_PD6_Msk);
- 180:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->IOCR4 |= (0U << 19);   
+ 179:../Dave/Generated/src/IO004/IO004.c ****                                           PORT2_PDR0_PD4_Msk);
+ 180:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle4.PortRegs->IOCR4 |= (0U << 3);   
  241              		.loc 1 180 0
  242 022c 40F20003 		movw	r3, #:lower16:IO004_Handle4
  243 0230 C0F20003 		movt	r3, #:upper16:IO004_Handle4
@@ -427,8 +427,8 @@
  248 0240 5B69     		ldr	r3, [r3, #20]
  249 0242 5361     		str	r3, [r2, #20]
  181:../Dave/Generated/src/IO004/IO004.c **** 
- 182:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 0 Port 12 based on User configuration */
- 183:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->OMR = 0U<< 12;
+ 182:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 2 Port 3 based on User configuration */
+ 183:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->OMR = 0U<< 3;
  250              		.loc 1 183 0
  251 0244 40F20003 		movw	r3, #:lower16:IO004_Handle5
  252 0248 C0F20003 		movt	r3, #:upper16:IO004_Handle5
@@ -436,7 +436,7 @@
  254 024e 4FF00002 		mov	r2, #0
  255 0252 5A60     		str	r2, [r3, #4]
  184:../Dave/Generated/src/IO004/IO004.c ****   
- 185:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->PDR1  &= (uint32_t)(~(PORT0_PDR1_PD12_Msk));
+ 185:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD3_Msk));
  256              		.loc 1 185 0
  257 0254 40F20003 		movw	r3, #:lower16:IO004_Handle5
  258 0258 C0F20003 		movt	r3, #:upper16:IO004_Handle5
@@ -444,10 +444,10 @@
  260 025e 40F20003 		movw	r3, #:lower16:IO004_Handle5
  261 0262 C0F20003 		movt	r3, #:upper16:IO004_Handle5
  262 0266 5B68     		ldr	r3, [r3, #4]
- 263 0268 5B6C     		ldr	r3, [r3, #68]
- 264 026a 23F4E023 		bic	r3, r3, #458752
- 265 026e 5364     		str	r3, [r2, #68]
- 186:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->PDR1  |= (uint32_t)((4UL << PORT0_PDR1_PD12_Pos) & \
+ 263 0268 1B6C     		ldr	r3, [r3, #64]
+ 264 026a 23F4E043 		bic	r3, r3, #28672
+ 265 026e 1364     		str	r3, [r2, #64]
+ 186:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD3_Pos) & \
  266              		.loc 1 186 0
  267 0270 40F20003 		movw	r3, #:lower16:IO004_Handle5
  268 0274 C0F20003 		movt	r3, #:upper16:IO004_Handle5
@@ -455,11 +455,11 @@
  270 027a 40F20003 		movw	r3, #:lower16:IO004_Handle5
  271 027e C0F20003 		movt	r3, #:upper16:IO004_Handle5
  272 0282 5B68     		ldr	r3, [r3, #4]
- 273 0284 5B6C     		ldr	r3, [r3, #68]
- 274 0286 43F48023 		orr	r3, r3, #262144
- 275 028a 5364     		str	r3, [r2, #68]
- 187:../Dave/Generated/src/IO004/IO004.c ****                                      PORT0_PDR1_PD12_Msk);
- 188:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->IOCR12 |= (3U << 3);   
+ 273 0284 1B6C     		ldr	r3, [r3, #64]
+ 274 0286 43F48043 		orr	r3, r3, #16384
+ 275 028a 1364     		str	r3, [r2, #64]
+ 187:../Dave/Generated/src/IO004/IO004.c ****                                           PORT2_PDR0_PD3_Msk);
+ 188:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle5.PortRegs->IOCR0 |= (3U << 27);   
  276              		.loc 1 188 0
  277 028c 40F20003 		movw	r3, #:lower16:IO004_Handle5
  278 0290 C0F20003 		movt	r3, #:upper16:IO004_Handle5
@@ -467,12 +467,12 @@
  280 0296 40F20003 		movw	r3, #:lower16:IO004_Handle5
  281 029a C0F20003 		movt	r3, #:upper16:IO004_Handle5
  282 029e 5B68     		ldr	r3, [r3, #4]
- 283 02a0 DB69     		ldr	r3, [r3, #28]
- 284 02a2 43F01803 		orr	r3, r3, #24
- 285 02a6 D361     		str	r3, [r2, #28]
+ 283 02a0 1B69     		ldr	r3, [r3, #16]
+ 284 02a2 43F0C053 		orr	r3, r3, #402653184
+ 285 02a6 1361     		str	r3, [r2, #16]
  189:../Dave/Generated/src/IO004/IO004.c **** 
- 190:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 3 Port 4 based on User configuration */
- 191:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->OMR = 0U<< 4;
+ 190:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 2 Port 2 based on User configuration */
+ 191:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->OMR = 0U<< 2;
  286              		.loc 1 191 0
  287 02a8 40F20003 		movw	r3, #:lower16:IO004_Handle6
  288 02ac C0F20003 		movt	r3, #:upper16:IO004_Handle6
@@ -480,7 +480,7 @@
  290 02b2 4FF00002 		mov	r2, #0
  291 02b6 5A60     		str	r2, [r3, #4]
  192:../Dave/Generated/src/IO004/IO004.c ****   
- 193:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->PDR0   &= (uint32_t)(~(PORT3_PDR0_PD4_Msk));
+ 193:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->PDR0   &= (uint32_t)(~(PORT2_PDR0_PD2_Msk));
  292              		.loc 1 193 0
  293 02b8 40F20003 		movw	r3, #:lower16:IO004_Handle6
  294 02bc C0F20003 		movt	r3, #:upper16:IO004_Handle6
@@ -489,9 +489,9 @@
  297 02c6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
  298 02ca 5B68     		ldr	r3, [r3, #4]
  299 02cc 1B6C     		ldr	r3, [r3, #64]
- 300 02ce 23F4E023 		bic	r3, r3, #458752
+ 300 02ce 23F4E063 		bic	r3, r3, #1792
  301 02d2 1364     		str	r3, [r2, #64]
- 194:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->PDR0   |= (uint32_t)((4UL << PORT3_PDR0_PD4_Pos) & \
+ 194:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->PDR0   |= (uint32_t)((4UL << PORT2_PDR0_PD2_Pos) & \
  302              		.loc 1 194 0
  303 02d4 40F20003 		movw	r3, #:lower16:IO004_Handle6
  304 02d8 C0F20003 		movt	r3, #:upper16:IO004_Handle6
@@ -500,10 +500,10 @@
  307 02e2 C0F20003 		movt	r3, #:upper16:IO004_Handle6
  308 02e6 5B68     		ldr	r3, [r3, #4]
  309 02e8 1B6C     		ldr	r3, [r3, #64]
- 310 02ea 43F48023 		orr	r3, r3, #262144
+ 310 02ea 43F48063 		orr	r3, r3, #1024
  311 02ee 1364     		str	r3, [r2, #64]
- 195:../Dave/Generated/src/IO004/IO004.c ****                                           PORT3_PDR0_PD4_Msk);
- 196:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->IOCR4 |= (0U << 3);   
+ 195:../Dave/Generated/src/IO004/IO004.c ****                                           PORT2_PDR0_PD2_Msk);
+ 196:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle6.PortRegs->IOCR0 |= (0U << 19);   
  312              		.loc 1 196 0
  313 02f0 40F20003 		movw	r3, #:lower16:IO004_Handle6
  314 02f4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
@@ -511,8 +511,8 @@
  316 02fa 40F20003 		movw	r3, #:lower16:IO004_Handle6
  317 02fe C0F20003 		movt	r3, #:upper16:IO004_Handle6
  318 0302 5B68     		ldr	r3, [r3, #4]
- 319 0304 5B69     		ldr	r3, [r3, #20]
- 320 0306 5361     		str	r3, [r2, #20]
+ 319 0304 1B69     		ldr	r3, [r3, #16]
+ 320 0306 1361     		str	r3, [r2, #16]
  197:../Dave/Generated/src/IO004/IO004.c **** 
  198:../Dave/Generated/src/IO004/IO004.c ****   /* Configuration of 1 Port 0 based on User configuration */
  199:../Dave/Generated/src/IO004/IO004.c ****   IO004_Handle7.PortRegs->OMR = 0U<< 0;
@@ -649,14 +649,14 @@
  429 042e 80BC     		pop	{r7}
  430 0430 7047     		bx	lr
  431              		.cfi_endproc
- 432              	.LFE112:
+ 432              	.LFE117:
  434 0432 00BF     		.section	.text.IO004_DisableOutputDriver,"ax",%progbits
  435              		.align	2
  436              		.global	IO004_DisableOutputDriver
  437              		.thumb
  438              		.thumb_func
  440              	IO004_DisableOutputDriver:
- 441              	.LFB113:
+ 441              	.LFB118:
  222:../Dave/Generated/src/IO004/IO004.c **** 
  223:../Dave/Generated/src/IO004/IO004.c **** void IO004_DisableOutputDriver(const IO004_HandleType* Handle,IO004_InputModeType Mode)
  224:../Dave/Generated/src/IO004/IO004.c **** {
@@ -875,14 +875,14 @@
  626 0178 80BC     		pop	{r7}
  627 017a 7047     		bx	lr
  628              		.cfi_endproc
- 629              	.LFE113:
+ 629              	.LFE118:
  631              		.section	.text.IO004_EnableOutputDriver,"ax",%progbits
  632              		.align	2
  633              		.global	IO004_EnableOutputDriver
  634              		.thumb
  635              		.thumb_func
  637              	IO004_EnableOutputDriver:
- 638              	.LFB114:
+ 638              	.LFB119:
  253:../Dave/Generated/src/IO004/IO004.c **** 
  254:../Dave/Generated/src/IO004/IO004.c **** void IO004_EnableOutputDriver(const IO004_HandleType* Handle,IO004_OutputModeType Mode)
  255:../Dave/Generated/src/IO004/IO004.c **** {
@@ -1101,7 +1101,7 @@
  823 0178 80BC     		pop	{r7}
  824 017a 7047     		bx	lr
  825              		.cfi_endproc
- 826              	.LFE114:
+ 826              	.LFE119:
  828              		.text
  829              	.Letext0:
  830              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
@@ -1110,14 +1110,14 @@
  833              		.file 5 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004.c
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:20     .text.IO004_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:25     .text.IO004_Init:00000000 IO004_Init
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:435    .text.IO004_DisableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:440    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:632    .text.IO004_EnableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:637    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:20     .text.IO004_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:25     .text.IO004_Init:00000000 IO004_Init
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:435    .text.IO004_DisableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:440    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:632    .text.IO004_EnableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:637    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
                      .debug_frame:00000010 $d
-                           .group:00000000 wm4.1.6730aed6a8e49268c462cbcb73e91a8e
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
                            .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
@@ -1137,12 +1137,16 @@ C:\Users\Carlos\AppData\Local\Temp\ccwzOIc5.s:637    .text.IO004_EnableOutputDri
                            .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
                            .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
                            .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
-                           .group:00000000 wm4.uc_id.h.35.91819d6149ee56f9404d69053d48d018
+                           .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
                            .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
                            .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
                            .group:00000000 wm4.Usic.h.54.8af9f733ba5771eeb374435d205ea54b
                            .group:00000000 wm4.UART001_Conf.h.53.ec21866ed24322af6d30be63c4791501
                            .group:00000000 wm4.UART001.h.109.3e835815a7a59791d8bd39655f4d4cc9
+                           .group:00000000 wm4.ADCGROUP001.h.66.3ee81aba16709c201614af7d67499bdb
+                           .group:00000000 wm4.IO001.h.49.4efcabb368feaef60c65bd7504b48505
+                           .group:00000000 wm4.ADC001.h.72.a0f6b9479a18584b91fa95e6f862978d
+                           .group:00000000 wm4.NVIC002_Conf.h.63.2037966d607e03e4d09b45a6c3213a0d
 
 UNDEFINED SYMBOLS
 IO004_Handle1

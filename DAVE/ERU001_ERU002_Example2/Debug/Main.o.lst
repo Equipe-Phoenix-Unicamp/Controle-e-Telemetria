@@ -1,0 +1,375 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.thumb
+  23              		.thumb_func
+  25              	main:
+  26              	.LFB117:
+  27              		.file 1 "../Main.c"
+   1:../Main.c     **** /*******************************************************************************
+   2:../Main.c     ****  Copyright (c) 2014, Infineon Technologies AG                                 **
+   3:../Main.c     ****  All rights reserved.                                                         **
+   4:../Main.c     ****                                                                               **
+   5:../Main.c     ****  Redistribution and use in source and binary forms, with or without           **
+   6:../Main.c     ****  modification,are permitted provided that the following conditions are met:   **
+   7:../Main.c     ****                                                                               **
+   8:../Main.c     ****  *Redistributions of source code must retain the above copyright notice,      **
+   9:../Main.c     ****  this list of conditions and the following disclaimer.                        **
+  10:../Main.c     ****  *Redistributions in binary form must reproduce the above copyright notice,   **
+  11:../Main.c     ****  this list of conditions and the following disclaimer in the documentation    **
+  12:../Main.c     ****  and/or other materials provided with the distribution.                       **
+  13:../Main.c     ****  *Neither the name of the copyright holders nor the names of its contributors **
+  14:../Main.c     ****  may be used to endorse or promote products derived from this software without**
+  15:../Main.c     ****  specific prior written permission.                                           **
+  16:../Main.c     ****                                                                               **
+  17:../Main.c     ****  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+  18:../Main.c     ****  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+  19:../Main.c     ****  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+  20:../Main.c     ****  ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+  21:../Main.c     ****  LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+  22:../Main.c     ****  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+  23:../Main.c     ****  SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+  24:../Main.c     ****  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+  25:../Main.c     ****  CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+  26:../Main.c     ****  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+  27:../Main.c     ****  POSSIBILITY OF SUCH DAMAGE.                                                  **
+  28:../Main.c     ****                                                                               **
+  29:../Main.c     ****  To improve the quality of the software, users are encouraged to share        **
+  30:../Main.c     ****  modifications, enhancements or bug fixes with Infineon Technologies AG       **
+  31:../Main.c     ****  dave@infineon.com).                                                          **
+  32:../Main.c     ****                                                                               **
+  33:../Main.c     **** ********************************************************************************
+  34:../Main.c     **** **                                                                            **
+  35:../Main.c     **** **                                                                            **
+  36:../Main.c     **** ** PLATFORM : Infineon XMC4500 AB Step Series                                 **
+  37:../Main.c     **** **                                                                            **
+  38:../Main.c     **** ** AUTHOR : Application Engineering Team                                      **
+  39:../Main.c     **** **                                                                            **
+  40:../Main.c     **** ** version 1.0.0 (Initial version)			                                  **
+  41:../Main.c     **** ** version 1.0.2 (Updated to Public release                                   **
+  42:../Main.c     **** **                1.0.50 DAVE APPs Library)			                          **
+  43:../Main.c     **** ** version 1.0.4 (Updated to Public release                                   **
+  44:../Main.c     **** **                1.0.64 DAVE APPs Library)			                          **
+  45:../Main.c     **** ** MODIFICATION DATE : May 23, 2014                                           **
+  46:../Main.c     **** **                                                                            **
+  47:../Main.c     **** *******************************************************************************/
+  48:../Main.c     **** 
+  49:../Main.c     **** /*******************************************************************************
+  50:../Main.c     **** **                       Author(s) Identity                                   **
+  51:../Main.c     **** ********************************************************************************
+  52:../Main.c     **** **                                                                            **
+  53:../Main.c     **** ** Initials     Name                                                          **
+  54:../Main.c     **** ** ---------------------------------------------------------------------------**
+  55:../Main.c     **** **           App Developer                                                    **
+  56:../Main.c     **** *******************************************************************************/
+  57:../Main.c     **** 
+  58:../Main.c     **** 
+  59:../Main.c     **** 
+  60:../Main.c     **** 
+  61:../Main.c     **** 
+  62:../Main.c     **** #include <DAVE3.h>			//Declarations from DAVE3 Code Generation it includes also XMC4500.h
+  63:../Main.c     **** 
+  64:../Main.c     **** void delayfunction();
+  65:../Main.c     **** 
+  66:../Main.c     **** 
+  67:../Main.c     **** int main(void)
+  68:../Main.c     **** {
+  28              		.loc 1 68 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_register 7
+  69:../Main.c     **** 	// ... Initializes Apps configurations ...
+  70:../Main.c     **** 	DAVE_Init();
+  40              		.loc 1 70 0
+  41 0004 FFF7FEFF 		bl	DAVE_Init
+  42              	.L2:
+  71:../Main.c     **** 
+  72:../Main.c     **** 	// ... infinite loop ...
+  73:../Main.c     **** 	while(1)
+  74:../Main.c     **** 	{
+  75:../Main.c     **** 		//
+  76:../Main.c     **** 	   IO004_ResetPin(IO004_Handle0);	// Clear P1.6
+  43              		.loc 1 76 0 discriminator 1
+  44 0008 40F20003 		movw	r3, #:lower16:IO004_Handle0
+  45 000c C0F20003 		movt	r3, #:upper16:IO004_Handle0
+  46 0010 5A68     		ldr	r2, [r3, #4]
+  47 0012 40F20003 		movw	r3, #:lower16:IO004_Handle0
+  48 0016 C0F20003 		movt	r3, #:upper16:IO004_Handle0
+  49 001a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  50 001c 4FF48031 		mov	r1, #65536
+  51 0020 01FA03F3 		lsl	r3, r1, r3
+  52 0024 5360     		str	r3, [r2, #4]
+  77:../Main.c     **** 	   delayfunction();
+  53              		.loc 1 77 0 discriminator 1
+  54 0026 FFF7FEFF 		bl	delayfunction
+  78:../Main.c     **** 
+  79:../Main.c     **** 	   IO004_SetPin(IO004_Handle1);		// Turns off LED (P3.9)
+  55              		.loc 1 79 0 discriminator 1
+  56 002a 40F20003 		movw	r3, #:lower16:IO004_Handle1
+  57 002e C0F20003 		movt	r3, #:upper16:IO004_Handle1
+  58 0032 5A68     		ldr	r2, [r3, #4]
+  59 0034 40F20003 		movw	r3, #:lower16:IO004_Handle1
+  60 0038 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+  61 003c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  62 003e 4FF00101 		mov	r1, #1
+  63 0042 01FA03F3 		lsl	r3, r1, r3
+  64 0046 5360     		str	r3, [r2, #4]
+  80:../Main.c     **** 	   delayfunction();
+  65              		.loc 1 80 0 discriminator 1
+  66 0048 FFF7FEFF 		bl	delayfunction
+  81:../Main.c     **** 
+  82:../Main.c     **** 	   IO004_SetPin(IO004_Handle0);		// Set P1.6 (external interrupt is triggered on rising edge)
+  67              		.loc 1 82 0 discriminator 1
+  68 004c 40F20003 		movw	r3, #:lower16:IO004_Handle0
+  69 0050 C0F20003 		movt	r3, #:upper16:IO004_Handle0
+  70 0054 5A68     		ldr	r2, [r3, #4]
+  71 0056 40F20003 		movw	r3, #:lower16:IO004_Handle0
+  72 005a C0F20003 		movt	r3, #:upper16:IO004_Handle0
+  73 005e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  74 0060 4FF00101 		mov	r1, #1
+  75 0064 01FA03F3 		lsl	r3, r1, r3
+  76 0068 5360     		str	r3, [r2, #4]
+  83:../Main.c     **** 	   delayfunction();
+  77              		.loc 1 83 0 discriminator 1
+  78 006a FFF7FEFF 		bl	delayfunction
+  84:../Main.c     **** 	}
+  79              		.loc 1 84 0 discriminator 1
+  80 006e CBE7     		b	.L2
+  81              		.cfi_endproc
+  82              	.LFE117:
+  84              		.section	.text.delayfunction,"ax",%progbits
+  85              		.align	2
+  86              		.global	delayfunction
+  87              		.thumb
+  88              		.thumb_func
+  90              	delayfunction:
+  91              	.LFB118:
+  85:../Main.c     **** 
+  86:../Main.c     **** }
+  87:../Main.c     **** 
+  88:../Main.c     **** /**
+  89:../Main.c     ****  * @brief This function is a delay function for 76ms
+  90:../Main.c     ****  * @param[in/out] None
+  91:../Main.c     ****  *
+  92:../Main.c     ****  */
+  93:../Main.c     **** void delayfunction(void)
+  94:../Main.c     **** {
+  92              		.loc 1 94 0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 8
+  95              		@ frame_needed = 1, uses_anonymous_args = 0
+  96              		@ link register save eliminated.
+  97 0000 80B4     		push	{r7}
+  98              	.LCFI2:
+  99              		.cfi_def_cfa_offset 4
+ 100              		.cfi_offset 7, -4
+ 101 0002 83B0     		sub	sp, sp, #12
+ 102              	.LCFI3:
+ 103              		.cfi_def_cfa_offset 16
+ 104 0004 00AF     		add	r7, sp, #0
+ 105              	.LCFI4:
+ 106              		.cfi_def_cfa_register 7
+  95:../Main.c     **** 	uint32_t tmp1, tmp2;
+  96:../Main.c     **** 
+  97:../Main.c     **** 	for(tmp1=0;tmp1<10000;tmp1++)
+ 107              		.loc 1 97 0
+ 108 0006 4FF00003 		mov	r3, #0
+ 109 000a 7B60     		str	r3, [r7, #4]
+ 110 000c 0EE0     		b	.L4
+ 111              	.L7:
+  98:../Main.c     **** 	{
+  99:../Main.c     **** 		for(tmp2=0;tmp2<100;tmp2++)
+ 112              		.loc 1 99 0
+ 113 000e 4FF00003 		mov	r3, #0
+ 114 0012 3B60     		str	r3, [r7, #0]
+ 115 0014 03E0     		b	.L5
+ 116              	.L6:
+ 117              		.loc 1 99 0 is_stmt 0 discriminator 2
+ 118 0016 3B68     		ldr	r3, [r7, #0]
+ 119 0018 03F10103 		add	r3, r3, #1
+ 120 001c 3B60     		str	r3, [r7, #0]
+ 121              	.L5:
+ 122              		.loc 1 99 0 discriminator 1
+ 123 001e 3B68     		ldr	r3, [r7, #0]
+ 124 0020 632B     		cmp	r3, #99
+ 125 0022 F8D9     		bls	.L6
+  97:../Main.c     **** 	for(tmp1=0;tmp1<10000;tmp1++)
+ 126              		.loc 1 97 0 is_stmt 1
+ 127 0024 7B68     		ldr	r3, [r7, #4]
+ 128 0026 03F10103 		add	r3, r3, #1
+ 129 002a 7B60     		str	r3, [r7, #4]
+ 130              	.L4:
+  97:../Main.c     **** 	for(tmp1=0;tmp1<10000;tmp1++)
+ 131              		.loc 1 97 0 is_stmt 0 discriminator 1
+ 132 002c 7A68     		ldr	r2, [r7, #4]
+ 133 002e 42F20F73 		movw	r3, #9999
+ 134 0032 9A42     		cmp	r2, r3
+ 135 0034 EBD9     		bls	.L7
+ 100:../Main.c     **** 		{
+ 101:../Main.c     **** 
+ 102:../Main.c     **** 		}
+ 103:../Main.c     **** 	}
+ 104:../Main.c     **** }
+ 136              		.loc 1 104 0 is_stmt 1
+ 137 0036 07F10C07 		add	r7, r7, #12
+ 138 003a BD46     		mov	sp, r7
+ 139 003c 80BC     		pop	{r7}
+ 140 003e 7047     		bx	lr
+ 141              		.cfi_endproc
+ 142              	.LFE118:
+ 144              		.section	.text.ERU0_3_IRQHandler,"ax",%progbits
+ 145              		.align	2
+ 146              		.global	ERU0_3_IRQHandler
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	ERU0_3_IRQHandler:
+ 151              	.LFB119:
+ 105:../Main.c     **** 
+ 106:../Main.c     **** /**
+ 107:../Main.c     ****  * @brief ERU Event Handler (Handler for external Interrupt): Turns on P3.9 on ERU event
+ 108:../Main.c     ****  * @param[in/out] None
+ 109:../Main.c     ****  *
+ 110:../Main.c     ****  */
+ 111:../Main.c     **** void ERU_Event_Handler(void)
+ 112:../Main.c     **** {
+ 152              		.loc 1 112 0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 8
+ 155              		@ frame_needed = 1, uses_anonymous_args = 0
+ 156 0000 80B5     		push	{r7, lr}
+ 157              	.LCFI5:
+ 158              		.cfi_def_cfa_offset 8
+ 159              		.cfi_offset 7, -8
+ 160              		.cfi_offset 14, -4
+ 161 0002 82B0     		sub	sp, sp, #8
+ 162              	.LCFI6:
+ 163              		.cfi_def_cfa_offset 16
+ 164 0004 00AF     		add	r7, sp, #0
+ 165              	.LCFI7:
+ 166              		.cfi_def_cfa_register 7
+ 113:../Main.c     **** 	uint32_t status;
+ 114:../Main.c     **** 
+ 115:../Main.c     **** 	//Reads Status Flag
+ 116:../Main.c     **** 	status = RD_REG(ERU001_Handle0.ERURegs->EXICON[ERU001_Handle0.InputChannel],ERU_EXICON_FL_Msk , ER
+ 167              		.loc 1 116 0
+ 168 0006 40F20003 		movw	r3, #:lower16:ERU001_Handle0
+ 169 000a C0F20003 		movt	r3, #:upper16:ERU001_Handle0
+ 170 000e 1A68     		ldr	r2, [r3, #0]
+ 171 0010 40F20003 		movw	r3, #:lower16:ERU001_Handle0
+ 172 0014 C0F20003 		movt	r3, #:upper16:ERU001_Handle0
+ 173 0018 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 174 001a 03F10403 		add	r3, r3, #4
+ 175 001e 52F82330 		ldr	r3, [r2, r3, lsl #2]
+ 176 0022 03F08003 		and	r3, r3, #128
+ 177 0026 4FEAD313 		lsr	r3, r3, #7
+ 178 002a 7B60     		str	r3, [r7, #4]
+ 117:../Main.c     **** 
+ 118:../Main.c     **** 	if(status)
+ 179              		.loc 1 118 0
+ 180 002c 7B68     		ldr	r3, [r7, #4]
+ 181 002e 002B     		cmp	r3, #0
+ 182 0030 16D0     		beq	.L8
+ 119:../Main.c     ****     {
+ 120:../Main.c     ****     	IO004_ResetPin(IO004_Handle1);		// ERU event received, turn on LED
+ 183              		.loc 1 120 0
+ 184 0032 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 185 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 186 003a 5A68     		ldr	r2, [r3, #4]
+ 187 003c 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 188 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 189 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 190 0046 4FF48031 		mov	r1, #65536
+ 191 004a 01FA03F3 		lsl	r3, r1, r3
+ 192 004e 5360     		str	r3, [r2, #4]
+ 121:../Main.c     ****     	ERU001_ClearFlag(ERU001_Handle0);	// Clears the Status Flag
+ 193              		.loc 1 121 0
+ 194 0050 40F20003 		movw	r3, #:lower16:ERU001_Handle0
+ 195 0054 C0F20003 		movt	r3, #:upper16:ERU001_Handle0
+ 196 0058 93E80700 		ldmia	r3, {r0, r1, r2}
+ 197 005c FFF7FEFF 		bl	ERU001_ClearFlag
+ 198              	.L8:
+ 122:../Main.c     ****     }
+ 123:../Main.c     **** 
+ 124:../Main.c     **** }
+ 199              		.loc 1 124 0
+ 200 0060 07F10807 		add	r7, r7, #8
+ 201 0064 BD46     		mov	sp, r7
+ 202 0066 80BD     		pop	{r7, pc}
+ 203              		.cfi_endproc
+ 204              	.LFE119:
+ 206              		.text
+ 207              	.Letext0:
+ 208              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 209              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 210              		.file 4 "C:\\DAVE3_workspace\\ws3.1.10\\may\\ERU001_ERU002_Example2\\Dave\\Generated\\inc\\DAVESup
+ 211              		.file 5 "C:\\DAVE3_workspace\\ws3.1.10\\may\\ERU001_ERU002_Example2\\Dave\\Generated\\inc\\DAVESup
+ 212              		.file 6 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 213              		.file 7 "C:\\DAVE3_workspace\\ws3.1.10\\may\\ERU001_ERU002_Example2\\Dave\\Generated\\inc\\DAVESup
+ 214              		.file 8 "C:\\DAVE3_workspace\\ws3.1.10\\may\\ERU001_ERU002_Example2\\Dave\\Generated\\inc\\DAVESup
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:20     .text.main:00000000 $t
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:25     .text.main:00000000 main
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:90     .text.delayfunction:00000000 delayfunction
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:85     .text.delayfunction:00000000 $t
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:145    .text.ERU0_3_IRQHandler:00000000 $t
+C:\Users\Renuka\AppData\Local\Temp\ccxA2pVh.s:150    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.e9ce17ad1e95e60f9b7364a48ad252e4
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.uc_id.h.35.6a563b5a45d32cec26f5b514b510065d
+                           .group:00000000 wm4.ERU001_Conf.h.69.f1b0ac0267f54084e307132dac04340c
+                           .group:00000000 wm4.ERU002_Conf.h.49.30dcaaaa39ec7b925c3755a566961d37
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.IO002_Conf.h.51.be0baad511cf66771895fab0bf90f390
+                           .group:00000000 wm4.NVIC002_Conf.h.62.ff9030362f600bd2a662fdeac2061397
+
+UNDEFINED SYMBOLS
+DAVE_Init
+IO004_Handle0
+IO004_Handle1
+ERU001_Handle0
+ERU001_ClearFlag

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="SCU" description="SCU " URI="http://www.infineon.com/0.1.33/peripheral/scu/0">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/posifreset/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.9"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/posif0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/posif0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/posif0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/posifreset/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.10"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/posif1rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/posif1rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/posif1rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/usicreset/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.11"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/usic0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/usic0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/usic0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/usicreset/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.12"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/usic1rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/usic1rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/usic1rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="2" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/usicreset/2">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.13"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/usic2rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/usic2rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/usic2rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="eru1reset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/eru1reset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.14"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/eru1rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/eru1rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/eru1rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="mmcreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/mmcreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.15"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/mmcirs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/mmcirs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/mmcirs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="fcereset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/fcereset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.16"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/fcers" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/fcers" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/fcers" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ledtsreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ledtsreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.17"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/ledtscu0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/ledtscu0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/ledtscu0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="pportreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/pportreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.18"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/pportsrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/pportsrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/pportsrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="rcurst" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/rcurst">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.0"/>
+    <resourcesList name="rststat" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0" isResolved="true"/>
+    <resourcesList name="rstset" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0" isResolved="true"/>
+    <resourcesList name="rstclr" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="usbreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/usbreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.19"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/usbrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/usbrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/usbrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="mcanreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/mcanreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.20"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/mcan0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/mcan0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/mcan0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="wdtreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/wdtreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.21"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/wdtrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/wdtrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/wdtrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="dacreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/dacreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.22"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/dacrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/dacrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/dacrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/dmareset/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.23"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/dma0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/dma0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/dma0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/dmareset/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.24"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/dma1rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/dma1rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/dma1rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ebureset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ebureset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.25"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat3/ebu" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset3/ebu" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr3/ebu" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="ethreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ethreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.26"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/eth0rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/eth0rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/eth0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="vadcreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/vadcreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.1"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/vadcrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/vadcrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/vadcrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="dsdreset" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/dsdreset">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.2"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/dsdrs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/dsdrs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/dsdrs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu4reset/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.3"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/ccu40rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/ccu40rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/ccu40rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu4reset/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.4"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/ccu41rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/ccu41rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/ccu41rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="2" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu4reset/2">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.5"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/ccu42rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/ccu42rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/ccu42rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="3" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu4reset/3">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.6"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat1/ccu43rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset1/ccu43rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr1/ccu43rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu8reset/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.7"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/ccu80rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/ccu80rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/ccu80rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/rstctrl/0/ccu8reset/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../RESET001/1.0.14/reset001_0.app#//@consumed.8"/>
+    <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat0/ccu81rs" isResolved="true"/>
+    <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset0/ccu81rs" isResolved="true"/>
+    <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr0/ccu81rs" isResolved="true"/>
+  </provided>
+  <categoryDescription description="SCU Device Description" name="SCU"/>
+</ResourceModel:Peripheral>

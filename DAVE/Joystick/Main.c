@@ -14,14 +14,29 @@ BIT 4: BLAH1
 BIT 5: ALBH1
 */
 
+/*
+ * Potenciometro(costas)
+ * |	|
+ * Gnd	Sig
+ *
+ *
+ *
+ *
+ *
+ * |
+ * Vcc
+ * */
+
 /***************************************************
  * Codigo organizado para uso no XI WINTER CHALLENGE
- * ----Protocolo de comunicacao: todo
- *
- *
+ *Byte 0 : LEDS (? definido no spartacus, retirar quando trocar prgrama do feather)
+ *Byte 1 : PWM 1
+ *Byte 2 : PWM 2
+ *Byte 3 : SENTIDOS
+ *Byte 3 : PWM 3 (Arma)
  ***************************************************/
 
-
+//TODO Separar partes do codigo em arquivos diferentes
 /***************************************************/
 /*************DECLARACAO DAS DEFINICOES*************/
 /***************************************************/
@@ -31,7 +46,7 @@ BIT 5: ALBH1
 #define PWM_LIM 60
 
 //Defines referentes ao protocolo
-#define BYTES_TO_SEND 4
+#define BYTES_TO_SEND 1
 //Defines referentes ao byte DADO 3
 #define	BLAH2		0
 #define	BUZINA		1
@@ -76,6 +91,13 @@ BIT 5: ALBH1
 #define SELECT (psxDado[0] & (1<<0))
 
 /***************************************************/
+/*********************INCLUDES**********************/
+/***************************************************/
+
+#include <DAVE3.h>		//Declarations from DAVE3 Code Generation (includes SFR declaration)
+
+
+/***************************************************/
 /**************DECLARACAO DAS FUNCOES***************/
 /***************************************************/
 
@@ -95,6 +117,7 @@ void psxEnterConfigMode();
 void psxExitConfigMode();
 void psxSetAnalogMode();
 void psxHandShake();
+void updateButtonStates();
 
 /***************************************************/
 /*********CALLBACK PARA BOTOES DO CONTROLE**********/
@@ -117,11 +140,40 @@ void (*down)(void) = NULL;
 void (*start)(void) = NULL;
 void (*select)(void) = NULL;
 
-/***************************************************/
-/*********************INCLUDES**********************/
-/***************************************************/
+//Variaveis de controle do joystick
+BOOLType l_um_state = 0;
+BOOLType l_dois_state = 0;
+BOOLType l_tres_state = 0;
+BOOLType r_um_state = 0;
+BOOLType r_dois_state = 0;
+BOOLType r_tres_state = 0;
+BOOLType cross_state = 0;
+BOOLType sqr_state = 0;
+BOOLType triangle_state = 0;
+BOOLType circle_state = 0;
+BOOLType left_state = 0;
+BOOLType right_state = 0;
+BOOLType up_state = 0;
+BOOLType down_state = 0;
+BOOLType start_state = 0;
+BOOLType select_state = 0;
 
-#include <DAVE3.h>		//Declarations from DAVE3 Code Generation (includes SFR declaration)
+BOOLType l_um_state_before = 0;
+BOOLType l_dois_state_before = 0;
+BOOLType l_tres_state_before = 0;
+BOOLType r_um_state_before = 0;
+BOOLType r_dois_state_before = 0;
+BOOLType r_tres_state_before = 0;
+BOOLType cross_state_before = 0;
+BOOLType sqr_state_before = 0;
+BOOLType triangle_state_before = 0;
+BOOLType circle_state_before = 0;
+BOOLType left_state_before = 0;
+BOOLType right_state_before = 0;
+BOOLType up_state_before = 0;
+BOOLType down_state_before = 0;
+BOOLType start_state_before = 0;
+BOOLType select_state_before = 0;
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -134,8 +186,8 @@ char data_E[BYTES_TO_SEND];
 uint8_t psx_status;
 /*Booleanos de controle para estados do robo*/
 BOOLType flipped = 0;
-BOOLType isPressed = 0;
-BOOLType lastIsPressed = 0;
+ADC001_ResultHandleType result;
+uint8_t pwm_max;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -147,14 +199,20 @@ int main(void)
 	DAVE_Init();			// Initialization of DAVE Apps
 	/*Etapa de inicializacao*/
 	configure_E(); //Configura transceptor como emissor
-	IO004_SetPin(LED1); //Leds para debug
-	IO004_SetPin(LED2);
+	//IO004_SetPin(LED1); //Leds para debug
+	//IO004_SetPin(LED2);
 	//VER COMOFAS pra ligar analog do controle aqui ja
+
+	while (1)
+	{
+		write_E();
+	}
 	psxHandShake();
 	psxConfiguraControle();
 	/*Loop do controle*/
 	while(1)
 	{
+		pwm_max = PWM_LIM;
 		/*Inicializa o que sera mandado*/
 		BOOLType blah2 = 1;
 		BOOLType buzina = 1;
@@ -164,35 +222,99 @@ int main(void)
 		BOOLType albh1 = 1;
 		int16_t pow1, pow2;
 		/*Le controle*/
-		psxLeControle();
+		//psxLeControle();
 		if (psx_status != 140)//Nao ta analogico
 		{
+			psxHandShake();
 			psxConfiguraControle();
 			continue;
 		}
 		/*Com dados do controle atribui valores e chama callbacks*/
-		if (START && start) start();
-		if (SELECT && select) select();
-		if (L_DOIS && l_dois) l_dois();
-		if (L_UM && l_um) l_um();
-		if (L_TRES && l_tres) l_tres();
-		if (R_UM && r_um) r_um();
-		if (R_DOIS && r_dois) r_dois();
-		if (R_TRES && r_tres) r_tres();
-		if (SQR && sqr) sqr();
-		if (TRIANGLE && triangle) triangle();
-		if (CIRCLE && circle) circle();
-		if (CROSS && cross) cross();
-		if (LEFT && left) left();
-		if (RIGHT && right) right();
-		if (UP && up) up();
-		if (DOWN && down) down();
+		if (START && start)
+		{
+			start_state = 1;
+			start();
+		}
+		if (SELECT && select)
+		{
+			select_state = 1;
+			select();
+		}
+		if (L_DOIS && l_dois)
+		{
+			l_dois_state = 1;
+			l_dois();
+		}
+		if (L_UM && l_um)
+		{
+			l_um_state = 1;
+			l_um();
+		}
+		if (L_TRES && l_tres)
+		{
+			l_tres_state = 1;
+			l_tres();
+		}
+		if (R_UM && r_um)
+		{
+			r_um_state = 1;
+			r_um();
+		}
+		if (R_DOIS && r_dois)
+		{
+			r_dois_state = 1;
+			r_dois();
+		}
+		if (R_TRES && r_tres)
+		{
+			r_tres_state = 1;
+			r_tres();
+		}
+		if (SQR && sqr)
+		{
+			sqr_state = 1;
+			sqr();
+		}
+		if (TRIANGLE && triangle)
+		{
+			triangle_state = 1;
+			triangle();
+		}
+		if (CIRCLE && circle)
+		{
+			circle_state = 1;
+			circle();
+		}
+		if (CROSS && cross)
+		{
+			cross_state = 1;
+			cross();
+		}
+		if (LEFT && left)
+		{
+			left_state = 1;
+			left();
+		}
+		if (RIGHT && right)
+		{
+			right_state = 1;
+			right();
+		}
+		if (UP && up)
+		{
+			up_state = 1;
+			up();
+		}
+		if (DOWN && down)
+		{
+			down_state = 1;
+			down();
+		}
 
-		if (psxDado[1]&1<<3) isPressed = 1;
-		else isPressed = 0;
-		if (lastIsPressed == 0 && isPressed == 1) flipped = !flipped;
+		ADC001_GenerateLoadEvent(&ADC001_Handle0);
+
 		data_E[0] = 173;
-		if (psxDado[5] == 0 && psxDado[3] == 0) continue; //Enquanto for zero nao faz nada -> tirar quando ligar o analogico
+		//if (psxDado[5] == 0 && psxDado[3] == 0) continue; //Enquanto for zero nao faz nada -> tirar quando ligar o analogico
 		pow1 = (psxDado[5]-127);//<<1; //Analog esq //Subtrai 127 para saber o sentido
 		pow2 = (psxDado[3]-127);//<<1;
 		data_E[3] = 0;
@@ -204,9 +326,9 @@ int main(void)
 			if (pow2 < -30) albh1 = 0;
 			else if (pow2 > 30) blah1 = 0;
 			temp = pow1>0?pow1*2:(-pow1)*2;
-			data_E[1] = temp*PWM_LIM/100;
+			data_E[1] = temp*pwm_max/100;
 			temp = pow2>0?pow2*2:(-pow2)*2;
-			data_E[2] = temp*PWM_LIM/100;
+			data_E[2] = temp*pwm_max/100;
 		}
 		else
 		{
@@ -215,14 +337,16 @@ int main(void)
 			if (pow1 > 30) albh1 = 0;
 			else if (pow1 < -30) blah1 = 0;
 			temp = pow1>0?pow1*2:(-pow1)*2;
-			data_E[2] = temp*PWM_LIM/100;
+			data_E[2] = temp*pwm_max/100;
 			temp = pow2>0?pow2*2:(-pow2)*2;
-			data_E[1] = temp*PWM_LIM/100;
+			data_E[1] = temp*pwm_max/100;
 		}
 		//if (data_E[1] > 20 || data_E[2] > 20) enable = 1;
 		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2) | (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE) | (buzina << BUZINA);
+		data_E[4] = result.Result>>4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
+
 		write_E();
-		lastIsPressed = isPressed;
+		updateButtonStates();
 	}
 	return 0;
 }
@@ -272,7 +396,7 @@ void configure_E()
 	configuration[10] = 0b00000000;
 	configuration[11] = 0b00000000;
 	configuration[12] = 0b00000000;//Fim enderco CH2
-	configuration[13] = 0x20;//num bits enviados (1 byte nesse ex)
+	configuration[13] = 0x8;//num bits enviados (1 byte nesse ex) TODO arrumar
 	configuration[14] = 0b00000000;
 
 	IO004_ResetPin(CE);
@@ -585,3 +709,63 @@ void printByteToInt(char a)
 
 }
 
+void adc_event(void)
+{
+	ADC001_GetResult(&ADC001_Handle0, &result);
+}
+
+/***************************************************/
+/*****************FUNCOES BOTOES********************/
+/***************************************************/
+
+void updateButtonStates()
+{
+	l_um_state_before = l_um_state;
+	l_dois_state_before = l_dois_state;
+	l_tres_state_before = l_tres_state;
+	r_um_state_before = r_um_state;
+	r_dois_state_before = r_dois_state;
+	r_tres_state_before = r_tres_state;
+	cross_state_before = cross_state;
+	sqr_state_before = sqr_state;
+	triangle_state_before = triangle_state;
+	circle_state_before = circle_state;
+	left_state_before = left_state;
+	right_state_before = right_state;
+	up_state_before = up_state;
+	down_state_before = down_state;
+	start_state_before = start_state;
+	select_state_before = select_state;
+
+	l_um_state = 0;
+	l_dois_state = 0;
+	l_tres_state = 0;
+	r_um_state = 0;
+	r_dois_state = 0;
+	r_tres_state = 0;
+	cross_state = 0;
+	sqr_state = 0;
+	triangle_state = 0;
+	circle_state = 0;
+	left_state = 0;
+	right_state = 0;
+	up_state = 0;
+	down_state = 0;
+	start_state = 0;
+	select_state = 0;
+}
+
+void turbo(void)
+{
+	pwm_max = 95;
+}
+
+void shunt(void)
+{
+	pwm_max = 40;
+}
+
+void flip(void)
+{
+	flipped = !flipped;
+}

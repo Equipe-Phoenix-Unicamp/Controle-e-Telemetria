@@ -27,6 +27,17 @@ Dave/Generated/src/LIBS/CCU8PWMLIB.d Dave/Generated/src/LIBS/CCU8PWMLIB.o: \
  C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h \
  C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/UART001/UART001_Conf.h \
  C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/UART001/UART001_Extern.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGLOB001/ADCGLOB001.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGLOB001/ADCGlob001_Conf.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGROUP001/ADCGROUP001.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGROUP001/ADCGROUP001_Conf.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/IO001/IO001.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/IO001/IO001_Conf.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADC001/ADC001.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADC001/ADC001_Conf.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
  ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h
 
 C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h:
@@ -82,5 +93,27 @@ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Genera
 C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/UART001/UART001_Conf.h:
 
 C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/UART001/UART001_Extern.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGLOB001/ADCGLOB001.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGLOB001/ADCGlob001_Conf.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGROUP001/ADCGROUP001.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADCGROUP001/ADCGROUP001_Conf.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/IO001/IO001.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/IO001/IO001_Conf.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADC001/ADC001.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/ADC001/ADC001_Conf.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
+
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
 
 ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h:

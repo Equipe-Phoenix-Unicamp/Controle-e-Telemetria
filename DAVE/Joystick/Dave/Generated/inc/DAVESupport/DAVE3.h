@@ -77,6 +77,11 @@ void SystemInit_DAVE3(void);
 	#include "../../inc/CLK001/CLK001.h" 
 	#include "../../inc/RESET001/RESET001.h" 
 	#include "../../inc/UART001/UART001.h" 
+	#include "../../inc/ADCGLOB001/ADCGLOB001.h" 
+	#include "../../inc/ADCGROUP001/ADCGROUP001.h" 
+	#include "../../inc/IO001/IO001.h" 
+	#include "../../inc/ADC001/ADC001.h" 
+	#include "../../inc/NVIC002/NVIC002.h" 
 
                          
 

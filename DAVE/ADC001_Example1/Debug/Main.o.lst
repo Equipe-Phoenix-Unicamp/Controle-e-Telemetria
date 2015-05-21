@@ -1,0 +1,207 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	Result,4,4
+  20              		.section	.text.main,"ax",%progbits
+  21              		.align	2
+  22              		.global	main
+  23              		.thumb
+  24              		.thumb_func
+  26              	main:
+  27              	.LFB117:
+  28              		.file 1 "../Main.c"
+   1:../Main.c     **** /*******************************************************************************
+   2:../Main.c     ****  Copyright (c) 2014, Infineon Technologies AG                                 **
+   3:../Main.c     ****  All rights reserved.                                                         **
+   4:../Main.c     ****                                                                               **
+   5:../Main.c     ****  Redistribution and use in source and binary forms, with or without           **
+   6:../Main.c     ****  modification,are permitted provided that the following conditions are met:   **
+   7:../Main.c     ****                                                                               **
+   8:../Main.c     ****  *Redistributions of source code must retain the above copyright notice,      **
+   9:../Main.c     ****  this list of conditions and the following disclaimer.                        **
+  10:../Main.c     ****  *Redistributions in binary form must reproduce the above copyright notice,   **
+  11:../Main.c     ****  this list of conditions and the following disclaimer in the documentation    **
+  12:../Main.c     ****  and/or other materials provided with the distribution.                       **
+  13:../Main.c     ****  *Neither the name of the copyright holders nor the names of its contributors **
+  14:../Main.c     ****  may be used to endorse or promote products derived from this software without**
+  15:../Main.c     ****  specific prior written permission.                                           **
+  16:../Main.c     ****                                                                               **
+  17:../Main.c     ****  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+  18:../Main.c     ****  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+  19:../Main.c     ****  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+  20:../Main.c     ****  ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+  21:../Main.c     ****  LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+  22:../Main.c     ****  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+  23:../Main.c     ****  SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+  24:../Main.c     ****  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+  25:../Main.c     ****  CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+  26:../Main.c     ****  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+  27:../Main.c     ****  POSSIBILITY OF SUCH DAMAGE.                                                  **
+  28:../Main.c     ****                                                                               **
+  29:../Main.c     ****  To improve the quality of the software, users are encouraged to share        **
+  30:../Main.c     ****  modifications, enhancements or bug fixes with Infineon Technologies AG       **
+  31:../Main.c     ****  dave@infineon.com).                                                          **
+  32:../Main.c     ****                                                                               **
+  33:../Main.c     **** ********************************************************************************
+  34:../Main.c     **** **                                                                            **
+  35:../Main.c     **** **                                                                            **
+  36:../Main.c     **** ** PLATFORM : Infineon XMC4000 Series                                         **
+  37:../Main.c     **** **                                                                            **
+  38:../Main.c     **** ** AUTHOR : Application Engineering Team                                      **
+  39:../Main.c     **** **                                                                            **
+  40:../Main.c     **** ** version 1.0.6 (Updated with latest apps)	                                  **
+  41:../Main.c     **** **                                                                            **
+  42:../Main.c     **** ** MODIFICATION DATE : May 27, 2014                                           **
+  43:../Main.c     **** **                                                                            **
+  44:../Main.c     **** *******************************************************************************/
+  45:../Main.c     **** /* Change History:
+  46:../Main.c     ****  *    Date       version       Details
+  47:../Main.c     ****  * 23-Nov-2012   1.0.0    Initial version
+  48:../Main.c     ****  * 01-Aug-2013   1.0.2    Update to latest DAVE Apps version e.g. ADC001 App v1.0.8
+  49:../Main.c     ****  * 16-Sep-2013   1.0.4    Updated with latest apps - ADC001[1.0.12], ADCGLOB001[1.0.16],
+  50:../Main.c     ****  *                        ADCGROUP001[1.0.18], DAVESUPPORT[1.0.36], LIBS[1.0.18],
+  51:../Main.c     ****  *                        MOTORLIBS[1.0.18]
+  52:../Main.c     ****  * 27-May-2013   1.0.6    (Migrated to new App versions) (Update-site Version 1.0.64)
+  53:../Main.c     ****  */
+  54:../Main.c     **** 
+  55:../Main.c     **** #include <DAVE3.h>			//Declarations from DAVE3 Code Generation (includes SFR declaration)
+  56:../Main.c     **** 
+  57:../Main.c     **** /* To store the conversion result */
+  58:../Main.c     **** ADC001_ResultHandleType Result;
+  59:../Main.c     **** 
+  60:../Main.c     **** int main(void)
+  61:../Main.c     **** {
+  29              		.loc 1 61 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 8
+  36              		.cfi_offset 7, -8
+  37              		.cfi_offset 14, -4
+  38 0002 00AF     		add	r7, sp, #0
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_register 7
+  62:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+  63:../Main.c     **** 
+  64:../Main.c     **** 
+  65:../Main.c     **** 	DAVE_Init();			// Initialization of DAVE Apps
+  41              		.loc 1 65 0
+  42 0004 FFF7FEFF 		bl	DAVE_Init
+  66:../Main.c     **** 
+  67:../Main.c     **** 	/* Generate Load Event*/
+  68:../Main.c     **** 	ADC001_GenerateLoadEvent(&ADC001_Handle0);
+  43              		.loc 1 68 0
+  44 0008 40F20000 		movw	r0, #:lower16:ADC001_Handle0
+  45 000c C0F20000 		movt	r0, #:upper16:ADC001_Handle0
+  46 0010 FFF7FEFF 		bl	ADC001_GenerateLoadEvent
+  47              	.L2:
+  69:../Main.c     **** 
+  70:../Main.c     **** 	while(1)
+  71:../Main.c     **** 	{
+  72:../Main.c     **** 
+  73:../Main.c     **** 	}
+  48              		.loc 1 73 0 discriminator 1
+  49 0014 FEE7     		b	.L2
+  50              		.cfi_endproc
+  51              	.LFE117:
+  53 0016 00BF     		.section	.text.VADC0_C0_2_IRQHandler,"ax",%progbits
+  54              		.align	2
+  55              		.global	VADC0_C0_2_IRQHandler
+  56              		.thumb
+  57              		.thumb_func
+  59              	VADC0_C0_2_IRQHandler:
+  60              	.LFB118:
+  74:../Main.c     **** 	return 0;
+  75:../Main.c     **** }
+  76:../Main.c     **** /* Global Result Register ISR*/
+  77:../Main.c     **** void GlobalResultEvent(void)
+  78:../Main.c     **** {
+  61              		.loc 1 78 0
+  62              		.cfi_startproc
+  63              		@ args = 0, pretend = 0, frame = 0
+  64              		@ frame_needed = 1, uses_anonymous_args = 0
+  65 0000 80B5     		push	{r7, lr}
+  66              	.LCFI2:
+  67              		.cfi_def_cfa_offset 8
+  68              		.cfi_offset 7, -8
+  69              		.cfi_offset 14, -4
+  70 0002 00AF     		add	r7, sp, #0
+  71              	.LCFI3:
+  72              		.cfi_def_cfa_register 7
+  79:../Main.c     ****     /* Read the Result Register*/
+  80:../Main.c     ****     ADC001_GetResult(&ADC001_Handle0,&Result);
+  73              		.loc 1 80 0
+  74 0004 40F20000 		movw	r0, #:lower16:ADC001_Handle0
+  75 0008 C0F20000 		movt	r0, #:upper16:ADC001_Handle0
+  76 000c 40F20001 		movw	r1, #:lower16:Result
+  77 0010 C0F20001 		movt	r1, #:upper16:Result
+  78 0014 FFF7FEFF 		bl	ADC001_GetResult
+  81:../Main.c     **** }
+  79              		.loc 1 81 0
+  80 0018 80BD     		pop	{r7, pc}
+  81              		.cfi_endproc
+  82              	.LFE118:
+  84 001a 00BF     		.text
+  85              	.Letext0:
+  86              		.file 2 "c:\\dave-3.1.10\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../ar
+  87              		.file 3 "C:\\DAVE-3.1.10\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.
+  88              		.file 4 "C:\\DAVE_3.1.10_Workspace\\ADC001_Example1\\Dave\\Generated\\inc\\DAVESupport/../../inc/A
+  89              		.file 5 "C:\\DAVE-3.1.10\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+  90              		.file 6 "C:\\DAVE_3.1.10_Workspace\\ADC001_Example1\\Dave\\Generated\\inc\\DAVESupport/../../inc/A
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+                            *COM*:00000004 Result
+C:\Users\ThomasJu\AppData\Local\Temp\cc55vLYq.s:21     .text.main:00000000 $t
+C:\Users\ThomasJu\AppData\Local\Temp\cc55vLYq.s:26     .text.main:00000000 main
+C:\Users\ThomasJu\AppData\Local\Temp\cc55vLYq.s:54     .text.VADC0_C0_2_IRQHandler:00000000 $t
+C:\Users\ThomasJu\AppData\Local\Temp\cc55vLYq.s:59     .text.VADC0_C0_2_IRQHandler:00000000 VADC0_C0_2_IRQHandler
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.e9ce17ad1e95e60f9b7364a48ad252e4
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.uc_id.h.35.6a563b5a45d32cec26f5b514b510065d
+                           .group:00000000 wm4.NVIC002_Conf.h.62.36db970f6153b5da024017b80c7220d8
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
+                           .group:00000000 wm4.ADCGROUP001.h.64.1a67eefa54ffa3e3b9429093742c873c
+                           .group:00000000 wm4.IO001.h.49.4efcabb368feaef60c65bd7504b48505
+                           .group:00000000 wm4.ADC001.h.72.a0f6b9479a18584b91fa95e6f862978d
+
+UNDEFINED SYMBOLS
+DAVE_Init
+ADC001_Handle0
+ADC001_GenerateLoadEvent
+ADC001_GetResult
