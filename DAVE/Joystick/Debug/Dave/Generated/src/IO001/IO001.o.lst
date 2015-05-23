@@ -486,12 +486,12 @@
  324              		.file 5 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
 DEFINED SYMBOLS
                             *ABS*:00000000 IO001.c
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:20     .text.IO001_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:25     .text.IO001_Init:00000000 IO001_Init
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:67     .text.IO001_EnableDigitalInput:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:72     .text.IO001_EnableDigitalInput:00000000 IO001_EnableDigitalInput
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:276    .text.IO001_DisableDigitalInput:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc5GWIZ0.s:281    .text.IO001_DisableDigitalInput:00000000 IO001_DisableDigitalInput
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:20     .text.IO001_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:25     .text.IO001_Init:00000000 IO001_Init
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:67     .text.IO001_EnableDigitalInput:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:72     .text.IO001_EnableDigitalInput:00000000 IO001_EnableDigitalInput
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:276    .text.IO001_DisableDigitalInput:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccOFebg8.s:281    .text.IO001_DisableDigitalInput:00000000 IO001_DisableDigitalInput
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

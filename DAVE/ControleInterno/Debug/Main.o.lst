@@ -1,0 +1,1063 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	configuration,15,4
+  20              		.comm	data_R,1,4
+  21              		.comm	data_E,1,4
+  22              		.section	.text.main,"ax",%progbits
+  23              		.align	2
+  24              		.global	main
+  25              		.thumb
+  26              		.thumb_func
+  28              	main:
+  29              	.LFB112:
+  30              		.file 1 "../Main.c"
+   1:../Main.c     **** /*
+   2:../Main.c     ****  * Main.c
+   3:../Main.c     ****  *
+   4:../Main.c     ****  *  Created on: 20/11/2014
+   5:../Main.c     ****  *      Author: Carlos
+   6:../Main.c     ****  */
+   7:../Main.c     **** 
+   8:../Main.c     **** /* DADO3:
+   9:../Main.c     **** BIT 0: BLAH2
+  10:../Main.c     **** BIT 1: BUZINA
+  11:../Main.c     **** BIT 2: ENABLE
+  12:../Main.c     **** BIT 3: ALBH2
+  13:../Main.c     **** BIT 4: BLAH1
+  14:../Main.c     **** BIT 5: ALBH1
+  15:../Main.c     **** */
+  16:../Main.c     **** 
+  17:../Main.c     **** /*
+  18:../Main.c     ****  * Potenciometro(costas)
+  19:../Main.c     ****  * |	|
+  20:../Main.c     ****  * Gnd	Sig
+  21:../Main.c     ****  *
+  22:../Main.c     ****  *
+  23:../Main.c     ****  *
+  24:../Main.c     ****  *
+  25:../Main.c     ****  *
+  26:../Main.c     ****  * |
+  27:../Main.c     ****  * Vcc
+  28:../Main.c     ****  * */
+  29:../Main.c     **** 
+  30:../Main.c     **** /***************************************************
+  31:../Main.c     ****  * Codigo organizado para uso no XI WINTER CHALLENGE
+  32:../Main.c     ****  *Byte 0 : LEDS (? definido no spartacus, retirar quando trocar prgrama do feather)
+  33:../Main.c     ****  *Byte 1 : PWM 1
+  34:../Main.c     ****  *Byte 2 : PWM 2
+  35:../Main.c     ****  *Byte 3 : SENTIDOS
+  36:../Main.c     ****  *Byte 3 : PWM 3 (Arma)
+  37:../Main.c     ****  ***************************************************/
+  38:../Main.c     **** 
+  39:../Main.c     **** //TODO Separar partes do codigo em arquivos diferentes
+  40:../Main.c     **** /***************************************************/
+  41:../Main.c     **** /*************DECLARACAO DAS DEFINICOES*************/
+  42:../Main.c     **** /***************************************************/
+  43:../Main.c     **** 
+  44:../Main.c     **** #define NULL 0
+  45:../Main.c     **** //Defines referentes aos limites
+  46:../Main.c     **** #define PWM_LIM 60
+  47:../Main.c     **** 
+  48:../Main.c     **** //Defines referentes ao protocolo
+  49:../Main.c     **** #define BYTES_TO_SEND 1
+  50:../Main.c     **** //Defines referentes ao byte DADO 3
+  51:../Main.c     **** #define	BLAH2		0
+  52:../Main.c     **** #define	BUZINA		1
+  53:../Main.c     **** #define	ENABLE		2
+  54:../Main.c     **** #define	ALBH2		3
+  55:../Main.c     **** #define	BLAH1		4
+  56:../Main.c     **** #define	ALBH1		5
+  57:../Main.c     **** //Defines referentes ao transceptor
+  58:../Main.c     **** #define CS	 	IO004_Handle1
+  59:../Main.c     **** #define CLK1 	IO004_Handle2
+  60:../Main.c     **** #define DATA 	IO004_Handle4
+  61:../Main.c     **** #define DR1		IO004_Handle5
+  62:../Main.c     **** #define CE 		IO004_Handle6
+  63:../Main.c     **** 
+  64:../Main.c     **** #include <DAVE3.h>		//Declarations from DAVE3 Code Generation (includes SFR declaration)
+  65:../Main.c     **** //#include
+  66:../Main.c     **** 
+  67:../Main.c     **** 
+  68:../Main.c     **** /***************************************************/
+  69:../Main.c     **** /**************DECLARACAO DAS FUNCOES***************/
+  70:../Main.c     **** /***************************************************/
+  71:../Main.c     **** 
+  72:../Main.c     **** void delay(long unsigned int i);
+  73:../Main.c     **** void pulse_R();
+  74:../Main.c     **** void configure_R();
+  75:../Main.c     **** void read_R();
+  76:../Main.c     **** void delay(long unsigned int i);
+  77:../Main.c     **** void updateButtonStates();
+  78:../Main.c     **** 
+  79:../Main.c     **** /***************************************************/
+  80:../Main.c     **** /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
+  81:../Main.c     **** /***************************************************/
+  82:../Main.c     **** 
+  83:../Main.c     **** char configuration[15];
+  84:../Main.c     **** char data_R[BYTES_TO_SEND];
+  85:../Main.c     **** char data_E[BYTES_TO_SEND];
+  86:../Main.c     **** 
+  87:../Main.c     **** /***************************************************/
+  88:../Main.c     **** /***********************MAIN************************/
+  89:../Main.c     **** /***************************************************/
+  90:../Main.c     **** 
+  91:../Main.c     **** int main(void)
+  92:../Main.c     **** {
+  31              		.loc 1 92 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 1, uses_anonymous_args = 0
+  35 0000 80B5     		push	{r7, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 8
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+  40 0002 00AF     		add	r7, sp, #0
+  41              	.LCFI1:
+  42              		.cfi_def_cfa_register 7
+  93:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+  94:../Main.c     **** 	DAVE_Init();			// Initialization of DAVE Apps
+  43              		.loc 1 94 0
+  44 0004 FFF7FEFF 		bl	DAVE_Init
+  95:../Main.c     **** 	/*Etapa de inicializacao*/
+  96:../Main.c     **** 	configure_R(); //Configura transceptor como receptor
+  45              		.loc 1 96 0
+  46 0008 FFF7FEFF 		bl	configure_R
+  47 000c 00E0     		b	.L3
+  48              	.L4:
+  97:../Main.c     **** 	//IO004_SetPin(LED1); //Leds para debug
+  98:../Main.c     **** 	//IO004_SetPin(LED2);
+  99:../Main.c     **** 
+ 100:../Main.c     **** 	/*Loop do codigo*/
+ 101:../Main.c     **** 	while(1)
+ 102:../Main.c     **** 	{
+ 103:../Main.c     **** 		if (IO004_ReadPin(DR1))
+ 104:../Main.c     **** 		{
+ 105:../Main.c     **** 			read_R();
+ 106:../Main.c     **** 		}
+ 107:../Main.c     **** 	}
+  49              		.loc 1 107 0
+  50 000e 00BF     		nop
+  51              	.L3:
+ 103:../Main.c     **** 		if (IO004_ReadPin(DR1))
+  52              		.loc 1 103 0
+  53 0010 40F20003 		movw	r3, #:lower16:IO004_Handle5
+  54 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle5
+  55 0018 5B68     		ldr	r3, [r3, #4]
+  56 001a 5A6A     		ldr	r2, [r3, #36]
+  57 001c 40F20003 		movw	r3, #:lower16:IO004_Handle5
+  58 0020 C0F20003 		movt	r3, #:upper16:IO004_Handle5
+  59 0024 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  60 0026 22FA03F3 		lsr	r3, r2, r3
+  61 002a 03F00103 		and	r3, r3, #1
+  62 002e 002B     		cmp	r3, #0
+  63 0030 EDD0     		beq	.L4
+ 105:../Main.c     **** 			read_R();
+  64              		.loc 1 105 0
+  65 0032 FFF7FEFF 		bl	read_R
+  66              		.loc 1 107 0
+  67 0036 EAE7     		b	.L4
+  68              		.cfi_endproc
+  69              	.LFE112:
+  71              		.section	.text.read_R,"ax",%progbits
+  72              		.align	2
+  73              		.global	read_R
+  74              		.thumb
+  75              		.thumb_func
+  77              	read_R:
+  78              	.LFB113:
+ 108:../Main.c     **** 	return 0;
+ 109:../Main.c     **** }
+ 110:../Main.c     **** 
+ 111:../Main.c     **** /***************************************************/
+ 112:../Main.c     **** /***************FUNCOES DO TRANSCEPTOR**************/
+ 113:../Main.c     **** /***************************************************/
+ 114:../Main.c     **** 
+ 115:../Main.c     **** void read_R()
+ 116:../Main.c     **** {
+  79              		.loc 1 116 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 8
+  82              		@ frame_needed = 1, uses_anonymous_args = 0
+  83 0000 80B5     		push	{r7, lr}
+  84              	.LCFI2:
+  85              		.cfi_def_cfa_offset 8
+  86              		.cfi_offset 7, -8
+  87              		.cfi_offset 14, -4
+  88 0002 82B0     		sub	sp, sp, #8
+  89              	.LCFI3:
+  90              		.cfi_def_cfa_offset 16
+  91 0004 00AF     		add	r7, sp, #0
+  92              	.LCFI4:
+  93              		.cfi_def_cfa_register 7
+ 117:../Main.c     **** 	int i;
+ 118:../Main.c     **** 	IO004_ResetPin(CE);
+  94              		.loc 1 118 0
+  95 0006 40F20003 		movw	r3, #:lower16:IO004_Handle6
+  96 000a C0F20003 		movt	r3, #:upper16:IO004_Handle6
+  97 000e 5A68     		ldr	r2, [r3, #4]
+  98 0010 40F20003 		movw	r3, #:lower16:IO004_Handle6
+  99 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 100 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 101 001a 4FF48031 		mov	r1, #65536
+ 102 001e 01FA03F3 		lsl	r3, r1, r3
+ 103 0022 5360     		str	r3, [r2, #4]
+ 119:../Main.c     **** 	delay(50000);
+ 104              		.loc 1 119 0
+ 105 0024 4CF25030 		movw	r0, #50000
+ 106 0028 FFF7FEFF 		bl	delay
+ 120:../Main.c     **** 	uint8_t temp = 0;
+ 107              		.loc 1 120 0
+ 108 002c 4FF00003 		mov	r3, #0
+ 109 0030 FB70     		strb	r3, [r7, #3]
+ 121:../Main.c     **** 
+ 122:../Main.c     **** 	for (i = 7; i > -1; i --)
+ 110              		.loc 1 122 0
+ 111 0032 4FF00703 		mov	r3, #7
+ 112 0036 7B60     		str	r3, [r7, #4]
+ 113 0038 20E0     		b	.L6
+ 114              	.L8:
+ 123:../Main.c     **** 	{
+ 124:../Main.c     **** 		if (IO004_ReadPin(DATA)) temp |= (1<<i);
+ 115              		.loc 1 124 0
+ 116 003a 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 117 003e C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 118 0042 5B68     		ldr	r3, [r3, #4]
+ 119 0044 5A6A     		ldr	r2, [r3, #36]
+ 120 0046 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 121 004a C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 122 004e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 123 0050 22FA03F3 		lsr	r3, r2, r3
+ 124 0054 03F00103 		and	r3, r3, #1
+ 125 0058 002B     		cmp	r3, #0
+ 126 005a 09D0     		beq	.L7
+ 127              		.loc 1 124 0 is_stmt 0 discriminator 1
+ 128 005c 4FF00102 		mov	r2, #1
+ 129 0060 7B68     		ldr	r3, [r7, #4]
+ 130 0062 02FA03F3 		lsl	r3, r2, r3
+ 131 0066 DAB2     		uxtb	r2, r3
+ 132 0068 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 133 006a 1343     		orrs	r3, r3, r2
+ 134 006c DBB2     		uxtb	r3, r3
+ 135 006e FB70     		strb	r3, [r7, #3]
+ 136              	.L7:
+ 125:../Main.c     **** 		pulse_R();
+ 137              		.loc 1 125 0 is_stmt 1
+ 138 0070 FFF7FEFF 		bl	pulse_R
+ 122:../Main.c     **** 	for (i = 7; i > -1; i --)
+ 139              		.loc 1 122 0
+ 140 0074 7B68     		ldr	r3, [r7, #4]
+ 141 0076 03F1FF33 		add	r3, r3, #-1
+ 142 007a 7B60     		str	r3, [r7, #4]
+ 143              	.L6:
+ 122:../Main.c     **** 	for (i = 7; i > -1; i --)
+ 144              		.loc 1 122 0 is_stmt 0 discriminator 1
+ 145 007c 7B68     		ldr	r3, [r7, #4]
+ 146 007e 002B     		cmp	r3, #0
+ 147 0080 DBDA     		bge	.L8
+ 126:../Main.c     **** 	}
+ 127:../Main.c     **** 	data_R[0] = temp;
+ 148              		.loc 1 127 0 is_stmt 1
+ 149 0082 40F20003 		movw	r3, #:lower16:data_R
+ 150 0086 C0F20003 		movt	r3, #:upper16:data_R
+ 151 008a FA78     		ldrb	r2, [r7, #3]
+ 152 008c 1A70     		strb	r2, [r3, #0]
+ 128:../Main.c     **** 	IO004_SetPin(CE);
+ 153              		.loc 1 128 0
+ 154 008e 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 155 0092 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 156 0096 5A68     		ldr	r2, [r3, #4]
+ 157 0098 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 158 009c C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 159 00a0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 160 00a2 4FF00101 		mov	r1, #1
+ 161 00a6 01FA03F3 		lsl	r3, r1, r3
+ 162 00aa 5360     		str	r3, [r2, #4]
+ 129:../Main.c     **** 	delay(50000);
+ 163              		.loc 1 129 0
+ 164 00ac 4CF25030 		movw	r0, #50000
+ 165 00b0 FFF7FEFF 		bl	delay
+ 130:../Main.c     **** }
+ 166              		.loc 1 130 0
+ 167 00b4 07F10807 		add	r7, r7, #8
+ 168 00b8 BD46     		mov	sp, r7
+ 169 00ba 80BD     		pop	{r7, pc}
+ 170              		.cfi_endproc
+ 171              	.LFE113:
+ 173              		.section	.text.pulse_R,"ax",%progbits
+ 174              		.align	2
+ 175              		.global	pulse_R
+ 176              		.thumb
+ 177              		.thumb_func
+ 179              	pulse_R:
+ 180              	.LFB114:
+ 131:../Main.c     **** 
+ 132:../Main.c     **** void pulse_R()
+ 133:../Main.c     **** {
+ 181              		.loc 1 133 0
+ 182              		.cfi_startproc
+ 183              		@ args = 0, pretend = 0, frame = 0
+ 184              		@ frame_needed = 1, uses_anonymous_args = 0
+ 185 0000 80B5     		push	{r7, lr}
+ 186              	.LCFI5:
+ 187              		.cfi_def_cfa_offset 8
+ 188              		.cfi_offset 7, -8
+ 189              		.cfi_offset 14, -4
+ 190 0002 00AF     		add	r7, sp, #0
+ 191              	.LCFI6:
+ 192              		.cfi_def_cfa_register 7
+ 134:../Main.c     **** 	delay(300);
+ 193              		.loc 1 134 0
+ 194 0004 4FF49670 		mov	r0, #300
+ 195 0008 FFF7FEFF 		bl	delay
+ 135:../Main.c     **** 	IO004_SetPin(CLK1);
+ 196              		.loc 1 135 0
+ 197 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 198 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 199 0014 5A68     		ldr	r2, [r3, #4]
+ 200 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 201 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 202 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 203 0020 4FF00101 		mov	r1, #1
+ 204 0024 01FA03F3 		lsl	r3, r1, r3
+ 205 0028 5360     		str	r3, [r2, #4]
+ 136:../Main.c     **** 	delay(300);
+ 206              		.loc 1 136 0
+ 207 002a 4FF49670 		mov	r0, #300
+ 208 002e FFF7FEFF 		bl	delay
+ 137:../Main.c     **** 	IO004_ResetPin(CLK1);
+ 209              		.loc 1 137 0
+ 210 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 211 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 212 003a 5A68     		ldr	r2, [r3, #4]
+ 213 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 214 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 215 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 216 0046 4FF48031 		mov	r1, #65536
+ 217 004a 01FA03F3 		lsl	r3, r1, r3
+ 218 004e 5360     		str	r3, [r2, #4]
+ 138:../Main.c     **** }
+ 219              		.loc 1 138 0
+ 220 0050 80BD     		pop	{r7, pc}
+ 221              		.cfi_endproc
+ 222              	.LFE114:
+ 224 0052 00BF     		.section	.text.configure_R,"ax",%progbits
+ 225              		.align	2
+ 226              		.global	configure_R
+ 227              		.thumb
+ 228              		.thumb_func
+ 230              	configure_R:
+ 231              	.LFB115:
+ 139:../Main.c     **** 
+ 140:../Main.c     **** void configure_R()
+ 141:../Main.c     **** {
+ 232              		.loc 1 141 0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 8
+ 235              		@ frame_needed = 1, uses_anonymous_args = 0
+ 236 0000 80B5     		push	{r7, lr}
+ 237              	.LCFI7:
+ 238              		.cfi_def_cfa_offset 8
+ 239              		.cfi_offset 7, -8
+ 240              		.cfi_offset 14, -4
+ 241 0002 82B0     		sub	sp, sp, #8
+ 242              	.LCFI8:
+ 243              		.cfi_def_cfa_offset 16
+ 244 0004 00AF     		add	r7, sp, #0
+ 245              	.LCFI9:
+ 246              		.cfi_def_cfa_register 7
+ 142:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
+ 143:../Main.c     **** 	configuration[0] = 0xC5;//RF_CH# e OP_MODE 0b11000101
+ 247              		.loc 1 143 0
+ 248 0006 40F20003 		movw	r3, #:lower16:configuration
+ 249 000a C0F20003 		movt	r3, #:upper16:configuration
+ 250 000e 4FF0C502 		mov	r2, #197
+ 251 0012 1A70     		strb	r2, [r3, #0]
+ 144:../Main.c     **** 	configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+ 252              		.loc 1 144 0
+ 253 0014 40F20003 		movw	r3, #:lower16:configuration
+ 254 0018 C0F20003 		movt	r3, #:upper16:configuration
+ 255 001c 4FF04F02 		mov	r2, #79
+ 256 0020 5A70     		strb	r2, [r3, #1]
+ 145:../Main.c     **** 	configuration[2] = 0xA3;//addr_w
+ 257              		.loc 1 145 0
+ 258 0022 40F20003 		movw	r3, #:lower16:configuration
+ 259 0026 C0F20003 		movt	r3, #:upper16:configuration
+ 260 002a 4FF0A302 		mov	r2, #163
+ 261 002e 9A70     		strb	r2, [r3, #2]
+ 146:../Main.c     **** 	configuration[3] = 0xEE;//Comeco enderco CH1 00000001
+ 262              		.loc 1 146 0
+ 263 0030 40F20003 		movw	r3, #:lower16:configuration
+ 264 0034 C0F20003 		movt	r3, #:upper16:configuration
+ 265 0038 4FF0EE02 		mov	r2, #238
+ 266 003c DA70     		strb	r2, [r3, #3]
+ 147:../Main.c     **** 	configuration[4] = 0xDD;//0b00000000
+ 267              		.loc 1 147 0
+ 268 003e 40F20003 		movw	r3, #:lower16:configuration
+ 269 0042 C0F20003 		movt	r3, #:upper16:configuration
+ 270 0046 4FF0DD02 		mov	r2, #221
+ 271 004a 1A71     		strb	r2, [r3, #4]
+ 148:../Main.c     **** 	configuration[5] = 0xCC;//0b11010100
+ 272              		.loc 1 148 0
+ 273 004c 40F20003 		movw	r3, #:lower16:configuration
+ 274 0050 C0F20003 		movt	r3, #:upper16:configuration
+ 275 0054 4FF0CC02 		mov	r2, #204
+ 276 0058 5A71     		strb	r2, [r3, #5]
+ 149:../Main.c     **** 	configuration[6] = 0xBB;//0b11011111
+ 277              		.loc 1 149 0
+ 278 005a 40F20003 		movw	r3, #:lower16:configuration
+ 279 005e C0F20003 		movt	r3, #:upper16:configuration
+ 280 0062 4FF0BB02 		mov	r2, #187
+ 281 0066 9A71     		strb	r2, [r3, #6]
+ 150:../Main.c     **** 	configuration[7] = 0xAA;//Fim enderco CH1 0b11101010
+ 282              		.loc 1 150 0
+ 283 0068 40F20003 		movw	r3, #:lower16:configuration
+ 284 006c C0F20003 		movt	r3, #:upper16:configuration
+ 285 0070 4FF0AA02 		mov	r2, #170
+ 286 0074 DA71     		strb	r2, [r3, #7]
+ 151:../Main.c     **** 	configuration[8] = 0b00000000;//Comeco enderco CH2
+ 287              		.loc 1 151 0
+ 288 0076 40F20003 		movw	r3, #:lower16:configuration
+ 289 007a C0F20003 		movt	r3, #:upper16:configuration
+ 290 007e 4FF00002 		mov	r2, #0
+ 291 0082 1A72     		strb	r2, [r3, #8]
+ 152:../Main.c     **** 	configuration[9] = 0b00000000;
+ 292              		.loc 1 152 0
+ 293 0084 40F20003 		movw	r3, #:lower16:configuration
+ 294 0088 C0F20003 		movt	r3, #:upper16:configuration
+ 295 008c 4FF00002 		mov	r2, #0
+ 296 0090 5A72     		strb	r2, [r3, #9]
+ 153:../Main.c     **** 	configuration[10] = 0b00000000;
+ 297              		.loc 1 153 0
+ 298 0092 40F20003 		movw	r3, #:lower16:configuration
+ 299 0096 C0F20003 		movt	r3, #:upper16:configuration
+ 300 009a 4FF00002 		mov	r2, #0
+ 301 009e 9A72     		strb	r2, [r3, #10]
+ 154:../Main.c     **** 	configuration[11] = 0b00000000;
+ 302              		.loc 1 154 0
+ 303 00a0 40F20003 		movw	r3, #:lower16:configuration
+ 304 00a4 C0F20003 		movt	r3, #:upper16:configuration
+ 305 00a8 4FF00002 		mov	r2, #0
+ 306 00ac DA72     		strb	r2, [r3, #11]
+ 155:../Main.c     **** 	configuration[12] = 0b00000000;//Fim enderco CH2
+ 307              		.loc 1 155 0
+ 308 00ae 40F20003 		movw	r3, #:lower16:configuration
+ 309 00b2 C0F20003 		movt	r3, #:upper16:configuration
+ 310 00b6 4FF00002 		mov	r2, #0
+ 311 00ba 1A73     		strb	r2, [r3, #12]
+ 156:../Main.c     **** 	configuration[13] = 0x8;//num bits enviados (1 byte nesse ex) TODO arrumar
+ 312              		.loc 1 156 0
+ 313 00bc 40F20003 		movw	r3, #:lower16:configuration
+ 314 00c0 C0F20003 		movt	r3, #:upper16:configuration
+ 315 00c4 4FF00802 		mov	r2, #8
+ 316 00c8 5A73     		strb	r2, [r3, #13]
+ 157:../Main.c     **** 	configuration[14] = 0b00000000;
+ 317              		.loc 1 157 0
+ 318 00ca 40F20003 		movw	r3, #:lower16:configuration
+ 319 00ce C0F20003 		movt	r3, #:upper16:configuration
+ 320 00d2 4FF00002 		mov	r2, #0
+ 321 00d6 9A73     		strb	r2, [r3, #14]
+ 158:../Main.c     **** 
+ 159:../Main.c     **** 	IO004_ResetPin(CE);
+ 322              		.loc 1 159 0
+ 323 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 324 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 325 00e0 5A68     		ldr	r2, [r3, #4]
+ 326 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 327 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 328 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 329 00ec 4FF48031 		mov	r1, #65536
+ 330 00f0 01FA03F3 		lsl	r3, r1, r3
+ 331 00f4 5360     		str	r3, [r2, #4]
+ 160:../Main.c     **** 	IO004_SetPin(CS);
+ 332              		.loc 1 160 0
+ 333 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 334 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 335 00fe 5A68     		ldr	r2, [r3, #4]
+ 336 0100 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 337 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 338 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 339 010a 4FF00101 		mov	r1, #1
+ 340 010e 01FA03F3 		lsl	r3, r1, r3
+ 341 0112 5360     		str	r3, [r2, #4]
+ 161:../Main.c     **** 	int i, j;
+ 162:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 342              		.loc 1 162 0
+ 343 0114 4FF00E03 		mov	r3, #14
+ 344 0118 7B60     		str	r3, [r7, #4]
+ 345 011a 3FE0     		b	.L11
+ 346              	.L16:
+ 163:../Main.c     **** 	{
+ 164:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 347              		.loc 1 164 0
+ 348 011c 4FF00703 		mov	r3, #7
+ 349 0120 3B60     		str	r3, [r7, #0]
+ 350 0122 34E0     		b	.L12
+ 351              	.L15:
+ 165:../Main.c     **** 		{
+ 166:../Main.c     **** 			if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
+ 352              		.loc 1 166 0
+ 353 0124 40F20003 		movw	r3, #:lower16:configuration
+ 354 0128 C0F20003 		movt	r3, #:upper16:configuration
+ 355 012c 7A68     		ldr	r2, [r7, #4]
+ 356 012e 9B18     		adds	r3, r3, r2
+ 357 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 358 0132 1A46     		mov	r2, r3
+ 359 0134 4FF00101 		mov	r1, #1
+ 360 0138 3B68     		ldr	r3, [r7, #0]
+ 361 013a 01FA03F3 		lsl	r3, r1, r3
+ 362 013e 1340     		ands	r3, r3, r2
+ 363 0140 002B     		cmp	r3, #0
+ 364 0142 0FDD     		ble	.L13
+ 365              		.loc 1 166 0 is_stmt 0 discriminator 1
+ 366 0144 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 367 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 368 014c 5A68     		ldr	r2, [r3, #4]
+ 369 014e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 370 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 371 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 372 0158 4FF00101 		mov	r1, #1
+ 373 015c 01FA03F3 		lsl	r3, r1, r3
+ 374 0160 5360     		str	r3, [r2, #4]
+ 375 0162 0EE0     		b	.L14
+ 376              	.L13:
+ 167:../Main.c     **** 			else IO004_ResetPin(DATA);;
+ 377              		.loc 1 167 0 is_stmt 1
+ 378 0164 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 379 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 380 016c 5A68     		ldr	r2, [r3, #4]
+ 381 016e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 382 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 383 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 384 0178 4FF48031 		mov	r1, #65536
+ 385 017c 01FA03F3 		lsl	r3, r1, r3
+ 386 0180 5360     		str	r3, [r2, #4]
+ 387              	.L14:
+ 168:../Main.c     **** 			pulse_R();
+ 388              		.loc 1 168 0
+ 389 0182 FFF7FEFF 		bl	pulse_R
+ 164:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 390              		.loc 1 164 0
+ 391 0186 3B68     		ldr	r3, [r7, #0]
+ 392 0188 03F1FF33 		add	r3, r3, #-1
+ 393 018c 3B60     		str	r3, [r7, #0]
+ 394              	.L12:
+ 164:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 395              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 396 018e 3B68     		ldr	r3, [r7, #0]
+ 397 0190 002B     		cmp	r3, #0
+ 398 0192 C7DA     		bge	.L15
+ 162:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 399              		.loc 1 162 0 is_stmt 1
+ 400 0194 7B68     		ldr	r3, [r7, #4]
+ 401 0196 03F1FF33 		add	r3, r3, #-1
+ 402 019a 7B60     		str	r3, [r7, #4]
+ 403              	.L11:
+ 162:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 404              		.loc 1 162 0 is_stmt 0 discriminator 1
+ 405 019c 7B68     		ldr	r3, [r7, #4]
+ 406 019e 002B     		cmp	r3, #0
+ 407 01a0 BCDA     		bge	.L16
+ 169:../Main.c     **** 		}
+ 170:../Main.c     **** 	}
+ 171:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
+ 408              		.loc 1 171 0 is_stmt 1
+ 409 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle4
+ 410 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle4
+ 411 01aa 4FF00301 		mov	r1, #3
+ 412 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 172:../Main.c     **** 	IO004_ResetPin(CS);
+ 413              		.loc 1 172 0
+ 414 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 415 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 416 01ba 5A68     		ldr	r2, [r3, #4]
+ 417 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 418 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 419 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 420 01c6 4FF48031 		mov	r1, #65536
+ 421 01ca 01FA03F3 		lsl	r3, r1, r3
+ 422 01ce 5360     		str	r3, [r2, #4]
+ 173:../Main.c     **** 	IO004_SetPin(CE);
+ 423              		.loc 1 173 0
+ 424 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 425 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 426 01d8 5A68     		ldr	r2, [r3, #4]
+ 427 01da 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 428 01de C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 429 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 430 01e4 4FF00101 		mov	r1, #1
+ 431 01e8 01FA03F3 		lsl	r3, r1, r3
+ 432 01ec 5360     		str	r3, [r2, #4]
+ 174:../Main.c     **** 	delay(50000);
+ 433              		.loc 1 174 0
+ 434 01ee 4CF25030 		movw	r0, #50000
+ 435 01f2 FFF7FEFF 		bl	delay
+ 175:../Main.c     **** }
+ 436              		.loc 1 175 0
+ 437 01f6 07F10807 		add	r7, r7, #8
+ 438 01fa BD46     		mov	sp, r7
+ 439 01fc 80BD     		pop	{r7, pc}
+ 440              		.cfi_endproc
+ 441              	.LFE115:
+ 443 01fe 00BF     		.section	.text.delay,"ax",%progbits
+ 444              		.align	2
+ 445              		.global	delay
+ 446              		.thumb
+ 447              		.thumb_func
+ 449              	delay:
+ 450              	.LFB116:
+ 176:../Main.c     **** 
+ 177:../Main.c     **** /***************************************************/
+ 178:../Main.c     **** /*****************FUNCOES GERAIS********************/
+ 179:../Main.c     **** /***************************************************/
+ 180:../Main.c     **** 
+ 181:../Main.c     **** void delay(long unsigned int i)
+ 182:../Main.c     **** {
+ 451              		.loc 1 182 0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 8
+ 454              		@ frame_needed = 1, uses_anonymous_args = 0
+ 455              		@ link register save eliminated.
+ 456 0000 80B4     		push	{r7}
+ 457              	.LCFI10:
+ 458              		.cfi_def_cfa_offset 4
+ 459              		.cfi_offset 7, -4
+ 460 0002 83B0     		sub	sp, sp, #12
+ 461              	.LCFI11:
+ 462              		.cfi_def_cfa_offset 16
+ 463 0004 00AF     		add	r7, sp, #0
+ 464              	.LCFI12:
+ 465              		.cfi_def_cfa_register 7
+ 466 0006 7860     		str	r0, [r7, #4]
+ 183:../Main.c     **** 	while(i--)
+ 467              		.loc 1 183 0
+ 468 0008 00E0     		b	.L18
+ 469              	.L19:
+ 470              	.LBB4:
+ 471              	.LBB5:
+ 472              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+   1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
+   2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
+   3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
+   4:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @version  V3.20
+   5:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @date     05. March 2013
+   6:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   7:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @note
+   8:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   9:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  ******************************************************************************/
+  10:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Copyright (c) 2009 - 2013 ARM LIMITED
+  11:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  12:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    All rights reserved.
+  13:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    Redistribution and use in source and binary forms, with or without
+  14:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    modification, are permitted provided that the following conditions are met:
+  15:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions of source code must retain the above copyright
+  16:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer.
+  17:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer in the
+  19:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      documentation and/or other materials provided with the distribution.
+  20:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  21:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      to endorse or promote products derived from this software without
+  22:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      specific prior written permission.
+  23:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    *
+  24:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  27:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  28:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  29:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  30:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  31:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  32:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  33:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  34:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    POSSIBILITY OF SUCH DAMAGE.
+  35:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ---------------------------------------------------------------------------*/
+  36:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  37:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  38:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __CORE_CMINSTR_H
+  39:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CORE_CMINSTR_H
+  40:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  41:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  42:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ##########################  Core Instruction Access  ######################### */
+  43:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  44:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   Access to dedicated instructions
+  45:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   @{
+  46:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** */
+  47:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  48:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  49:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ARM armcc specific functions */
+  50:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  51:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if (__ARMCC_VERSION < 400677)
+  52:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  53:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+  54:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  55:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  56:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+  57:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  58:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+  59:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  60:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __NOP                             __nop
+  61:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  62:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  63:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Interrupt
+  64:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  65:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+  66:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     until one of a number of events occurs.
+  67:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  68:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFI                             __wfi
+  69:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  70:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  71:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Event
+  72:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  73:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+  74:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+  75:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  76:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFE                             __wfe
+  77:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  78:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  79:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Send Event
+  80:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  81:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+  82:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  83:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SEV                             __sev
+  84:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  85:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  86:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+  87:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  88:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+  89:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+  90:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     memory, after the instruction has been completed.
+  91:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  92:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ISB()                           __isb(0xF)
+  93:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  94:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  95:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+  96:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  97:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+  98:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+  99:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 100:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DSB()                           __dsb(0xF)
+ 101:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 102:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 103:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 104:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 105:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 106:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 107:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 108:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DMB()                           __dmb(0xF)
+ 109:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 110:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 111:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 112:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 113:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 114:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 115:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 116:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 117:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 118:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __REV                             __rev
+ 119:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 120:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 121:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (16 bit)
+ 122:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 123:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in two unsigned short values.
+ 124:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 125:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 126:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 127:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 128:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 129:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+ 130:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 131:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   rev16 r0, r0
+ 132:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 133:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 134:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 135:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 136:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order in signed short value
+ 137:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 138:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in a signed short value with sign extension to integer.
+ 139:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 140:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 141:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 142:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 143:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 144:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+ 145:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 146:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   revsh r0, r0
+ 147:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 148:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 149:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 150:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 151:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 152:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Rotate Right in unsigned value (32 bit)
+ 153:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 154:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function Rotate Right (immediate) provides the value of the contents of a register rotated
+ 155:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 156:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 157:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Number of Bits to rotate
+ 158:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Rotated value
+ 159:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 160:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ROR                             __ror
+ 161:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 162:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 163:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Breakpoint
+ 164:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 165:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function causes the processor to enter Debug state.
+ 166:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Debug tools can use this to investigate system state when the instruction at a particular addre
+ 167:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 168:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  is ignored by the processor.
+ 169:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****                    If required, a debugger can use it to store additional information about the bre
+ 170:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 171:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __BKPT(value)                       __breakpoint(value)
+ 172:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 173:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 174:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if       (__CORTEX_M >= 0x03)
+ 175:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 176:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse bit order of value
+ 177:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 178:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the bit order of the given value.
+ 179:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 180:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 181:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 182:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 183:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __RBIT                            __rbit
+ 184:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 185:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 186:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (8 bit)
+ 187:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 188:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 8 bit value.
+ 189:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 190:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 191:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 192:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 193:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXB(ptr)                     ((uint8_t ) __ldrex(ptr))
+ 194:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 195:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 196:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (16 bit)
+ 197:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 198:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 16 bit values.
+ 199:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 200:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 201:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 202:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 203:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXH(ptr)                     ((uint16_t) __ldrex(ptr))
+ 204:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 205:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 206:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (32 bit)
+ 207:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 208:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 32 bit values.
+ 209:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 210:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 211:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 212:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 213:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXW(ptr)                     ((uint32_t ) __ldrex(ptr))
+ 214:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 215:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 216:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (8 bit)
+ 217:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 218:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 8 bit values.
+ 219:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 220:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 221:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 222:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 223:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 224:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 225:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXB(value, ptr)              __strex(value, ptr)
+ 226:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 227:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 228:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (16 bit)
+ 229:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 230:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 16 bit values.
+ 231:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 232:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 233:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 234:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 235:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 236:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 237:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXH(value, ptr)              __strex(value, ptr)
+ 238:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 239:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 240:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (32 bit)
+ 241:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 242:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 32 bit values.
+ 243:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 244:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 245:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 246:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 247:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 248:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 249:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXW(value, ptr)              __strex(value, ptr)
+ 250:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 251:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 252:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Remove the exclusive lock
+ 253:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 254:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function removes the exclusive lock which is created by LDREX.
+ 255:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 256:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 257:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLREX                           __clrex
+ 258:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 259:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 260:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Signed Saturate
+ 261:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 262:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates a signed value.
+ 263:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 264:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 265:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (1..32)
+ 266:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 267:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 268:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SSAT                            __ssat
+ 269:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 270:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 271:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Unsigned Saturate
+ 272:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 273:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates an unsigned value.
+ 274:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 275:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 276:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (0..31)
+ 277:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 278:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 279:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __USAT                            __usat
+ 280:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 281:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 282:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Count leading zeros
+ 283:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 284:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function counts the number of leading zeros of a data value.
+ 285:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 286:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to count the leading zeros
+ 287:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             number of leading zeros in value
+ 288:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 289:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLZ                             __clz
+ 290:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 291:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif /* (__CORTEX_M >= 0x03) */
+ 292:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 293:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 294:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 295:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+ 296:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* IAR iccarm specific functions */
+ 297:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 298:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_iar.h>
+ 299:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 300:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 301:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+ 302:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* TI CCS specific functions */
+ 303:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 304:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_ccs.h>
+ 305:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 306:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 307:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 308:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* GNU gcc specific functions */
+ 309:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 310:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 311:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * For thumb1, use low register (r0-r7), specified by constrant "l"
+ 312:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * Otherwise, use general registers, specified by constrant "r" */
+ 313:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 314:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 315:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 316:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #else
+ 317:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 318:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 319:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 320:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 321:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+ 322:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 323:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+ 324:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
+ 326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
+ 473              		.loc 2 327 0
+ 474              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 475 000a 00BF     		nop
+ 476              	@ 0 "" 2
+ 477              		.thumb
+ 478              	.L18:
+ 479              	.LBE5:
+ 480              	.LBE4:
+ 481              		.loc 1 183 0 discriminator 1
+ 482 000c 7B68     		ldr	r3, [r7, #4]
+ 483 000e 002B     		cmp	r3, #0
+ 484 0010 0CBF     		ite	eq
+ 485 0012 0023     		moveq	r3, #0
+ 486 0014 0123     		movne	r3, #1
+ 487 0016 DBB2     		uxtb	r3, r3
+ 488 0018 7A68     		ldr	r2, [r7, #4]
+ 489 001a 02F1FF32 		add	r2, r2, #-1
+ 490 001e 7A60     		str	r2, [r7, #4]
+ 491 0020 002B     		cmp	r3, #0
+ 492 0022 F2D1     		bne	.L19
+ 184:../Main.c     **** 	{
+ 185:../Main.c     **** 		__NOP();
+ 186:../Main.c     **** 	}
+ 187:../Main.c     **** }
+ 493              		.loc 1 187 0
+ 494 0024 07F10C07 		add	r7, r7, #12
+ 495 0028 BD46     		mov	sp, r7
+ 496 002a 80BC     		pop	{r7}
+ 497 002c 7047     		bx	lr
+ 498              		.cfi_endproc
+ 499              	.LFE116:
+ 501 002e 00BF     		.text
+ 502              	.Letext0:
+ 503              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 504              		.file 4 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\ControleInterno\\Dave\
+ 505              		.file 5 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 506              		.file 6 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\ControleInterno\\Dave\
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+                            *COM*:0000000f configuration
+                            *COM*:00000001 data_R
+                            *COM*:00000001 data_E
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:23     .text.main:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:28     .text.main:00000000 main
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:230    .text.configure_R:00000000 configure_R
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:77     .text.read_R:00000000 read_R
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:72     .text.read_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:449    .text.delay:00000000 delay
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:179    .text.pulse_R:00000000 pulse_R
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:174    .text.pulse_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:225    .text.configure_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc0HUfrd.s:444    .text.delay:00000000 $t
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+
+UNDEFINED SYMBOLS
+DAVE_Init
+IO004_Handle5
+IO004_Handle6
+IO004_Handle4
+IO004_Handle2
+IO004_Handle1
+IO004_DisableOutputDriver

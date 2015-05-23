@@ -19,7 +19,7 @@ int CE_E = 4;
 
 char configuration[15];
 
-char data = 0;
+char data = 1;
 char data_R[4];
 void setup() {
   Serial.begin(9600);
@@ -61,20 +61,20 @@ void setup() {
   pinMode(CLK_E, OUTPUT);
   pinMode(CE_E, OUTPUT);
   
-  //configure_E();
-  data = '0';
-  configure_R();
+  configure_E();
+  data = '2';
+  //configure_R();
 }
 int i = 0;
 void loop() {
-  //write_E();
-  Serial.println("Esperando dados");
+  write_E();
+  Serial.println("Printing");
   //data = '0';
   //if (Serial.available() > 0)
     //data = Serial.read();
   //Serial.println(data);
   //write_E();
-  while (digitalRead(DR_R) == LOW);
+  /*while (digitalRead(DR_R) == LOW);
   read_R();
   Serial.print((uint8_t)(data_R[0]));
   Serial.print("\t");
@@ -88,7 +88,7 @@ void loop() {
   }
   Serial.println();
   //data++;
-  //delay(500);
+  //delay(500);*/
     
 }
 

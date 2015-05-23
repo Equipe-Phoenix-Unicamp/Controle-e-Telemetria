@@ -1110,12 +1110,12 @@
  833              		.file 5 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004.c
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:20     .text.IO004_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:25     .text.IO004_Init:00000000 IO004_Init
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:435    .text.IO004_DisableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:440    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:632    .text.IO004_EnableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc8BUrJG.s:637    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:20     .text.IO004_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:25     .text.IO004_Init:00000000 IO004_Init
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:435    .text.IO004_DisableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:440    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:632    .text.IO004_EnableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccTdUO8Z.s:637    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
