@@ -9,7 +9,7 @@ Common symbol       size              file
 configuration       0xf               Main.o
 pwm_max             0x1               Main.o
 psx_status          0x1               Main.o
-data_E              0x1               Main.o
+data_E              0x5               Main.o
 psxDado             0x18              Main.o
 result              0x4               Main.o
 
@@ -1202,7 +1202,7 @@ LOAD c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-n
 END GROUP
                 0x00000800                stack_size = 0x800
 
-.text           0x08000000     0x6260 load address 0x0c000000
+.text           0x08000000     0x68e4 load address 0x0c000000
                 0x08000000                sText = .
  *(.Xmc4500.reset)
  .Xmc4500.reset
@@ -1336,475 +1336,475 @@ END GROUP
  .text.SystemClockSetup
                 0x08000590      0x4cc Startup/system_XMC4500.o
  .text          0x08000a5c        0x0 Main.o
- .text.main     0x08000a5c       0x14 Main.o
+ .text.main     0x08000a5c      0x6f8 Main.o
                 0x08000a5c                main
- .text.read_R   0x08000a70       0xbc Main.o
-                0x08000a70                read_R
- .text.pulse_R  0x08000b2c       0x54 Main.o
-                0x08000b2c                pulse_R
+ .text.read_R   0x08001154       0xbc Main.o
+                0x08001154                read_R
+ .text.pulse_R  0x08001210       0x54 Main.o
+                0x08001210                pulse_R
  .text.configure_E
-                0x08000b80      0x1d0 Main.o
-                0x08000b80                configure_E
- .text.write_E  0x08000d50      0x178 Main.o
-                0x08000d50                write_E
+                0x08001264      0x1d0 Main.o
+                0x08001264                configure_E
+ .text.write_E  0x08001434      0x178 Main.o
+                0x08001434                write_E
  .text.psxConfiguraControle
-                0x08000ec8       0x14 Main.o
-                0x08000ec8                psxConfiguraControle
+                0x080015ac       0x14 Main.o
+                0x080015ac                psxConfiguraControle
  .text.psxEnterConfigMode
-                0x08000edc       0xd0 Main.o
-                0x08000edc                psxEnterConfigMode
+                0x080015c0       0xd0 Main.o
+                0x080015c0                psxEnterConfigMode
  .text.psxSetAnalogMode
-                0x08000fac      0x100 Main.o
-                0x08000fac                psxSetAnalogMode
+                0x08001690      0x100 Main.o
+                0x08001690                psxSetAnalogMode
  .text.psxExitConfigMode
-                0x080010ac      0x100 Main.o
-                0x080010ac                psxExitConfigMode
+                0x08001790      0x100 Main.o
+                0x08001790                psxExitConfigMode
  .text.psxLeControle
-                0x080011ac       0xf4 Main.o
-                0x080011ac                psxLeControle
+                0x08001890       0xf4 Main.o
+                0x08001890                psxLeControle
  .text.psxHandShake
-                0x080012a0       0xe0 Main.o
-                0x080012a0                psxHandShake
+                0x08001984       0xe0 Main.o
+                0x08001984                psxHandShake
  .text.psxTrocaByte
-                0x08001380      0x124 Main.o
-                0x08001380                psxTrocaByte
- .text.delay    0x080014a4       0x30 Main.o
-                0x080014a4                delay
+                0x08001a64      0x124 Main.o
+                0x08001a64                psxTrocaByte
+ .text.delay    0x08001b88       0x30 Main.o
+                0x08001b88                delay
  .text.printByteToInt
-                0x080014d4       0xe4 Main.o
-                0x080014d4                printByteToInt
+                0x08001bb8       0xe4 Main.o
+                0x08001bb8                printByteToInt
  .text.VADC0_C0_2_IRQHandler
-                0x080015b8       0x1c Main.o
-                0x080015b8                VADC0_C0_2_IRQHandler
+                0x08001c9c       0x1c Main.o
+                0x08001c9c                VADC0_C0_2_IRQHandler
  .text.updateButtonStates
-                0x080015d4      0x22c Main.o
-                0x080015d4                updateButtonStates
- .text.turbo    0x08001800       0x18 Main.o
-                0x08001800                turbo
- .text.shunt    0x08001818       0x18 Main.o
-                0x08001818                shunt
- .text.flip     0x08001830       0x2c Main.o
-                0x08001830                flip
- .text          0x0800185c        0x0 Lib/System_LibcStubs.o
- .text._open    0x0800185c       0x1c Lib/System_LibcStubs.o
-                0x0800185c                _open
- .text._lseek   0x08001878       0x1c Lib/System_LibcStubs.o
-                0x08001878                _lseek
- .text._read    0x08001894       0x1c Lib/System_LibcStubs.o
-                0x08001894                _read
- .text._write   0x080018b0       0x1c Lib/System_LibcStubs.o
-                0x080018b0                _write
- .text._close   0x080018cc       0x10 Lib/System_LibcStubs.o
-                0x080018cc                _close
- .text._fstat   0x080018dc       0x28 Lib/System_LibcStubs.o
-                0x080018dc                _fstat
- .text._link    0x08001904       0x28 Lib/System_LibcStubs.o
-                0x08001904                _link
- .text._unlink  0x0800192c       0x18 Lib/System_LibcStubs.o
-                0x0800192c                _unlink
- .text._sbrk    0x08001944       0xa0 Lib/System_LibcStubs.o
-                0x08001944                _sbrk
- .text._times   0x080019e4       0x18 Lib/System_LibcStubs.o
-                0x080019e4                _times
- .text._wait    0x080019fc       0x18 Lib/System_LibcStubs.o
-                0x080019fc                _wait
- .text._kill    0x08001a14       0x1c Lib/System_LibcStubs.o
-                0x08001a14                _kill
- .text._fork    0x08001a30       0x10 Lib/System_LibcStubs.o
-                0x08001a30                _fork
- .text._getpid  0x08001a40       0x10 Lib/System_LibcStubs.o
-                0x08001a40                _getpid
- .text._exit    0x08001a50        0xc Lib/System_LibcStubs.o
-                0x08001a50                _exit
- .text._init    0x08001a5c        0xc Lib/System_LibcStubs.o
-                0x08001a5c                _init
- .text._isatty  0x08001a68       0x18 Lib/System_LibcStubs.o
-                0x08001a68                _isatty
- .text          0x08001a80        0x0 Dave/Generated/src/UART001/UART001.o
+                0x08001cb8      0x22c Main.o
+                0x08001cb8                updateButtonStates
+ .text.turbo    0x08001ee4       0x18 Main.o
+                0x08001ee4                turbo
+ .text.shunt    0x08001efc       0x18 Main.o
+                0x08001efc                shunt
+ .text.flip     0x08001f14       0x2c Main.o
+                0x08001f14                flip
+ .text          0x08001f40        0x0 Lib/System_LibcStubs.o
+ .text._open    0x08001f40       0x1c Lib/System_LibcStubs.o
+                0x08001f40                _open
+ .text._lseek   0x08001f5c       0x1c Lib/System_LibcStubs.o
+                0x08001f5c                _lseek
+ .text._read    0x08001f78       0x1c Lib/System_LibcStubs.o
+                0x08001f78                _read
+ .text._write   0x08001f94       0x1c Lib/System_LibcStubs.o
+                0x08001f94                _write
+ .text._close   0x08001fb0       0x10 Lib/System_LibcStubs.o
+                0x08001fb0                _close
+ .text._fstat   0x08001fc0       0x28 Lib/System_LibcStubs.o
+                0x08001fc0                _fstat
+ .text._link    0x08001fe8       0x28 Lib/System_LibcStubs.o
+                0x08001fe8                _link
+ .text._unlink  0x08002010       0x18 Lib/System_LibcStubs.o
+                0x08002010                _unlink
+ .text._sbrk    0x08002028       0xa0 Lib/System_LibcStubs.o
+                0x08002028                _sbrk
+ .text._times   0x080020c8       0x18 Lib/System_LibcStubs.o
+                0x080020c8                _times
+ .text._wait    0x080020e0       0x18 Lib/System_LibcStubs.o
+                0x080020e0                _wait
+ .text._kill    0x080020f8       0x1c Lib/System_LibcStubs.o
+                0x080020f8                _kill
+ .text._fork    0x08002114       0x10 Lib/System_LibcStubs.o
+                0x08002114                _fork
+ .text._getpid  0x08002124       0x10 Lib/System_LibcStubs.o
+                0x08002124                _getpid
+ .text._exit    0x08002134        0xc Lib/System_LibcStubs.o
+                0x08002134                _exit
+ .text._init    0x08002140        0xc Lib/System_LibcStubs.o
+                0x08002140                _init
+ .text._isatty  0x0800214c       0x18 Lib/System_LibcStubs.o
+                0x0800214c                _isatty
+ .text          0x08002164        0x0 Dave/Generated/src/UART001/UART001.o
  .text.UART001_lInit
-                0x08001a80      0x1a8 Dave/Generated/src/UART001/UART001.o
-                0x08001a80                UART001_lInit
+                0x08002164      0x1a8 Dave/Generated/src/UART001/UART001.o
+                0x08002164                UART001_lInit
  .text.UART001_lConfigTXPin
-                0x08001c28       0xfc Dave/Generated/src/UART001/UART001.o
-                0x08001c28                UART001_lConfigTXPin
+                0x0800230c       0xfc Dave/Generated/src/UART001/UART001.o
+                0x0800230c                UART001_lConfigTXPin
  .text.UART001_labsRealType
-                0x08001d24       0x38 Dave/Generated/src/UART001/UART001.o
-                0x08001d24                UART001_labsRealType
+                0x08002408       0x38 Dave/Generated/src/UART001/UART001.o
+                0x08002408                UART001_labsRealType
  .text.UART001_lConfigureBaudRate
-                0x08001d5c      0x4e8 Dave/Generated/src/UART001/UART001.o
-                0x08001d5c                UART001_lConfigureBaudRate
+                0x08002440      0x4e8 Dave/Generated/src/UART001/UART001.o
+                0x08002440                UART001_lConfigureBaudRate
  .text.UART001_Init
-                0x08002244       0x6c Dave/Generated/src/UART001/UART001.o
-                0x08002244                UART001_Init
+                0x08002928       0x6c Dave/Generated/src/UART001/UART001.o
+                0x08002928                UART001_Init
  .text.UART001_DeInit
-                0x080022b0       0x14 Dave/Generated/src/UART001/UART001.o
-                0x080022b0                UART001_DeInit
+                0x08002994       0x14 Dave/Generated/src/UART001/UART001.o
+                0x08002994                UART001_DeInit
  .text.UART001_Configure
-                0x080022c4      0x114 Dave/Generated/src/UART001/UART001.o
-                0x080022c4                UART001_Configure
+                0x080029a8      0x114 Dave/Generated/src/UART001/UART001.o
+                0x080029a8                UART001_Configure
  .text.UART001_ReadDataMultiple
-                0x080023d8       0x80 Dave/Generated/src/UART001/UART001.o
-                0x080023d8                UART001_ReadDataMultiple
+                0x08002abc       0x80 Dave/Generated/src/UART001/UART001.o
+                0x08002abc                UART001_ReadDataMultiple
  .text.UART001_ReadDataBytes
-                0x08002458       0x80 Dave/Generated/src/UART001/UART001.o
-                0x08002458                UART001_ReadDataBytes
+                0x08002b3c       0x80 Dave/Generated/src/UART001/UART001.o
+                0x08002b3c                UART001_ReadDataBytes
  .text.UART001_WriteDataMultiple
-                0x080024d8       0x90 Dave/Generated/src/UART001/UART001.o
-                0x080024d8                UART001_WriteDataMultiple
+                0x08002bbc       0x90 Dave/Generated/src/UART001/UART001.o
+                0x08002bbc                UART001_WriteDataMultiple
  .text.UART001_WriteDataBytes
-                0x08002568       0x90 Dave/Generated/src/UART001/UART001.o
-                0x08002568                UART001_WriteDataBytes
+                0x08002c4c       0x90 Dave/Generated/src/UART001/UART001.o
+                0x08002c4c                UART001_WriteDataBytes
  .text.UART001_GetFlagStatus
-                0x080025f8       0x98 Dave/Generated/src/UART001/UART001.o
-                0x080025f8                UART001_GetFlagStatus
+                0x08002cdc       0x98 Dave/Generated/src/UART001/UART001.o
+                0x08002cdc                UART001_GetFlagStatus
  .text.UART001_ClearFlag
-                0x08002690       0x78 Dave/Generated/src/UART001/UART001.o
-                0x08002690                UART001_ClearFlag
- .text          0x08002708        0x0 Dave/Generated/src/UART001/UART001_Conf.o
- .text          0x08002708        0x0 Dave/Generated/src/RESET001/RESET001.o
+                0x08002d74       0x78 Dave/Generated/src/UART001/UART001.o
+                0x08002d74                UART001_ClearFlag
+ .text          0x08002dec        0x0 Dave/Generated/src/UART001/UART001_Conf.o
+ .text          0x08002dec        0x0 Dave/Generated/src/RESET001/RESET001.o
  .text.RESET001_AssertReset
-                0x08002708       0x54 Dave/Generated/src/RESET001/RESET001.o
-                0x08002708                RESET001_AssertReset
+                0x08002dec       0x54 Dave/Generated/src/RESET001/RESET001.o
+                0x08002dec                RESET001_AssertReset
  .text.RESET001_DeassertReset
-                0x0800275c       0x54 Dave/Generated/src/RESET001/RESET001.o
-                0x0800275c                RESET001_DeassertReset
+                0x08002e40       0x54 Dave/Generated/src/RESET001/RESET001.o
+                0x08002e40                RESET001_DeassertReset
  .text.RESET001_GetResetInfo
-                0x080027b0       0x2c Dave/Generated/src/RESET001/RESET001.o
-                0x080027b0                RESET001_GetResetInfo
+                0x08002e94       0x2c Dave/Generated/src/RESET001/RESET001.o
+                0x08002e94                RESET001_GetResetInfo
  .text.RESET001_GetStatus
-                0x080027dc       0x7c Dave/Generated/src/RESET001/RESET001.o
-                0x080027dc                RESET001_GetStatus
+                0x08002ec0       0x7c Dave/Generated/src/RESET001/RESET001.o
+                0x08002ec0                RESET001_GetStatus
  .text.RESET001_ClearResetInfo
-                0x08002858       0x28 Dave/Generated/src/RESET001/RESET001.o
-                0x08002858                RESET001_ClearResetInfo
- .text          0x08002880        0x0 Dave/Generated/src/NVIC002/NVIC002.o
+                0x08002f3c       0x28 Dave/Generated/src/RESET001/RESET001.o
+                0x08002f3c                RESET001_ClearResetInfo
+ .text          0x08002f64        0x0 Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC_GetPriorityGrouping
-                0x08002880       0x20 Dave/Generated/src/NVIC002/NVIC002.o
+                0x08002f64       0x20 Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC_EnableIRQ
-                0x080028a0       0x38 Dave/Generated/src/NVIC002/NVIC002.o
+                0x08002f84       0x38 Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC_SetPriority
-                0x080028d8       0x5c Dave/Generated/src/NVIC002/NVIC002.o
+                0x08002fbc       0x5c Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC_EncodePriority
-                0x08002934       0x78 Dave/Generated/src/NVIC002/NVIC002.o
+                0x08003018       0x78 Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC002_EnableIRQ
-                0x080029ac       0x20 Dave/Generated/src/NVIC002/NVIC002.o
+                0x08003090       0x20 Dave/Generated/src/NVIC002/NVIC002.o
  .text.NVIC002_Init
-                0x080029cc       0x38 Dave/Generated/src/NVIC002/NVIC002.o
-                0x080029cc                NVIC002_Init
+                0x080030b0       0x38 Dave/Generated/src/NVIC002/NVIC002.o
+                0x080030b0                NVIC002_Init
  .text.NVIC002_lInit
-                0x08002a04       0x4c Dave/Generated/src/NVIC002/NVIC002.o
- .text          0x08002a50        0x0 Dave/Generated/src/NVIC002/NVIC002_Conf.o
- .text          0x08002a50        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .text          0x08002a50        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
- .text          0x08002a50        0x0 Dave/Generated/src/IO004/IO004.o
+                0x080030e8       0x4c Dave/Generated/src/NVIC002/NVIC002.o
+ .text          0x08003134        0x0 Dave/Generated/src/NVIC002/NVIC002_Conf.o
+ .text          0x08003134        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .text          0x08003134        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
+ .text          0x08003134        0x0 Dave/Generated/src/IO004/IO004.o
  .text.IO004_Init
-                0x08002a50      0x434 Dave/Generated/src/IO004/IO004.o
-                0x08002a50                IO004_Init
+                0x08003134      0x3d4 Dave/Generated/src/IO004/IO004.o
+                0x08003134                IO004_Init
  .text.IO004_DisableOutputDriver
-                0x08002e84      0x17c Dave/Generated/src/IO004/IO004.o
-                0x08002e84                IO004_DisableOutputDriver
+                0x08003508      0x17c Dave/Generated/src/IO004/IO004.o
+                0x08003508                IO004_DisableOutputDriver
  .text.IO004_EnableOutputDriver
-                0x08003000      0x17c Dave/Generated/src/IO004/IO004.o
-                0x08003000                IO004_EnableOutputDriver
- .text          0x0800317c        0x0 Dave/Generated/src/IO004/IO004_Conf.o
- .text          0x0800317c        0x0 Dave/Generated/src/IO001/IO001.o
+                0x08003684      0x17c Dave/Generated/src/IO004/IO004.o
+                0x08003684                IO004_EnableOutputDriver
+ .text          0x08003800        0x0 Dave/Generated/src/IO004/IO004_Conf.o
+ .text          0x08003800        0x0 Dave/Generated/src/IO001/IO001.o
  .text.IO001_Init
-                0x0800317c       0x40 Dave/Generated/src/IO001/IO001.o
-                0x0800317c                IO001_Init
+                0x08003800       0x40 Dave/Generated/src/IO001/IO001.o
+                0x08003800                IO001_Init
  .text.IO001_EnableDigitalInput
-                0x080031bc      0x198 Dave/Generated/src/IO001/IO001.o
-                0x080031bc                IO001_EnableDigitalInput
+                0x08003840      0x198 Dave/Generated/src/IO001/IO001.o
+                0x08003840                IO001_EnableDigitalInput
  .text.IO001_DisableDigitalInput
-                0x08003354       0x2c Dave/Generated/src/IO001/IO001.o
-                0x08003354                IO001_DisableDigitalInput
- .text          0x08003380        0x0 Dave/Generated/src/IO001/IO001_Conf.o
- .text          0x08003380        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x080039d8       0x2c Dave/Generated/src/IO001/IO001.o
+                0x080039d8                IO001_DisableDigitalInput
+ .text          0x08003a04        0x0 Dave/Generated/src/IO001/IO001_Conf.o
+ .text          0x08003a04        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.NVIC_SetPriorityGrouping
-                0x08003380       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003a04       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.DAVE_Init
-                0x080033d0       0x38 Dave/Generated/src/DAVESupport/DAVE3.o
-                0x080033d0                DAVE_Init
+                0x08003a54       0x38 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003a54                DAVE_Init
  .text.SystemInit_DAVE3
-                0x08003408        0xc Dave/Generated/src/DAVESupport/DAVE3.o
-                0x08003408                SystemInit_DAVE3
- .text          0x08003414        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003a8c        0xc Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08003a8c                SystemInit_DAVE3
+ .text          0x08003a98        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
  .text.DAVE_MUX_Init
-                0x08003414      0x210 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08003414                DAVE_MUX_Init
+                0x08003a98      0x210 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003a98                DAVE_MUX_Init
  .text.DAVE_MUX_PreInit
-                0x08003624        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08003624                DAVE_MUX_PreInit
- .text          0x08003630        0x0 Dave/Generated/src/CLK001/CLK001.o
+                0x08003ca8        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08003ca8                DAVE_MUX_PreInit
+ .text          0x08003cb4        0x0 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Delay
-                0x08003630       0x34 Dave/Generated/src/CLK001/CLK001.o
+                0x08003cb4       0x34 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SysClk_Valid
-                0x08003664       0x38 Dave/Generated/src/CLK001/CLK001.o
+                0x08003ce8       0x38 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_BackupClkTrim
-                0x0800369c       0x94 Dave/Generated/src/CLK001/CLK001.o
+                0x08003d20       0x94 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SetMainPLLClkSrc
-                0x08003730       0xf0 Dave/Generated/src/CLK001/CLK001.o
+                0x08003db4       0xf0 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_ConfigMainPLL
-                0x08003820      0x15c Dave/Generated/src/CLK001/CLK001.o
+                0x08003ea4      0x15c Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_FreqStepupMainPLL
-                0x0800397c      0x164 Dave/Generated/src/CLK001/CLK001.o
+                0x08004000      0x164 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_SysClk_Init
-                0x08003ae0       0x50 Dave/Generated/src/CLK001/CLK001.o
+                0x08004164       0x50 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Init
-                0x08003b30       0x30 Dave/Generated/src/CLK001/CLK001.o
-                0x08003b30                CLK001_Init
+                0x080041b4       0x30 Dave/Generated/src/CLK001/CLK001.o
+                0x080041b4                CLK001_Init
  .text.AllowPLLInitByStartup
-                0x08003b60       0x10 Dave/Generated/src/CLK001/CLK001.o
-                0x08003b60                AllowPLLInitByStartup
- .text          0x08003b70        0x0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080041e4       0x10 Dave/Generated/src/CLK001/CLK001.o
+                0x080041e4                AllowPLLInitByStartup
+ .text          0x080041f4        0x0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
  .text.ADCGROUP001_Init
-                0x08003b70       0x2c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003b70                ADCGROUP001_Init
+                0x080041f4       0x2c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080041f4                ADCGROUP001_Init
  .text.ADCGROUP001_lInit
-                0x08003b9c      0x1a0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003b9c                ADCGROUP001_lInit
+                0x08004220      0x1a0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004220                ADCGROUP001_lInit
  .text.ADCGROUP001_Deinit
-                0x08003d3c       0x84 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003d3c                ADCGROUP001_Deinit
+                0x080043c0       0x84 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080043c0                ADCGROUP001_Deinit
  .text.ADCGROUP001_GetStartupCalStatus
-                0x08003dc0       0x34 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003dc0                ADCGROUP001_GetStartupCalStatus
+                0x08004444       0x34 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004444                ADCGROUP001_GetStartupCalStatus
  .text.ADCGROUP001_SetGroupBound0
-                0x08003df4       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003df4                ADCGROUP001_SetGroupBound0
+                0x08004478       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004478                ADCGROUP001_SetGroupBound0
  .text.ADCGROUP001_SetGroupBound1
-                0x08003e5c       0x6c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003e5c                ADCGROUP001_SetGroupBound1
+                0x080044e0       0x6c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080044e0                ADCGROUP001_SetGroupBound1
  .text.ADCGROUP001_ActiveGroupServiceRequestNode
-                0x08003ec8       0x78 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003ec8                ADCGROUP001_ActiveGroupServiceRequestNode
+                0x0800454c       0x78 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x0800454c                ADCGROUP001_ActiveGroupServiceRequestNode
  .text.ADCGROUP001_DeActiveGroupServiceRequestNode
-                0x08003f40       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003f40                ADCGROUP001_DeActiveGroupServiceRequestNode
+                0x080045c4       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080045c4                ADCGROUP001_DeActiveGroupServiceRequestNode
  .text.ADCGROUP001_ActiveSharedServiceRequestNode
-                0x08003fa0       0x80 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08003fa0                ADCGROUP001_ActiveSharedServiceRequestNode
+                0x08004624       0x80 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004624                ADCGROUP001_ActiveSharedServiceRequestNode
  .text.ADCGROUP001_DeActiveSharedServiceRequestNode
-                0x08004020       0x64 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004020                ADCGROUP001_DeActiveSharedServiceRequestNode
+                0x080046a4       0x64 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080046a4                ADCGROUP001_DeActiveSharedServiceRequestNode
  .text.ADCGROUP001_EMUXStartSelection
-                0x08004084       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004084                ADCGROUP001_EMUXStartSelection
+                0x08004708       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004708                ADCGROUP001_EMUXStartSelection
  .text.ADCGROUP001_GetEMUXStartSelection
-                0x080040e0       0x54 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x080040e0                ADCGROUP001_GetEMUXStartSelection
+                0x08004764       0x54 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004764                ADCGROUP001_GetEMUXStartSelection
  .text.ADCGROUP001_SetEMUXChannelSelect
-                0x08004134       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004134                ADCGROUP001_SetEMUXChannelSelect
+                0x080047b8       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080047b8                ADCGROUP001_SetEMUXChannelSelect
  .text.ADCGROUP001_SetEMUXMode
-                0x08004194       0x70 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004194                ADCGROUP001_SetEMUXMode
+                0x08004818       0x70 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004818                ADCGROUP001_SetEMUXMode
  .text.ADCGROUP001_SetEMUXCodeScheme
-                0x08004204       0x78 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004204                ADCGROUP001_SetEMUXCodeScheme
+                0x08004888       0x78 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004888                ADCGROUP001_SetEMUXCodeScheme
  .text.ADCGROUP001_SetGroupClass0SampleTime
-                0x0800427c       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x0800427c                ADCGROUP001_SetGroupClass0SampleTime
+                0x08004900       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004900                ADCGROUP001_SetGroupClass0SampleTime
  .text.ADCGROUP001_SetGroupClass1SampleTime
-                0x080042d8       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x080042d8                ADCGROUP001_SetGroupClass1SampleTime
+                0x0800495c       0x5c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x0800495c                ADCGROUP001_SetGroupClass1SampleTime
  .text.ADCGROUP001_SetGroupClass0EmuxSampleTime
-                0x08004334       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004334                ADCGROUP001_SetGroupClass0EmuxSampleTime
+                0x080049b8       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x080049b8                ADCGROUP001_SetGroupClass0EmuxSampleTime
  .text.ADCGROUP001_SetGroupClass1EmuxSampleTime
-                0x08004394       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004394                ADCGROUP001_SetGroupClass1EmuxSampleTime
+                0x08004a18       0x60 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004a18                ADCGROUP001_SetGroupClass1EmuxSampleTime
  .text.ADCGROUP001_SetGroupClass0ConvMode
-                0x080043f4       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x080043f4                ADCGROUP001_SetGroupClass0ConvMode
+                0x08004a78       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004a78                ADCGROUP001_SetGroupClass0ConvMode
  .text.ADCGROUP001_SetGroupClass1ConvMode
-                0x0800445c       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x0800445c                ADCGROUP001_SetGroupClass1ConvMode
+                0x08004ae0       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004ae0                ADCGROUP001_SetGroupClass1ConvMode
  .text.ADCGROUP001_SetGroupClass0EmuxConvMode
-                0x080044c4       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x080044c4                ADCGROUP001_SetGroupClass0EmuxConvMode
+                0x08004b48       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004b48                ADCGROUP001_SetGroupClass0EmuxConvMode
  .text.ADCGROUP001_SetGroupClass1EmuxConvMode
-                0x0800452c       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x0800452c                ADCGROUP001_SetGroupClass1EmuxConvMode
+                0x08004bb0       0x68 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004bb0                ADCGROUP001_SetGroupClass1EmuxConvMode
  .text.ADCGROUP001_SetEMUXSampleTimeControl
-                0x08004594       0x70 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                0x08004594                ADCGROUP001_SetEMUXSampleTimeControl
- .text          0x08004604        0x0 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
- .text          0x08004604        0x0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004c18       0x70 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                0x08004c18                ADCGROUP001_SetEMUXSampleTimeControl
+ .text          0x08004c88        0x0 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+ .text          0x08004c88        0x0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
  .text.ADCGLOB001_Init
-                0x08004604      0x1a0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004604                ADCGLOB001_Init
+                0x08004c88      0x1a0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004c88                ADCGLOB001_Init
  .text.ADCGLOB001_DeInit
-                0x080047a4       0x98 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x080047a4                ADCGLOB001_DeInit
+                0x08004e28       0x98 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004e28                ADCGLOB001_DeInit
  .text.ADCGLOB001_CLKRequestDisable
-                0x0800483c       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x0800483c                ADCGLOB001_CLKRequestDisable
+                0x08004ec0       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004ec0                ADCGLOB001_CLKRequestDisable
  .text.ADCGLOB001_CLKRequestEnable
-                0x08004878       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004878                ADCGLOB001_CLKRequestEnable
+                0x08004efc       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004efc                ADCGLOB001_CLKRequestEnable
  .text.ADCGLOB001_SetStartUpCalibration
-                0x080048b4       0x40 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x080048b4                ADCGLOB001_SetStartUpCalibration
+                0x08004f38       0x40 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004f38                ADCGLOB001_SetStartUpCalibration
  .text.ADCGLOB001_StartUpCalibrationInit
-                0x080048f4       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x080048f4                ADCGLOB001_StartUpCalibrationInit
+                0x08004f78       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004f78                ADCGLOB001_StartUpCalibrationInit
  .text.ADCGLOB001_EnableSleepModeControl
-                0x08004954       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004954                ADCGLOB001_EnableSleepModeControl
+                0x08004fd8       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08004fd8                ADCGLOB001_EnableSleepModeControl
  .text.ADCGLOB001_DisregardSleepModeControl
-                0x08004990       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004990                ADCGLOB001_DisregardSleepModeControl
+                0x08005014       0x3c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005014                ADCGLOB001_DisregardSleepModeControl
  .text.ADCGLOB001_SetGlobClass0ConvMode
-                0x080049cc       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x080049cc                ADCGLOB001_SetGlobClass0ConvMode
+                0x08005050       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005050                ADCGLOB001_SetGlobClass0ConvMode
  .text.ADCGLOB001_SetGlobClass0SampleTime
-                0x08004a30       0x5c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004a30                ADCGLOB001_SetGlobClass0SampleTime
+                0x080050b4       0x5c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x080050b4                ADCGLOB001_SetGlobClass0SampleTime
  .text.ADCGLOB001_SetGlobClass0EmuxConvMode
-                0x08004a8c       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004a8c                ADCGLOB001_SetGlobClass0EmuxConvMode
+                0x08005110       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005110                ADCGLOB001_SetGlobClass0EmuxConvMode
  .text.ADCGLOB001_SetGlobClass0EmuxSampleTime
-                0x08004af0       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004af0                ADCGLOB001_SetGlobClass0EmuxSampleTime
+                0x08005174       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005174                ADCGLOB001_SetGlobClass0EmuxSampleTime
  .text.ADCGLOB001_SetGlobClass1ConvMode
-                0x08004b50       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004b50                ADCGLOB001_SetGlobClass1ConvMode
+                0x080051d4       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x080051d4                ADCGLOB001_SetGlobClass1ConvMode
  .text.ADCGLOB001_SetGlobClass1SampleTime
-                0x08004bb4       0x5c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004bb4                ADCGLOB001_SetGlobClass1SampleTime
+                0x08005238       0x5c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005238                ADCGLOB001_SetGlobClass1SampleTime
  .text.ADCGLOB001_SetGlobClass1EmuxConvMode
-                0x08004c10       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004c10                ADCGLOB001_SetGlobClass1EmuxConvMode
+                0x08005294       0x64 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005294                ADCGLOB001_SetGlobClass1EmuxConvMode
  .text.ADCGLOB001_SetGlobClass1EmuxSampleTime
-                0x08004c74       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004c74                ADCGLOB001_SetGlobClass1EmuxSampleTime
+                0x080052f8       0x60 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x080052f8                ADCGLOB001_SetGlobClass1EmuxSampleTime
  .text.ADCGLOB001_GetDisableBitStatus
-                0x08004cd4       0x44 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004cd4                ADCGLOB001_GetDisableBitStatus
+                0x08005358       0x44 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005358                ADCGLOB001_GetDisableBitStatus
  .text.ADCGLOB001_GetIdValue
-                0x08004d18       0x38 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004d18                ADCGLOB001_GetIdValue
+                0x0800539c       0x38 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x0800539c                ADCGLOB001_GetIdValue
  .text.ADCGLOB001_GTFRConvtrDiagnoGrp
-                0x08004d50       0x8c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004d50                ADCGLOB001_GTFRConvtrDiagnoGrp
+                0x080053d4       0x8c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x080053d4                ADCGLOB001_GTFRConvtrDiagnoGrp
  .text.ADCGLOB001_GTFRConvtrDiagnoEnable
-                0x08004ddc       0x54 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004ddc                ADCGLOB001_GTFRConvtrDiagnoEnable
+                0x08005460       0x54 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005460                ADCGLOB001_GTFRConvtrDiagnoEnable
  .text.ADCGLOB001_GTFRConvtrDiagnoPullDevicesSelect
-                0x08004e30       0x8c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004e30                ADCGLOB001_GTFRConvtrDiagnoPullDevicesSelect
+                0x080054b4       0x8c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x080054b4                ADCGLOB001_GTFRConvtrDiagnoPullDevicesSelect
  .text.ADCGLOB001_GTFRPullDwnDiagnoEnable
-                0x08004ebc       0x54 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                0x08004ebc                ADCGLOB001_GTFRPullDwnDiagnoEnable
- .text          0x08004f10        0x0 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
- .text          0x08004f10        0x0 Dave/Generated/src/ADC001/ADC001.o
+                0x08005540       0x54 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                0x08005540                ADCGLOB001_GTFRPullDwnDiagnoEnable
+ .text          0x08005594        0x0 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+ .text          0x08005594        0x0 Dave/Generated/src/ADC001/ADC001.o
  .text.ADC001_Init
-                0x08004f10       0x18 Dave/Generated/src/ADC001/ADC001.o
-                0x08004f10                ADC001_Init
+                0x08005594       0x18 Dave/Generated/src/ADC001/ADC001.o
+                0x08005594                ADC001_Init
  .text.ADC001_lInit
-                0x08004f28      0x2a0 Dave/Generated/src/ADC001/ADC001.o
-                0x08004f28                ADC001_lInit
+                0x080055ac      0x2a0 Dave/Generated/src/ADC001/ADC001.o
+                0x080055ac                ADC001_lInit
  .text.ADC001_Deinit
-                0x080051c8      0x150 Dave/Generated/src/ADC001/ADC001.o
-                0x080051c8                ADC001_Deinit
+                0x0800584c      0x150 Dave/Generated/src/ADC001/ADC001.o
+                0x0800584c                ADC001_Deinit
  .text.ADC001_SelectInputClass
-                0x08005318       0xdc Dave/Generated/src/ADC001/ADC001.o
-                0x08005318                ADC001_SelectInputClass
+                0x0800599c       0xdc Dave/Generated/src/ADC001/ADC001.o
+                0x0800599c                ADC001_SelectInputClass
  .text.ADC001_EnableResultEvt
-                0x080053f4       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x080053f4                ADC001_EnableResultEvt
+                0x08005a78       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005a78                ADC001_EnableResultEvt
  .text.ADC001_DisableResultEvt
-                0x08005438       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005438                ADC001_DisableResultEvt
+                0x08005abc       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005abc                ADC001_DisableResultEvt
  .text.ADC001_GetResult
-                0x0800547c       0x84 Dave/Generated/src/ADC001/ADC001.o
-                0x0800547c                ADC001_GetResult
+                0x08005b00       0x84 Dave/Generated/src/ADC001/ADC001.o
+                0x08005b00                ADC001_GetResult
  .text.ADC001_GetFastResult
-                0x08005500       0x24 Dave/Generated/src/ADC001/ADC001.o
-                0x08005500                ADC001_GetFastResult
+                0x08005b84       0x24 Dave/Generated/src/ADC001/ADC001.o
+                0x08005b84                ADC001_GetFastResult
  .text.ADC001_GetResultEvtFlag
-                0x08005524       0x58 Dave/Generated/src/ADC001/ADC001.o
-                0x08005524                ADC001_GetResultEvtFlag
+                0x08005ba8       0x58 Dave/Generated/src/ADC001/ADC001.o
+                0x08005ba8                ADC001_GetResultEvtFlag
  .text.ADC001_SetResultEvtFlag
-                0x0800557c       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x0800557c                ADC001_SetResultEvtFlag
- .text.ADC001_ClearResultEvtFlag
-                0x080055c0       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x080055c0                ADC001_ClearResultEvtFlag
- .text.ADC001_GetChannelEvtFlag
-                0x08005604       0xe4 Dave/Generated/src/ADC001/ADC001.o
-                0x08005604                ADC001_GetChannelEvtFlag
- .text.ADC001_SetChannelEvtFlag
-                0x080056e8       0xd0 Dave/Generated/src/ADC001/ADC001.o
-                0x080056e8                ADC001_SetChannelEvtFlag
- .text.ADC001_ClearChannelEvtFlag
-                0x080057b8       0xd0 Dave/Generated/src/ADC001/ADC001.o
-                0x080057b8                ADC001_ClearChannelEvtFlag
- .text.ADC001_EnableBackGroundEvent
-                0x08005888       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005888                ADC001_EnableBackGroundEvent
- .text.ADC001_DisableBackGroundEvent
-                0x080058cc       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x080058cc                ADC001_DisableBackGroundEvent
- .text.ADC001_GetBackGroundEvtFlag
-                0x08005910       0x54 Dave/Generated/src/ADC001/ADC001.o
-                0x08005910                ADC001_GetBackGroundEvtFlag
- .text.ADC001_SetBackGroundEvtFlag
-                0x08005964       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005964                ADC001_SetBackGroundEvtFlag
- .text.ADC001_ClearBackGroundEvtFlag
-                0x080059a8       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x080059a8                ADC001_ClearBackGroundEvtFlag
- .text.ADC001_ClearPendingBits
-                0x080059ec       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x080059ec                ADC001_ClearPendingBits
- .text.ADC001_GenerateLoadEvent
-                0x08005a30       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005a30                ADC001_GenerateLoadEvent
- .text.ADC001_EnableGate
-                0x08005a74       0x5c Dave/Generated/src/ADC001/ADC001.o
-                0x08005a74                ADC001_EnableGate
- .text.ADC001_GetGateLevel
-                0x08005ad0       0x58 Dave/Generated/src/ADC001/ADC001.o
-                0x08005ad0                ADC001_GetGateLevel
- .text.ADC001_SetExternalTriggerMode
-                0x08005b28       0x94 Dave/Generated/src/ADC001/ADC001.o
-                0x08005b28                ADC001_SetExternalTriggerMode
- .text.ADC001_EnableExternalTrigger
-                0x08005bbc       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005bbc                ADC001_EnableExternalTrigger
- .text.ADC001_DisableExternalTrigger
                 0x08005c00       0x44 Dave/Generated/src/ADC001/ADC001.o
-                0x08005c00                ADC001_DisableExternalTrigger
+                0x08005c00                ADC001_SetResultEvtFlag
+ .text.ADC001_ClearResultEvtFlag
+                0x08005c44       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005c44                ADC001_ClearResultEvtFlag
+ .text.ADC001_GetChannelEvtFlag
+                0x08005c88       0xe4 Dave/Generated/src/ADC001/ADC001.o
+                0x08005c88                ADC001_GetChannelEvtFlag
+ .text.ADC001_SetChannelEvtFlag
+                0x08005d6c       0xd0 Dave/Generated/src/ADC001/ADC001.o
+                0x08005d6c                ADC001_SetChannelEvtFlag
+ .text.ADC001_ClearChannelEvtFlag
+                0x08005e3c       0xd0 Dave/Generated/src/ADC001/ADC001.o
+                0x08005e3c                ADC001_ClearChannelEvtFlag
+ .text.ADC001_EnableBackGroundEvent
+                0x08005f0c       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005f0c                ADC001_EnableBackGroundEvent
+ .text.ADC001_DisableBackGroundEvent
+                0x08005f50       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005f50                ADC001_DisableBackGroundEvent
+ .text.ADC001_GetBackGroundEvtFlag
+                0x08005f94       0x54 Dave/Generated/src/ADC001/ADC001.o
+                0x08005f94                ADC001_GetBackGroundEvtFlag
+ .text.ADC001_SetBackGroundEvtFlag
+                0x08005fe8       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08005fe8                ADC001_SetBackGroundEvtFlag
+ .text.ADC001_ClearBackGroundEvtFlag
+                0x0800602c       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x0800602c                ADC001_ClearBackGroundEvtFlag
+ .text.ADC001_ClearPendingBits
+                0x08006070       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08006070                ADC001_ClearPendingBits
+ .text.ADC001_GenerateLoadEvent
+                0x080060b4       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x080060b4                ADC001_GenerateLoadEvent
+ .text.ADC001_EnableGate
+                0x080060f8       0x5c Dave/Generated/src/ADC001/ADC001.o
+                0x080060f8                ADC001_EnableGate
+ .text.ADC001_GetGateLevel
+                0x08006154       0x58 Dave/Generated/src/ADC001/ADC001.o
+                0x08006154                ADC001_GetGateLevel
+ .text.ADC001_SetExternalTriggerMode
+                0x080061ac       0x94 Dave/Generated/src/ADC001/ADC001.o
+                0x080061ac                ADC001_SetExternalTriggerMode
+ .text.ADC001_EnableExternalTrigger
+                0x08006240       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08006240                ADC001_EnableExternalTrigger
+ .text.ADC001_DisableExternalTrigger
+                0x08006284       0x44 Dave/Generated/src/ADC001/ADC001.o
+                0x08006284                ADC001_DisableExternalTrigger
  .text.ADC001_EnableArbitrationSlot
-                0x08005c44       0x94 Dave/Generated/src/ADC001/ADC001.o
-                0x08005c44                ADC001_EnableArbitrationSlot
+                0x080062c8       0x94 Dave/Generated/src/ADC001/ADC001.o
+                0x080062c8                ADC001_EnableArbitrationSlot
  .text.ADC001_DisableArbitrationSlot
-                0x08005cd8       0x94 Dave/Generated/src/ADC001/ADC001.o
-                0x08005cd8                ADC001_DisableArbitrationSlot
+                0x0800635c       0x94 Dave/Generated/src/ADC001/ADC001.o
+                0x0800635c                ADC001_DisableArbitrationSlot
  .text.ADC001_SetLoadEventMode
-                0x08005d6c       0x74 Dave/Generated/src/ADC001/ADC001.o
-                0x08005d6c                ADC001_SetLoadEventMode
+                0x080063f0       0x74 Dave/Generated/src/ADC001/ADC001.o
+                0x080063f0                ADC001_SetLoadEventMode
  .text.ADC001_SetPendingChannel
-                0x08005de0       0xb4 Dave/Generated/src/ADC001/ADC001.o
-                0x08005de0                ADC001_SetPendingChannel
+                0x08006464       0xb4 Dave/Generated/src/ADC001/ADC001.o
+                0x08006464                ADC001_SetPendingChannel
  .text.ADC001_ClearPendingChannel
-                0x08005e94       0xb8 Dave/Generated/src/ADC001/ADC001.o
-                0x08005e94                ADC001_ClearPendingChannel
+                0x08006518       0xb8 Dave/Generated/src/ADC001/ADC001.o
+                0x08006518                ADC001_ClearPendingChannel
  .text.ADC001_SetChannelSelect
-                0x08005f4c       0xb4 Dave/Generated/src/ADC001/ADC001.o
-                0x08005f4c                ADC001_SetChannelSelect
+                0x080065d0       0xb4 Dave/Generated/src/ADC001/ADC001.o
+                0x080065d0                ADC001_SetChannelSelect
  .text.ADC001_ClearChannelSelect
-                0x08006000       0xb8 Dave/Generated/src/ADC001/ADC001.o
-                0x08006000                ADC001_ClearChannelSelect
+                0x08006684       0xb8 Dave/Generated/src/ADC001/ADC001.o
+                0x08006684                ADC001_ClearChannelSelect
  .text.ADC001_SetChannelEventMode
-                0x080060b8      0x114 Dave/Generated/src/ADC001/ADC001.o
-                0x080060b8                ADC001_SetChannelEventMode
- .text          0x080061cc        0x0 Dave/Generated/src/ADC001/ADC001_Conf.o
- .text          0x080061cc        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x0800673c      0x114 Dave/Generated/src/ADC001/ADC001.o
+                0x0800673c                ADC001_SetChannelEventMode
+ .text          0x08006850        0x0 Dave/Generated/src/ADC001/ADC001_Conf.o
+ .text          0x08006850        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
  .text.__libc_init_array
-                0x080061cc       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
-                0x080061cc                __libc_init_array
+                0x08006850       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x08006850                __libc_init_array
  *(.glue*)
  .glue_7        0x00000000        0x0 linker stubs
  .glue_7t       0x00000000        0x0 linker stubs
@@ -1813,81 +1813,80 @@ END GROUP
  *(.vfp11_veneer)
  .vfp11_veneer  0x00000000        0x0 linker stubs
  *(.init)
-                0x08006260                __preinit_array_start = .
+                0x080068e4                __preinit_array_start = .
  *(.preinit_array)
-                0x08006260                __preinit_array_end = .
-                0x08006260                __init_array_start = .
+                0x080068e4                __preinit_array_end = .
+                0x080068e4                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
-                0x08006260                __init_array_end = .
+                0x080068e4                __init_array_end = .
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
  *(.fini)
-                0x08006260                __fini_array_start = .
+                0x080068e4                __fini_array_start = .
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0x08006260                __fini_array_end = .
+                0x080068e4                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x08006260                __extab_start = .
+                0x080068e4                __extab_start = .
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.Xmc4500.reset
-                0x08006260        0x0 Startup/startup_XMC4500.o
+                0x080068e4        0x0 Startup/startup_XMC4500.o
  .ARM.extab.Xmc4500.postreset
-                0x08006260        0x0 Startup/startup_XMC4500.o
-                0x08006260                . = ALIGN (0x4)
-                0x08006260                __extab_end = ABSOLUTE (.)
+                0x080068e4        0x0 Startup/startup_XMC4500.o
+                0x080068e4                . = ALIGN (0x4)
+                0x080068e4                __extab_end = ABSOLUTE (.)
 
-.iplt           0x08006260        0x0 load address 0x0c006260
+.iplt           0x080068e4        0x0 load address 0x0c0068e4
  .iplt          0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ARM.exidx      0x08006260       0x10 load address 0x0c006260
-                0x08006260                __exidx_start = .
+.ARM.exidx      0x080068e4       0x10 load address 0x0c0068e4
+                0x080068e4                __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.Xmc4500.reset
-                0x08006260        0x8 Startup/startup_XMC4500.o
+                0x080068e4        0x8 Startup/startup_XMC4500.o
  .ARM.exidx.Xmc4500.postreset
-                0x08006268        0x8 Startup/startup_XMC4500.o
-                0x08006270                . = ALIGN (0x4)
-                0x08006270                __exidx_end = ABSOLUTE (.)
+                0x080068ec        0x8 Startup/startup_XMC4500.o
+                0x080068f4                . = ALIGN (0x4)
+                0x080068f4                __exidx_end = ABSOLUTE (.)
 
-.rodata         0x08006270      0x128 load address 0x0c006270
+.rodata         0x080068f4      0x120 load address 0x0c0068f4
  *(.rodata .rodata.*)
- .rodata        0x08006270       0x34 Dave/Generated/src/UART001/UART001_Conf.o
-                0x08006270                UART001_Handle0
- .rodata        0x080062a4        0x4 Dave/Generated/src/NVIC002/NVIC002_Conf.o
-                0x080062a4                NVIC002_Handle0
- .rodata        0x080062a8       0x58 Dave/Generated/src/IO004/IO004_Conf.o
-                0x080062a8                IO004_Handle1
-                0x080062b0                IO004_Handle10
-                0x080062b8                IO004_Handle11
-                0x080062c0                IO004_Handle12
-                0x080062c8                IO004_Handle2
-                0x080062d0                IO004_Handle4
-                0x080062d8                IO004_Handle5
-                0x080062e0                IO004_Handle6
-                0x080062e8                IO004_Handle7
-                0x080062f0                IO004_Handle8
-                0x080062f8                IO004_Handle9
- .rodata        0x08006300        0x8 Dave/Generated/src/IO001/IO001_Conf.o
-                0x08006300                IO001_Handle0
- .rodata        0x08006308       0x20 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
-                0x08006308                ADCGROUP001_Handle0
- .rodata        0x08006328       0x18 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
-                0x08006328                ADCGLOB001_Handle0
- .rodata        0x08006340       0x58 Dave/Generated/src/ADC001/ADC001_Conf.o
-                0x08006340                ADC001_ChannelAAHandle
-                0x08006344                ADC001_Handle0
+ .rodata        0x080068f4       0x34 Dave/Generated/src/UART001/UART001_Conf.o
+                0x080068f4                UART001_Handle0
+ .rodata        0x08006928        0x4 Dave/Generated/src/NVIC002/NVIC002_Conf.o
+                0x08006928                NVIC002_Handle0
+ .rodata        0x0800692c       0x50 Dave/Generated/src/IO004/IO004_Conf.o
+                0x0800692c                IO004_Handle1
+                0x08006934                IO004_Handle10
+                0x0800693c                IO004_Handle11
+                0x08006944                IO004_Handle12
+                0x0800694c                IO004_Handle2
+                0x08006954                IO004_Handle4
+                0x0800695c                IO004_Handle5
+                0x08006964                IO004_Handle6
+                0x0800696c                IO004_Handle8
+                0x08006974                IO004_Handle9
+ .rodata        0x0800697c        0x8 Dave/Generated/src/IO001/IO001_Conf.o
+                0x0800697c                IO001_Handle0
+ .rodata        0x08006984       0x20 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+                0x08006984                ADCGROUP001_Handle0
+ .rodata        0x080069a4       0x18 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+                0x080069a4                ADCGLOB001_Handle0
+ .rodata        0x080069bc       0x58 Dave/Generated/src/ADC001/ADC001_Conf.o
+                0x080069bc                ADC001_ChannelAAHandle
+                0x080069c0                ADC001_Handle0
  *(.gnu.linkonce.r*)
 
-.rel.dyn        0x08006398        0x0 load address 0x0c006398
+.rel.dyn        0x08006a14        0x0 load address 0x0c006a14
  .rel.iplt      0x00000000        0x0 Startup/startup_XMC4500.o
-                0x080063a0                . = ALIGN (0x10)
-                0x0c0063a0                eROData = (. | 0x4000000)
+                0x08006a20                . = ALIGN (0x10)
+                0x0c006a20                eROData = (. | 0x4000000)
 
 Stack           0x10000000      0x800
                 0x10000800                . = (. + stack_size)
@@ -1900,7 +1899,7 @@ Stack           0x10000000      0x800
                 0x10000800                __data3_end = .
                 0x00000000                __data3_size = (__data3_end - __data3_start)
 
-.data           0x20000000       0x14 load address 0x0c0063a0
+.data           0x20000000       0x14 load address 0x0c006a20
                 0x20000000                __Xmc4500_sData = .
  *(.data)
  .data          0x20000000        0x0 Startup/startup_XMC4500.o
@@ -1940,17 +1939,17 @@ Stack           0x10000000      0x800
                 0x20000014                __Xmc4500_eData = ALIGN (0x4)
                 0x00000014                __Xmc4500_Data_Size = (__Xmc4500_eData - __Xmc4500_sData)
 
-.igot.plt       0x20000014        0x0 load address 0x0c0063b4
+.igot.plt       0x20000014        0x0 load address 0x0c006a34
  .igot.plt      0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ram_code       0x10000800        0x0 load address 0x0c0063b4
+.ram_code       0x10000800        0x0 load address 0x0c006a34
                 0x10000800                __ram_code_start = .
  *(.ram_code)
                 0x10000800                __ram_code_end = .
-                0x0c0063b4                __ram_code_load = LOADADDR (.ram_code)
+                0x0c006a34                __ram_code_load = LOADADDR (.ram_code)
                 0x00000000                __ram_code_size = (__ram_code_end - __ram_code_start)
 
-.bss            0x20000014       0xbc load address 0x0c0063b4
+.bss            0x20000014       0xc0 load address 0x0c006a34
                 0x20000014                __Xmc4500_sBSS = .
  *(.bss)
  .bss           0x20000014        0x0 Startup/startup_XMC4500.o
@@ -2033,25 +2032,25 @@ Stack           0x10000000      0x800
  .bss           0x2000009c        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
  *(.bss*)
  *(COMMON)
- COMMON         0x2000009c       0x34 Main.o
+ COMMON         0x2000009c       0x38 Main.o
                 0x2000009c                configuration
                 0x200000ab                pwm_max
                 0x200000ac                psx_status
                 0x200000b0                data_E
-                0x200000b4                psxDado
-                0x200000cc                result
+                0x200000b8                psxDado
+                0x200000d0                result
  *(.gnu.linkonce.b*)
-                0x200000d0                __Xmc4500_eBSS = ALIGN (0x4)
-                0x200000d0                . = ALIGN (0x4)
-                0x200000d0                Heap_Bank1_Start = .
-                0x000000bc                __Xmc4500_BSS_Size = (__Xmc4500_eBSS - __Xmc4500_sBSS)
+                0x200000d4                __Xmc4500_eBSS = ALIGN (0x4)
+                0x200000d4                . = ALIGN (0x4)
+                0x200000d4                Heap_Bank1_Start = .
+                0x000000c0                __Xmc4500_BSS_Size = (__Xmc4500_eBSS - __Xmc4500_sBSS)
 
 .data2          0x30000000        0x0
                 0x30000000                __data2_start = .
  *(ETH_RAM)
                 0x30000000                __data2_end = .
                 0x00000000                __data2_size = (__data2_end - __data2_start)
-                0x0000ff30                Heap_Bank1_Size = (0x10000 - (Heap_Bank1_Start - ORIGIN (DSRAM_1_system)))
+                0x0000ff2c                Heap_Bank1_Size = (0x10000 - (Heap_Bank1_Start - ORIGIN (DSRAM_1_system)))
 
 DSRAM2_Heap     0x30000000        0x0
                 0x30000000                Heap_Bank2_Start = .
@@ -2139,191 +2138,191 @@ PSRAM_Heap      0x10000800        0x0
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_info     0x00000000     0xd0ff
+.debug_info     0x00000000     0xd15e
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000       0x8c Startup/startup_XMC4500.o
- .debug_info    0x0000008c      0xaf0 Startup/system_XMC4500.o
- .debug_info    0x00000b7c     0x1bda Main.o
- .debug_info    0x00002756      0x65f Lib/System_LibcStubs.o
- .debug_info    0x00002db5      0xfc2 Dave/Generated/src/UART001/UART001.o
- .debug_info    0x00003d77      0x805 Dave/Generated/src/UART001/UART001_Conf.o
- .debug_info    0x0000457c      0x47c Dave/Generated/src/RESET001/RESET001.o
- .debug_info    0x000049f8      0x884 Dave/Generated/src/NVIC002/NVIC002.o
- .debug_info    0x0000527c      0x127 Dave/Generated/src/NVIC002/NVIC002_Conf.o
- .debug_info    0x000053a3       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_info    0x00005437       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_info    0x000054cb      0x422 Dave/Generated/src/IO004/IO004.o
- .debug_info    0x000058ed      0x33a Dave/Generated/src/IO004/IO004_Conf.o
- .debug_info    0x00005c27      0x35f Dave/Generated/src/IO001/IO001.o
- .debug_info    0x00005f86      0x286 Dave/Generated/src/IO001/IO001_Conf.o
- .debug_info    0x0000620c      0x2e9 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_info    0x000064f5      0xc85 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_info    0x0000717a      0x689 Dave/Generated/src/CLK001/CLK001.o
- .debug_info    0x00007803     0x139c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_info    0x00008b9f      0xb38 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
- .debug_info    0x000096d7      0xcc0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_info    0x0000a397      0x5b1 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
- .debug_info    0x0000a948     0x1aa5 Dave/Generated/src/ADC001/ADC001.o
- .debug_info    0x0000c3ed      0xd12 Dave/Generated/src/ADC001/ADC001_Conf.o
+ .debug_info    0x00000000       0x76 Startup/startup_XMC4500.o
+ .debug_info    0x00000076      0xaf0 Startup/system_XMC4500.o
+ .debug_info    0x00000b66     0x1dab Main.o
+ .debug_info    0x00002911      0x65f Lib/System_LibcStubs.o
+ .debug_info    0x00002f70      0xfc2 Dave/Generated/src/UART001/UART001.o
+ .debug_info    0x00003f32      0x805 Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_info    0x00004737      0x47c Dave/Generated/src/RESET001/RESET001.o
+ .debug_info    0x00004bb3      0x884 Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_info    0x00005437      0x127 Dave/Generated/src/NVIC002/NVIC002_Conf.o
+ .debug_info    0x0000555e       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_info    0x000055f2       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_info    0x00005686      0x414 Dave/Generated/src/IO004/IO004.o
+ .debug_info    0x00005a9a      0x328 Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_info    0x00005dc2      0x35f Dave/Generated/src/IO001/IO001.o
+ .debug_info    0x00006121      0x286 Dave/Generated/src/IO001/IO001_Conf.o
+ .debug_info    0x000063a7      0x2e9 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_info    0x00006690      0xb49 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_info    0x000071d9      0x689 Dave/Generated/src/CLK001/CLK001.o
+ .debug_info    0x00007862     0x139c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_info    0x00008bfe      0xb38 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+ .debug_info    0x00009736      0xcc0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_info    0x0000a3f6      0x5b1 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+ .debug_info    0x0000a9a7     0x1aa5 Dave/Generated/src/ADC001/ADC001.o
+ .debug_info    0x0000c44c      0xd12 Dave/Generated/src/ADC001/ADC001_Conf.o
 
-.debug_abbrev   0x00000000     0x1bfb
+.debug_abbrev   0x00000000     0x1c04
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0x12 Startup/startup_XMC4500.o
  .debug_abbrev  0x00000012      0x154 Startup/system_XMC4500.o
- .debug_abbrev  0x00000166      0x2b3 Main.o
- .debug_abbrev  0x00000419      0x149 Lib/System_LibcStubs.o
- .debug_abbrev  0x00000562      0x203 Dave/Generated/src/UART001/UART001.o
- .debug_abbrev  0x00000765      0x12c Dave/Generated/src/UART001/UART001_Conf.o
- .debug_abbrev  0x00000891      0x122 Dave/Generated/src/RESET001/RESET001.o
- .debug_abbrev  0x000009b3      0x1c1 Dave/Generated/src/NVIC002/NVIC002.o
- .debug_abbrev  0x00000b74       0x9f Dave/Generated/src/NVIC002/NVIC002_Conf.o
- .debug_abbrev  0x00000c13       0x4e Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_abbrev  0x00000c61       0x4e Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_abbrev  0x00000caf      0x138 Dave/Generated/src/IO004/IO004.o
- .debug_abbrev  0x00000de7       0xbb Dave/Generated/src/IO004/IO004_Conf.o
- .debug_abbrev  0x00000ea2      0x129 Dave/Generated/src/IO001/IO001.o
- .debug_abbrev  0x00000fcb       0xbb Dave/Generated/src/IO001/IO001_Conf.o
- .debug_abbrev  0x00001086       0xf3 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_abbrev  0x00001179      0x123 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_abbrev  0x0000129c      0x186 Dave/Generated/src/CLK001/CLK001.o
- .debug_abbrev  0x00001422      0x19c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_abbrev  0x000015be      0x112 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
- .debug_abbrev  0x000016d0      0x183 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_abbrev  0x00001853       0xef Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
- .debug_abbrev  0x00001942      0x1a7 Dave/Generated/src/ADC001/ADC001.o
- .debug_abbrev  0x00001ae9      0x112 Dave/Generated/src/ADC001/ADC001_Conf.o
+ .debug_abbrev  0x00000166      0x2cb Main.o
+ .debug_abbrev  0x00000431      0x149 Lib/System_LibcStubs.o
+ .debug_abbrev  0x0000057a      0x203 Dave/Generated/src/UART001/UART001.o
+ .debug_abbrev  0x0000077d      0x12c Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_abbrev  0x000008a9      0x122 Dave/Generated/src/RESET001/RESET001.o
+ .debug_abbrev  0x000009cb      0x1c1 Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_abbrev  0x00000b8c       0x9f Dave/Generated/src/NVIC002/NVIC002_Conf.o
+ .debug_abbrev  0x00000c2b       0x4e Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_abbrev  0x00000c79       0x4e Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_abbrev  0x00000cc7      0x129 Dave/Generated/src/IO004/IO004.o
+ .debug_abbrev  0x00000df0       0xbb Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_abbrev  0x00000eab      0x129 Dave/Generated/src/IO001/IO001.o
+ .debug_abbrev  0x00000fd4       0xbb Dave/Generated/src/IO001/IO001_Conf.o
+ .debug_abbrev  0x0000108f       0xf3 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_abbrev  0x00001182      0x123 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_abbrev  0x000012a5      0x186 Dave/Generated/src/CLK001/CLK001.o
+ .debug_abbrev  0x0000142b      0x19c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_abbrev  0x000015c7      0x112 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+ .debug_abbrev  0x000016d9      0x183 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_abbrev  0x0000185c       0xef Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+ .debug_abbrev  0x0000194b      0x1a7 Dave/Generated/src/ADC001/ADC001.o
+ .debug_abbrev  0x00001af2      0x112 Dave/Generated/src/ADC001/ADC001_Conf.o
 
-.debug_line     0x00000000     0xde25
+.debug_line     0x00000000     0xce3c
  *(.debug_line)
  .debug_line    0x00000000      0x130 Startup/startup_XMC4500.o
  .debug_line    0x00000130      0x3b7 Startup/system_XMC4500.o
- .debug_line    0x000004e7      0xe3a Main.o
- .debug_line    0x00001321      0x3c1 Lib/System_LibcStubs.o
- .debug_line    0x000016e2      0x6d9 Dave/Generated/src/UART001/UART001.o
- .debug_line    0x00001dbb      0x3f1 Dave/Generated/src/UART001/UART001_Conf.o
- .debug_line    0x000021ac      0x41e Dave/Generated/src/RESET001/RESET001.o
- .debug_line    0x000025ca      0x433 Dave/Generated/src/NVIC002/NVIC002.o
- .debug_line    0x000029fd      0x373 Dave/Generated/src/NVIC002/NVIC002_Conf.o
- .debug_line    0x00002d70      0xbea Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_line    0x0000395a      0xbe6 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_line    0x00004540      0xc65 Dave/Generated/src/IO004/IO004.o
- .debug_line    0x000051a5      0xbb1 Dave/Generated/src/IO004/IO004_Conf.o
- .debug_line    0x00005d56      0xc10 Dave/Generated/src/IO001/IO001.o
- .debug_line    0x00006966      0xbb1 Dave/Generated/src/IO001/IO001_Conf.o
- .debug_line    0x00007517      0xa03 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_line    0x00007f1a      0xa00 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_line    0x0000891a      0x4af Dave/Generated/src/CLK001/CLK001.o
- .debug_line    0x00008dc9      0xe9c Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_line    0x00009c65      0xbbd Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
- .debug_line    0x0000a822      0xe19 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_line    0x0000b63b      0xbbb Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
- .debug_line    0x0000c1f6     0x107c Dave/Generated/src/ADC001/ADC001.o
- .debug_line    0x0000d272      0xbb3 Dave/Generated/src/ADC001/ADC001_Conf.o
+ .debug_line    0x000004e7      0xe51 Main.o
+ .debug_line    0x00001338      0x3c1 Lib/System_LibcStubs.o
+ .debug_line    0x000016f9      0x6c3 Dave/Generated/src/UART001/UART001.o
+ .debug_line    0x00001dbc      0x3db Dave/Generated/src/UART001/UART001_Conf.o
+ .debug_line    0x00002197      0x41e Dave/Generated/src/RESET001/RESET001.o
+ .debug_line    0x000025b5      0x433 Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_line    0x000029e8      0x373 Dave/Generated/src/NVIC002/NVIC002_Conf.o
+ .debug_line    0x00002d5b      0xaa0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_line    0x000037fb      0xa9c Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_line    0x00004297      0xb17 Dave/Generated/src/IO004/IO004.o
+ .debug_line    0x00004dae      0xa67 Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_line    0x00005815      0xac6 Dave/Generated/src/IO001/IO001.o
+ .debug_line    0x000062db      0xa67 Dave/Generated/src/IO001/IO001_Conf.o
+ .debug_line    0x00006d42      0x9d7 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_line    0x00007719      0x9d4 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_line    0x000080ed      0x4af Dave/Generated/src/CLK001/CLK001.o
+ .debug_line    0x0000859c      0xd52 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_line    0x000092ee      0xa73 Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+ .debug_line    0x00009d61      0xccf Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_line    0x0000aa30      0xa71 Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+ .debug_line    0x0000b4a1      0xf32 Dave/Generated/src/ADC001/ADC001.o
+ .debug_line    0x0000c3d3      0xa69 Dave/Generated/src/ADC001/ADC001_Conf.o
 
-.debug_frame    0x00000000     0x1374
+.debug_frame    0x00000000     0x1378
  *(.debug_frame)
  .debug_frame   0x00000000       0x6c Startup/system_XMC4500.o
- .debug_frame   0x0000006c      0x248 Main.o
- .debug_frame   0x000002b4      0x1ec Lib/System_LibcStubs.o
- .debug_frame   0x000004a0      0x190 Dave/Generated/src/UART001/UART001.o
- .debug_frame   0x00000630       0x9c Dave/Generated/src/RESET001/RESET001.o
- .debug_frame   0x000006cc       0xe4 Dave/Generated/src/NVIC002/NVIC002.o
- .debug_frame   0x000007b0       0x64 Dave/Generated/src/IO004/IO004.o
- .debug_frame   0x00000814       0x64 Dave/Generated/src/IO001/IO001.o
- .debug_frame   0x00000878       0x64 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_frame   0x000008dc       0x48 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_frame   0x00000924      0x120 Dave/Generated/src/CLK001/CLK001.o
- .debug_frame   0x00000a44      0x2b0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_frame   0x00000cf4      0x27c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_frame   0x00000f70      0x3d4 Dave/Generated/src/ADC001/ADC001.o
- .debug_frame   0x00001344       0x30 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+ .debug_frame   0x0000006c      0x24c Main.o
+ .debug_frame   0x000002b8      0x1ec Lib/System_LibcStubs.o
+ .debug_frame   0x000004a4      0x190 Dave/Generated/src/UART001/UART001.o
+ .debug_frame   0x00000634       0x9c Dave/Generated/src/RESET001/RESET001.o
+ .debug_frame   0x000006d0       0xe4 Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_frame   0x000007b4       0x64 Dave/Generated/src/IO004/IO004.o
+ .debug_frame   0x00000818       0x64 Dave/Generated/src/IO001/IO001.o
+ .debug_frame   0x0000087c       0x64 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_frame   0x000008e0       0x48 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_frame   0x00000928      0x120 Dave/Generated/src/CLK001/CLK001.o
+ .debug_frame   0x00000a48      0x2b0 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_frame   0x00000cf8      0x27c Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_frame   0x00000f74      0x3d4 Dave/Generated/src/ADC001/ADC001.o
+ .debug_frame   0x00001348       0x30 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
 
-.debug_str      0x00000000    0x9a048
+.debug_str      0x00000000    0x9a057
  *(.debug_str)
- .debug_str     0x00000000    0x90172 Startup/system_XMC4500.o
-                              0x90489 (size before relaxing)
- .debug_str     0x00090172     0x3eb5 Main.o
-                              0x93f9a (size before relaxing)
- .debug_str     0x00094027     0x2e29 Lib/System_LibcStubs.o
-                               0x58a9 (size before relaxing)
- .debug_str     0x00096e50      0x7c2 Dave/Generated/src/UART001/UART001.o
-                              0x915dd (size before relaxing)
- .debug_str     0x00097612       0x2d Dave/Generated/src/UART001/UART001_Conf.o
-                              0x90e29 (size before relaxing)
- .debug_str     0x0009763f      0x225 Dave/Generated/src/RESET001/RESET001.o
-                              0x907e8 (size before relaxing)
- .debug_str     0x00097864      0x771 Dave/Generated/src/NVIC002/NVIC002.o
-                              0x90910 (size before relaxing)
- .debug_str     0x00097fd5       0x3d Dave/Generated/src/NVIC002/NVIC002_Conf.o
-                              0x90185 (size before relaxing)
- .debug_str     0x00098012       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
-                              0x9306b (size before relaxing)
- .debug_str     0x0009803a       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
-                              0x93069 (size before relaxing)
- .debug_str     0x00098060      0x156 Dave/Generated/src/IO004/IO004.o
-                              0x932f1 (size before relaxing)
- .debug_str     0x000981b6       0x29 Dave/Generated/src/IO004/IO004_Conf.o
-                              0x931b8 (size before relaxing)
- .debug_str     0x000981df      0x155 Dave/Generated/src/IO001/IO001.o
-                              0x9322e (size before relaxing)
- .debug_str     0x00098334       0x29 Dave/Generated/src/IO001/IO001_Conf.o
-                              0x93129 (size before relaxing)
- .debug_str     0x0009835d       0x68 Dave/Generated/src/DAVESupport/DAVE3.o
-                              0x93139 (size before relaxing)
- .debug_str     0x000983c5       0x87 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                              0x9333a (size before relaxing)
- .debug_str     0x0009844c      0x1a0 Dave/Generated/src/CLK001/CLK001.o
-                              0x90a71 (size before relaxing)
- .debug_str     0x000985ec      0xa80 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
-                              0x93dc1 (size before relaxing)
- .debug_str     0x0009906c      0x16d Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
-                              0x93741 (size before relaxing)
- .debug_str     0x000991d9      0x50e Dave/Generated/src/ADCGLOB001/ADCGlob001.o
-                              0x93bb1 (size before relaxing)
- .debug_str     0x000996e7       0x4b Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
-                              0x933f6 (size before relaxing)
- .debug_str     0x00099732      0x6ee Dave/Generated/src/ADC001/ADC001.o
-                              0x93eef (size before relaxing)
- .debug_str     0x00099e20      0x228 Dave/Generated/src/ADC001/ADC001_Conf.o
-                              0x93874 (size before relaxing)
+ .debug_str     0x00000000    0x9015c Startup/system_XMC4500.o
+                              0x90473 (size before relaxing)
+ .debug_str     0x0009015c     0x3ef0 Main.o
+                              0x93fc7 (size before relaxing)
+ .debug_str     0x0009404c     0x2e29 Lib/System_LibcStubs.o
+                               0x5893 (size before relaxing)
+ .debug_str     0x00096e75      0x7c2 Dave/Generated/src/UART001/UART001.o
+                              0x915c7 (size before relaxing)
+ .debug_str     0x00097637       0x2d Dave/Generated/src/UART001/UART001_Conf.o
+                              0x90e13 (size before relaxing)
+ .debug_str     0x00097664      0x225 Dave/Generated/src/RESET001/RESET001.o
+                              0x907d2 (size before relaxing)
+ .debug_str     0x00097889      0x771 Dave/Generated/src/NVIC002/NVIC002.o
+                              0x908fa (size before relaxing)
+ .debug_str     0x00097ffa       0x3d Dave/Generated/src/NVIC002/NVIC002_Conf.o
+                              0x9016f (size before relaxing)
+ .debug_str     0x00098037       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+                              0x93055 (size before relaxing)
+ .debug_str     0x0009805f       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
+                              0x93053 (size before relaxing)
+ .debug_str     0x00098085      0x156 Dave/Generated/src/IO004/IO004.o
+                              0x932cd (size before relaxing)
+ .debug_str     0x000981db       0x29 Dave/Generated/src/IO004/IO004_Conf.o
+                              0x93194 (size before relaxing)
+ .debug_str     0x00098204      0x155 Dave/Generated/src/IO001/IO001.o
+                              0x93218 (size before relaxing)
+ .debug_str     0x00098359       0x29 Dave/Generated/src/IO001/IO001_Conf.o
+                              0x93113 (size before relaxing)
+ .debug_str     0x00098382       0x68 Dave/Generated/src/DAVESupport/DAVE3.o
+                              0x93123 (size before relaxing)
+ .debug_str     0x000983ea       0x71 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                              0x93319 (size before relaxing)
+ .debug_str     0x0009845b      0x1a0 Dave/Generated/src/CLK001/CLK001.o
+                              0x90a5b (size before relaxing)
+ .debug_str     0x000985fb      0xa80 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+                              0x93dab (size before relaxing)
+ .debug_str     0x0009907b      0x16d Dave/Generated/src/ADCGROUP001/ADCGroup001_Conf.o
+                              0x9372b (size before relaxing)
+ .debug_str     0x000991e8      0x50e Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+                              0x93b9b (size before relaxing)
+ .debug_str     0x000996f6       0x4b Dave/Generated/src/ADCGLOB001/ADCGlob001_Conf.o
+                              0x933e0 (size before relaxing)
+ .debug_str     0x00099741      0x6ee Dave/Generated/src/ADC001/ADC001.o
+                              0x93ed9 (size before relaxing)
+ .debug_str     0x00099e2f      0x228 Dave/Generated/src/ADC001/ADC001_Conf.o
+                              0x9385e (size before relaxing)
 
-.debug_loc      0x00000000     0x22e6
+.debug_loc      0x00000000     0x22f2
  *(.debug_loc)
  .debug_loc     0x00000000       0xa8 Startup/system_XMC4500.o
- .debug_loc     0x000000a8      0x3c8 Main.o
- .debug_loc     0x00000470      0x388 Lib/System_LibcStubs.o
- .debug_loc     0x000007f8      0x2e6 Dave/Generated/src/UART001/UART001.o
- .debug_loc     0x00000ade      0x118 Dave/Generated/src/RESET001/RESET001.o
- .debug_loc     0x00000bf6      0x17c Dave/Generated/src/NVIC002/NVIC002.o
- .debug_loc     0x00000d72       0x9c Dave/Generated/src/IO004/IO004.o
- .debug_loc     0x00000e0e       0x9c Dave/Generated/src/IO001/IO001.o
- .debug_loc     0x00000eaa       0x90 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_loc     0x00000f3a       0x64 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_loc     0x00000f9e      0x1e0 Dave/Generated/src/CLK001/CLK001.o
- .debug_loc     0x0000117e      0x534 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_loc     0x000016b2      0x4d0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_loc     0x00001b82      0x764 Dave/Generated/src/ADC001/ADC001.o
+ .debug_loc     0x000000a8      0x3d4 Main.o
+ .debug_loc     0x0000047c      0x388 Lib/System_LibcStubs.o
+ .debug_loc     0x00000804      0x2e6 Dave/Generated/src/UART001/UART001.o
+ .debug_loc     0x00000aea      0x118 Dave/Generated/src/RESET001/RESET001.o
+ .debug_loc     0x00000c02      0x17c Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_loc     0x00000d7e       0x9c Dave/Generated/src/IO004/IO004.o
+ .debug_loc     0x00000e1a       0x9c Dave/Generated/src/IO001/IO001.o
+ .debug_loc     0x00000eb6       0x90 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_loc     0x00000f46       0x64 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_loc     0x00000faa      0x1e0 Dave/Generated/src/CLK001/CLK001.o
+ .debug_loc     0x0000118a      0x534 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_loc     0x000016be      0x4d0 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_loc     0x00001b8e      0x764 Dave/Generated/src/ADC001/ADC001.o
 
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000      0x5c0
+.debug_ranges   0x00000000      0x5d8
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x30 Startup/startup_XMC4500.o
  .debug_ranges  0x00000030       0x20 Startup/system_XMC4500.o
- .debug_ranges  0x00000050       0xa0 Main.o
- .debug_ranges  0x000000f0       0x90 Lib/System_LibcStubs.o
- .debug_ranges  0x00000180       0x70 Dave/Generated/src/UART001/UART001.o
- .debug_ranges  0x000001f0       0x30 Dave/Generated/src/RESET001/RESET001.o
- .debug_ranges  0x00000220       0x40 Dave/Generated/src/NVIC002/NVIC002.o
- .debug_ranges  0x00000260       0x20 Dave/Generated/src/IO004/IO004.o
- .debug_ranges  0x00000280       0x20 Dave/Generated/src/IO001/IO001.o
- .debug_ranges  0x000002a0       0x20 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_ranges  0x000002c0       0x18 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
- .debug_ranges  0x000002d8       0x50 Dave/Generated/src/CLK001/CLK001.o
- .debug_ranges  0x00000328       0xc8 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
- .debug_ranges  0x000003f0       0xb8 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
- .debug_ranges  0x000004a8      0x118 Dave/Generated/src/ADC001/ADC001.o
+ .debug_ranges  0x00000050       0xb8 Main.o
+ .debug_ranges  0x00000108       0x90 Lib/System_LibcStubs.o
+ .debug_ranges  0x00000198       0x70 Dave/Generated/src/UART001/UART001.o
+ .debug_ranges  0x00000208       0x30 Dave/Generated/src/RESET001/RESET001.o
+ .debug_ranges  0x00000238       0x40 Dave/Generated/src/NVIC002/NVIC002.o
+ .debug_ranges  0x00000278       0x20 Dave/Generated/src/IO004/IO004.o
+ .debug_ranges  0x00000298       0x20 Dave/Generated/src/IO001/IO001.o
+ .debug_ranges  0x000002b8       0x20 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_ranges  0x000002d8       0x18 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_ranges  0x000002f0       0x50 Dave/Generated/src/CLK001/CLK001.o
+ .debug_ranges  0x00000340       0xc8 Dave/Generated/src/ADCGROUP001/ADCGroup001.o
+ .debug_ranges  0x00000408       0xb8 Dave/Generated/src/ADCGLOB001/ADCGlob001.o
+ .debug_ranges  0x000004c0      0x118 Dave/Generated/src/ADC001/ADC001.o
 
 .debug_weaknames
  *(.debug_weaknames)

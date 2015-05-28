@@ -46,7 +46,7 @@ BIT 5: ALBH1
 #define PWM_LIM 60
 
 //Defines referentes ao protocolo
-#define BYTES_TO_SEND 1
+#define BYTES_TO_SEND 5
 //Defines referentes ao byte DADO 3
 #define	BLAH2		0
 #define	BUZINA		1
@@ -196,17 +196,17 @@ uint8_t pwm_max;
 int main(void)
 {
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+	PORT0->HWSEL &= ~0x0000c000UL; //Faz pin 0.7 funcionar
+	PORT0->HWSEL |= 0 << 14;
 	DAVE_Init();			// Initialization of DAVE Apps
+	//PORT0->HWSEL &= ~0x0000c000UL; //Faz pin 0.7 funcionar
+	//PORT0->HWSEL |= 0 << 14;
 	/*Etapa de inicializacao*/
 	configure_E(); //Configura transceptor como emissor
 	//IO004_SetPin(LED1); //Leds para debug
 	//IO004_SetPin(LED2);
 	//VER COMOFAS pra ligar analog do controle aqui ja
 
-	while (1)
-	{
-		write_E();
-	}
 	psxHandShake();
 	psxConfiguraControle();
 	/*Loop do controle*/
@@ -222,7 +222,7 @@ int main(void)
 		BOOLType albh1 = 1;
 		int16_t pow1, pow2;
 		/*Le controle*/
-		//psxLeControle();
+		psxLeControle();
 		if (psx_status != 140)//Nao ta analogico
 		{
 			psxHandShake();
@@ -311,9 +311,9 @@ int main(void)
 			down();
 		}
 
-		ADC001_GenerateLoadEvent(&ADC001_Handle0);
+		//ADC001_GenerateLoadEvent(&ADC001_Handle0);
 
-		data_E[0] = 173;
+		data_E[0] = 0;
 		//if (psxDado[5] == 0 && psxDado[3] == 0) continue; //Enquanto for zero nao faz nada -> tirar quando ligar o analogico
 		pow1 = (psxDado[5]-127);//<<1; //Analog esq //Subtrai 127 para saber o sentido
 		pow2 = (psxDado[3]-127);//<<1;
@@ -396,7 +396,7 @@ void configure_E()
 	configuration[10] = 0b00000000;
 	configuration[11] = 0b00000000;
 	configuration[12] = 0b00000000;//Fim enderco CH2
-	configuration[13] = 0x8;//num bits enviados (1 byte nesse ex) TODO arrumar
+	configuration[13] = 0x28;//num bits enviados (1 byte nesse ex) TODO arrumar
 	configuration[14] = 0b00000000;
 
 	IO004_ResetPin(CE);

@@ -139,29 +139,29 @@ void IO004_Init(void)
                                      PORT2_PDR1_PD8_Msk);
   IO004_Handle1.PortRegs->IOCR8 |= (0U << 3);   
 
-  /* Configuration of 0 Port 0 based on User configuration */
+  /* Configuration of 1 Port 0 based on User configuration */
   IO004_Handle10.PortRegs->OMR = 0U<< 0;
   
-  IO004_Handle10.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD0_Msk));
-  IO004_Handle10.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD0_Pos) & \
-                                          PORT0_PDR0_PD0_Msk);
+  IO004_Handle10.PortRegs->PDR0   &= (uint32_t)(~(PORT1_PDR0_PD0_Msk));
+  IO004_Handle10.PortRegs->PDR0   |= (uint32_t)((4UL << PORT1_PDR0_PD0_Pos) & \
+                                          PORT1_PDR0_PD0_Msk);
   IO004_Handle10.PortRegs->IOCR0 |= (0U << 3);   
 
-  /* Configuration of 3 Port 0 based on User configuration */
-  IO004_Handle11.PortRegs->OMR = 0U<< 0;
+  /* Configuration of 1 Port 9 based on User configuration */
+  IO004_Handle11.PortRegs->OMR = 0U<< 9;
   
-  IO004_Handle11.PortRegs->PDR0   &= (uint32_t)(~(PORT3_PDR0_PD0_Msk));
-  IO004_Handle11.PortRegs->PDR0   |= (uint32_t)((4UL << PORT3_PDR0_PD0_Pos) & \
-                                          PORT3_PDR0_PD0_Msk);
-  IO004_Handle11.PortRegs->IOCR0 |= (0U << 3);   
+  IO004_Handle11.PortRegs->PDR1  &= (uint32_t)(~(PORT1_PDR1_PD9_Msk));
+  IO004_Handle11.PortRegs->PDR1  |= (uint32_t)((4UL << PORT1_PDR1_PD9_Pos) & \
+                                     PORT1_PDR1_PD9_Msk);
+  IO004_Handle11.PortRegs->IOCR8 |= (0U << 11);   
 
-  /* Configuration of 0 Port 1 based on User configuration */
-  IO004_Handle12.PortRegs->OMR = 0U<< 1;
+  /* Configuration of 0 Port 8 based on User configuration */
+  IO004_Handle12.PortRegs->OMR = 0U<< 8;
   
-  IO004_Handle12.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD1_Msk));
-  IO004_Handle12.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD1_Pos) & \
-                                          PORT0_PDR0_PD1_Msk);
-  IO004_Handle12.PortRegs->IOCR0 |= (0U << 11);   
+  IO004_Handle12.PortRegs->PDR1  &= (uint32_t)(~(PORT0_PDR1_PD8_Msk));
+  IO004_Handle12.PortRegs->PDR1  |= (uint32_t)((4UL << PORT0_PDR1_PD8_Pos) & \
+                                     PORT0_PDR1_PD8_Msk);
+  IO004_Handle12.PortRegs->IOCR8 |= (0U << 3);   
 
   /* Configuration of 2 Port 5 based on User configuration */
   IO004_Handle2.PortRegs->OMR = 0U<< 5;
@@ -195,14 +195,6 @@ void IO004_Init(void)
                                           PORT2_PDR0_PD2_Msk);
   IO004_Handle6.PortRegs->IOCR0 |= (0U << 19);   
 
-  /* Configuration of 1 Port 0 based on User configuration */
-  IO004_Handle7.PortRegs->OMR = 0U<< 0;
-  
-  IO004_Handle7.PortRegs->PDR0   &= (uint32_t)(~(PORT1_PDR0_PD0_Msk));
-  IO004_Handle7.PortRegs->PDR0   |= (uint32_t)((4UL << PORT1_PDR0_PD0_Pos) & \
-                                          PORT1_PDR0_PD0_Msk);
-  IO004_Handle7.PortRegs->IOCR0 |= (0U << 3);   
-
   /* Configuration of 1 Port 1 based on User configuration */
   IO004_Handle8.PortRegs->OMR = 0U<< 1;
   
@@ -211,13 +203,13 @@ void IO004_Init(void)
                                           PORT1_PDR0_PD1_Msk);
   IO004_Handle8.PortRegs->IOCR0 |= (0U << 11);   
 
-  /* Configuration of 3 Port 2 based on User configuration */
-  IO004_Handle9.PortRegs->OMR = 0U<< 2;
+  /* Configuration of 0 Port 7 based on User configuration */
+  IO004_Handle9.PortRegs->OMR = 0U<< 7;
   
-  IO004_Handle9.PortRegs->PDR0   &= (uint32_t)(~(PORT3_PDR0_PD2_Msk));
-  IO004_Handle9.PortRegs->PDR0   |= (uint32_t)((4UL << PORT3_PDR0_PD2_Pos) & \
-                                          PORT3_PDR0_PD2_Msk);
-  IO004_Handle9.PortRegs->IOCR0 |= (2U << 19);
+  IO004_Handle9.PortRegs->PDR0   &= (uint32_t)(~(PORT0_PDR0_PD7_Msk));
+  IO004_Handle9.PortRegs->PDR0   |= (uint32_t)((4UL << PORT0_PDR0_PD7_Pos) & \
+                                          PORT0_PDR0_PD7_Msk);
+  IO004_Handle9.PortRegs->IOCR4 |= (2U << 27);
 }
 
 void IO004_DisableOutputDriver(const IO004_HandleType* Handle,IO004_InputModeType Mode)

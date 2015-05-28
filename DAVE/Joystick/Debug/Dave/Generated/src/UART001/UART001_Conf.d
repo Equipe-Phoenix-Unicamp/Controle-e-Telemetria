@@ -9,7 +9,7 @@ Dave/Generated/src/UART001/UART001_Conf.d Dave/Generated/src/UART001/UART001_Con
  C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmFunc.h \
  C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cm4_simd.h \
  C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h \
- C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h \
+ C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\LIBS/types.h \
  ../Dave/Generated/src/UART001/../../inc/UART001/UART001_Conf.h \
  ../Dave/Generated/src/UART001/../../inc/UART001/UART001_Extern.h
 
@@ -31,7 +31,7 @@ C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cm4_simd.h:
 
 C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h:
 
-C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h:
+C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\LIBS/types.h:
 
 ../Dave/Generated/src/UART001/../../inc/UART001/UART001_Conf.h:
 

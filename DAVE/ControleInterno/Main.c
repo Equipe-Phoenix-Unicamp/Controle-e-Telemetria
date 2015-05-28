@@ -46,7 +46,7 @@ BIT 5: ALBH1
 #define PWM_LIM 60
 
 //Defines referentes ao protocolo
-#define BYTES_TO_SEND 1
+#define BYTES_TO_SEND 5
 //Defines referentes ao byte DADO 3
 #define	BLAH2		0
 #define	BUZINA		1
@@ -114,17 +114,19 @@ int main(void)
 
 void read_R()
 {
-	int i;
+	int i, j;
 	IO004_ResetPin(CE);
 	delay(50000);
 	uint8_t temp = 0;
-
-	for (i = 7; i > -1; i --)
+	for (j = 0; j < BYTES_TO_SEND; j++)
 	{
-		if (IO004_ReadPin(DATA)) temp |= (1<<i);
-		pulse_R();
+		for (i = 7; i > -1; i --)
+		{
+			if (IO004_ReadPin(DATA)) temp |= (1<<i);
+			pulse_R();
+		}
+		data_R[j] = temp;
 	}
-	data_R[0] = temp;
 	IO004_SetPin(CE);
 	delay(50000);
 }
@@ -153,7 +155,7 @@ void configure_R()
 	configuration[10] = 0b00000000;
 	configuration[11] = 0b00000000;
 	configuration[12] = 0b00000000;//Fim enderco CH2
-	configuration[13] = 0x8;//num bits enviados (1 byte nesse ex) TODO arrumar
+	configuration[13] = 0x28;//num bits enviados (1 byte nesse ex) TODO arrumar
 	configuration[14] = 0b00000000;
 
 	IO004_ResetPin(CE);

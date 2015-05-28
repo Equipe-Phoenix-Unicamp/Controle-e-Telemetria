@@ -19,10 +19,7 @@ SUBDIRS := \
 Startup \
 . \
 Lib \
-Dave/Generated/src/UART001 \
-Dave/Generated/src/RESET001 \
 Dave/Generated/src/LIBS \
 Dave/Generated/src/IO004 \
 Dave/Generated/src/DAVESupport \
-Dave/Generated/src/CLK001 \
 

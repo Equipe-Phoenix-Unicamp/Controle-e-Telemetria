@@ -72,8 +72,6 @@ extern const IO004_HandleType IO004_Handle5;
 
 extern const IO004_HandleType IO004_Handle6;
 
-extern const IO004_HandleType IO004_Handle7;
-
 extern const IO004_HandleType IO004_Handle8;
 
 extern const IO004_HandleType IO004_Handle9;

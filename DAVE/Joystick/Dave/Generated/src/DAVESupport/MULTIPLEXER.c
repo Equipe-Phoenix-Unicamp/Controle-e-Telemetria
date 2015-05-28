@@ -138,14 +138,16 @@ void DAVE_MUX_Init(void)
             	         
                                           
 
-/*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                                      
-  WR_REG(PORT0->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P0.0 : PORT0_IOCR0_PC0_OE */					   
-					                         
-  WR_REG(PORT0->IOCR0, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /*    P0.1 : PORT0_IOCR0_PC1_OE */					   
+/*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                
+              
+  WR_REG(PORT0->HWSEL, PORT0_HWSEL_HW8_Msk, PORT0_HWSEL_HW8_Pos, PORT_HWSEL_SW);                    /*    P0.8 : PORT0_HWSEL_HW8 */                         
+  WR_REG(PORT0->IOCR8, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P0.8 : PORT0_IOCR8_PC8_OE */					   
 					                         
   WR_REG(PORT1->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P1.0 : PORT1_IOCR0_PC0_OE */					   
 					                         
   WR_REG(PORT1->IOCR0, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /*    P1.1 : PORT1_IOCR0_PC1_OE */					   
+					                         
+  WR_REG(PORT1->IOCR8, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /*    P1.9 : PORT1_IOCR8_PC9_OE */					   
 					                         
   WR_REG(PORT2->IOCR0, PORT_IOCR_PC2_OE_Msk, PORT_IOCR_PC2_OE_Pos, PORT_IOCR_OE1);                /*    P2.2 : PORT2_IOCR0_PC2_OE */					   
 					                         
@@ -156,8 +158,6 @@ void DAVE_MUX_Init(void)
   WR_REG(PORT2->IOCR8, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P2.8 : PORT2_IOCR8_PC8_OE */					   
 					                         
   WR_REG(PORT2->IOCR12, 0xb80000U, PORT_IOCR_PC2_PCR_Pos, 0x12U);                /*P2.14 : PORT2_IOCR12_PC14_PCR and PORT2_IOCR12_PC14_OE */					   
-					                         
-  WR_REG(PORT3->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P3.0 : PORT3_IOCR0_PC0_OE */					   
 					      
    	 
             	         

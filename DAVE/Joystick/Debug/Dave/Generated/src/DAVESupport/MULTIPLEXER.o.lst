@@ -256,26 +256,26 @@
  138:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****             	         
  139:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                           
  140:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 141:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                           
- 142:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT0->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
- 120              		.loc 1 142 0
+ 141:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                
+ 142:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****               
+ 143:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT0->HWSEL, PORT0_HWSEL_HW8_Msk, PORT0_HWSEL_HW8_Pos, PORT_HWSEL_SW);                   
+ 120              		.loc 1 143 0
  121 00f8 4FF40043 		mov	r3, #32768
  122 00fc C4F60203 		movt	r3, 18434
  123 0100 4FF40042 		mov	r2, #32768
  124 0104 C4F60202 		movt	r2, 18434
- 125 0108 1269     		ldr	r2, [r2, #16]
- 126 010a 42F08002 		orr	r2, r2, #128
- 127 010e 1A61     		str	r2, [r3, #16]
- 143:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 144:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT0->IOCR0, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /
+ 125 0108 526F     		ldr	r2, [r2, #116]
+ 126 010a 22F44032 		bic	r2, r2, #196608
+ 127 010e 5A67     		str	r2, [r3, #116]
+ 144:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT0->IOCR8, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
  128              		.loc 1 144 0
  129 0110 4FF40043 		mov	r3, #32768
  130 0114 C4F60203 		movt	r3, 18434
  131 0118 4FF40042 		mov	r2, #32768
  132 011c C4F60202 		movt	r2, 18434
- 133 0120 1269     		ldr	r2, [r2, #16]
- 134 0122 42F40042 		orr	r2, r2, #32768
- 135 0126 1A61     		str	r2, [r3, #16]
+ 133 0120 9269     		ldr	r2, [r2, #24]
+ 134 0122 42F08002 		orr	r2, r2, #128
+ 135 0126 9A61     		str	r2, [r3, #24]
  145:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
  146:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT1->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
  136              		.loc 1 146 0
@@ -297,66 +297,66 @@
  150 0152 42F40042 		orr	r2, r2, #32768
  151 0156 1A61     		str	r2, [r3, #16]
  149:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 150:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR0, PORT_IOCR_PC2_OE_Msk, PORT_IOCR_PC2_OE_Pos, PORT_IOCR_OE1);                /
+ 150:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT1->IOCR8, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /
  152              		.loc 1 150 0
- 153 0158 4FF40243 		mov	r3, #33280
+ 153 0158 4FF40143 		mov	r3, #33024
  154 015c C4F60203 		movt	r3, 18434
- 155 0160 4FF40242 		mov	r2, #33280
+ 155 0160 4FF40142 		mov	r2, #33024
  156 0164 C4F60202 		movt	r2, 18434
- 157 0168 1269     		ldr	r2, [r2, #16]
- 158 016a 42F40002 		orr	r2, r2, #8388608
- 159 016e 1A61     		str	r2, [r3, #16]
+ 157 0168 9269     		ldr	r2, [r2, #24]
+ 158 016a 42F40042 		orr	r2, r2, #32768
+ 159 016e 9A61     		str	r2, [r3, #24]
  151:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 152:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR4, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
+ 152:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR0, PORT_IOCR_PC2_OE_Msk, PORT_IOCR_PC2_OE_Pos, PORT_IOCR_OE1);                /
  160              		.loc 1 152 0
  161 0170 4FF40243 		mov	r3, #33280
  162 0174 C4F60203 		movt	r3, 18434
  163 0178 4FF40242 		mov	r2, #33280
  164 017c C4F60202 		movt	r2, 18434
- 165 0180 5269     		ldr	r2, [r2, #20]
- 166 0182 42F08002 		orr	r2, r2, #128
- 167 0186 5A61     		str	r2, [r3, #20]
+ 165 0180 1269     		ldr	r2, [r2, #16]
+ 166 0182 42F40002 		orr	r2, r2, #8388608
+ 167 0186 1A61     		str	r2, [r3, #16]
  153:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 154:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR4, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /
+ 154:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR4, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
  168              		.loc 1 154 0
  169 0188 4FF40243 		mov	r3, #33280
  170 018c C4F60203 		movt	r3, 18434
  171 0190 4FF40242 		mov	r2, #33280
  172 0194 C4F60202 		movt	r2, 18434
  173 0198 5269     		ldr	r2, [r2, #20]
- 174 019a 42F40042 		orr	r2, r2, #32768
+ 174 019a 42F08002 		orr	r2, r2, #128
  175 019e 5A61     		str	r2, [r3, #20]
  155:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 156:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR8, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
+ 156:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR4, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /
  176              		.loc 1 156 0
  177 01a0 4FF40243 		mov	r3, #33280
  178 01a4 C4F60203 		movt	r3, 18434
  179 01a8 4FF40242 		mov	r2, #33280
  180 01ac C4F60202 		movt	r2, 18434
- 181 01b0 9269     		ldr	r2, [r2, #24]
- 182 01b2 42F08002 		orr	r2, r2, #128
- 183 01b6 9A61     		str	r2, [r3, #24]
+ 181 01b0 5269     		ldr	r2, [r2, #20]
+ 182 01b2 42F40042 		orr	r2, r2, #32768
+ 183 01b6 5A61     		str	r2, [r3, #20]
  157:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 158:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR12, 0xb80000U, PORT_IOCR_PC2_PCR_Pos, 0x12U);                /*P2.14 : PORT2_IO
+ 158:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR8, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
  184              		.loc 1 158 0
  185 01b8 4FF40243 		mov	r3, #33280
  186 01bc C4F60203 		movt	r3, 18434
  187 01c0 4FF40242 		mov	r2, #33280
  188 01c4 C4F60202 		movt	r2, 18434
- 189 01c8 D269     		ldr	r2, [r2, #28]
- 190 01ca 22F43802 		bic	r2, r2, #12058624
- 191 01ce 42F41002 		orr	r2, r2, #9437184
- 192 01d2 DA61     		str	r2, [r3, #28]
+ 189 01c8 9269     		ldr	r2, [r2, #24]
+ 190 01ca 42F08002 		orr	r2, r2, #128
+ 191 01ce 9A61     		str	r2, [r3, #24]
  159:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					                         
- 160:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT3->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /
- 193              		.loc 1 160 0
- 194 01d4 4FF40343 		mov	r3, #33536
- 195 01d8 C4F60203 		movt	r3, 18434
- 196 01dc 4FF40342 		mov	r2, #33536
- 197 01e0 C4F60202 		movt	r2, 18434
- 198 01e4 1269     		ldr	r2, [r2, #16]
- 199 01e6 42F08002 		orr	r2, r2, #128
- 200 01ea 1A61     		str	r2, [r3, #16]
+ 160:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(PORT2->IOCR12, 0xb80000U, PORT_IOCR_PC2_PCR_Pos, 0x12U);                /*P2.14 : PORT2_IO
+ 192              		.loc 1 160 0
+ 193 01d0 4FF40243 		mov	r3, #33280
+ 194 01d4 C4F60203 		movt	r3, 18434
+ 195 01d8 4FF40242 		mov	r2, #33280
+ 196 01dc C4F60202 		movt	r2, 18434
+ 197 01e0 D269     		ldr	r2, [r2, #28]
+ 198 01e2 22F43802 		bic	r2, r2, #12058624
+ 199 01e6 42F41002 		orr	r2, r2, #9437184
+ 200 01ea DA61     		str	r2, [r3, #28]
  161:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					      
  162:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****    	 
  163:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****             	         
@@ -450,10 +450,10 @@
  247              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 MULTIPLEXER.c
-C:\Users\Carlos\AppData\Local\Temp\ccTkuUPU.s:20     .text.DAVE_MUX_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccTkuUPU.s:25     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
-C:\Users\Carlos\AppData\Local\Temp\ccTkuUPU.s:217    .text.DAVE_MUX_PreInit:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccTkuUPU.s:222    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\Carlos\AppData\Local\Temp\ccAjkzW5.s:20     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccAjkzW5.s:25     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\Carlos\AppData\Local\Temp\ccAjkzW5.s:217    .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccAjkzW5.s:222    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
