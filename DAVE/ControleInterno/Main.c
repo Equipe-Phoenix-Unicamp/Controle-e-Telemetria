@@ -126,6 +126,7 @@ void read_R()
 			pulse_R();
 		}
 		data_R[j] = temp;
+		temp = 0;
 	}
 	IO004_SetPin(CE);
 	delay(50000);

@@ -362,7 +362,7 @@ LOAD c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-n
 END GROUP
                 0x00000800                stack_size = 0x800
 
-.text           0x08000000     0x1674 load address 0x0c000000
+.text           0x08000000     0x1678 load address 0x0c000000
                 0x08000000                sText = .
  *(.Xmc4500.reset)
  .Xmc4500.reset
@@ -501,80 +501,80 @@ END GROUP
  .text          0x08000a5c        0x0 Main.o
  .text.main     0x08000a5c       0x38 Main.o
                 0x08000a5c                main
- .text.read_R   0x08000a94       0xd8 Main.o
+ .text.read_R   0x08000a94       0xdc Main.o
                 0x08000a94                read_R
- .text.pulse_R  0x08000b6c       0x54 Main.o
-                0x08000b6c                pulse_R
+ .text.pulse_R  0x08000b70       0x54 Main.o
+                0x08000b70                pulse_R
  .text.configure_R
-                0x08000bc0      0x200 Main.o
-                0x08000bc0                configure_R
- .text.delay    0x08000dc0       0x30 Main.o
-                0x08000dc0                delay
- .text          0x08000df0        0x0 Lib/System_LibcStubs.o
- .text._open    0x08000df0       0x1c Lib/System_LibcStubs.o
-                0x08000df0                _open
- .text._lseek   0x08000e0c       0x1c Lib/System_LibcStubs.o
-                0x08000e0c                _lseek
- .text._read    0x08000e28       0x1c Lib/System_LibcStubs.o
-                0x08000e28                _read
- .text._write   0x08000e44       0x1c Lib/System_LibcStubs.o
-                0x08000e44                _write
- .text._close   0x08000e60       0x10 Lib/System_LibcStubs.o
-                0x08000e60                _close
- .text._fstat   0x08000e70       0x28 Lib/System_LibcStubs.o
-                0x08000e70                _fstat
- .text._link    0x08000e98       0x28 Lib/System_LibcStubs.o
-                0x08000e98                _link
- .text._unlink  0x08000ec0       0x18 Lib/System_LibcStubs.o
-                0x08000ec0                _unlink
- .text._sbrk    0x08000ed8       0xa0 Lib/System_LibcStubs.o
-                0x08000ed8                _sbrk
- .text._times   0x08000f78       0x18 Lib/System_LibcStubs.o
-                0x08000f78                _times
- .text._wait    0x08000f90       0x18 Lib/System_LibcStubs.o
-                0x08000f90                _wait
- .text._kill    0x08000fa8       0x1c Lib/System_LibcStubs.o
-                0x08000fa8                _kill
- .text._fork    0x08000fc4       0x10 Lib/System_LibcStubs.o
-                0x08000fc4                _fork
- .text._getpid  0x08000fd4       0x10 Lib/System_LibcStubs.o
-                0x08000fd4                _getpid
- .text._exit    0x08000fe4        0xc Lib/System_LibcStubs.o
-                0x08000fe4                _exit
- .text._init    0x08000ff0        0xc Lib/System_LibcStubs.o
-                0x08000ff0                _init
- .text._isatty  0x08000ffc       0x18 Lib/System_LibcStubs.o
-                0x08000ffc                _isatty
- .text          0x08001014        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .text          0x08001014        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
- .text          0x08001014        0x0 Dave/Generated/src/IO004/IO004.o
+                0x08000bc4      0x200 Main.o
+                0x08000bc4                configure_R
+ .text.delay    0x08000dc4       0x30 Main.o
+                0x08000dc4                delay
+ .text          0x08000df4        0x0 Lib/System_LibcStubs.o
+ .text._open    0x08000df4       0x1c Lib/System_LibcStubs.o
+                0x08000df4                _open
+ .text._lseek   0x08000e10       0x1c Lib/System_LibcStubs.o
+                0x08000e10                _lseek
+ .text._read    0x08000e2c       0x1c Lib/System_LibcStubs.o
+                0x08000e2c                _read
+ .text._write   0x08000e48       0x1c Lib/System_LibcStubs.o
+                0x08000e48                _write
+ .text._close   0x08000e64       0x10 Lib/System_LibcStubs.o
+                0x08000e64                _close
+ .text._fstat   0x08000e74       0x28 Lib/System_LibcStubs.o
+                0x08000e74                _fstat
+ .text._link    0x08000e9c       0x28 Lib/System_LibcStubs.o
+                0x08000e9c                _link
+ .text._unlink  0x08000ec4       0x18 Lib/System_LibcStubs.o
+                0x08000ec4                _unlink
+ .text._sbrk    0x08000edc       0xa0 Lib/System_LibcStubs.o
+                0x08000edc                _sbrk
+ .text._times   0x08000f7c       0x18 Lib/System_LibcStubs.o
+                0x08000f7c                _times
+ .text._wait    0x08000f94       0x18 Lib/System_LibcStubs.o
+                0x08000f94                _wait
+ .text._kill    0x08000fac       0x1c Lib/System_LibcStubs.o
+                0x08000fac                _kill
+ .text._fork    0x08000fc8       0x10 Lib/System_LibcStubs.o
+                0x08000fc8                _fork
+ .text._getpid  0x08000fd8       0x10 Lib/System_LibcStubs.o
+                0x08000fd8                _getpid
+ .text._exit    0x08000fe8        0xc Lib/System_LibcStubs.o
+                0x08000fe8                _exit
+ .text._init    0x08000ff4        0xc Lib/System_LibcStubs.o
+                0x08000ff4                _init
+ .text._isatty  0x08001000       0x18 Lib/System_LibcStubs.o
+                0x08001000                _isatty
+ .text          0x08001018        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .text          0x08001018        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
+ .text          0x08001018        0x0 Dave/Generated/src/IO004/IO004.o
  .text.IO004_Init
-                0x08001014      0x1f0 Dave/Generated/src/IO004/IO004.o
-                0x08001014                IO004_Init
+                0x08001018      0x1f0 Dave/Generated/src/IO004/IO004.o
+                0x08001018                IO004_Init
  .text.IO004_DisableOutputDriver
-                0x08001204      0x17c Dave/Generated/src/IO004/IO004.o
-                0x08001204                IO004_DisableOutputDriver
+                0x08001208      0x17c Dave/Generated/src/IO004/IO004.o
+                0x08001208                IO004_DisableOutputDriver
  .text.IO004_EnableOutputDriver
-                0x08001380      0x17c Dave/Generated/src/IO004/IO004.o
-                0x08001380                IO004_EnableOutputDriver
- .text          0x080014fc        0x0 Dave/Generated/src/IO004/IO004_Conf.o
- .text          0x080014fc        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08001384      0x17c Dave/Generated/src/IO004/IO004.o
+                0x08001384                IO004_EnableOutputDriver
+ .text          0x08001500        0x0 Dave/Generated/src/IO004/IO004_Conf.o
+ .text          0x08001500        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.NVIC_SetPriorityGrouping
-                0x080014fc       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08001500       0x50 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.DAVE_Init
-                0x0800154c       0x1c Dave/Generated/src/DAVESupport/DAVE3.o
-                0x0800154c                DAVE_Init
- .text          0x08001568        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08001550       0x1c Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08001550                DAVE_Init
+ .text          0x0800156c        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
  .text.DAVE_MUX_Init
-                0x08001568       0x6c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08001568                DAVE_MUX_Init
+                0x0800156c       0x6c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x0800156c                DAVE_MUX_Init
  .text.DAVE_MUX_PreInit
-                0x080015d4        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x080015d4                DAVE_MUX_PreInit
- .text          0x080015e0        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x080015d8        0xc Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x080015d8                DAVE_MUX_PreInit
+ .text          0x080015e4        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
  .text.__libc_init_array
-                0x080015e0       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
-                0x080015e0                __libc_init_array
+                0x080015e4       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
+                0x080015e4                __libc_init_array
  *(.glue*)
  .glue_7        0x00000000        0x0 linker stubs
  .glue_7t       0x00000000        0x0 linker stubs
@@ -583,59 +583,59 @@ END GROUP
  *(.vfp11_veneer)
  .vfp11_veneer  0x00000000        0x0 linker stubs
  *(.init)
-                0x08001674                __preinit_array_start = .
+                0x08001678                __preinit_array_start = .
  *(.preinit_array)
-                0x08001674                __preinit_array_end = .
-                0x08001674                __init_array_start = .
+                0x08001678                __preinit_array_end = .
+                0x08001678                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
-                0x08001674                __init_array_end = .
+                0x08001678                __init_array_end = .
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
  *(.fini)
-                0x08001674                __fini_array_start = .
+                0x08001678                __fini_array_start = .
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0x08001674                __fini_array_end = .
+                0x08001678                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x08001674                __extab_start = .
+                0x08001678                __extab_start = .
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.Xmc4500.reset
-                0x08001674        0x0 Startup/startup_XMC4500.o
+                0x08001678        0x0 Startup/startup_XMC4500.o
  .ARM.extab.Xmc4500.postreset
-                0x08001674        0x0 Startup/startup_XMC4500.o
-                0x08001674                . = ALIGN (0x4)
-                0x08001674                __extab_end = ABSOLUTE (.)
+                0x08001678        0x0 Startup/startup_XMC4500.o
+                0x08001678                . = ALIGN (0x4)
+                0x08001678                __extab_end = ABSOLUTE (.)
 
-.iplt           0x08001674        0x0 load address 0x0c001674
+.iplt           0x08001678        0x0 load address 0x0c001678
  .iplt          0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ARM.exidx      0x08001674       0x10 load address 0x0c001674
-                0x08001674                __exidx_start = .
+.ARM.exidx      0x08001678       0x10 load address 0x0c001678
+                0x08001678                __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.Xmc4500.reset
-                0x08001674        0x8 Startup/startup_XMC4500.o
+                0x08001678        0x8 Startup/startup_XMC4500.o
  .ARM.exidx.Xmc4500.postreset
-                0x0800167c        0x8 Startup/startup_XMC4500.o
-                0x08001684                . = ALIGN (0x4)
-                0x08001684                __exidx_end = ABSOLUTE (.)
+                0x08001680        0x8 Startup/startup_XMC4500.o
+                0x08001688                . = ALIGN (0x4)
+                0x08001688                __exidx_end = ABSOLUTE (.)
 
-.rodata         0x08001684       0x28 load address 0x0c001684
+.rodata         0x08001688       0x28 load address 0x0c001688
  *(.rodata .rodata.*)
- .rodata        0x08001684       0x28 Dave/Generated/src/IO004/IO004_Conf.o
-                0x08001684                IO004_Handle1
-                0x0800168c                IO004_Handle2
-                0x08001694                IO004_Handle4
-                0x0800169c                IO004_Handle5
-                0x080016a4                IO004_Handle6
+ .rodata        0x08001688       0x28 Dave/Generated/src/IO004/IO004_Conf.o
+                0x08001688                IO004_Handle1
+                0x08001690                IO004_Handle2
+                0x08001698                IO004_Handle4
+                0x080016a0                IO004_Handle5
+                0x080016a8                IO004_Handle6
  *(.gnu.linkonce.r*)
 
-.rel.dyn        0x080016ac        0x0 load address 0x0c0016ac
+.rel.dyn        0x080016b0        0x0 load address 0x0c0016b0
  .rel.iplt      0x00000000        0x0 Startup/startup_XMC4500.o
                 0x080016b0                . = ALIGN (0x10)
                 0x0c0016b0                eROData = (. | 0x4000000)
@@ -775,18 +775,18 @@ PSRAM_Heap      0x10000800        0x0
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_info     0x00000000     0x22f1
+.debug_info     0x00000000     0x2307
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000       0x7d Startup/startup_XMC4500.o
- .debug_info    0x0000007d      0xaf0 Startup/system_XMC4500.o
- .debug_info    0x00000b6d      0x43c Main.o
- .debug_info    0x00000fa9      0x65f Lib/System_LibcStubs.o
- .debug_info    0x00001608       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_info    0x0000169c       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_info    0x00001730      0x3d3 Dave/Generated/src/IO004/IO004.o
- .debug_info    0x00001b03      0x2ce Dave/Generated/src/IO004/IO004_Conf.o
- .debug_info    0x00001dd1      0x2d3 Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_info    0x000020a4      0x24d Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_info    0x00000000       0x93 Startup/startup_XMC4500.o
+ .debug_info    0x00000093      0xaf0 Startup/system_XMC4500.o
+ .debug_info    0x00000b83      0x43c Main.o
+ .debug_info    0x00000fbf      0x65f Lib/System_LibcStubs.o
+ .debug_info    0x0000161e       0x94 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_info    0x000016b2       0x94 Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_info    0x00001746      0x3d3 Dave/Generated/src/IO004/IO004.o
+ .debug_info    0x00001b19      0x2ce Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_info    0x00001de7      0x2d3 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_info    0x000020ba      0x24d Dave/Generated/src/DAVESupport/MULTIPLEXER.o
 
 .debug_abbrev   0x00000000      0x876
  *(.debug_abbrev)
@@ -801,18 +801,18 @@ PSRAM_Heap      0x10000800        0x0
  .debug_abbrev  0x000006c6       0xf3 Dave/Generated/src/DAVESupport/DAVE3.o
  .debug_abbrev  0x000007b9       0xbd Dave/Generated/src/DAVESupport/MULTIPLEXER.o
 
-.debug_line     0x00000000     0x2f66
+.debug_line     0x00000000     0x31b9
  *(.debug_line)
  .debug_line    0x00000000      0x130 Startup/startup_XMC4500.o
  .debug_line    0x00000130      0x3b7 Startup/system_XMC4500.o
- .debug_line    0x000004e7      0x5f7 Main.o
- .debug_line    0x00000ade      0x3c1 Lib/System_LibcStubs.o
- .debug_line    0x00000e9f      0x584 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .debug_line    0x00001423      0x580 Dave/Generated/src/LIBS/MOTORLIB.o
- .debug_line    0x000019a3      0x5e7 Dave/Generated/src/IO004/IO004.o
- .debug_line    0x00001f8a      0x54b Dave/Generated/src/IO004/IO004_Conf.o
- .debug_line    0x000024d5      0x54a Dave/Generated/src/DAVESupport/DAVE3.o
- .debug_line    0x00002a1f      0x547 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+ .debug_line    0x000004e7      0x666 Main.o
+ .debug_line    0x00000b4d      0x3c1 Lib/System_LibcStubs.o
+ .debug_line    0x00000f0e      0x5f2 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .debug_line    0x00001500      0x5ee Dave/Generated/src/LIBS/MOTORLIB.o
+ .debug_line    0x00001aee      0x655 Dave/Generated/src/IO004/IO004.o
+ .debug_line    0x00002143      0x5b9 Dave/Generated/src/IO004/IO004_Conf.o
+ .debug_line    0x000026fc      0x560 Dave/Generated/src/DAVESupport/DAVE3.o
+ .debug_line    0x00002c5c      0x55d Dave/Generated/src/DAVESupport/MULTIPLEXER.o
 
 .debug_frame    0x00000000      0x420
  *(.debug_frame)
@@ -824,26 +824,26 @@ PSRAM_Heap      0x10000800        0x0
  .debug_frame   0x000003a8       0x48 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
  .debug_frame   0x000003f0       0x30 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libg.a(lib_a-init.o)
 
-.debug_str      0x00000000    0x95248
+.debug_str      0x00000000    0x9525e
  *(.debug_str)
- .debug_str     0x00000000    0x90168 Startup/system_XMC4500.o
-                              0x9047a (size before relaxing)
- .debug_str     0x00090168     0x20c7 Main.o
-                              0x920f9 (size before relaxing)
- .debug_str     0x0009222f     0x2e30 Lib/System_LibcStubs.o
-                               0x589a (size before relaxing)
- .debug_str     0x0009505f       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
-                              0x91e62 (size before relaxing)
- .debug_str     0x00095087       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
-                              0x91e60 (size before relaxing)
- .debug_str     0x000950ad       0xa2 Dave/Generated/src/IO004/IO004.o
-                              0x92091 (size before relaxing)
- .debug_str     0x0009514f       0x29 Dave/Generated/src/IO004/IO004_Conf.o
-                              0x91f58 (size before relaxing)
- .debug_str     0x00095178       0x76 Dave/Generated/src/DAVESupport/DAVE3.o
-                              0x91f1f (size before relaxing)
- .debug_str     0x000951ee       0x5a Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                              0x91efe (size before relaxing)
+ .debug_str     0x00000000    0x9017e Startup/system_XMC4500.o
+                              0x90490 (size before relaxing)
+ .debug_str     0x0009017e     0x20c7 Main.o
+                              0x9210f (size before relaxing)
+ .debug_str     0x00092245     0x2e30 Lib/System_LibcStubs.o
+                               0x58b0 (size before relaxing)
+ .debug_str     0x00095075       0x28 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+                              0x91e78 (size before relaxing)
+ .debug_str     0x0009509d       0x26 Dave/Generated/src/LIBS/MOTORLIB.o
+                              0x91e76 (size before relaxing)
+ .debug_str     0x000950c3       0xa2 Dave/Generated/src/IO004/IO004.o
+                              0x920a7 (size before relaxing)
+ .debug_str     0x00095165       0x29 Dave/Generated/src/IO004/IO004_Conf.o
+                              0x91f6e (size before relaxing)
+ .debug_str     0x0009518e       0x76 Dave/Generated/src/DAVESupport/DAVE3.o
+                              0x91f35 (size before relaxing)
+ .debug_str     0x00095204       0x5a Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                              0x91f14 (size before relaxing)
 
 .debug_loc      0x00000000      0x688
  *(.debug_loc)

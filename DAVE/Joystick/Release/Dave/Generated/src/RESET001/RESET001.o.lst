@@ -115,20 +115,20 @@
  125              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 RESET001.c
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:17     .text.RESET001_AssertReset:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:22     .text.RESET001_AssertReset:00000000 RESET001_AssertReset
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:36     .text.RESET001_AssertReset:00000010 $d
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:39     .text.RESET001_DeassertReset:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:44     .text.RESET001_DeassertReset:00000000 RESET001_DeassertReset
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:58     .text.RESET001_DeassertReset:00000010 $d
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:61     .text.RESET001_GetResetInfo:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:66     .text.RESET001_GetResetInfo:00000000 RESET001_GetResetInfo
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:77     .text.RESET001_GetResetInfo:00000008 $d
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:80     .text.RESET001_GetStatus:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:85     .text.RESET001_GetStatus:00000000 RESET001_GetStatus
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:103    .text.RESET001_GetStatus:00000018 $d
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:106    .text.RESET001_ClearResetInfo:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:111    .text.RESET001_ClearResetInfo:00000000 RESET001_ClearResetInfo
-C:\Users\Carlos\AppData\Local\Temp\ccUshDef.s:123    .text.RESET001_ClearResetInfo:0000000c $d
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:17     .text.RESET001_AssertReset:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:22     .text.RESET001_AssertReset:00000000 RESET001_AssertReset
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:36     .text.RESET001_AssertReset:00000010 $d
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:39     .text.RESET001_DeassertReset:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:44     .text.RESET001_DeassertReset:00000000 RESET001_DeassertReset
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:58     .text.RESET001_DeassertReset:00000010 $d
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:61     .text.RESET001_GetResetInfo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:66     .text.RESET001_GetResetInfo:00000000 RESET001_GetResetInfo
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:77     .text.RESET001_GetResetInfo:00000008 $d
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:80     .text.RESET001_GetStatus:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:85     .text.RESET001_GetStatus:00000000 RESET001_GetStatus
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:103    .text.RESET001_GetStatus:00000018 $d
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:106    .text.RESET001_ClearResetInfo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:111    .text.RESET001_ClearResetInfo:00000000 RESET001_ClearResetInfo
+C:\Users\Carlos\AppData\Local\Temp\cch6IZBH.s:123    .text.RESET001_ClearResetInfo:0000000c $d
 
 NO UNDEFINED SYMBOLS

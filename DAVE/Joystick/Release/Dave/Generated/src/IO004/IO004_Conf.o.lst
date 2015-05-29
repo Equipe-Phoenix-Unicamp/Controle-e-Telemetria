@@ -15,86 +15,79 @@
   15              		.file	"IO004_Conf.c"
   16              		.global	IO004_Handle9
   17              		.global	IO004_Handle8
-  18              		.global	IO004_Handle7
-  19              		.global	IO004_Handle6
-  20              		.global	IO004_Handle5
-  21              		.global	IO004_Handle4
-  22              		.global	IO004_Handle2
-  23              		.global	IO004_Handle12
-  24              		.global	IO004_Handle11
-  25              		.global	IO004_Handle10
-  26              		.global	IO004_Handle1
-  27              		.section	.rodata
-  28              		.align	2
-  31              	IO004_Handle9:
-  32 0000 03       		.byte	3
-  33 0001 02       		.byte	2
-  34 0002 0000     		.space	2
-  35 0004 00830248 		.word	1208124160
-  38              	IO004_Handle8:
-  39 0008 01       		.byte	1
-  40 0009 01       		.byte	1
-  41 000a 0000     		.space	2
-  42 000c 00810248 		.word	1208123648
-  45              	IO004_Handle7:
-  46 0010 01       		.byte	1
-  47 0011 00       		.byte	0
-  48 0012 0000     		.space	2
-  49 0014 00810248 		.word	1208123648
-  52              	IO004_Handle6:
-  53 0018 03       		.byte	3
-  54 0019 04       		.byte	4
-  55 001a 0000     		.space	2
-  56 001c 00830248 		.word	1208124160
-  59              	IO004_Handle5:
-  60 0020 00       		.byte	0
-  61 0021 0C       		.byte	12
-  62 0022 0000     		.space	2
-  63 0024 00800248 		.word	1208123392
-  66              	IO004_Handle4:
-  67 0028 00       		.byte	0
-  68 0029 06       		.byte	6
-  69 002a 0000     		.space	2
-  70 002c 00800248 		.word	1208123392
-  73              	IO004_Handle2:
-  74 0030 00       		.byte	0
-  75 0031 02       		.byte	2
-  76 0032 0000     		.space	2
-  77 0034 00800248 		.word	1208123392
-  80              	IO004_Handle12:
-  81 0038 00       		.byte	0
-  82 0039 01       		.byte	1
-  83 003a 0000     		.space	2
-  84 003c 00800248 		.word	1208123392
-  87              	IO004_Handle11:
-  88 0040 03       		.byte	3
-  89 0041 00       		.byte	0
-  90 0042 0000     		.space	2
-  91 0044 00830248 		.word	1208124160
-  94              	IO004_Handle10:
-  95 0048 00       		.byte	0
-  96 0049 00       		.byte	0
-  97 004a 0000     		.space	2
-  98 004c 00800248 		.word	1208123392
- 101              	IO004_Handle1:
- 102 0050 00       		.byte	0
- 103 0051 04       		.byte	4
- 104 0052 0000     		.space	2
- 105 0054 00800248 		.word	1208123392
- 106              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  18              		.global	IO004_Handle6
+  19              		.global	IO004_Handle5
+  20              		.global	IO004_Handle4
+  21              		.global	IO004_Handle2
+  22              		.global	IO004_Handle12
+  23              		.global	IO004_Handle11
+  24              		.global	IO004_Handle10
+  25              		.global	IO004_Handle1
+  26              		.section	.rodata
+  27              		.align	2
+  30              	IO004_Handle9:
+  31 0000 00       		.byte	0
+  32 0001 07       		.byte	7
+  33 0002 0000     		.space	2
+  34 0004 00800248 		.word	1208123392
+  37              	IO004_Handle8:
+  38 0008 01       		.byte	1
+  39 0009 01       		.byte	1
+  40 000a 0000     		.space	2
+  41 000c 00810248 		.word	1208123648
+  44              	IO004_Handle6:
+  45 0010 02       		.byte	2
+  46 0011 02       		.byte	2
+  47 0012 0000     		.space	2
+  48 0014 00820248 		.word	1208123904
+  51              	IO004_Handle5:
+  52 0018 02       		.byte	2
+  53 0019 03       		.byte	3
+  54 001a 0000     		.space	2
+  55 001c 00820248 		.word	1208123904
+  58              	IO004_Handle4:
+  59 0020 02       		.byte	2
+  60 0021 04       		.byte	4
+  61 0022 0000     		.space	2
+  62 0024 00820248 		.word	1208123904
+  65              	IO004_Handle2:
+  66 0028 02       		.byte	2
+  67 0029 05       		.byte	5
+  68 002a 0000     		.space	2
+  69 002c 00820248 		.word	1208123904
+  72              	IO004_Handle12:
+  73 0030 00       		.byte	0
+  74 0031 08       		.byte	8
+  75 0032 0000     		.space	2
+  76 0034 00800248 		.word	1208123392
+  79              	IO004_Handle11:
+  80 0038 01       		.byte	1
+  81 0039 09       		.byte	9
+  82 003a 0000     		.space	2
+  83 003c 00810248 		.word	1208123648
+  86              	IO004_Handle10:
+  87 0040 01       		.byte	1
+  88 0041 00       		.byte	0
+  89 0042 0000     		.space	2
+  90 0044 00810248 		.word	1208123648
+  93              	IO004_Handle1:
+  94 0048 02       		.byte	2
+  95 0049 08       		.byte	8
+  96 004a 0000     		.space	2
+  97 004c 00820248 		.word	1208123904
+  98              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004_Conf.c
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:31     .rodata:00000000 IO004_Handle9
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:38     .rodata:00000008 IO004_Handle8
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:45     .rodata:00000010 IO004_Handle7
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:52     .rodata:00000018 IO004_Handle6
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:59     .rodata:00000020 IO004_Handle5
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:66     .rodata:00000028 IO004_Handle4
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:73     .rodata:00000030 IO004_Handle2
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:80     .rodata:00000038 IO004_Handle12
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:87     .rodata:00000040 IO004_Handle11
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:94     .rodata:00000048 IO004_Handle10
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:101    .rodata:00000050 IO004_Handle1
-C:\Users\Carlos\AppData\Local\Temp\ccwwxZEM.s:28     .rodata:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:30     .rodata:00000000 IO004_Handle9
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:37     .rodata:00000008 IO004_Handle8
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:44     .rodata:00000010 IO004_Handle6
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:51     .rodata:00000018 IO004_Handle5
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:58     .rodata:00000020 IO004_Handle4
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:65     .rodata:00000028 IO004_Handle2
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:72     .rodata:00000030 IO004_Handle12
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:79     .rodata:00000038 IO004_Handle11
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:86     .rodata:00000040 IO004_Handle10
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:93     .rodata:00000048 IO004_Handle1
+C:\Users\Carlos\AppData\Local\Temp\ccas016W.s:27     .rodata:00000000 $d
 
 NO UNDEFINED SYMBOLS

@@ -27,7 +27,18 @@ Dave/Generated/src/DAVESupport/DAVE3.d Dave/Generated/src/DAVESupport/DAVE3.o: \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/Usic.h \
  C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Conf.h \
- ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Extern.h
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Extern.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGLOB001/ADCGLOB001.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGLOB001/ADCGlob001_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGROUP001/ADCGROUP001.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGROUP001/ADCGROUP001_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO001/IO001.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO001/IO001_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADC001/ADC001.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADC001/ADC001_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/DAVE3.h:
 
@@ -84,3 +95,25 @@ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Genera
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Conf.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Extern.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGLOB001/ADCGLOB001.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGLOB001/ADCGlob001_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGROUP001/ADCGROUP001.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGROUP001/ADCGROUP001_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO001/IO001.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO001/IO001_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADC001/ADC001.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADC001/ADC001_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:

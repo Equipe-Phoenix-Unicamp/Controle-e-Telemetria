@@ -22,19 +22,19 @@
   23              		@ args = 0, pretend = 0, frame = 0
   24              		@ frame_needed = 0, uses_anonymous_args = 0
   25              		@ link register save eliminated.
-  26 0000 4A4B     		ldr	r3, .L2
+  26 0000 434B     		ldr	r3, .L2
   27 0002 5A68     		ldr	r2, [r3, #4]
   28 0004 0020     		movs	r0, #0
   29 0006 5060     		str	r0, [r2, #4]
-  30 0008 116C     		ldr	r1, [r2, #64]
-  31 000a 21F4E023 		bic	r3, r1, #458752
-  32 000e 1364     		str	r3, [r2, #64]
-  33 0010 116C     		ldr	r1, [r2, #64]
-  34 0012 41F48023 		orr	r3, r1, #262144
-  35 0016 1364     		str	r3, [r2, #64]
-  36 0018 5169     		ldr	r1, [r2, #20]
-  37 001a 5161     		str	r1, [r2, #20]
-  38 001c 444A     		ldr	r2, .L2+4
+  30 0008 516C     		ldr	r1, [r2, #68]
+  31 000a 21F00703 		bic	r3, r1, #7
+  32 000e 5364     		str	r3, [r2, #68]
+  33 0010 516C     		ldr	r1, [r2, #68]
+  34 0012 41F00403 		orr	r3, r1, #4
+  35 0016 5364     		str	r3, [r2, #68]
+  36 0018 9169     		ldr	r1, [r2, #24]
+  37 001a 9161     		str	r1, [r2, #24]
+  38 001c 3D4A     		ldr	r2, .L2+4
   39 001e 5368     		ldr	r3, [r2, #4]
   40 0020 5860     		str	r0, [r3, #4]
   41 0022 196C     		ldr	r1, [r3, #64]
@@ -45,300 +45,288 @@
   46 0030 1A64     		str	r2, [r3, #64]
   47 0032 1969     		ldr	r1, [r3, #16]
   48 0034 1961     		str	r1, [r3, #16]
-  49 0036 3F4B     		ldr	r3, .L2+8
+  49 0036 384B     		ldr	r3, .L2+8
   50 0038 5A68     		ldr	r2, [r3, #4]
   51 003a 5060     		str	r0, [r2, #4]
-  52 003c 116C     		ldr	r1, [r2, #64]
-  53 003e 21F00703 		bic	r3, r1, #7
-  54 0042 1364     		str	r3, [r2, #64]
-  55 0044 116C     		ldr	r1, [r2, #64]
-  56 0046 41F00403 		orr	r3, r1, #4
-  57 004a 1364     		str	r3, [r2, #64]
-  58 004c 1169     		ldr	r1, [r2, #16]
-  59 004e 1161     		str	r1, [r2, #16]
-  60 0050 394A     		ldr	r2, .L2+12
+  52 003c 516C     		ldr	r1, [r2, #68]
+  53 003e 21F07003 		bic	r3, r1, #112
+  54 0042 5364     		str	r3, [r2, #68]
+  55 0044 516C     		ldr	r1, [r2, #68]
+  56 0046 41F04003 		orr	r3, r1, #64
+  57 004a 5364     		str	r3, [r2, #68]
+  58 004c 9169     		ldr	r1, [r2, #24]
+  59 004e 9161     		str	r1, [r2, #24]
+  60 0050 324A     		ldr	r2, .L2+12
   61 0052 5368     		ldr	r3, [r2, #4]
   62 0054 5860     		str	r0, [r3, #4]
-  63 0056 196C     		ldr	r1, [r3, #64]
-  64 0058 21F07002 		bic	r2, r1, #112
-  65 005c 1A64     		str	r2, [r3, #64]
-  66 005e 196C     		ldr	r1, [r3, #64]
-  67 0060 41F04002 		orr	r2, r1, #64
-  68 0064 1A64     		str	r2, [r3, #64]
-  69 0066 1969     		ldr	r1, [r3, #16]
-  70 0068 1961     		str	r1, [r3, #16]
-  71 006a 344B     		ldr	r3, .L2+16
+  63 0056 596C     		ldr	r1, [r3, #68]
+  64 0058 21F00702 		bic	r2, r1, #7
+  65 005c 5A64     		str	r2, [r3, #68]
+  66 005e 596C     		ldr	r1, [r3, #68]
+  67 0060 41F00402 		orr	r2, r1, #4
+  68 0064 5A64     		str	r2, [r3, #68]
+  69 0066 9969     		ldr	r1, [r3, #24]
+  70 0068 9961     		str	r1, [r3, #24]
+  71 006a 2D4B     		ldr	r3, .L2+16
   72 006c 5A68     		ldr	r2, [r3, #4]
   73 006e 5060     		str	r0, [r2, #4]
   74 0070 116C     		ldr	r1, [r2, #64]
-  75 0072 21F4E063 		bic	r3, r1, #1792
+  75 0072 21F4E003 		bic	r3, r1, #7340032
   76 0076 1364     		str	r3, [r2, #64]
   77 0078 116C     		ldr	r1, [r2, #64]
-  78 007a 41F48063 		orr	r3, r1, #1024
+  78 007a 41F48003 		orr	r3, r1, #4194304
   79 007e 1364     		str	r3, [r2, #64]
-  80 0080 1169     		ldr	r1, [r2, #16]
-  81 0082 1161     		str	r1, [r2, #16]
-  82 0084 2E4A     		ldr	r2, .L2+20
+  80 0080 5169     		ldr	r1, [r2, #20]
+  81 0082 5161     		str	r1, [r2, #20]
+  82 0084 274A     		ldr	r2, .L2+20
   83 0086 5368     		ldr	r3, [r2, #4]
   84 0088 5860     		str	r0, [r3, #4]
   85 008a 196C     		ldr	r1, [r3, #64]
-  86 008c 21F0E062 		bic	r2, r1, #117440512
+  86 008c 21F4E022 		bic	r2, r1, #458752
   87 0090 1A64     		str	r2, [r3, #64]
   88 0092 196C     		ldr	r1, [r3, #64]
-  89 0094 41F08062 		orr	r2, r1, #67108864
+  89 0094 41F48022 		orr	r2, r1, #262144
   90 0098 1A64     		str	r2, [r3, #64]
   91 009a 5969     		ldr	r1, [r3, #20]
   92 009c 5961     		str	r1, [r3, #20]
-  93 009e 294B     		ldr	r3, .L2+24
+  93 009e 224B     		ldr	r3, .L2+24
   94 00a0 5A68     		ldr	r2, [r3, #4]
   95 00a2 5060     		str	r0, [r2, #4]
-  96 00a4 516C     		ldr	r1, [r2, #68]
-  97 00a6 21F4E023 		bic	r3, r1, #458752
-  98 00aa 5364     		str	r3, [r2, #68]
-  99 00ac 516C     		ldr	r1, [r2, #68]
- 100 00ae 41F48023 		orr	r3, r1, #262144
- 101 00b2 5364     		str	r3, [r2, #68]
- 102 00b4 D169     		ldr	r1, [r2, #28]
- 103 00b6 41F01803 		orr	r3, r1, #24
- 104 00ba D361     		str	r3, [r2, #28]
- 105 00bc 224A     		ldr	r2, .L2+28
+  96 00a4 116C     		ldr	r1, [r2, #64]
+  97 00a6 21F4E043 		bic	r3, r1, #28672
+  98 00aa 1364     		str	r3, [r2, #64]
+  99 00ac 116C     		ldr	r1, [r2, #64]
+ 100 00ae 41F48043 		orr	r3, r1, #16384
+ 101 00b2 1364     		str	r3, [r2, #64]
+ 102 00b4 1169     		ldr	r1, [r2, #16]
+ 103 00b6 41F0C053 		orr	r3, r1, #402653184
+ 104 00ba 1361     		str	r3, [r2, #16]
+ 105 00bc 1B4A     		ldr	r2, .L2+28
  106 00be 5368     		ldr	r3, [r2, #4]
  107 00c0 5860     		str	r0, [r3, #4]
  108 00c2 196C     		ldr	r1, [r3, #64]
- 109 00c4 21F4E022 		bic	r2, r1, #458752
+ 109 00c4 21F4E062 		bic	r2, r1, #1792
  110 00c8 1A64     		str	r2, [r3, #64]
  111 00ca 196C     		ldr	r1, [r3, #64]
- 112 00cc 41F48022 		orr	r2, r1, #262144
+ 112 00cc 41F48062 		orr	r2, r1, #1024
  113 00d0 1A64     		str	r2, [r3, #64]
- 114 00d2 5969     		ldr	r1, [r3, #20]
- 115 00d4 5961     		str	r1, [r3, #20]
- 116 00d6 1D4B     		ldr	r3, .L2+32
+ 114 00d2 1969     		ldr	r1, [r3, #16]
+ 115 00d4 1961     		str	r1, [r3, #16]
+ 116 00d6 164B     		ldr	r3, .L2+32
  117 00d8 5A68     		ldr	r2, [r3, #4]
  118 00da 5060     		str	r0, [r2, #4]
  119 00dc 116C     		ldr	r1, [r2, #64]
- 120 00de 21F00703 		bic	r3, r1, #7
+ 120 00de 21F07003 		bic	r3, r1, #112
  121 00e2 1364     		str	r3, [r2, #64]
  122 00e4 116C     		ldr	r1, [r2, #64]
- 123 00e6 41F00403 		orr	r3, r1, #4
+ 123 00e6 41F04003 		orr	r3, r1, #64
  124 00ea 1364     		str	r3, [r2, #64]
  125 00ec 1169     		ldr	r1, [r2, #16]
  126 00ee 1161     		str	r1, [r2, #16]
- 127 00f0 174A     		ldr	r2, .L2+36
- 128 00f2 5368     		ldr	r3, [r2, #4]
- 129 00f4 5860     		str	r0, [r3, #4]
- 130 00f6 196C     		ldr	r1, [r3, #64]
- 131 00f8 21F07002 		bic	r2, r1, #112
- 132 00fc 1A64     		str	r2, [r3, #64]
- 133 00fe 196C     		ldr	r1, [r3, #64]
- 134 0100 41F04002 		orr	r2, r1, #64
- 135 0104 1A64     		str	r2, [r3, #64]
- 136 0106 1969     		ldr	r1, [r3, #16]
- 137 0108 1961     		str	r1, [r3, #16]
- 138 010a 124B     		ldr	r3, .L2+40
- 139 010c 5A68     		ldr	r2, [r3, #4]
- 140 010e 5060     		str	r0, [r2, #4]
- 141 0110 106C     		ldr	r0, [r2, #64]
- 142 0112 20F4E061 		bic	r1, r0, #1792
- 143 0116 1164     		str	r1, [r2, #64]
- 144 0118 136C     		ldr	r3, [r2, #64]
- 145 011a 43F48060 		orr	r0, r3, #1024
- 146 011e 1064     		str	r0, [r2, #64]
- 147 0120 1169     		ldr	r1, [r2, #16]
- 148 0122 41F48013 		orr	r3, r1, #1048576
- 149 0126 1361     		str	r3, [r2, #16]
- 150 0128 7047     		bx	lr
- 151              	.L3:
- 152 012a 00BF     		.align	2
- 153              	.L2:
- 154 012c 00000000 		.word	IO004_Handle1
- 155 0130 00000000 		.word	IO004_Handle10
- 156 0134 00000000 		.word	IO004_Handle11
- 157 0138 00000000 		.word	IO004_Handle12
- 158 013c 00000000 		.word	IO004_Handle2
- 159 0140 00000000 		.word	IO004_Handle4
- 160 0144 00000000 		.word	IO004_Handle5
- 161 0148 00000000 		.word	IO004_Handle6
- 162 014c 00000000 		.word	IO004_Handle7
- 163 0150 00000000 		.word	IO004_Handle8
- 164 0154 00000000 		.word	IO004_Handle9
- 166              		.section	.text.IO004_DisableOutputDriver,"ax",%progbits
- 167              		.align	1
- 168              		.global	IO004_DisableOutputDriver
- 169              		.thumb
- 170              		.thumb_func
- 172              	IO004_DisableOutputDriver:
- 173              		@ args = 0, pretend = 0, frame = 0
- 174              		@ frame_needed = 0, uses_anonymous_args = 0
- 175 0000 10B5     		push	{r4, lr}
- 176 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 177 0004 032B     		cmp	r3, #3
- 178 0006 11D8     		bhi	.L5
- 179 0008 4268     		ldr	r2, [r0, #4]
- 180 000a DB00     		lsls	r3, r3, #3
- 181 000c 1469     		ldr	r4, [r2, #16]
- 182 000e 0333     		adds	r3, r3, #3
- 183 0010 1F20     		movs	r0, #31
- 184 0012 00FA03F0 		lsl	r0, r0, r3
- 185 0016 24EA0000 		bic	r0, r4, r0
- 186 001a 1061     		str	r0, [r2, #16]
- 187 001c 1069     		ldr	r0, [r2, #16]
- 188 001e 01F01F01 		and	r1, r1, #31
- 189 0022 01FA03F3 		lsl	r3, r1, r3
- 190 0026 0343     		orrs	r3, r3, r0
- 191 0028 1361     		str	r3, [r2, #16]
- 192 002a 10BD     		pop	{r4, pc}
- 193              	.L5:
- 194 002c 1A1F     		subs	r2, r3, #4
- 195 002e D2B2     		uxtb	r2, r2
- 196 0030 032A     		cmp	r2, #3
- 197 0032 11D8     		bhi	.L7
- 198 0034 4368     		ldr	r3, [r0, #4]
- 199 0036 D000     		lsls	r0, r2, #3
- 200 0038 5C69     		ldr	r4, [r3, #20]
- 201 003a C21C     		adds	r2, r0, #3
- 202 003c 1F20     		movs	r0, #31
- 203 003e 00FA02F0 		lsl	r0, r0, r2
- 204 0042 24EA0000 		bic	r0, r4, r0
- 205 0046 5861     		str	r0, [r3, #20]
- 206 0048 5869     		ldr	r0, [r3, #20]
- 207 004a 01F01F01 		and	r1, r1, #31
- 208 004e 01FA02F2 		lsl	r2, r1, r2
- 209 0052 0243     		orrs	r2, r2, r0
- 210 0054 5A61     		str	r2, [r3, #20]
- 211 0056 10BD     		pop	{r4, pc}
- 212              	.L7:
- 213 0058 A3F10802 		sub	r2, r3, #8
- 214 005c D2B2     		uxtb	r2, r2
- 215 005e 032A     		cmp	r2, #3
- 216 0060 11D8     		bhi	.L8
- 217 0062 4368     		ldr	r3, [r0, #4]
- 218 0064 D200     		lsls	r2, r2, #3
- 219 0066 9C69     		ldr	r4, [r3, #24]
- 220 0068 0332     		adds	r2, r2, #3
- 221 006a 1F20     		movs	r0, #31
- 222 006c 00FA02F0 		lsl	r0, r0, r2
- 223 0070 24EA0000 		bic	r0, r4, r0
- 224 0074 9861     		str	r0, [r3, #24]
- 225 0076 9869     		ldr	r0, [r3, #24]
- 226 0078 01F01F01 		and	r1, r1, #31
- 227 007c 01FA02F2 		lsl	r2, r1, r2
- 228 0080 0243     		orrs	r2, r2, r0
- 229 0082 9A61     		str	r2, [r3, #24]
- 230 0084 10BD     		pop	{r4, pc}
- 231              	.L8:
- 232 0086 0C3B     		subs	r3, r3, #12
- 233 0088 DBB2     		uxtb	r3, r3
- 234 008a 032B     		cmp	r3, #3
- 235 008c 10D8     		bhi	.L4
- 236 008e 4268     		ldr	r2, [r0, #4]
- 237 0090 D800     		lsls	r0, r3, #3
- 238 0092 D469     		ldr	r4, [r2, #28]
- 239 0094 C31C     		adds	r3, r0, #3
- 240 0096 1F20     		movs	r0, #31
- 241 0098 00FA03F0 		lsl	r0, r0, r3
- 242 009c 24EA0000 		bic	r0, r4, r0
- 243 00a0 D061     		str	r0, [r2, #28]
- 244 00a2 D069     		ldr	r0, [r2, #28]
- 245 00a4 01F01F01 		and	r1, r1, #31
- 246 00a8 01FA03F3 		lsl	r3, r1, r3
- 247 00ac 0343     		orrs	r3, r3, r0
- 248 00ae D361     		str	r3, [r2, #28]
- 249              	.L4:
- 250 00b0 10BD     		pop	{r4, pc}
- 252              		.section	.text.IO004_EnableOutputDriver,"ax",%progbits
- 253              		.align	1
- 254              		.global	IO004_EnableOutputDriver
- 255              		.thumb
- 256              		.thumb_func
- 258              	IO004_EnableOutputDriver:
- 259              		@ args = 0, pretend = 0, frame = 0
- 260              		@ frame_needed = 0, uses_anonymous_args = 0
- 261 0000 10B5     		push	{r4, lr}
- 262 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 263 0004 032B     		cmp	r3, #3
- 264 0006 11D8     		bhi	.L11
- 265 0008 4268     		ldr	r2, [r0, #4]
- 266 000a DB00     		lsls	r3, r3, #3
- 267 000c 1469     		ldr	r4, [r2, #16]
- 268 000e 0333     		adds	r3, r3, #3
- 269 0010 1F20     		movs	r0, #31
- 270 0012 00FA03F0 		lsl	r0, r0, r3
- 271 0016 24EA0000 		bic	r0, r4, r0
- 272 001a 1061     		str	r0, [r2, #16]
- 273 001c 1069     		ldr	r0, [r2, #16]
- 274 001e 01F01F01 		and	r1, r1, #31
- 275 0022 01FA03F3 		lsl	r3, r1, r3
- 276 0026 0343     		orrs	r3, r3, r0
- 277 0028 1361     		str	r3, [r2, #16]
- 278 002a 10BD     		pop	{r4, pc}
- 279              	.L11:
- 280 002c 1A1F     		subs	r2, r3, #4
- 281 002e D2B2     		uxtb	r2, r2
- 282 0030 032A     		cmp	r2, #3
- 283 0032 11D8     		bhi	.L13
- 284 0034 4368     		ldr	r3, [r0, #4]
- 285 0036 D000     		lsls	r0, r2, #3
- 286 0038 5C69     		ldr	r4, [r3, #20]
- 287 003a C21C     		adds	r2, r0, #3
- 288 003c 1F20     		movs	r0, #31
- 289 003e 00FA02F0 		lsl	r0, r0, r2
- 290 0042 24EA0000 		bic	r0, r4, r0
- 291 0046 5861     		str	r0, [r3, #20]
- 292 0048 5869     		ldr	r0, [r3, #20]
- 293 004a 01F01F01 		and	r1, r1, #31
- 294 004e 01FA02F2 		lsl	r2, r1, r2
- 295 0052 0243     		orrs	r2, r2, r0
- 296 0054 5A61     		str	r2, [r3, #20]
- 297 0056 10BD     		pop	{r4, pc}
- 298              	.L13:
- 299 0058 A3F10802 		sub	r2, r3, #8
- 300 005c D2B2     		uxtb	r2, r2
- 301 005e 032A     		cmp	r2, #3
- 302 0060 11D8     		bhi	.L14
- 303 0062 4368     		ldr	r3, [r0, #4]
- 304 0064 D200     		lsls	r2, r2, #3
- 305 0066 9C69     		ldr	r4, [r3, #24]
- 306 0068 0332     		adds	r2, r2, #3
- 307 006a 1F20     		movs	r0, #31
- 308 006c 00FA02F0 		lsl	r0, r0, r2
- 309 0070 24EA0000 		bic	r0, r4, r0
- 310 0074 9861     		str	r0, [r3, #24]
- 311 0076 9869     		ldr	r0, [r3, #24]
- 312 0078 01F01F01 		and	r1, r1, #31
- 313 007c 01FA02F2 		lsl	r2, r1, r2
- 314 0080 0243     		orrs	r2, r2, r0
- 315 0082 9A61     		str	r2, [r3, #24]
- 316 0084 10BD     		pop	{r4, pc}
- 317              	.L14:
- 318 0086 0C3B     		subs	r3, r3, #12
- 319 0088 DBB2     		uxtb	r3, r3
- 320 008a 032B     		cmp	r3, #3
- 321 008c 10D8     		bhi	.L10
- 322 008e 4268     		ldr	r2, [r0, #4]
- 323 0090 D800     		lsls	r0, r3, #3
- 324 0092 D469     		ldr	r4, [r2, #28]
- 325 0094 C31C     		adds	r3, r0, #3
- 326 0096 1F20     		movs	r0, #31
- 327 0098 00FA03F0 		lsl	r0, r0, r3
- 328 009c 24EA0000 		bic	r0, r4, r0
- 329 00a0 D061     		str	r0, [r2, #28]
- 330 00a2 D069     		ldr	r0, [r2, #28]
- 331 00a4 01F01F01 		and	r1, r1, #31
- 332 00a8 01FA03F3 		lsl	r3, r1, r3
- 333 00ac 0343     		orrs	r3, r3, r0
- 334 00ae D361     		str	r3, [r2, #28]
- 335              	.L10:
- 336 00b0 10BD     		pop	{r4, pc}
- 338              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+ 127 00f0 104A     		ldr	r2, .L2+36
+ 128 00f2 5168     		ldr	r1, [r2, #4]
+ 129 00f4 4860     		str	r0, [r1, #4]
+ 130 00f6 086C     		ldr	r0, [r1, #64]
+ 131 00f8 20F0E043 		bic	r3, r0, #1879048192
+ 132 00fc 0B64     		str	r3, [r1, #64]
+ 133 00fe 0A6C     		ldr	r2, [r1, #64]
+ 134 0100 42F08040 		orr	r0, r2, #1073741824
+ 135 0104 0864     		str	r0, [r1, #64]
+ 136 0106 4B69     		ldr	r3, [r1, #20]
+ 137 0108 43F08052 		orr	r2, r3, #268435456
+ 138 010c 4A61     		str	r2, [r1, #20]
+ 139 010e 7047     		bx	lr
+ 140              	.L3:
+ 141              		.align	2
+ 142              	.L2:
+ 143 0110 00000000 		.word	IO004_Handle1
+ 144 0114 00000000 		.word	IO004_Handle10
+ 145 0118 00000000 		.word	IO004_Handle11
+ 146 011c 00000000 		.word	IO004_Handle12
+ 147 0120 00000000 		.word	IO004_Handle2
+ 148 0124 00000000 		.word	IO004_Handle4
+ 149 0128 00000000 		.word	IO004_Handle5
+ 150 012c 00000000 		.word	IO004_Handle6
+ 151 0130 00000000 		.word	IO004_Handle8
+ 152 0134 00000000 		.word	IO004_Handle9
+ 154              		.section	.text.IO004_DisableOutputDriver,"ax",%progbits
+ 155              		.align	1
+ 156              		.global	IO004_DisableOutputDriver
+ 157              		.thumb
+ 158              		.thumb_func
+ 160              	IO004_DisableOutputDriver:
+ 161              		@ args = 0, pretend = 0, frame = 0
+ 162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 163 0000 10B5     		push	{r4, lr}
+ 164 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 165 0004 032B     		cmp	r3, #3
+ 166 0006 11D8     		bhi	.L5
+ 167 0008 4268     		ldr	r2, [r0, #4]
+ 168 000a DB00     		lsls	r3, r3, #3
+ 169 000c 1469     		ldr	r4, [r2, #16]
+ 170 000e 0333     		adds	r3, r3, #3
+ 171 0010 1F20     		movs	r0, #31
+ 172 0012 00FA03F0 		lsl	r0, r0, r3
+ 173 0016 24EA0000 		bic	r0, r4, r0
+ 174 001a 1061     		str	r0, [r2, #16]
+ 175 001c 1069     		ldr	r0, [r2, #16]
+ 176 001e 01F01F01 		and	r1, r1, #31
+ 177 0022 01FA03F3 		lsl	r3, r1, r3
+ 178 0026 0343     		orrs	r3, r3, r0
+ 179 0028 1361     		str	r3, [r2, #16]
+ 180 002a 10BD     		pop	{r4, pc}
+ 181              	.L5:
+ 182 002c 1A1F     		subs	r2, r3, #4
+ 183 002e D2B2     		uxtb	r2, r2
+ 184 0030 032A     		cmp	r2, #3
+ 185 0032 11D8     		bhi	.L7
+ 186 0034 4368     		ldr	r3, [r0, #4]
+ 187 0036 D000     		lsls	r0, r2, #3
+ 188 0038 5C69     		ldr	r4, [r3, #20]
+ 189 003a C21C     		adds	r2, r0, #3
+ 190 003c 1F20     		movs	r0, #31
+ 191 003e 00FA02F0 		lsl	r0, r0, r2
+ 192 0042 24EA0000 		bic	r0, r4, r0
+ 193 0046 5861     		str	r0, [r3, #20]
+ 194 0048 5869     		ldr	r0, [r3, #20]
+ 195 004a 01F01F01 		and	r1, r1, #31
+ 196 004e 01FA02F2 		lsl	r2, r1, r2
+ 197 0052 0243     		orrs	r2, r2, r0
+ 198 0054 5A61     		str	r2, [r3, #20]
+ 199 0056 10BD     		pop	{r4, pc}
+ 200              	.L7:
+ 201 0058 A3F10802 		sub	r2, r3, #8
+ 202 005c D2B2     		uxtb	r2, r2
+ 203 005e 032A     		cmp	r2, #3
+ 204 0060 11D8     		bhi	.L8
+ 205 0062 4368     		ldr	r3, [r0, #4]
+ 206 0064 D200     		lsls	r2, r2, #3
+ 207 0066 9C69     		ldr	r4, [r3, #24]
+ 208 0068 0332     		adds	r2, r2, #3
+ 209 006a 1F20     		movs	r0, #31
+ 210 006c 00FA02F0 		lsl	r0, r0, r2
+ 211 0070 24EA0000 		bic	r0, r4, r0
+ 212 0074 9861     		str	r0, [r3, #24]
+ 213 0076 9869     		ldr	r0, [r3, #24]
+ 214 0078 01F01F01 		and	r1, r1, #31
+ 215 007c 01FA02F2 		lsl	r2, r1, r2
+ 216 0080 0243     		orrs	r2, r2, r0
+ 217 0082 9A61     		str	r2, [r3, #24]
+ 218 0084 10BD     		pop	{r4, pc}
+ 219              	.L8:
+ 220 0086 0C3B     		subs	r3, r3, #12
+ 221 0088 DBB2     		uxtb	r3, r3
+ 222 008a 032B     		cmp	r3, #3
+ 223 008c 10D8     		bhi	.L4
+ 224 008e 4268     		ldr	r2, [r0, #4]
+ 225 0090 D800     		lsls	r0, r3, #3
+ 226 0092 D469     		ldr	r4, [r2, #28]
+ 227 0094 C31C     		adds	r3, r0, #3
+ 228 0096 1F20     		movs	r0, #31
+ 229 0098 00FA03F0 		lsl	r0, r0, r3
+ 230 009c 24EA0000 		bic	r0, r4, r0
+ 231 00a0 D061     		str	r0, [r2, #28]
+ 232 00a2 D069     		ldr	r0, [r2, #28]
+ 233 00a4 01F01F01 		and	r1, r1, #31
+ 234 00a8 01FA03F3 		lsl	r3, r1, r3
+ 235 00ac 0343     		orrs	r3, r3, r0
+ 236 00ae D361     		str	r3, [r2, #28]
+ 237              	.L4:
+ 238 00b0 10BD     		pop	{r4, pc}
+ 240              		.section	.text.IO004_EnableOutputDriver,"ax",%progbits
+ 241              		.align	1
+ 242              		.global	IO004_EnableOutputDriver
+ 243              		.thumb
+ 244              		.thumb_func
+ 246              	IO004_EnableOutputDriver:
+ 247              		@ args = 0, pretend = 0, frame = 0
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249 0000 10B5     		push	{r4, lr}
+ 250 0002 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 251 0004 032B     		cmp	r3, #3
+ 252 0006 11D8     		bhi	.L11
+ 253 0008 4268     		ldr	r2, [r0, #4]
+ 254 000a DB00     		lsls	r3, r3, #3
+ 255 000c 1469     		ldr	r4, [r2, #16]
+ 256 000e 0333     		adds	r3, r3, #3
+ 257 0010 1F20     		movs	r0, #31
+ 258 0012 00FA03F0 		lsl	r0, r0, r3
+ 259 0016 24EA0000 		bic	r0, r4, r0
+ 260 001a 1061     		str	r0, [r2, #16]
+ 261 001c 1069     		ldr	r0, [r2, #16]
+ 262 001e 01F01F01 		and	r1, r1, #31
+ 263 0022 01FA03F3 		lsl	r3, r1, r3
+ 264 0026 0343     		orrs	r3, r3, r0
+ 265 0028 1361     		str	r3, [r2, #16]
+ 266 002a 10BD     		pop	{r4, pc}
+ 267              	.L11:
+ 268 002c 1A1F     		subs	r2, r3, #4
+ 269 002e D2B2     		uxtb	r2, r2
+ 270 0030 032A     		cmp	r2, #3
+ 271 0032 11D8     		bhi	.L13
+ 272 0034 4368     		ldr	r3, [r0, #4]
+ 273 0036 D000     		lsls	r0, r2, #3
+ 274 0038 5C69     		ldr	r4, [r3, #20]
+ 275 003a C21C     		adds	r2, r0, #3
+ 276 003c 1F20     		movs	r0, #31
+ 277 003e 00FA02F0 		lsl	r0, r0, r2
+ 278 0042 24EA0000 		bic	r0, r4, r0
+ 279 0046 5861     		str	r0, [r3, #20]
+ 280 0048 5869     		ldr	r0, [r3, #20]
+ 281 004a 01F01F01 		and	r1, r1, #31
+ 282 004e 01FA02F2 		lsl	r2, r1, r2
+ 283 0052 0243     		orrs	r2, r2, r0
+ 284 0054 5A61     		str	r2, [r3, #20]
+ 285 0056 10BD     		pop	{r4, pc}
+ 286              	.L13:
+ 287 0058 A3F10802 		sub	r2, r3, #8
+ 288 005c D2B2     		uxtb	r2, r2
+ 289 005e 032A     		cmp	r2, #3
+ 290 0060 11D8     		bhi	.L14
+ 291 0062 4368     		ldr	r3, [r0, #4]
+ 292 0064 D200     		lsls	r2, r2, #3
+ 293 0066 9C69     		ldr	r4, [r3, #24]
+ 294 0068 0332     		adds	r2, r2, #3
+ 295 006a 1F20     		movs	r0, #31
+ 296 006c 00FA02F0 		lsl	r0, r0, r2
+ 297 0070 24EA0000 		bic	r0, r4, r0
+ 298 0074 9861     		str	r0, [r3, #24]
+ 299 0076 9869     		ldr	r0, [r3, #24]
+ 300 0078 01F01F01 		and	r1, r1, #31
+ 301 007c 01FA02F2 		lsl	r2, r1, r2
+ 302 0080 0243     		orrs	r2, r2, r0
+ 303 0082 9A61     		str	r2, [r3, #24]
+ 304 0084 10BD     		pop	{r4, pc}
+ 305              	.L14:
+ 306 0086 0C3B     		subs	r3, r3, #12
+ 307 0088 DBB2     		uxtb	r3, r3
+ 308 008a 032B     		cmp	r3, #3
+ 309 008c 10D8     		bhi	.L10
+ 310 008e 4268     		ldr	r2, [r0, #4]
+ 311 0090 D800     		lsls	r0, r3, #3
+ 312 0092 D469     		ldr	r4, [r2, #28]
+ 313 0094 C31C     		adds	r3, r0, #3
+ 314 0096 1F20     		movs	r0, #31
+ 315 0098 00FA03F0 		lsl	r0, r0, r3
+ 316 009c 24EA0000 		bic	r0, r4, r0
+ 317 00a0 D061     		str	r0, [r2, #28]
+ 318 00a2 D069     		ldr	r0, [r2, #28]
+ 319 00a4 01F01F01 		and	r1, r1, #31
+ 320 00a8 01FA03F3 		lsl	r3, r1, r3
+ 321 00ac 0343     		orrs	r3, r3, r0
+ 322 00ae D361     		str	r3, [r2, #28]
+ 323              	.L10:
+ 324 00b0 10BD     		pop	{r4, pc}
+ 326              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004.c
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:17     .text.IO004_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:22     .text.IO004_Init:00000000 IO004_Init
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:154    .text.IO004_Init:0000012c $d
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:167    .text.IO004_DisableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:172    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:253    .text.IO004_EnableOutputDriver:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccIRvxFj.s:258    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:17     .text.IO004_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:22     .text.IO004_Init:00000000 IO004_Init
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:143    .text.IO004_Init:00000110 $d
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:155    .text.IO004_DisableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:160    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:241    .text.IO004_EnableOutputDriver:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccvJO6Mi.s:246    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
 
 UNDEFINED SYMBOLS
 IO004_Handle1
@@ -349,6 +337,5 @@ IO004_Handle2
 IO004_Handle4
 IO004_Handle5
 IO004_Handle6
-IO004_Handle7
 IO004_Handle8
 IO004_Handle9

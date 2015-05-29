@@ -11,10 +11,10 @@ Dave/Generated/src/DAVESupport/MULTIPLEXER.d Dave/Generated/src/DAVESupport/MULT
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/DAVESupport/MULTIPLEXER.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/LIBS/LIBS.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/LIBS/CCU8PWMLIB.h \
- C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/LIBS/MOTORLIB.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/DBG001/DBG001.h \
- C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\DAVESupport/Dave3.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/Dave3.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO004/IO004.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO004/IO004_Conf.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/CLK001/CLK001.h \
@@ -25,7 +25,7 @@ Dave/Generated/src/DAVESupport/MULTIPLEXER.d Dave/Generated/src/DAVESupport/MULT
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/RESET001/../../inc/LIBS/types.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/Usic.h \
- C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\LIBS/types.h \
+ C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Conf.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Extern.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADCGLOB001/ADCGLOB001.h \
@@ -62,13 +62,13 @@ C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/LIBS/CCU8PWMLIB.h:
 
-C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h:
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/LIBS/MOTORLIB.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/DBG001/DBG001.h:
 
-C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\DAVESupport/Dave3.h:
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/Dave3.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/IO004/IO004.h:
 
@@ -90,7 +90,7 @@ C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/Include/uc_id.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/Usic.h:
 
-C:\Users\Carlos\Desktop\NOVOWORKSPACE\Joystick\Dave\Generated\inc\LIBS/types.h:
+C:\Users\Carlos\Documents\GitHub\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\LIBS/types.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/UART001/UART001_Conf.h:
 

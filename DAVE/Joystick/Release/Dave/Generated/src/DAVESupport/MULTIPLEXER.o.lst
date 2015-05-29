@@ -22,7 +22,7 @@
   23              		@ args = 0, pretend = 0, frame = 0
   24              		@ frame_needed = 0, uses_anonymous_args = 0
   25              		@ link register save eliminated.
-  26 0000 304B     		ldr	r3, .L2
+  26 0000 364B     		ldr	r3, .L2
   27 0002 1A6C     		ldr	r2, [r3, #64]
   28 0004 196C     		ldr	r1, [r3, #64]
   29 0006 21F00F00 		bic	r0, r1, #15
@@ -48,59 +48,65 @@
   49 004e 40EA0201 		orr	r1, r0, r2
   50 0052 1964     		str	r1, [r3, #64]
   51 0054 03F50043 		add	r3, r3, #32768
-  52 0058 1869     		ldr	r0, [r3, #16]
-  53 005a 40F08002 		orr	r2, r0, #128
-  54 005e 1A61     		str	r2, [r3, #16]
-  55 0060 1969     		ldr	r1, [r3, #16]
-  56 0062 41F40040 		orr	r0, r1, #32768
-  57 0066 1861     		str	r0, [r3, #16]
-  58 0068 1A69     		ldr	r2, [r3, #16]
-  59 006a 42F40001 		orr	r1, r2, #8388608
-  60 006e 1961     		str	r1, [r3, #16]
-  61 0070 5869     		ldr	r0, [r3, #20]
-  62 0072 40F08002 		orr	r2, r0, #128
-  63 0076 5A61     		str	r2, [r3, #20]
-  64 0078 5969     		ldr	r1, [r3, #20]
-  65 007a 41F40000 		orr	r0, r1, #8388608
-  66 007e 5861     		str	r0, [r3, #20]
-  67 0080 D3F81021 		ldr	r2, [r3, #272]
-  68 0084 42F08001 		orr	r1, r2, #128
-  69 0088 C3F81011 		str	r1, [r3, #272]
-  70 008c D3F81001 		ldr	r0, [r3, #272]
-  71 0090 40F40042 		orr	r2, r0, #32768
-  72 0094 C3F81021 		str	r2, [r3, #272]
-  73 0098 D3F81C12 		ldr	r1, [r3, #540]
-  74 009c 21F43800 		bic	r0, r1, #12058624
-  75 00a0 40F41002 		orr	r2, r0, #9437184
-  76 00a4 C3F81C22 		str	r2, [r3, #540]
-  77 00a8 D3F81013 		ldr	r1, [r3, #784]
-  78 00ac 41F08000 		orr	r0, r1, #128
-  79 00b0 C3F81003 		str	r0, [r3, #784]
-  80 00b4 D3F81423 		ldr	r2, [r3, #788]
-  81 00b8 42F08001 		orr	r1, r2, #128
-  82 00bc C3F81413 		str	r1, [r3, #788]
-  83 00c0 7047     		bx	lr
-  84              	.L3:
-  85 00c2 00BF     		.align	2
-  86              	.L2:
-  87 00c4 00000248 		.word	1208090624
-  89              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
-  90              		.align	1
-  91              		.global	DAVE_MUX_PreInit
-  92              		.thumb
-  93              		.thumb_func
-  95              	DAVE_MUX_PreInit:
-  96              		@ args = 0, pretend = 0, frame = 0
-  97              		@ frame_needed = 0, uses_anonymous_args = 0
-  98              		@ link register save eliminated.
-  99 0000 7047     		bx	lr
- 101              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  52 0058 586F     		ldr	r0, [r3, #116]
+  53 005a 20F44032 		bic	r2, r0, #196608
+  54 005e 5A67     		str	r2, [r3, #116]
+  55 0060 9969     		ldr	r1, [r3, #24]
+  56 0062 41F08000 		orr	r0, r1, #128
+  57 0066 9861     		str	r0, [r3, #24]
+  58 0068 03F58073 		add	r3, r3, #256
+  59 006c 1A69     		ldr	r2, [r3, #16]
+  60 006e 42F08001 		orr	r1, r2, #128
+  61 0072 1961     		str	r1, [r3, #16]
+  62 0074 1869     		ldr	r0, [r3, #16]
+  63 0076 40F40042 		orr	r2, r0, #32768
+  64 007a 1A61     		str	r2, [r3, #16]
+  65 007c 9969     		ldr	r1, [r3, #24]
+  66 007e 41F40040 		orr	r0, r1, #32768
+  67 0082 9861     		str	r0, [r3, #24]
+  68 0084 D3F81021 		ldr	r2, [r3, #272]
+  69 0088 42F40001 		orr	r1, r2, #8388608
+  70 008c C3F81011 		str	r1, [r3, #272]
+  71 0090 D3F81401 		ldr	r0, [r3, #276]
+  72 0094 40F08002 		orr	r2, r0, #128
+  73 0098 C3F81421 		str	r2, [r3, #276]
+  74 009c D3F81411 		ldr	r1, [r3, #276]
+  75 00a0 41F40040 		orr	r0, r1, #32768
+  76 00a4 C3F81401 		str	r0, [r3, #276]
+  77 00a8 D3F81821 		ldr	r2, [r3, #280]
+  78 00ac 42F08001 		orr	r1, r2, #128
+  79 00b0 C3F81811 		str	r1, [r3, #280]
+  80 00b4 D3F81C01 		ldr	r0, [r3, #284]
+  81 00b8 20F43802 		bic	r2, r0, #12058624
+  82 00bc 42F41001 		orr	r1, r2, #9437184
+  83 00c0 C3F81C11 		str	r1, [r3, #284]
+  84 00c4 4FF04023 		mov	r3, #1073758208
+  85 00c8 D3F84001 		ldr	r0, [r3, #320]
+  86 00cc 20F47022 		bic	r2, r0, #983040
+  87 00d0 42F40031 		orr	r1, r2, #131072
+  88 00d4 C3F84011 		str	r1, [r3, #320]
+  89 00d8 7047     		bx	lr
+  90              	.L3:
+  91 00da 00BF     		.align	2
+  92              	.L2:
+  93 00dc 00000248 		.word	1208090624
+  95              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
+  96              		.align	1
+  97              		.global	DAVE_MUX_PreInit
+  98              		.thumb
+  99              		.thumb_func
+ 101              	DAVE_MUX_PreInit:
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104              		@ link register save eliminated.
+ 105 0000 7047     		bx	lr
+ 107              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 MULTIPLEXER.c
-C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:17     .text.DAVE_MUX_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
-C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:87     .text.DAVE_MUX_Init:000000c4 $d
-C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:90     .text.DAVE_MUX_PreInit:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccZHdqkL.s:95     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\Carlos\AppData\Local\Temp\cckkTTI4.s:17     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cckkTTI4.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\Carlos\AppData\Local\Temp\cckkTTI4.s:93     .text.DAVE_MUX_Init:000000dc $d
+C:\Users\Carlos\AppData\Local\Temp\cckkTTI4.s:96     .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cckkTTI4.s:101    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
 
 NO UNDEFINED SYMBOLS

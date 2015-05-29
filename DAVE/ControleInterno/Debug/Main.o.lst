@@ -230,7 +230,7 @@
  110              		.loc 1 121 0
  111 0032 4FF00003 		mov	r3, #0
  112 0036 BB60     		str	r3, [r7, #8]
- 113 0038 33E0     		b	.L6
+ 113 0038 36E0     		b	.L6
  114              	.L10:
  122:../Main.c     **** 	{
  123:../Main.c     **** 		for (i = 7; i > -1; i --)
@@ -286,392 +286,396 @@
  157 0094 9B18     		adds	r3, r3, r2
  158 0096 FA79     		ldrb	r2, [r7, #7]
  159 0098 1A70     		strb	r2, [r3, #0]
+ 129:../Main.c     **** 		temp = 0;
+ 160              		.loc 1 129 0
+ 161 009a 4FF00003 		mov	r3, #0
+ 162 009e FB71     		strb	r3, [r7, #7]
  121:../Main.c     **** 	for (j = 0; j < BYTES_TO_SEND; j++)
- 160              		.loc 1 121 0
- 161 009a BB68     		ldr	r3, [r7, #8]
- 162 009c 03F10103 		add	r3, r3, #1
- 163 00a0 BB60     		str	r3, [r7, #8]
- 164              	.L6:
+ 163              		.loc 1 121 0
+ 164 00a0 BB68     		ldr	r3, [r7, #8]
+ 165 00a2 03F10103 		add	r3, r3, #1
+ 166 00a6 BB60     		str	r3, [r7, #8]
+ 167              	.L6:
  121:../Main.c     **** 	for (j = 0; j < BYTES_TO_SEND; j++)
- 165              		.loc 1 121 0 is_stmt 0 discriminator 1
- 166 00a2 BB68     		ldr	r3, [r7, #8]
- 167 00a4 042B     		cmp	r3, #4
- 168 00a6 C8DD     		ble	.L10
- 129:../Main.c     **** 	}
- 130:../Main.c     **** 	IO004_SetPin(CE);
- 169              		.loc 1 130 0 is_stmt 1
- 170 00a8 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 171 00ac C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 172 00b0 5A68     		ldr	r2, [r3, #4]
- 173 00b2 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 174 00b6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 175 00ba 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 176 00bc 4FF00101 		mov	r1, #1
- 177 00c0 01FA03F3 		lsl	r3, r1, r3
- 178 00c4 5360     		str	r3, [r2, #4]
- 131:../Main.c     **** 	delay(50000);
- 179              		.loc 1 131 0
- 180 00c6 4CF25030 		movw	r0, #50000
- 181 00ca FFF7FEFF 		bl	delay
- 132:../Main.c     **** }
+ 168              		.loc 1 121 0 is_stmt 0 discriminator 1
+ 169 00a8 BB68     		ldr	r3, [r7, #8]
+ 170 00aa 042B     		cmp	r3, #4
+ 171 00ac C5DD     		ble	.L10
+ 130:../Main.c     **** 	}
+ 131:../Main.c     **** 	IO004_SetPin(CE);
+ 172              		.loc 1 131 0 is_stmt 1
+ 173 00ae 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 174 00b2 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 175 00b6 5A68     		ldr	r2, [r3, #4]
+ 176 00b8 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 177 00bc C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 178 00c0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 179 00c2 4FF00101 		mov	r1, #1
+ 180 00c6 01FA03F3 		lsl	r3, r1, r3
+ 181 00ca 5360     		str	r3, [r2, #4]
+ 132:../Main.c     **** 	delay(50000);
  182              		.loc 1 132 0
- 183 00ce 07F11007 		add	r7, r7, #16
- 184 00d2 BD46     		mov	sp, r7
- 185 00d4 80BD     		pop	{r7, pc}
- 186              		.cfi_endproc
- 187              	.LFE113:
- 189 00d6 00BF     		.section	.text.pulse_R,"ax",%progbits
- 190              		.align	2
- 191              		.global	pulse_R
- 192              		.thumb
- 193              		.thumb_func
- 195              	pulse_R:
- 196              	.LFB114:
- 133:../Main.c     **** 
- 134:../Main.c     **** void pulse_R()
- 135:../Main.c     **** {
- 197              		.loc 1 135 0
- 198              		.cfi_startproc
- 199              		@ args = 0, pretend = 0, frame = 0
- 200              		@ frame_needed = 1, uses_anonymous_args = 0
- 201 0000 80B5     		push	{r7, lr}
- 202              	.LCFI5:
- 203              		.cfi_def_cfa_offset 8
- 204              		.cfi_offset 7, -8
- 205              		.cfi_offset 14, -4
- 206 0002 00AF     		add	r7, sp, #0
- 207              	.LCFI6:
- 208              		.cfi_def_cfa_register 7
- 136:../Main.c     **** 	delay(300);
- 209              		.loc 1 136 0
- 210 0004 4FF49670 		mov	r0, #300
- 211 0008 FFF7FEFF 		bl	delay
- 137:../Main.c     **** 	IO004_SetPin(CLK1);
+ 183 00cc 4CF25030 		movw	r0, #50000
+ 184 00d0 FFF7FEFF 		bl	delay
+ 133:../Main.c     **** }
+ 185              		.loc 1 133 0
+ 186 00d4 07F11007 		add	r7, r7, #16
+ 187 00d8 BD46     		mov	sp, r7
+ 188 00da 80BD     		pop	{r7, pc}
+ 189              		.cfi_endproc
+ 190              	.LFE113:
+ 192              		.section	.text.pulse_R,"ax",%progbits
+ 193              		.align	2
+ 194              		.global	pulse_R
+ 195              		.thumb
+ 196              		.thumb_func
+ 198              	pulse_R:
+ 199              	.LFB114:
+ 134:../Main.c     **** 
+ 135:../Main.c     **** void pulse_R()
+ 136:../Main.c     **** {
+ 200              		.loc 1 136 0
+ 201              		.cfi_startproc
+ 202              		@ args = 0, pretend = 0, frame = 0
+ 203              		@ frame_needed = 1, uses_anonymous_args = 0
+ 204 0000 80B5     		push	{r7, lr}
+ 205              	.LCFI5:
+ 206              		.cfi_def_cfa_offset 8
+ 207              		.cfi_offset 7, -8
+ 208              		.cfi_offset 14, -4
+ 209 0002 00AF     		add	r7, sp, #0
+ 210              	.LCFI6:
+ 211              		.cfi_def_cfa_register 7
+ 137:../Main.c     **** 	delay(300);
  212              		.loc 1 137 0
- 213 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 214 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 215 0014 5A68     		ldr	r2, [r3, #4]
- 216 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 217 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 218 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 219 0020 4FF00101 		mov	r1, #1
- 220 0024 01FA03F3 		lsl	r3, r1, r3
- 221 0028 5360     		str	r3, [r2, #4]
- 138:../Main.c     **** 	delay(300);
- 222              		.loc 1 138 0
- 223 002a 4FF49670 		mov	r0, #300
- 224 002e FFF7FEFF 		bl	delay
- 139:../Main.c     **** 	IO004_ResetPin(CLK1);
+ 213 0004 4FF49670 		mov	r0, #300
+ 214 0008 FFF7FEFF 		bl	delay
+ 138:../Main.c     **** 	IO004_SetPin(CLK1);
+ 215              		.loc 1 138 0
+ 216 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 217 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 218 0014 5A68     		ldr	r2, [r3, #4]
+ 219 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 220 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 221 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 222 0020 4FF00101 		mov	r1, #1
+ 223 0024 01FA03F3 		lsl	r3, r1, r3
+ 224 0028 5360     		str	r3, [r2, #4]
+ 139:../Main.c     **** 	delay(300);
  225              		.loc 1 139 0
- 226 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 227 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 228 003a 5A68     		ldr	r2, [r3, #4]
- 229 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 230 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 231 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 232 0046 4FF48031 		mov	r1, #65536
- 233 004a 01FA03F3 		lsl	r3, r1, r3
- 234 004e 5360     		str	r3, [r2, #4]
- 140:../Main.c     **** }
- 235              		.loc 1 140 0
- 236 0050 80BD     		pop	{r7, pc}
- 237              		.cfi_endproc
- 238              	.LFE114:
- 240 0052 00BF     		.section	.text.configure_R,"ax",%progbits
- 241              		.align	2
- 242              		.global	configure_R
- 243              		.thumb
- 244              		.thumb_func
- 246              	configure_R:
- 247              	.LFB115:
- 141:../Main.c     **** 
- 142:../Main.c     **** void configure_R()
- 143:../Main.c     **** {
- 248              		.loc 1 143 0
- 249              		.cfi_startproc
- 250              		@ args = 0, pretend = 0, frame = 8
- 251              		@ frame_needed = 1, uses_anonymous_args = 0
- 252 0000 80B5     		push	{r7, lr}
- 253              	.LCFI7:
- 254              		.cfi_def_cfa_offset 8
- 255              		.cfi_offset 7, -8
- 256              		.cfi_offset 14, -4
- 257 0002 82B0     		sub	sp, sp, #8
- 258              	.LCFI8:
- 259              		.cfi_def_cfa_offset 16
- 260 0004 00AF     		add	r7, sp, #0
- 261              	.LCFI9:
- 262              		.cfi_def_cfa_register 7
- 144:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
- 145:../Main.c     **** 	configuration[0] = 0xC5;//RF_CH# e OP_MODE 0b11000101
- 263              		.loc 1 145 0
- 264 0006 40F20003 		movw	r3, #:lower16:configuration
- 265 000a C0F20003 		movt	r3, #:upper16:configuration
- 266 000e 4FF0C502 		mov	r2, #197
- 267 0012 1A70     		strb	r2, [r3, #0]
- 146:../Main.c     **** 	configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
- 268              		.loc 1 146 0
- 269 0014 40F20003 		movw	r3, #:lower16:configuration
- 270 0018 C0F20003 		movt	r3, #:upper16:configuration
- 271 001c 4FF04F02 		mov	r2, #79
- 272 0020 5A70     		strb	r2, [r3, #1]
- 147:../Main.c     **** 	configuration[2] = 0xA3;//addr_w
- 273              		.loc 1 147 0
- 274 0022 40F20003 		movw	r3, #:lower16:configuration
- 275 0026 C0F20003 		movt	r3, #:upper16:configuration
- 276 002a 4FF0A302 		mov	r2, #163
- 277 002e 9A70     		strb	r2, [r3, #2]
- 148:../Main.c     **** 	configuration[3] = 0xEE;//Comeco enderco CH1 00000001
- 278              		.loc 1 148 0
- 279 0030 40F20003 		movw	r3, #:lower16:configuration
- 280 0034 C0F20003 		movt	r3, #:upper16:configuration
- 281 0038 4FF0EE02 		mov	r2, #238
- 282 003c DA70     		strb	r2, [r3, #3]
- 149:../Main.c     **** 	configuration[4] = 0xDD;//0b00000000
- 283              		.loc 1 149 0
- 284 003e 40F20003 		movw	r3, #:lower16:configuration
- 285 0042 C0F20003 		movt	r3, #:upper16:configuration
- 286 0046 4FF0DD02 		mov	r2, #221
- 287 004a 1A71     		strb	r2, [r3, #4]
- 150:../Main.c     **** 	configuration[5] = 0xCC;//0b11010100
- 288              		.loc 1 150 0
- 289 004c 40F20003 		movw	r3, #:lower16:configuration
- 290 0050 C0F20003 		movt	r3, #:upper16:configuration
- 291 0054 4FF0CC02 		mov	r2, #204
- 292 0058 5A71     		strb	r2, [r3, #5]
- 151:../Main.c     **** 	configuration[6] = 0xBB;//0b11011111
- 293              		.loc 1 151 0
- 294 005a 40F20003 		movw	r3, #:lower16:configuration
- 295 005e C0F20003 		movt	r3, #:upper16:configuration
- 296 0062 4FF0BB02 		mov	r2, #187
- 297 0066 9A71     		strb	r2, [r3, #6]
- 152:../Main.c     **** 	configuration[7] = 0xAA;//Fim enderco CH1 0b11101010
- 298              		.loc 1 152 0
- 299 0068 40F20003 		movw	r3, #:lower16:configuration
- 300 006c C0F20003 		movt	r3, #:upper16:configuration
- 301 0070 4FF0AA02 		mov	r2, #170
- 302 0074 DA71     		strb	r2, [r3, #7]
- 153:../Main.c     **** 	configuration[8] = 0b00000000;//Comeco enderco CH2
- 303              		.loc 1 153 0
- 304 0076 40F20003 		movw	r3, #:lower16:configuration
- 305 007a C0F20003 		movt	r3, #:upper16:configuration
- 306 007e 4FF00002 		mov	r2, #0
- 307 0082 1A72     		strb	r2, [r3, #8]
- 154:../Main.c     **** 	configuration[9] = 0b00000000;
- 308              		.loc 1 154 0
- 309 0084 40F20003 		movw	r3, #:lower16:configuration
- 310 0088 C0F20003 		movt	r3, #:upper16:configuration
- 311 008c 4FF00002 		mov	r2, #0
- 312 0090 5A72     		strb	r2, [r3, #9]
- 155:../Main.c     **** 	configuration[10] = 0b00000000;
- 313              		.loc 1 155 0
- 314 0092 40F20003 		movw	r3, #:lower16:configuration
- 315 0096 C0F20003 		movt	r3, #:upper16:configuration
- 316 009a 4FF00002 		mov	r2, #0
- 317 009e 9A72     		strb	r2, [r3, #10]
- 156:../Main.c     **** 	configuration[11] = 0b00000000;
- 318              		.loc 1 156 0
- 319 00a0 40F20003 		movw	r3, #:lower16:configuration
- 320 00a4 C0F20003 		movt	r3, #:upper16:configuration
- 321 00a8 4FF00002 		mov	r2, #0
- 322 00ac DA72     		strb	r2, [r3, #11]
- 157:../Main.c     **** 	configuration[12] = 0b00000000;//Fim enderco CH2
- 323              		.loc 1 157 0
- 324 00ae 40F20003 		movw	r3, #:lower16:configuration
- 325 00b2 C0F20003 		movt	r3, #:upper16:configuration
- 326 00b6 4FF00002 		mov	r2, #0
- 327 00ba 1A73     		strb	r2, [r3, #12]
- 158:../Main.c     **** 	configuration[13] = 0x28;//num bits enviados (1 byte nesse ex) TODO arrumar
- 328              		.loc 1 158 0
- 329 00bc 40F20003 		movw	r3, #:lower16:configuration
- 330 00c0 C0F20003 		movt	r3, #:upper16:configuration
- 331 00c4 4FF02802 		mov	r2, #40
- 332 00c8 5A73     		strb	r2, [r3, #13]
- 159:../Main.c     **** 	configuration[14] = 0b00000000;
- 333              		.loc 1 159 0
- 334 00ca 40F20003 		movw	r3, #:lower16:configuration
- 335 00ce C0F20003 		movt	r3, #:upper16:configuration
- 336 00d2 4FF00002 		mov	r2, #0
- 337 00d6 9A73     		strb	r2, [r3, #14]
- 160:../Main.c     **** 
- 161:../Main.c     **** 	IO004_ResetPin(CE);
- 338              		.loc 1 161 0
- 339 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 340 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 341 00e0 5A68     		ldr	r2, [r3, #4]
- 342 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 343 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 344 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 345 00ec 4FF48031 		mov	r1, #65536
- 346 00f0 01FA03F3 		lsl	r3, r1, r3
- 347 00f4 5360     		str	r3, [r2, #4]
- 162:../Main.c     **** 	IO004_SetPin(CS);
- 348              		.loc 1 162 0
- 349 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 350 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 351 00fe 5A68     		ldr	r2, [r3, #4]
- 352 0100 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 353 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 354 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 355 010a 4FF00101 		mov	r1, #1
- 356 010e 01FA03F3 		lsl	r3, r1, r3
- 357 0112 5360     		str	r3, [r2, #4]
- 163:../Main.c     **** 	int i, j;
- 164:../Main.c     **** 	for (i = 14; i > -1; i--)
- 358              		.loc 1 164 0
- 359 0114 4FF00E03 		mov	r3, #14
- 360 0118 7B60     		str	r3, [r7, #4]
- 361 011a 3FE0     		b	.L13
- 362              	.L18:
- 165:../Main.c     **** 	{
- 166:../Main.c     **** 		for (j = 7; j > -1; j--)
- 363              		.loc 1 166 0
- 364 011c 4FF00703 		mov	r3, #7
- 365 0120 3B60     		str	r3, [r7, #0]
- 366 0122 34E0     		b	.L14
- 367              	.L17:
- 167:../Main.c     **** 		{
- 168:../Main.c     **** 			if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
- 368              		.loc 1 168 0
- 369 0124 40F20003 		movw	r3, #:lower16:configuration
- 370 0128 C0F20003 		movt	r3, #:upper16:configuration
- 371 012c 7A68     		ldr	r2, [r7, #4]
- 372 012e 9B18     		adds	r3, r3, r2
- 373 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 374 0132 1A46     		mov	r2, r3
- 375 0134 4FF00101 		mov	r1, #1
- 376 0138 3B68     		ldr	r3, [r7, #0]
- 377 013a 01FA03F3 		lsl	r3, r1, r3
- 378 013e 1340     		ands	r3, r3, r2
- 379 0140 002B     		cmp	r3, #0
- 380 0142 0FDD     		ble	.L15
- 381              		.loc 1 168 0 is_stmt 0 discriminator 1
- 382 0144 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 383 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 384 014c 5A68     		ldr	r2, [r3, #4]
- 385 014e 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 386 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 387 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 388 0158 4FF00101 		mov	r1, #1
- 389 015c 01FA03F3 		lsl	r3, r1, r3
- 390 0160 5360     		str	r3, [r2, #4]
- 391 0162 0EE0     		b	.L16
- 392              	.L15:
- 169:../Main.c     **** 			else IO004_ResetPin(DATA);;
- 393              		.loc 1 169 0 is_stmt 1
- 394 0164 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 395 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 396 016c 5A68     		ldr	r2, [r3, #4]
- 397 016e 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 398 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 399 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 400 0178 4FF48031 		mov	r1, #65536
- 401 017c 01FA03F3 		lsl	r3, r1, r3
- 402 0180 5360     		str	r3, [r2, #4]
- 403              	.L16:
- 170:../Main.c     **** 			pulse_R();
- 404              		.loc 1 170 0
- 405 0182 FFF7FEFF 		bl	pulse_R
- 166:../Main.c     **** 		for (j = 7; j > -1; j--)
- 406              		.loc 1 166 0
- 407 0186 3B68     		ldr	r3, [r7, #0]
- 408 0188 03F1FF33 		add	r3, r3, #-1
- 409 018c 3B60     		str	r3, [r7, #0]
- 410              	.L14:
- 166:../Main.c     **** 		for (j = 7; j > -1; j--)
- 411              		.loc 1 166 0 is_stmt 0 discriminator 1
- 412 018e 3B68     		ldr	r3, [r7, #0]
- 413 0190 002B     		cmp	r3, #0
- 414 0192 C7DA     		bge	.L17
- 164:../Main.c     **** 	for (i = 14; i > -1; i--)
- 415              		.loc 1 164 0 is_stmt 1
- 416 0194 7B68     		ldr	r3, [r7, #4]
- 417 0196 03F1FF33 		add	r3, r3, #-1
- 418 019a 7B60     		str	r3, [r7, #4]
- 419              	.L13:
- 164:../Main.c     **** 	for (i = 14; i > -1; i--)
- 420              		.loc 1 164 0 is_stmt 0 discriminator 1
- 421 019c 7B68     		ldr	r3, [r7, #4]
- 422 019e 002B     		cmp	r3, #0
- 423 01a0 BCDA     		bge	.L18
- 171:../Main.c     **** 		}
- 172:../Main.c     **** 	}
- 173:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
- 424              		.loc 1 173 0 is_stmt 1
- 425 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle4
- 426 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle4
- 427 01aa 4FF00301 		mov	r1, #3
- 428 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
- 174:../Main.c     **** 	IO004_ResetPin(CS);
- 429              		.loc 1 174 0
- 430 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 431 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 432 01ba 5A68     		ldr	r2, [r3, #4]
- 433 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 434 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 435 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 436 01c6 4FF48031 		mov	r1, #65536
- 437 01ca 01FA03F3 		lsl	r3, r1, r3
- 438 01ce 5360     		str	r3, [r2, #4]
- 175:../Main.c     **** 	IO004_SetPin(CE);
- 439              		.loc 1 175 0
- 440 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 441 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 442 01d8 5A68     		ldr	r2, [r3, #4]
- 443 01da 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 444 01de C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 445 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 446 01e4 4FF00101 		mov	r1, #1
- 447 01e8 01FA03F3 		lsl	r3, r1, r3
- 448 01ec 5360     		str	r3, [r2, #4]
- 176:../Main.c     **** 	delay(50000);
- 449              		.loc 1 176 0
- 450 01ee 4CF25030 		movw	r0, #50000
- 451 01f2 FFF7FEFF 		bl	delay
- 177:../Main.c     **** }
+ 226 002a 4FF49670 		mov	r0, #300
+ 227 002e FFF7FEFF 		bl	delay
+ 140:../Main.c     **** 	IO004_ResetPin(CLK1);
+ 228              		.loc 1 140 0
+ 229 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 230 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 231 003a 5A68     		ldr	r2, [r3, #4]
+ 232 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 233 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 234 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 235 0046 4FF48031 		mov	r1, #65536
+ 236 004a 01FA03F3 		lsl	r3, r1, r3
+ 237 004e 5360     		str	r3, [r2, #4]
+ 141:../Main.c     **** }
+ 238              		.loc 1 141 0
+ 239 0050 80BD     		pop	{r7, pc}
+ 240              		.cfi_endproc
+ 241              	.LFE114:
+ 243 0052 00BF     		.section	.text.configure_R,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	configure_R
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	configure_R:
+ 250              	.LFB115:
+ 142:../Main.c     **** 
+ 143:../Main.c     **** void configure_R()
+ 144:../Main.c     **** {
+ 251              		.loc 1 144 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 8
+ 254              		@ frame_needed = 1, uses_anonymous_args = 0
+ 255 0000 80B5     		push	{r7, lr}
+ 256              	.LCFI7:
+ 257              		.cfi_def_cfa_offset 8
+ 258              		.cfi_offset 7, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 82B0     		sub	sp, sp, #8
+ 261              	.LCFI8:
+ 262              		.cfi_def_cfa_offset 16
+ 263 0004 00AF     		add	r7, sp, #0
+ 264              	.LCFI9:
+ 265              		.cfi_def_cfa_register 7
+ 145:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
+ 146:../Main.c     **** 	configuration[0] = 0xC5;//RF_CH# e OP_MODE 0b11000101
+ 266              		.loc 1 146 0
+ 267 0006 40F20003 		movw	r3, #:lower16:configuration
+ 268 000a C0F20003 		movt	r3, #:upper16:configuration
+ 269 000e 4FF0C502 		mov	r2, #197
+ 270 0012 1A70     		strb	r2, [r3, #0]
+ 147:../Main.c     **** 	configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+ 271              		.loc 1 147 0
+ 272 0014 40F20003 		movw	r3, #:lower16:configuration
+ 273 0018 C0F20003 		movt	r3, #:upper16:configuration
+ 274 001c 4FF04F02 		mov	r2, #79
+ 275 0020 5A70     		strb	r2, [r3, #1]
+ 148:../Main.c     **** 	configuration[2] = 0xA3;//addr_w
+ 276              		.loc 1 148 0
+ 277 0022 40F20003 		movw	r3, #:lower16:configuration
+ 278 0026 C0F20003 		movt	r3, #:upper16:configuration
+ 279 002a 4FF0A302 		mov	r2, #163
+ 280 002e 9A70     		strb	r2, [r3, #2]
+ 149:../Main.c     **** 	configuration[3] = 0xEE;//Comeco enderco CH1 00000001
+ 281              		.loc 1 149 0
+ 282 0030 40F20003 		movw	r3, #:lower16:configuration
+ 283 0034 C0F20003 		movt	r3, #:upper16:configuration
+ 284 0038 4FF0EE02 		mov	r2, #238
+ 285 003c DA70     		strb	r2, [r3, #3]
+ 150:../Main.c     **** 	configuration[4] = 0xDD;//0b00000000
+ 286              		.loc 1 150 0
+ 287 003e 40F20003 		movw	r3, #:lower16:configuration
+ 288 0042 C0F20003 		movt	r3, #:upper16:configuration
+ 289 0046 4FF0DD02 		mov	r2, #221
+ 290 004a 1A71     		strb	r2, [r3, #4]
+ 151:../Main.c     **** 	configuration[5] = 0xCC;//0b11010100
+ 291              		.loc 1 151 0
+ 292 004c 40F20003 		movw	r3, #:lower16:configuration
+ 293 0050 C0F20003 		movt	r3, #:upper16:configuration
+ 294 0054 4FF0CC02 		mov	r2, #204
+ 295 0058 5A71     		strb	r2, [r3, #5]
+ 152:../Main.c     **** 	configuration[6] = 0xBB;//0b11011111
+ 296              		.loc 1 152 0
+ 297 005a 40F20003 		movw	r3, #:lower16:configuration
+ 298 005e C0F20003 		movt	r3, #:upper16:configuration
+ 299 0062 4FF0BB02 		mov	r2, #187
+ 300 0066 9A71     		strb	r2, [r3, #6]
+ 153:../Main.c     **** 	configuration[7] = 0xAA;//Fim enderco CH1 0b11101010
+ 301              		.loc 1 153 0
+ 302 0068 40F20003 		movw	r3, #:lower16:configuration
+ 303 006c C0F20003 		movt	r3, #:upper16:configuration
+ 304 0070 4FF0AA02 		mov	r2, #170
+ 305 0074 DA71     		strb	r2, [r3, #7]
+ 154:../Main.c     **** 	configuration[8] = 0b00000000;//Comeco enderco CH2
+ 306              		.loc 1 154 0
+ 307 0076 40F20003 		movw	r3, #:lower16:configuration
+ 308 007a C0F20003 		movt	r3, #:upper16:configuration
+ 309 007e 4FF00002 		mov	r2, #0
+ 310 0082 1A72     		strb	r2, [r3, #8]
+ 155:../Main.c     **** 	configuration[9] = 0b00000000;
+ 311              		.loc 1 155 0
+ 312 0084 40F20003 		movw	r3, #:lower16:configuration
+ 313 0088 C0F20003 		movt	r3, #:upper16:configuration
+ 314 008c 4FF00002 		mov	r2, #0
+ 315 0090 5A72     		strb	r2, [r3, #9]
+ 156:../Main.c     **** 	configuration[10] = 0b00000000;
+ 316              		.loc 1 156 0
+ 317 0092 40F20003 		movw	r3, #:lower16:configuration
+ 318 0096 C0F20003 		movt	r3, #:upper16:configuration
+ 319 009a 4FF00002 		mov	r2, #0
+ 320 009e 9A72     		strb	r2, [r3, #10]
+ 157:../Main.c     **** 	configuration[11] = 0b00000000;
+ 321              		.loc 1 157 0
+ 322 00a0 40F20003 		movw	r3, #:lower16:configuration
+ 323 00a4 C0F20003 		movt	r3, #:upper16:configuration
+ 324 00a8 4FF00002 		mov	r2, #0
+ 325 00ac DA72     		strb	r2, [r3, #11]
+ 158:../Main.c     **** 	configuration[12] = 0b00000000;//Fim enderco CH2
+ 326              		.loc 1 158 0
+ 327 00ae 40F20003 		movw	r3, #:lower16:configuration
+ 328 00b2 C0F20003 		movt	r3, #:upper16:configuration
+ 329 00b6 4FF00002 		mov	r2, #0
+ 330 00ba 1A73     		strb	r2, [r3, #12]
+ 159:../Main.c     **** 	configuration[13] = 0x28;//num bits enviados (1 byte nesse ex) TODO arrumar
+ 331              		.loc 1 159 0
+ 332 00bc 40F20003 		movw	r3, #:lower16:configuration
+ 333 00c0 C0F20003 		movt	r3, #:upper16:configuration
+ 334 00c4 4FF02802 		mov	r2, #40
+ 335 00c8 5A73     		strb	r2, [r3, #13]
+ 160:../Main.c     **** 	configuration[14] = 0b00000000;
+ 336              		.loc 1 160 0
+ 337 00ca 40F20003 		movw	r3, #:lower16:configuration
+ 338 00ce C0F20003 		movt	r3, #:upper16:configuration
+ 339 00d2 4FF00002 		mov	r2, #0
+ 340 00d6 9A73     		strb	r2, [r3, #14]
+ 161:../Main.c     **** 
+ 162:../Main.c     **** 	IO004_ResetPin(CE);
+ 341              		.loc 1 162 0
+ 342 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 343 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 344 00e0 5A68     		ldr	r2, [r3, #4]
+ 345 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 346 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 347 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 348 00ec 4FF48031 		mov	r1, #65536
+ 349 00f0 01FA03F3 		lsl	r3, r1, r3
+ 350 00f4 5360     		str	r3, [r2, #4]
+ 163:../Main.c     **** 	IO004_SetPin(CS);
+ 351              		.loc 1 163 0
+ 352 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 353 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 354 00fe 5A68     		ldr	r2, [r3, #4]
+ 355 0100 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 356 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 357 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 358 010a 4FF00101 		mov	r1, #1
+ 359 010e 01FA03F3 		lsl	r3, r1, r3
+ 360 0112 5360     		str	r3, [r2, #4]
+ 164:../Main.c     **** 	int i, j;
+ 165:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 361              		.loc 1 165 0
+ 362 0114 4FF00E03 		mov	r3, #14
+ 363 0118 7B60     		str	r3, [r7, #4]
+ 364 011a 3FE0     		b	.L13
+ 365              	.L18:
+ 166:../Main.c     **** 	{
+ 167:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 366              		.loc 1 167 0
+ 367 011c 4FF00703 		mov	r3, #7
+ 368 0120 3B60     		str	r3, [r7, #0]
+ 369 0122 34E0     		b	.L14
+ 370              	.L17:
+ 168:../Main.c     **** 		{
+ 169:../Main.c     **** 			if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
+ 371              		.loc 1 169 0
+ 372 0124 40F20003 		movw	r3, #:lower16:configuration
+ 373 0128 C0F20003 		movt	r3, #:upper16:configuration
+ 374 012c 7A68     		ldr	r2, [r7, #4]
+ 375 012e 9B18     		adds	r3, r3, r2
+ 376 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 377 0132 1A46     		mov	r2, r3
+ 378 0134 4FF00101 		mov	r1, #1
+ 379 0138 3B68     		ldr	r3, [r7, #0]
+ 380 013a 01FA03F3 		lsl	r3, r1, r3
+ 381 013e 1340     		ands	r3, r3, r2
+ 382 0140 002B     		cmp	r3, #0
+ 383 0142 0FDD     		ble	.L15
+ 384              		.loc 1 169 0 is_stmt 0 discriminator 1
+ 385 0144 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 386 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 387 014c 5A68     		ldr	r2, [r3, #4]
+ 388 014e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 389 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 390 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 391 0158 4FF00101 		mov	r1, #1
+ 392 015c 01FA03F3 		lsl	r3, r1, r3
+ 393 0160 5360     		str	r3, [r2, #4]
+ 394 0162 0EE0     		b	.L16
+ 395              	.L15:
+ 170:../Main.c     **** 			else IO004_ResetPin(DATA);;
+ 396              		.loc 1 170 0 is_stmt 1
+ 397 0164 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 398 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 399 016c 5A68     		ldr	r2, [r3, #4]
+ 400 016e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 401 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 402 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 403 0178 4FF48031 		mov	r1, #65536
+ 404 017c 01FA03F3 		lsl	r3, r1, r3
+ 405 0180 5360     		str	r3, [r2, #4]
+ 406              	.L16:
+ 171:../Main.c     **** 			pulse_R();
+ 407              		.loc 1 171 0
+ 408 0182 FFF7FEFF 		bl	pulse_R
+ 167:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 409              		.loc 1 167 0
+ 410 0186 3B68     		ldr	r3, [r7, #0]
+ 411 0188 03F1FF33 		add	r3, r3, #-1
+ 412 018c 3B60     		str	r3, [r7, #0]
+ 413              	.L14:
+ 167:../Main.c     **** 		for (j = 7; j > -1; j--)
+ 414              		.loc 1 167 0 is_stmt 0 discriminator 1
+ 415 018e 3B68     		ldr	r3, [r7, #0]
+ 416 0190 002B     		cmp	r3, #0
+ 417 0192 C7DA     		bge	.L17
+ 165:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 418              		.loc 1 165 0 is_stmt 1
+ 419 0194 7B68     		ldr	r3, [r7, #4]
+ 420 0196 03F1FF33 		add	r3, r3, #-1
+ 421 019a 7B60     		str	r3, [r7, #4]
+ 422              	.L13:
+ 165:../Main.c     **** 	for (i = 14; i > -1; i--)
+ 423              		.loc 1 165 0 is_stmt 0 discriminator 1
+ 424 019c 7B68     		ldr	r3, [r7, #4]
+ 425 019e 002B     		cmp	r3, #0
+ 426 01a0 BCDA     		bge	.L18
+ 172:../Main.c     **** 		}
+ 173:../Main.c     **** 	}
+ 174:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
+ 427              		.loc 1 174 0 is_stmt 1
+ 428 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle4
+ 429 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle4
+ 430 01aa 4FF00301 		mov	r1, #3
+ 431 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 175:../Main.c     **** 	IO004_ResetPin(CS);
+ 432              		.loc 1 175 0
+ 433 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 434 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 435 01ba 5A68     		ldr	r2, [r3, #4]
+ 436 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 437 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 438 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 439 01c6 4FF48031 		mov	r1, #65536
+ 440 01ca 01FA03F3 		lsl	r3, r1, r3
+ 441 01ce 5360     		str	r3, [r2, #4]
+ 176:../Main.c     **** 	IO004_SetPin(CE);
+ 442              		.loc 1 176 0
+ 443 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 444 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 445 01d8 5A68     		ldr	r2, [r3, #4]
+ 446 01da 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 447 01de C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 448 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 449 01e4 4FF00101 		mov	r1, #1
+ 450 01e8 01FA03F3 		lsl	r3, r1, r3
+ 451 01ec 5360     		str	r3, [r2, #4]
+ 177:../Main.c     **** 	delay(50000);
  452              		.loc 1 177 0
- 453 01f6 07F10807 		add	r7, r7, #8
- 454 01fa BD46     		mov	sp, r7
- 455 01fc 80BD     		pop	{r7, pc}
- 456              		.cfi_endproc
- 457              	.LFE115:
- 459 01fe 00BF     		.section	.text.delay,"ax",%progbits
- 460              		.align	2
- 461              		.global	delay
- 462              		.thumb
- 463              		.thumb_func
- 465              	delay:
- 466              	.LFB116:
- 178:../Main.c     **** 
- 179:../Main.c     **** /***************************************************/
- 180:../Main.c     **** /*****************FUNCOES GERAIS********************/
- 181:../Main.c     **** /***************************************************/
- 182:../Main.c     **** 
- 183:../Main.c     **** void delay(long unsigned int i)
- 184:../Main.c     **** {
- 467              		.loc 1 184 0
- 468              		.cfi_startproc
- 469              		@ args = 0, pretend = 0, frame = 8
- 470              		@ frame_needed = 1, uses_anonymous_args = 0
- 471              		@ link register save eliminated.
- 472 0000 80B4     		push	{r7}
- 473              	.LCFI10:
- 474              		.cfi_def_cfa_offset 4
- 475              		.cfi_offset 7, -4
- 476 0002 83B0     		sub	sp, sp, #12
- 477              	.LCFI11:
- 478              		.cfi_def_cfa_offset 16
- 479 0004 00AF     		add	r7, sp, #0
- 480              	.LCFI12:
- 481              		.cfi_def_cfa_register 7
- 482 0006 7860     		str	r0, [r7, #4]
- 185:../Main.c     **** 	while(i--)
- 483              		.loc 1 185 0
- 484 0008 00E0     		b	.L20
- 485              	.L21:
- 486              	.LBB4:
- 487              	.LBB5:
- 488              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+ 453 01ee 4CF25030 		movw	r0, #50000
+ 454 01f2 FFF7FEFF 		bl	delay
+ 178:../Main.c     **** }
+ 455              		.loc 1 178 0
+ 456 01f6 07F10807 		add	r7, r7, #8
+ 457 01fa BD46     		mov	sp, r7
+ 458 01fc 80BD     		pop	{r7, pc}
+ 459              		.cfi_endproc
+ 460              	.LFE115:
+ 462 01fe 00BF     		.section	.text.delay,"ax",%progbits
+ 463              		.align	2
+ 464              		.global	delay
+ 465              		.thumb
+ 466              		.thumb_func
+ 468              	delay:
+ 469              	.LFB116:
+ 179:../Main.c     **** 
+ 180:../Main.c     **** /***************************************************/
+ 181:../Main.c     **** /*****************FUNCOES GERAIS********************/
+ 182:../Main.c     **** /***************************************************/
+ 183:../Main.c     **** 
+ 184:../Main.c     **** void delay(long unsigned int i)
+ 185:../Main.c     **** {
+ 470              		.loc 1 185 0
+ 471              		.cfi_startproc
+ 472              		@ args = 0, pretend = 0, frame = 8
+ 473              		@ frame_needed = 1, uses_anonymous_args = 0
+ 474              		@ link register save eliminated.
+ 475 0000 80B4     		push	{r7}
+ 476              	.LCFI10:
+ 477              		.cfi_def_cfa_offset 4
+ 478              		.cfi_offset 7, -4
+ 479 0002 83B0     		sub	sp, sp, #12
+ 480              	.LCFI11:
+ 481              		.cfi_def_cfa_offset 16
+ 482 0004 00AF     		add	r7, sp, #0
+ 483              	.LCFI12:
+ 484              		.cfi_def_cfa_register 7
+ 485 0006 7860     		str	r0, [r7, #4]
+ 186:../Main.c     **** 	while(i--)
+ 486              		.loc 1 186 0
+ 487 0008 00E0     		b	.L20
+ 488              	.L21:
+ 489              	.LBB4:
+ 490              	.LBB5:
+ 491              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
    1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
    2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
    3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
@@ -999,58 +1003,58 @@
  325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
  326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
  327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
- 489              		.loc 2 327 0
- 490              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
- 491 000a 00BF     		nop
- 492              	@ 0 "" 2
- 493              		.thumb
- 494              	.L20:
- 495              	.LBE5:
- 496              	.LBE4:
- 497              		.loc 1 185 0 discriminator 1
- 498 000c 7B68     		ldr	r3, [r7, #4]
- 499 000e 002B     		cmp	r3, #0
- 500 0010 0CBF     		ite	eq
- 501 0012 0023     		moveq	r3, #0
- 502 0014 0123     		movne	r3, #1
- 503 0016 DBB2     		uxtb	r3, r3
- 504 0018 7A68     		ldr	r2, [r7, #4]
- 505 001a 02F1FF32 		add	r2, r2, #-1
- 506 001e 7A60     		str	r2, [r7, #4]
- 507 0020 002B     		cmp	r3, #0
- 508 0022 F2D1     		bne	.L21
- 186:../Main.c     **** 	{
- 187:../Main.c     **** 		__NOP();
- 188:../Main.c     **** 	}
- 189:../Main.c     **** }
- 509              		.loc 1 189 0
- 510 0024 07F10C07 		add	r7, r7, #12
- 511 0028 BD46     		mov	sp, r7
- 512 002a 80BC     		pop	{r7}
- 513 002c 7047     		bx	lr
- 514              		.cfi_endproc
- 515              	.LFE116:
- 517 002e 00BF     		.text
- 518              	.Letext0:
- 519              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
- 520              		.file 4 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\ControleInterno\\Dave\\Generated\\inc\\DAVESup
- 521              		.file 5 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
- 522              		.file 6 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\ControleInterno\\Dave\\Generated\\inc\\DAVESup
+ 492              		.loc 2 327 0
+ 493              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 494 000a 00BF     		nop
+ 495              	@ 0 "" 2
+ 496              		.thumb
+ 497              	.L20:
+ 498              	.LBE5:
+ 499              	.LBE4:
+ 500              		.loc 1 186 0 discriminator 1
+ 501 000c 7B68     		ldr	r3, [r7, #4]
+ 502 000e 002B     		cmp	r3, #0
+ 503 0010 0CBF     		ite	eq
+ 504 0012 0023     		moveq	r3, #0
+ 505 0014 0123     		movne	r3, #1
+ 506 0016 DBB2     		uxtb	r3, r3
+ 507 0018 7A68     		ldr	r2, [r7, #4]
+ 508 001a 02F1FF32 		add	r2, r2, #-1
+ 509 001e 7A60     		str	r2, [r7, #4]
+ 510 0020 002B     		cmp	r3, #0
+ 511 0022 F2D1     		bne	.L21
+ 187:../Main.c     **** 	{
+ 188:../Main.c     **** 		__NOP();
+ 189:../Main.c     **** 	}
+ 190:../Main.c     **** }
+ 512              		.loc 1 190 0
+ 513 0024 07F10C07 		add	r7, r7, #12
+ 514 0028 BD46     		mov	sp, r7
+ 515 002a 80BC     		pop	{r7}
+ 516 002c 7047     		bx	lr
+ 517              		.cfi_endproc
+ 518              	.LFE116:
+ 520 002e 00BF     		.text
+ 521              	.Letext0:
+ 522              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 523              		.file 4 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\ControleInterno\\Dave\
+ 524              		.file 5 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 525              		.file 6 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\ControleInterno\\Dave\
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
                             *COM*:0000000f configuration
                             *COM*:00000005 data_R
                             *COM*:00000005 data_E
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:23     .text.main:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:28     .text.main:00000000 main
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:246    .text.configure_R:00000000 configure_R
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:77     .text.read_R:00000000 read_R
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:72     .text.read_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:465    .text.delay:00000000 delay
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:195    .text.pulse_R:00000000 pulse_R
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:190    .text.pulse_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:241    .text.configure_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccqjZySI.s:460    .text.delay:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:23     .text.main:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:28     .text.main:00000000 main
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:249    .text.configure_R:00000000 configure_R
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:77     .text.read_R:00000000 read_R
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:72     .text.read_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:468    .text.delay:00000000 delay
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:198    .text.pulse_R:00000000 pulse_R
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:193    .text.pulse_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:244    .text.configure_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccfGX51w.s:463    .text.delay:00000000 $t
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

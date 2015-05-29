@@ -21,8 +21,8 @@
   22              	DAVE_Init:
   23              		@ args = 0, pretend = 0, frame = 0
   24              		@ frame_needed = 0, uses_anonymous_args = 0
-  25 0000 0A49     		ldr	r1, .L2
-  26 0002 0B48     		ldr	r0, .L2+4
+  25 0000 0F49     		ldr	r1, .L2
+  26 0002 1048     		ldr	r0, .L2+4
   27 0004 08B5     		push	{r3, lr}
   28 0006 CB68     		ldr	r3, [r1, #12]
   29 0008 4FF6FF02 		movw	r2, #63743
@@ -33,35 +33,45 @@
   34 0018 FFF7FEFF 		bl	IO004_Init
   35 001c FFF7FEFF 		bl	CLK001_Init
   36 0020 FFF7FEFF 		bl	UART001_Init
-  37 0024 BDE80840 		pop	{r3, lr}
-  38 0028 FFF7FEBF 		b	DAVE_MUX_Init
-  39              	.L3:
-  40              		.align	2
-  41              	.L2:
-  42 002c 00ED00E0 		.word	-536810240
-  43 0030 0001FA05 		.word	100270336
-  45              		.section	.text.SystemInit_DAVE3,"ax",%progbits
-  46              		.align	1
-  47              		.global	SystemInit_DAVE3
-  48              		.thumb
-  49              		.thumb_func
-  51              	SystemInit_DAVE3:
-  52              		@ args = 0, pretend = 0, frame = 0
-  53              		@ frame_needed = 0, uses_anonymous_args = 0
-  54              		@ link register save eliminated.
-  55 0000 FFF7FEBF 		b	CLK001_Init
-  57              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  37 0024 FFF7FEFF 		bl	ADCGLOB001_Init
+  38 0028 FFF7FEFF 		bl	ADCGROUP001_Init
+  39 002c FFF7FEFF 		bl	IO001_Init
+  40 0030 FFF7FEFF 		bl	ADC001_Init
+  41 0034 FFF7FEFF 		bl	NVIC002_Init
+  42 0038 BDE80840 		pop	{r3, lr}
+  43 003c FFF7FEBF 		b	DAVE_MUX_Init
+  44              	.L3:
+  45              		.align	2
+  46              	.L2:
+  47 0040 00ED00E0 		.word	-536810240
+  48 0044 0001FA05 		.word	100270336
+  50              		.section	.text.SystemInit_DAVE3,"ax",%progbits
+  51              		.align	1
+  52              		.global	SystemInit_DAVE3
+  53              		.thumb
+  54              		.thumb_func
+  56              	SystemInit_DAVE3:
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  60 0000 FFF7FEBF 		b	CLK001_Init
+  62              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 DAVE3.c
-C:\Users\Carlos\AppData\Local\Temp\ccCUEBFe.s:17     .text.DAVE_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccCUEBFe.s:22     .text.DAVE_Init:00000000 DAVE_Init
-C:\Users\Carlos\AppData\Local\Temp\ccCUEBFe.s:42     .text.DAVE_Init:0000002c $d
-C:\Users\Carlos\AppData\Local\Temp\ccCUEBFe.s:46     .text.SystemInit_DAVE3:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccCUEBFe.s:51     .text.SystemInit_DAVE3:00000000 SystemInit_DAVE3
+C:\Users\Carlos\AppData\Local\Temp\ccFb4tgr.s:17     .text.DAVE_Init:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccFb4tgr.s:22     .text.DAVE_Init:00000000 DAVE_Init
+C:\Users\Carlos\AppData\Local\Temp\ccFb4tgr.s:47     .text.DAVE_Init:00000040 $d
+C:\Users\Carlos\AppData\Local\Temp\ccFb4tgr.s:51     .text.SystemInit_DAVE3:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\ccFb4tgr.s:56     .text.SystemInit_DAVE3:00000000 SystemInit_DAVE3
 
 UNDEFINED SYMBOLS
 DAVE_MUX_PreInit
 IO004_Init
 CLK001_Init
 UART001_Init
+ADCGLOB001_Init
+ADCGROUP001_Init
+IO001_Init
+ADC001_Init
+NVIC002_Init
 DAVE_MUX_Init

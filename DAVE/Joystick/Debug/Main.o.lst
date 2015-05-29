@@ -4002,112 +4002,112 @@
  2915              	.Letext0:
  2916              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
  2917              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 2918              		.file 5 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/..
- 2919              		.file 6 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/..
- 2920              		.file 7 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/..
- 2921              		.file 8 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/..
- 2922              		.file 9 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/..
+ 2918              		.file 5 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
+ 2919              		.file 6 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
+ 2920              		.file 7 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
+ 2921              		.file 8 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
+ 2922              		.file 9 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Genera
  2923              		.file 10 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
- 2924              		.file 11 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/.
- 2925              		.file 12 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/.
- 2926              		.file 13 "C:\\Users\\Carlos\\Desktop\\NOVOWORKSPACE\\Joystick\\Dave\\Generated\\inc\\DAVESupport/.
+ 2924              		.file 11 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Gener
+ 2925              		.file 12 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Gener
+ 2926              		.file 13 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\Joystick\\Dave\\Gener
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:24     .bss:00000000 l_um
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:21     .bss:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:30     .bss:00000004 l_dois
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:36     .bss:00000008 l_tres
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:42     .bss:0000000c r_um
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:48     .bss:00000010 r_dois
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:54     .bss:00000014 r_tres
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:60     .bss:00000018 cross
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:66     .bss:0000001c sqr
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:72     .bss:00000020 triangle
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:78     .bss:00000024 circle
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:84     .bss:00000028 left
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:90     .bss:0000002c right
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:96     .bss:00000030 up
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:102    .bss:00000034 down
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:108    .bss:00000038 start
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:114    .bss:0000003c select
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:119    .bss:00000040 l_um_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:124    .bss:00000041 l_dois_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:129    .bss:00000042 l_tres_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:134    .bss:00000043 r_um_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:139    .bss:00000044 r_dois_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:144    .bss:00000045 r_tres_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:149    .bss:00000046 cross_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:154    .bss:00000047 sqr_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:159    .bss:00000048 triangle_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:164    .bss:00000049 circle_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:169    .bss:0000004a left_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:174    .bss:0000004b right_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:179    .bss:0000004c up_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:184    .bss:0000004d down_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:189    .bss:0000004e start_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:194    .bss:0000004f select_state
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:199    .bss:00000050 l_um_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:204    .bss:00000051 l_dois_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:209    .bss:00000052 l_tres_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:214    .bss:00000053 r_um_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:219    .bss:00000054 r_dois_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:224    .bss:00000055 r_tres_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:229    .bss:00000056 cross_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:234    .bss:00000057 sqr_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:239    .bss:00000058 triangle_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:244    .bss:00000059 circle_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:249    .bss:0000005a left_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:254    .bss:0000005b right_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:259    .bss:0000005c up_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:264    .bss:0000005d down_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:269    .bss:0000005e start_state_before
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:274    .bss:0000005f select_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:24     .bss:00000000 l_um
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:21     .bss:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:30     .bss:00000004 l_dois
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:36     .bss:00000008 l_tres
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:42     .bss:0000000c r_um
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:48     .bss:00000010 r_dois
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:54     .bss:00000014 r_tres
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:60     .bss:00000018 cross
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:66     .bss:0000001c sqr
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:72     .bss:00000020 triangle
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:78     .bss:00000024 circle
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:84     .bss:00000028 left
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:90     .bss:0000002c right
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:96     .bss:00000030 up
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:102    .bss:00000034 down
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:108    .bss:00000038 start
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:114    .bss:0000003c select
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:119    .bss:00000040 l_um_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:124    .bss:00000041 l_dois_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:129    .bss:00000042 l_tres_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:134    .bss:00000043 r_um_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:139    .bss:00000044 r_dois_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:144    .bss:00000045 r_tres_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:149    .bss:00000046 cross_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:154    .bss:00000047 sqr_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:159    .bss:00000048 triangle_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:164    .bss:00000049 circle_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:169    .bss:0000004a left_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:174    .bss:0000004b right_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:179    .bss:0000004c up_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:184    .bss:0000004d down_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:189    .bss:0000004e start_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:194    .bss:0000004f select_state
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:199    .bss:00000050 l_um_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:204    .bss:00000051 l_dois_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:209    .bss:00000052 l_tres_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:214    .bss:00000053 r_um_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:219    .bss:00000054 r_dois_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:224    .bss:00000055 r_tres_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:229    .bss:00000056 cross_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:234    .bss:00000057 sqr_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:239    .bss:00000058 triangle_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:244    .bss:00000059 circle_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:249    .bss:0000005a left_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:254    .bss:0000005b right_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:259    .bss:0000005c up_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:264    .bss:0000005d down_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:269    .bss:0000005e start_state_before
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:274    .bss:0000005f select_state_before
                             *COM*:00000018 psxDado
                             *COM*:0000000f configuration
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:282    .data:00000000 data_R
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:282    .data:00000000 data_R
                             *COM*:00000005 data_E
                             *COM*:00000001 psx_status
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:290    .bss:00000060 flipped
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:290    .bss:00000060 flipped
                             *COM*:00000004 result
                             *COM*:00000001 pwm_max
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:295    .text.main:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:300    .text.main:00000000 main
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1240   .text.configure_E:00000000 configure_E
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2150   .text.psxHandShake:00000000 psxHandShake
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1632   .text.psxConfiguraControle:00000000 psxConfiguraControle
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2029   .text.psxLeControle:00000000 psxLeControle
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1444   .text.write_E:00000000 write_E
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2597   .text.updateButtonStates:00000000 updateButtonStates
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1082   .text.read_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1087   .text.read_R:00000000 read_R
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2401   .text.delay:00000000 delay
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1189   .text.pulse_R:00000000 pulse_R
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1184   .text.pulse_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1235   .text.configure_E:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1439   .text.write_E:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1627   .text.psxConfiguraControle:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1663   .text.psxEnterConfigMode:00000000 psxEnterConfigMode
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1769   .text.psxSetAnalogMode:00000000 psxSetAnalogMode
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1899   .text.psxExitConfigMode:00000000 psxExitConfigMode
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1658   .text.psxEnterConfigMode:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2261   .text.psxTrocaByte:00000000 psxTrocaByte
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1764   .text.psxSetAnalogMode:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:1894   .text.psxExitConfigMode:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2024   .text.psxLeControle:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2145   .text.psxHandShake:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2256   .text.psxTrocaByte:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2396   .text.delay:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2454   .text.printByteToInt:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2459   .text.printByteToInt:00000000 printByteToInt
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2561   .text.VADC0_C0_2_IRQHandler:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2566   .text.VADC0_C0_2_IRQHandler:00000000 VADC0_C0_2_IRQHandler
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2592   .text.updateButtonStates:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2811   .text.turbo:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2816   .text.turbo:00000000 turbo
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2843   .text.shunt:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2848   .text.shunt:00000000 shunt
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2875   .text.flip:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1TXILJ.s:2880   .text.flip:00000000 flip
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:295    .text.main:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:300    .text.main:00000000 main
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1240   .text.configure_E:00000000 configure_E
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2150   .text.psxHandShake:00000000 psxHandShake
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1632   .text.psxConfiguraControle:00000000 psxConfiguraControle
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2029   .text.psxLeControle:00000000 psxLeControle
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1444   .text.write_E:00000000 write_E
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2597   .text.updateButtonStates:00000000 updateButtonStates
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1082   .text.read_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1087   .text.read_R:00000000 read_R
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2401   .text.delay:00000000 delay
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1189   .text.pulse_R:00000000 pulse_R
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1184   .text.pulse_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1235   .text.configure_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1439   .text.write_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1627   .text.psxConfiguraControle:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1663   .text.psxEnterConfigMode:00000000 psxEnterConfigMode
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1769   .text.psxSetAnalogMode:00000000 psxSetAnalogMode
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1899   .text.psxExitConfigMode:00000000 psxExitConfigMode
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1658   .text.psxEnterConfigMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2261   .text.psxTrocaByte:00000000 psxTrocaByte
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1764   .text.psxSetAnalogMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:1894   .text.psxExitConfigMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2024   .text.psxLeControle:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2145   .text.psxHandShake:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2256   .text.psxTrocaByte:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2396   .text.delay:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2454   .text.printByteToInt:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2459   .text.printByteToInt:00000000 printByteToInt
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2561   .text.VADC0_C0_2_IRQHandler:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2566   .text.VADC0_C0_2_IRQHandler:00000000 VADC0_C0_2_IRQHandler
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2592   .text.updateButtonStates:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2811   .text.turbo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2816   .text.turbo:00000000 turbo
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2843   .text.shunt:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2848   .text.shunt:00000000 shunt
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2875   .text.flip:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cci8l4ln.s:2880   .text.flip:00000000 flip
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

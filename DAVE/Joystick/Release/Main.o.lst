@@ -33,760 +33,1426 @@
   34 0008 FAE7     		b	.L2
   35              	.L5:
   36 000a 7047     		bx	lr
-  38              		.section	.text.psxLeByte,"ax",%progbits
+  38              		.section	.text.psxTrocaByte,"ax",%progbits
   39              		.align	1
-  40              		.global	psxLeByte
+  40              		.global	psxTrocaByte
   41              		.thumb
   42              		.thumb_func
-  44              	psxLeByte:
+  44              	psxTrocaByte:
   45              		@ args = 0, pretend = 0, frame = 0
   46              		@ frame_needed = 0, uses_anonymous_args = 0
-  47 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
-  48 0002 0024     		movs	r4, #0
-  49 0004 2546     		mov	r5, r4
-  50              	.L8:
-  51 0006 154B     		ldr	r3, .L10
-  52 0008 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
-  53 000a 5E68     		ldr	r6, [r3, #4]
-  54 000c 4FF48030 		mov	r0, #65536
-  55 0010 00FA07F0 		lsl	r0, r0, r7
-  56 0014 7060     		str	r0, [r6, #4]
-  57 0016 4FF49670 		mov	r0, #300
-  58 001a FFF7FEFF 		bl	delay
-  59 001e 1049     		ldr	r1, .L10+4
-  60 0020 4A68     		ldr	r2, [r1, #4]
-  61 0022 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
-  62 0024 506A     		ldr	r0, [r2, #36]
-  63 0026 20FA03F1 		lsr	r1, r0, r3
-  64 002a 11F0010F 		tst	r1, #1
-  65 002e 4FF00102 		mov	r2, #1
-  66 0032 08BF     		it	eq
-  67 0034 02FA04F0 		lsleq	r0, r2, r4
-  68 0038 02FA07F7 		lsl	r7, r2, r7
-  69 003c 08BF     		it	eq
-  70 003e 0543     		orreq	r5, r5, r0
-  71 0040 7760     		str	r7, [r6, #4]
-  72 0042 4FF49670 		mov	r0, #300
-  73 0046 0134     		adds	r4, r4, #1
-  74 0048 FFF7FEFF 		bl	delay
-  75 004c 082C     		cmp	r4, #8
-  76 004e DAD1     		bne	.L8
-  77 0050 6420     		movs	r0, #100
-  78 0052 FFF7FEFF 		bl	delay
-  79 0056 2846     		mov	r0, r5
-  80 0058 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
-  81              	.L11:
-  82 005a 00BF     		.align	2
-  83              	.L10:
-  84 005c 00000000 		.word	IO004_Handle10
-  85 0060 00000000 		.word	IO004_Handle9
-  87              		.section	.text.psxGravaByte,"ax",%progbits
-  88              		.align	1
-  89              		.global	psxGravaByte
-  90              		.thumb
-  91              		.thumb_func
-  93              	psxGravaByte:
-  94              		@ args = 0, pretend = 0, frame = 0
-  95              		@ frame_needed = 0, uses_anonymous_args = 0
-  96 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
-  97 0004 8046     		mov	r8, r0
-  98 0006 0024     		movs	r4, #0
-  99              	.L15:
- 100 0008 1848     		ldr	r0, .L18
- 101 000a 48FA04F3 		asr	r3, r8, r4
- 102 000e 13F0010F 		tst	r3, #1
- 103 0012 4268     		ldr	r2, [r0, #4]
- 104 0014 4578     		ldrb	r5, [r0, #1]	@ zero_extendqisi2
- 105 0016 01D0     		beq	.L13
- 106 0018 0121     		movs	r1, #1
- 107 001a 01E0     		b	.L17
- 108              	.L13:
- 109 001c 4FF48031 		mov	r1, #65536
- 110              	.L17:
- 111 0020 134F     		ldr	r7, .L18+4
- 112 0022 01FA05F6 		lsl	r6, r1, r5
- 113 0026 7D68     		ldr	r5, [r7, #4]
- 114 0028 7F78     		ldrb	r7, [r7, #1]	@ zero_extendqisi2
- 115 002a 5660     		str	r6, [r2, #4]
- 116 002c 4FF48033 		mov	r3, #65536
- 117 0030 03FA07F3 		lsl	r3, r3, r7
- 118 0034 0126     		movs	r6, #1
- 119 0036 6B60     		str	r3, [r5, #4]
- 120 0038 4FF49670 		mov	r0, #300
- 121 003c 06FA07F7 		lsl	r7, r6, r7
- 122 0040 FFF7FEFF 		bl	delay
- 123 0044 A419     		adds	r4, r4, r6
- 124 0046 6F60     		str	r7, [r5, #4]
- 125 0048 4FF49670 		mov	r0, #300
- 126 004c FFF7FEFF 		bl	delay
- 127 0050 082C     		cmp	r4, #8
- 128 0052 D9D1     		bne	.L15
- 129 0054 0548     		ldr	r0, .L18
- 130 0056 4178     		ldrb	r1, [r0, #1]	@ zero_extendqisi2
- 131 0058 4268     		ldr	r2, [r0, #4]
- 132 005a 06FA01F6 		lsl	r6, r6, r1
- 133 005e 6420     		movs	r0, #100
- 134 0060 5660     		str	r6, [r2, #4]
- 135 0062 BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
- 136 0066 FFF7FEBF 		b	delay
- 137              	.L19:
- 138 006a 00BF     		.align	2
- 139              	.L18:
- 140 006c 00000000 		.word	IO004_Handle12
- 141 0070 00000000 		.word	IO004_Handle10
- 143              		.section	.text.psxLeControle,"ax",%progbits
- 144              		.align	1
- 145              		.global	psxLeControle
- 146              		.thumb
- 147              		.thumb_func
- 149              	psxLeControle:
- 150              		@ args = 0, pretend = 0, frame = 0
- 151              		@ frame_needed = 0, uses_anonymous_args = 0
- 152 0000 174B     		ldr	r3, .L23
- 153 0002 70B5     		push	{r4, r5, r6, lr}
- 154 0004 174D     		ldr	r5, .L23+4
- 155 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 156 0008 5A68     		ldr	r2, [r3, #4]
- 157 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
- 158 000c 6E68     		ldr	r6, [r5, #4]
- 159 000e 0124     		movs	r4, #1
- 160 0010 04FA00F1 		lsl	r1, r4, r0
- 161 0014 1448     		ldr	r0, .L23+8
- 162 0016 5160     		str	r1, [r2, #4]
- 163 0018 04FA03F2 		lsl	r2, r4, r3
- 164 001c 7260     		str	r2, [r6, #4]
- 165 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
- 166 0020 4568     		ldr	r5, [r0, #4]
- 167 0022 4FF48031 		mov	r1, #65536
- 168 0026 01FA06F1 		lsl	r1, r1, r6
- 169 002a 6960     		str	r1, [r5, #4]
- 170 002c 4FF49670 		mov	r0, #300
- 171 0030 FFF7FEFF 		bl	delay
- 172 0034 2046     		mov	r0, r4
- 173 0036 FFF7FEFF 		bl	psxGravaByte
- 174 003a 4220     		movs	r0, #66
- 175 003c FFF7FEFF 		bl	psxGravaByte
- 176 0040 0020     		movs	r0, #0
- 177 0042 FFF7FEFF 		bl	psxGravaByte
- 178 0046 0024     		movs	r4, #0
- 179              	.L21:
- 180 0048 FFF7FEFF 		bl	psxLeByte
- 181 004c 074B     		ldr	r3, .L23+12
- 182 004e 1851     		str	r0, [r3, r4]
- 183 0050 0434     		adds	r4, r4, #4
- 184 0052 182C     		cmp	r4, #24
- 185 0054 F8D1     		bne	.L21
- 186 0056 0122     		movs	r2, #1
- 187 0058 02FA06F6 		lsl	r6, r2, r6
- 188 005c 6E60     		str	r6, [r5, #4]
- 189 005e 70BD     		pop	{r4, r5, r6, pc}
- 190              	.L24:
- 191              		.align	2
- 192              	.L23:
- 193 0060 00000000 		.word	IO004_Handle12
- 194 0064 00000000 		.word	IO004_Handle10
- 195 0068 00000000 		.word	IO004_Handle11
- 196 006c 00000000 		.word	psxDado
- 198              		.section	.text.pulse_R,"ax",%progbits
- 199              		.align	1
- 200              		.global	pulse_R
- 201              		.thumb
- 202              		.thumb_func
- 204              	pulse_R:
- 205              		@ args = 0, pretend = 0, frame = 0
- 206              		@ frame_needed = 0, uses_anonymous_args = 0
- 207 0000 38B5     		push	{r3, r4, r5, lr}
- 208 0002 4FF49670 		mov	r0, #300
- 209 0006 FFF7FEFF 		bl	delay
- 210 000a 084B     		ldr	r3, .L26
- 211 000c 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
- 212 000e 5C68     		ldr	r4, [r3, #4]
- 213 0010 0120     		movs	r0, #1
- 214 0012 00FA05F0 		lsl	r0, r0, r5
- 215 0016 6060     		str	r0, [r4, #4]
- 216 0018 4FF49670 		mov	r0, #300
- 217 001c FFF7FEFF 		bl	delay
- 218 0020 4FF48031 		mov	r1, #65536
- 219 0024 01FA05F5 		lsl	r5, r1, r5
- 220 0028 6560     		str	r5, [r4, #4]
- 221 002a 38BD     		pop	{r3, r4, r5, pc}
- 222              	.L27:
- 223              		.align	2
- 224              	.L26:
- 225 002c 00000000 		.word	IO004_Handle2
- 227              		.section	.text.write_E,"ax",%progbits
- 228              		.align	1
- 229              		.global	write_E
- 230              		.thumb
- 231              		.thumb_func
- 233              	write_E:
- 234              		@ args = 0, pretend = 0, frame = 0
- 235              		@ frame_needed = 0, uses_anonymous_args = 0
- 236 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 237 0002 2A4B     		ldr	r3, .L41
- 238 0004 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
- 239 0006 5E68     		ldr	r6, [r3, #4]
- 240 0008 0120     		movs	r0, #1
- 241 000a 00FA07F0 		lsl	r0, r0, r7
- 242 000e 7060     		str	r0, [r6, #4]
- 243 0010 4FF47A70 		mov	r0, #1000
- 244 0014 FFF7FEFF 		bl	delay
- 245 0018 0725     		movs	r5, #7
- 246              	.L29:
- 247 001a 0724     		movs	r4, #7
- 248              	.L32:
- 249 001c 244B     		ldr	r3, .L41+4
- 250 001e 0122     		movs	r2, #1
- 251 0020 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
- 252 0022 244B     		ldr	r3, .L41+8
- 253 0024 02FA04F1 		lsl	r1, r2, r4
- 254 0028 0142     		tst	r1, r0
- 255 002a 05D0     		beq	.L30
- 256 002c 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
- 257 002e 5868     		ldr	r0, [r3, #4]
- 258 0030 02FA01F2 		lsl	r2, r2, r1
- 259 0034 4260     		str	r2, [r0, #4]
- 260 0036 06E0     		b	.L31
- 261              	.L30:
- 262 0038 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 263 003a 5A68     		ldr	r2, [r3, #4]
- 264 003c 4FF48031 		mov	r1, #65536
- 265 0040 01FA00F3 		lsl	r3, r1, r0
- 266 0044 5360     		str	r3, [r2, #4]
- 267              	.L31:
- 268 0046 FFF7FEFF 		bl	pulse_R
- 269 004a 14F1FF34 		adds	r4, r4, #-1
- 270 004e E5D2     		bcs	.L32
- 271 0050 013D     		subs	r5, r5, #1
- 272 0052 022D     		cmp	r5, #2
- 273 0054 E1D1     		bne	.L29
- 274              	.L38:
- 275 0056 0025     		movs	r5, #0
- 276              	.L33:
- 277 0058 0724     		movs	r4, #7
- 278              	.L36:
- 279 005a 174B     		ldr	r3, .L41+12
- 280 005c 0122     		movs	r2, #1
- 281 005e E95C     		ldrb	r1, [r5, r3]	@ zero_extendqisi2
- 282 0060 02FA04F0 		lsl	r0, r2, r4
- 283 0064 0842     		tst	r0, r1
- 284 0066 1348     		ldr	r0, .L41+8
- 285 0068 05D0     		beq	.L34
- 286 006a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 287 006c 4168     		ldr	r1, [r0, #4]
- 288 006e 02FA03F2 		lsl	r2, r2, r3
- 289 0072 4A60     		str	r2, [r1, #4]
- 290 0074 06E0     		b	.L35
- 291              	.L34:
- 292 0076 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 293 0078 4268     		ldr	r2, [r0, #4]
- 294 007a 4FF48031 		mov	r1, #65536
- 295 007e 01FA03F0 		lsl	r0, r1, r3
- 296 0082 5060     		str	r0, [r2, #4]
- 297              	.L35:
- 298 0084 FFF7FEFF 		bl	pulse_R
- 299 0088 14F1FF34 		adds	r4, r4, #-1
- 300 008c E5D2     		bcs	.L36
- 301 008e 0135     		adds	r5, r5, #1
- 302 0090 042D     		cmp	r5, #4
- 303 0092 E1D1     		bne	.L33
- 304 0094 4FF48032 		mov	r2, #65536
- 305 0098 02FA07F7 		lsl	r7, r2, r7
- 306 009c 41F28830 		movw	r0, #5000
- 307 00a0 7760     		str	r7, [r6, #4]
- 308 00a2 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
- 309 00a6 FFF7FEBF 		b	delay
- 310              	.L42:
- 311 00aa 00BF     		.align	2
- 312              	.L41:
- 313 00ac 00000000 		.word	IO004_Handle6
- 314 00b0 00000000 		.word	configuration
- 315 00b4 00000000 		.word	IO004_Handle4
- 316 00b8 00000000 		.word	data_E
- 318              		.section	.text.configure_E,"ax",%progbits
- 319              		.align	1
- 320              		.global	configure_E
- 321              		.thumb
- 322              		.thumb_func
- 324              	configure_E:
- 325              		@ args = 0, pretend = 0, frame = 0
- 326              		@ frame_needed = 0, uses_anonymous_args = 0
- 327 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 328 0002 294B     		ldr	r3, .L50
- 329 0004 C422     		movs	r2, #196
- 330 0006 4F20     		movs	r0, #79
- 331 0008 A321     		movs	r1, #163
- 332 000a 1A70     		strb	r2, [r3, #0]
- 333 000c 5870     		strb	r0, [r3, #1]
- 334 000e 9970     		strb	r1, [r3, #2]
- 335 0010 0020     		movs	r0, #0
- 336 0012 EE24     		movs	r4, #238
- 337 0014 DD25     		movs	r5, #221
- 338 0016 CC26     		movs	r6, #204
- 339 0018 BB27     		movs	r7, #187
- 340 001a AA22     		movs	r2, #170
- 341 001c 2021     		movs	r1, #32
- 342 001e DC70     		strb	r4, [r3, #3]
- 343 0020 1D71     		strb	r5, [r3, #4]
- 344 0022 5E71     		strb	r6, [r3, #5]
- 345 0024 9F71     		strb	r7, [r3, #6]
- 346 0026 DA71     		strb	r2, [r3, #7]
- 347 0028 1872     		strb	r0, [r3, #8]
- 348 002a 5872     		strb	r0, [r3, #9]
- 349 002c 9872     		strb	r0, [r3, #10]
- 350 002e D872     		strb	r0, [r3, #11]
- 351 0030 1873     		strb	r0, [r3, #12]
- 352 0032 9873     		strb	r0, [r3, #14]
- 353 0034 5973     		strb	r1, [r3, #13]
- 354 0036 1D4B     		ldr	r3, .L50+4
- 355 0038 1D4A     		ldr	r2, .L50+8
- 356 003a 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
- 357 003c 5C68     		ldr	r4, [r3, #4]
- 358 003e 4FF48036 		mov	r6, #65536
- 359 0042 06FA05F7 		lsl	r7, r6, r5
- 360 0046 6760     		str	r7, [r4, #4]
- 361 0048 5778     		ldrb	r7, [r2, #1]	@ zero_extendqisi2
- 362 004a 5668     		ldr	r6, [r2, #4]
- 363 004c 0120     		movs	r0, #1
- 364 004e 00FA07F0 		lsl	r0, r0, r7
- 365 0052 7060     		str	r0, [r6, #4]
- 366 0054 0E25     		movs	r5, #14
- 367              	.L44:
- 368 0056 0724     		movs	r4, #7
- 369              	.L47:
- 370 0058 134B     		ldr	r3, .L50
- 371 005a 0122     		movs	r2, #1
- 372 005c E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
- 373 005e 154B     		ldr	r3, .L50+12
- 374 0060 02FA04F1 		lsl	r1, r2, r4
- 375 0064 0142     		tst	r1, r0
- 376 0066 05D0     		beq	.L45
- 377 0068 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
- 378 006a 5868     		ldr	r0, [r3, #4]
- 379 006c 02FA01F2 		lsl	r2, r2, r1
- 380 0070 4260     		str	r2, [r0, #4]
- 381 0072 06E0     		b	.L46
- 382              	.L45:
- 383 0074 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 384 0076 5A68     		ldr	r2, [r3, #4]
- 385 0078 4FF48031 		mov	r1, #65536
- 386 007c 01FA00F3 		lsl	r3, r1, r0
- 387 0080 5360     		str	r3, [r2, #4]
- 388              	.L46:
- 389 0082 FFF7FEFF 		bl	pulse_R
- 390 0086 14F1FF34 		adds	r4, r4, #-1
- 391 008a E5D2     		bcs	.L47
- 392 008c 15F1FF35 		adds	r5, r5, #-1
- 393 0090 E1D2     		bcs	.L44
- 394              	.L48:
- 395 0092 4FF48032 		mov	r2, #65536
- 396 0096 02FA07F7 		lsl	r7, r2, r7
- 397 009a 4CF25030 		movw	r0, #50000
- 398 009e 7760     		str	r7, [r6, #4]
- 399 00a0 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
- 400 00a4 FFF7FEBF 		b	delay
- 401              	.L51:
- 402              		.align	2
- 403              	.L50:
- 404 00a8 00000000 		.word	configuration
- 405 00ac 00000000 		.word	IO004_Handle6
- 406 00b0 00000000 		.word	IO004_Handle1
- 407 00b4 00000000 		.word	IO004_Handle4
- 409              		.section	.text.startup.main,"ax",%progbits
- 410              		.align	1
- 411              		.global	main
- 412              		.thumb
- 413              		.thumb_func
- 415              	main:
- 416              		@ args = 0, pretend = 0, frame = 0
- 417              		@ frame_needed = 0, uses_anonymous_args = 0
- 418 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 419 0004 FFF7FEFF 		bl	DAVE_Init
- 420 0008 684D     		ldr	r5, .L90
- 421 000a FFF7FEFF 		bl	configure_E
- 422 000e 684B     		ldr	r3, .L90+4
- 423 0010 6F78     		ldrb	r7, [r5, #1]	@ zero_extendqisi2
- 424 0012 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
- 425 0014 6E68     		ldr	r6, [r5, #4]
- 426 0016 5A68     		ldr	r2, [r3, #4]
- 427 0018 0120     		movs	r0, #1
- 428 001a 00FA01F4 		lsl	r4, r0, r1
- 429 001e 00FA07F0 		lsl	r0, r0, r7
- 430 0022 5460     		str	r4, [r2, #4]
- 431 0024 7060     		str	r0, [r6, #4]
- 432 0026 FFF7FEFF 		bl	psxLeControle
- 433 002a 0025     		movs	r5, #0
- 434 002c 2C46     		mov	r4, r5
- 435              	.L83:
- 436 002e FFF7FEFF 		bl	psxLeControle
- 437 0032 604B     		ldr	r3, .L90+8
- 438 0034 5A68     		ldr	r2, [r3, #4]
- 439 0036 C2F3C008 		ubfx	r8, r2, #3, #1
- 440 003a 25B9     		cbnz	r5, .L54
- 441 003c B8F1000F 		cmp	r8, #0
- 442 0040 01D0     		beq	.L54
- 443 0042 84F00104 		eor	r4, r4, #1
- 444              	.L54:
- 445 0046 5C48     		ldr	r0, .L90+12
- 446 0048 5E69     		ldr	r6, [r3, #20]
- 447 004a AD21     		movs	r1, #173
- 448 004c 0170     		strb	r1, [r0, #0]
- 449 004e 1EB9     		cbnz	r6, .L55
- 450 0050 584F     		ldr	r7, .L90+8
- 451 0052 FB68     		ldr	r3, [r7, #12]
- 452 0054 002B     		cmp	r3, #0
- 453 0056 EAD0     		beq	.L83
- 454              	.L55:
- 455 0058 564D     		ldr	r5, .L90+8
- 456 005a EA68     		ldr	r2, [r5, #12]
- 457 005c 7F3E     		subs	r6, r6, #127
- 458 005e 7F3A     		subs	r2, r2, #127
- 459 0060 B6B2     		uxth	r6, r6
- 460 0062 95B2     		uxth	r5, r2
- 461 0064 1FFA86FE 		uxth	lr, r6
- 462 0068 AFB2     		uxth	r7, r5
- 463 006a 0021     		movs	r1, #0
- 464 006c 002C     		cmp	r4, #0
- 465 006e 48D1     		bne	.L57
- 466 0070 0FFA8EF3 		sxth	r3, lr
- 467 0074 13F11E0F 		cmn	r3, #30
- 468 0078 04DB     		blt	.L71
- 469 007a 1E2B     		cmp	r3, #30
- 470 007c 4FF00103 		mov	r3, #1
- 471 0080 03DC     		bgt	.L72
- 472 0082 00E0     		b	.L84
- 473              	.L71:
- 474 0084 2346     		mov	r3, r4
- 475              	.L84:
- 476 0086 0121     		movs	r1, #1
- 477 0088 00E0     		b	.L58
- 478              	.L72:
- 479 008a 2146     		mov	r1, r4
- 480              	.L58:
- 481 008c 3AB2     		sxth	r2, r7
- 482 008e 12F11E0F 		cmn	r2, #30
- 483 0092 04DB     		blt	.L73
- 484 0094 1E2A     		cmp	r2, #30
- 485 0096 4FF00102 		mov	r2, #1
- 486 009a 03DC     		bgt	.L74
- 487 009c 00E0     		b	.L85
- 488              	.L73:
- 489 009e 0022     		movs	r2, #0
- 490              	.L85:
- 491 00a0 0120     		movs	r0, #1
- 492 00a2 00E0     		b	.L59
- 493              	.L74:
- 494 00a4 0020     		movs	r0, #0
- 495              	.L59:
- 496 00a6 0FFA8EFC 		sxth	ip, lr
- 497 00aa BCF1000F 		cmp	ip, #0
- 498 00ae D6BF     		itet	le
- 499 00b0 6FF0010C 		mvnle	ip, #1
- 500 00b4 4FEA460C 		lslgt	ip, r6, #1
- 501 00b8 0CFB06FC 		mulle	ip, ip, r6
- 502 00bc 1FFA8CFE 		uxth	lr, ip
- 503 00c0 0FFA8EFE 		sxth	lr, lr
- 504 00c4 4FEA8E0C 		lsl	ip, lr, #2
- 505 00c8 4FEA8E1E 		lsl	lr, lr, #6
- 506 00cc CCEB0E0E 		rsb	lr, ip, lr
- 507 00d0 394E     		ldr	r6, .L90+12
- 508 00d2 4FF0640C 		mov	ip, #100
- 509 00d6 3FB2     		sxth	r7, r7
- 510 00d8 9EFBFCFE 		sdiv	lr, lr, ip
- 511 00dc 002F     		cmp	r7, #0
- 512 00de 86F801E0 		strb	lr, [r6, #1]
- 513 00e2 01DD     		ble	.L62
- 514 00e4 6D00     		lsls	r5, r5, #1
- 515 00e6 02E0     		b	.L87
- 516              	.L62:
- 517 00e8 6FF00107 		mvn	r7, #1
- 518 00ec 7D43     		muls	r5, r7, r5
- 519              	.L87:
- 520 00ee ADB2     		uxth	r5, r5
- 521 00f0 2DB2     		sxth	r5, r5
- 522 00f2 AF00     		lsls	r7, r5, #2
- 523 00f4 AD01     		lsls	r5, r5, #6
- 524 00f6 ED1B     		subs	r5, r5, r7
- 525 00f8 6427     		movs	r7, #100
- 526 00fa 95FBF7F5 		sdiv	r5, r5, r7
- 527 00fe B570     		strb	r5, [r6, #2]
- 528 0100 45E0     		b	.L64
- 529              	.L57:
- 530 0102 38B2     		sxth	r0, r7
- 531 0104 1E28     		cmp	r0, #30
- 532 0106 05DC     		bgt	.L75
- 533 0108 10F11E03 		adds	r3, r0, #30
- 534 010c 4FF00103 		mov	r3, #1
- 535 0110 02DB     		blt	.L65
- 536 0112 00E0     		b	.L88
- 537              	.L75:
- 538 0114 0B46     		mov	r3, r1
- 539              	.L88:
- 540 0116 0121     		movs	r1, #1
- 541              	.L65:
- 542 0118 0FFA8EF2 		sxth	r2, lr
- 543 011c 1E2A     		cmp	r2, #30
- 544 011e 08DC     		bgt	.L77
- 545 0120 12F11E0F 		cmn	r2, #30
- 546 0124 B4BF     		ite	lt
- 547 0126 0020     		movlt	r0, #0
- 548 0128 0120     		movge	r0, #1
- 549 012a 002A     		cmp	r2, #0
- 550 012c 08DD     		ble	.L67
- 551 012e 0122     		movs	r2, #1
- 552 0130 01E0     		b	.L66
- 553              	.L77:
- 554 0132 0022     		movs	r2, #0
- 555 0134 0120     		movs	r0, #1
- 556              	.L66:
- 557 0136 4FEA4606 		lsl	r6, r6, #1
- 558 013a 1FFA86FE 		uxth	lr, r6
- 559 013e 06E0     		b	.L68
- 560              	.L67:
- 561 0140 6FF0010C 		mvn	ip, #1
- 562 0144 0CFB06F6 		mul	r6, ip, r6
- 563 0148 1FFA86FE 		uxth	lr, r6
- 564 014c 0122     		movs	r2, #1
- 565              	.L68:
- 566 014e 0FFA8EFE 		sxth	lr, lr
- 567 0152 4FEA8E0C 		lsl	ip, lr, #2
- 568 0156 4FEA8E1E 		lsl	lr, lr, #6
- 569 015a CCEB0E0E 		rsb	lr, ip, lr
- 570 015e 164E     		ldr	r6, .L90+12
- 571 0160 4FF0640C 		mov	ip, #100
- 572 0164 3FB2     		sxth	r7, r7
- 573 0166 9EFBFCFE 		sdiv	lr, lr, ip
- 574 016a 002F     		cmp	r7, #0
- 575 016c 86F802E0 		strb	lr, [r6, #2]
- 576 0170 01DD     		ble	.L69
- 577 0172 6D00     		lsls	r5, r5, #1
- 578 0174 02E0     		b	.L89
- 579              	.L69:
- 580 0176 6FF00107 		mvn	r7, #1
- 581 017a 7D43     		muls	r5, r7, r5
- 582              	.L89:
- 583 017c ADB2     		uxth	r5, r5
- 584 017e 2DB2     		sxth	r5, r5
- 585 0180 AF00     		lsls	r7, r5, #2
- 586 0182 AD01     		lsls	r5, r5, #6
- 587 0184 ED1B     		subs	r5, r5, r7
- 588 0186 6427     		movs	r7, #100
- 589 0188 95FBF7F5 		sdiv	r5, r5, r7
- 590 018c 7570     		strb	r5, [r6, #1]
- 591              	.L64:
- 592 018e 5201     		lsls	r2, r2, #5
- 593 0190 42EA0010 		orr	r0, r2, r0, lsl #4
- 594 0194 41F00201 		orr	r1, r1, #2
- 595 0198 40EA0106 		orr	r6, r0, r1
- 596 019c 064F     		ldr	r7, .L90+12
- 597 019e 46EAC303 		orr	r3, r6, r3, lsl #3
- 598 01a2 FB70     		strb	r3, [r7, #3]
- 599 01a4 4546     		mov	r5, r8
- 600 01a6 FFF7FEFF 		bl	write_E
- 601 01aa 40E7     		b	.L83
- 602              	.L91:
- 603              		.align	2
- 604              	.L90:
- 605 01ac 00000000 		.word	IO004_Handle8
- 606 01b0 00000000 		.word	IO004_Handle7
- 607 01b4 00000000 		.word	psxDado
- 608 01b8 00000000 		.word	data_E
- 610              		.section	.text.read_R,"ax",%progbits
- 611              		.align	1
- 612              		.global	read_R
- 613              		.thumb
- 614              		.thumb_func
- 616              	read_R:
- 617              		@ args = 0, pretend = 0, frame = 0
- 618              		@ frame_needed = 0, uses_anonymous_args = 0
- 619 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 620 0002 164B     		ldr	r3, .L99
- 621 0004 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
- 622 0006 5E68     		ldr	r6, [r3, #4]
- 623 0008 4FF48030 		mov	r0, #65536
- 624 000c 00FA07F0 		lsl	r0, r0, r7
- 625 0010 7060     		str	r0, [r6, #4]
- 626 0012 4CF25030 		movw	r0, #50000
- 627 0016 FFF7FEFF 		bl	delay
- 628 001a 0025     		movs	r5, #0
- 629 001c 0724     		movs	r4, #7
- 630              	.L94:
- 631 001e 1049     		ldr	r1, .L99+4
- 632 0020 4A68     		ldr	r2, [r1, #4]
- 633 0022 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
- 634 0024 506A     		ldr	r0, [r2, #36]
- 635 0026 20FA03F1 		lsr	r1, r0, r3
- 636 002a CB07     		lsls	r3, r1, #31
- 637 002c 04D5     		bpl	.L93
- 638 002e 0122     		movs	r2, #1
- 639 0030 02FA04F2 		lsl	r2, r2, r4
- 640 0034 1543     		orrs	r5, r5, r2
- 641 0036 EDB2     		uxtb	r5, r5
- 642              	.L93:
- 643 0038 FFF7FEFF 		bl	pulse_R
- 644 003c 14F1FF34 		adds	r4, r4, #-1
- 645 0040 EDD2     		bcs	.L94
- 646 0042 0848     		ldr	r0, .L99+8
- 647 0044 0123     		movs	r3, #1
- 648 0046 0570     		strb	r5, [r0, #0]
- 649 0048 03FA07F7 		lsl	r7, r3, r7
- 650 004c 4CF25030 		movw	r0, #50000
- 651 0050 7760     		str	r7, [r6, #4]
- 652 0052 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
- 653 0056 FFF7FEBF 		b	delay
- 654              	.L100:
- 655 005a 00BF     		.align	2
- 656              	.L99:
- 657 005c 00000000 		.word	IO004_Handle6
- 658 0060 00000000 		.word	IO004_Handle4
- 659 0064 00000000 		.word	.LANCHOR0
- 661              		.section	.text.printByteToInt,"ax",%progbits
- 662              		.align	1
- 663              		.global	printByteToInt
- 664              		.thumb
- 665              		.thumb_func
- 667              	printByteToInt:
- 668              		@ args = 0, pretend = 0, frame = 0
- 669              		@ frame_needed = 0, uses_anonymous_args = 0
- 670 0000 0A23     		movs	r3, #10
- 671 0002 70B5     		push	{r4, r5, r6, lr}
- 672 0004 B0FBF3F4 		udiv	r4, r0, r3
- 673 0008 E5B2     		uxtb	r5, r4
- 674 000a B5FBF3F1 		udiv	r1, r5, r3
- 675 000e B1FBF3F6 		udiv	r6, r1, r3
- 676 0012 0A4A     		ldr	r2, .L102
- 677 0014 06FB1316 		mls	r6, r6, r3, r1
- 678 0018 03FB1400 		mls	r0, r3, r4, r0
- 679 001c 03FB1151 		mls	r1, r3, r1, r5
- 680 0020 1268     		ldr	r2, [r2, #0]
- 681 0022 3036     		adds	r6, r6, #48
- 682 0024 3031     		adds	r1, r1, #48
- 683 0026 3030     		adds	r0, r0, #48
- 684 0028 F6B2     		uxtb	r6, r6
- 685 002a C9B2     		uxtb	r1, r1
- 686 002c C3B2     		uxtb	r3, r0
- 687 002e C2F88061 		str	r6, [r2, #384]
- 688 0032 C2F88011 		str	r1, [r2, #384]
- 689 0036 C2F88031 		str	r3, [r2, #384]
- 690 003a 70BD     		pop	{r4, r5, r6, pc}
- 691              	.L103:
- 692              		.align	2
- 693              	.L102:
- 694 003c 00000000 		.word	UART001_Handle0
- 696              		.comm	data_E,4,1
- 697              		.global	data_R
- 698              		.comm	configuration,15,1
- 699              		.comm	psxDado,24,4
- 700              		.global	select
- 701              		.global	start
- 702              		.global	down
- 703              		.global	up
- 704              		.global	right
- 705              		.global	left
- 706              		.global	circle
- 707              		.global	triangle
- 708              		.global	sqr
- 709              		.global	cross
- 710              		.global	r2
- 711              		.global	r1
- 712              		.global	l2
- 713              		.global	l1
- 714              		.data
- 715              		.set	.LANCHOR0,. + 0
- 718              	data_R:
- 719 0000 30       		.byte	48
- 720              		.bss
- 721              		.align	2
- 724              	select:
- 725 0000 00000000 		.space	4
- 728              	start:
- 729 0004 00000000 		.space	4
- 732              	down:
- 733 0008 00000000 		.space	4
- 736              	up:
- 737 000c 00000000 		.space	4
- 740              	right:
- 741 0010 00000000 		.space	4
- 744              	left:
- 745 0014 00000000 		.space	4
- 748              	circle:
- 749 0018 00000000 		.space	4
- 752              	triangle:
- 753 001c 00000000 		.space	4
- 756              	sqr:
- 757 0020 00000000 		.space	4
- 760              	cross:
- 761 0024 00000000 		.space	4
- 764              	r2:
- 765 0028 00000000 		.space	4
- 768              	r1:
- 769 002c 00000000 		.space	4
- 772              	l2:
- 773 0030 00000000 		.space	4
- 776              	l1:
- 777 0034 00000000 		.space	4
- 778              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  47 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  48 0004 0025     		movs	r5, #0
+  49 0006 8046     		mov	r8, r0
+  50 0008 2C46     		mov	r4, r5
+  51              	.L10:
+  52 000a 2048     		ldr	r0, .L13
+  53 000c 48FA04F3 		asr	r3, r8, r4
+  54 0010 13F0010F 		tst	r3, #1
+  55 0014 4268     		ldr	r2, [r0, #4]
+  56 0016 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+  57 0018 01D0     		beq	.L7
+  58 001a 0121     		movs	r1, #1
+  59 001c 01E0     		b	.L12
+  60              	.L7:
+  61 001e 4FF48031 		mov	r1, #65536
+  62              	.L12:
+  63 0022 1B4B     		ldr	r3, .L13+4
+  64 0024 01FA06F7 		lsl	r7, r1, r6
+  65 0028 5760     		str	r7, [r2, #4]
+  66 002a 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
+  67 002c 5E68     		ldr	r6, [r3, #4]
+  68 002e 4FF48030 		mov	r0, #65536
+  69 0032 00FA07F0 		lsl	r0, r0, r7
+  70 0036 7060     		str	r0, [r6, #4]
+  71 0038 4FF49670 		mov	r0, #300
+  72 003c FFF7FEFF 		bl	delay
+  73 0040 1449     		ldr	r1, .L13+8
+  74 0042 4A68     		ldr	r2, [r1, #4]
+  75 0044 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+  76 0046 506A     		ldr	r0, [r2, #36]
+  77 0048 20FA03F1 		lsr	r1, r0, r3
+  78 004c 11F0010F 		tst	r1, #1
+  79 0050 4FF00102 		mov	r2, #1
+  80 0054 08BF     		it	eq
+  81 0056 02FA04F0 		lsleq	r0, r2, r4
+  82 005a 02FA07F7 		lsl	r7, r2, r7
+  83 005e 08BF     		it	eq
+  84 0060 0543     		orreq	r5, r5, r0
+  85 0062 7760     		str	r7, [r6, #4]
+  86 0064 4FF49670 		mov	r0, #300
+  87 0068 0134     		adds	r4, r4, #1
+  88 006a FFF7FEFF 		bl	delay
+  89 006e 082C     		cmp	r4, #8
+  90 0070 CBD1     		bne	.L10
+  91 0072 0648     		ldr	r0, .L13
+  92 0074 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  93 0076 4268     		ldr	r2, [r0, #4]
+  94 0078 0121     		movs	r1, #1
+  95 007a 01FA03F0 		lsl	r0, r1, r3
+  96 007e 5060     		str	r0, [r2, #4]
+  97 0080 6420     		movs	r0, #100
+  98 0082 FFF7FEFF 		bl	delay
+  99 0086 2846     		mov	r0, r5
+ 100 0088 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 101              	.L14:
+ 102              		.align	2
+ 103              	.L13:
+ 104 008c 00000000 		.word	IO004_Handle12
+ 105 0090 00000000 		.word	IO004_Handle10
+ 106 0094 00000000 		.word	IO004_Handle9
+ 108              		.section	.text.psxHandShake,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	psxHandShake
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	psxHandShake:
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117 0000 174B     		ldr	r3, .L16
+ 118 0002 70B5     		push	{r4, r5, r6, lr}
+ 119 0004 174D     		ldr	r5, .L16+4
+ 120 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 121 0008 5A68     		ldr	r2, [r3, #4]
+ 122 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 123 000c 6E68     		ldr	r6, [r5, #4]
+ 124 000e 0124     		movs	r4, #1
+ 125 0010 04FA00F1 		lsl	r1, r4, r0
+ 126 0014 1448     		ldr	r0, .L16+8
+ 127 0016 5160     		str	r1, [r2, #4]
+ 128 0018 04FA03F2 		lsl	r2, r4, r3
+ 129 001c 7260     		str	r2, [r6, #4]
+ 130 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+ 131 0020 4568     		ldr	r5, [r0, #4]
+ 132 0022 4FF48031 		mov	r1, #65536
+ 133 0026 01FA06F1 		lsl	r1, r1, r6
+ 134 002a 6960     		str	r1, [r5, #4]
+ 135 002c 4FF49670 		mov	r0, #300
+ 136 0030 FFF7FEFF 		bl	delay
+ 137 0034 2046     		mov	r0, r4
+ 138 0036 FFF7FEFF 		bl	psxTrocaByte
+ 139 003a 4220     		movs	r0, #66
+ 140 003c FFF7FEFF 		bl	psxTrocaByte
+ 141 0040 0A4B     		ldr	r3, .L16+12
+ 142 0042 1870     		strb	r0, [r3, #0]
+ 143 0044 0020     		movs	r0, #0
+ 144 0046 FFF7FEFF 		bl	psxTrocaByte
+ 145 004a 0020     		movs	r0, #0
+ 146 004c FFF7FEFF 		bl	psxTrocaByte
+ 147 0050 04FA06F4 		lsl	r4, r4, r6
+ 148 0054 0020     		movs	r0, #0
+ 149 0056 FFF7FEFF 		bl	psxTrocaByte
+ 150 005a 6C60     		str	r4, [r5, #4]
+ 151 005c 70BD     		pop	{r4, r5, r6, pc}
+ 152              	.L17:
+ 153 005e 00BF     		.align	2
+ 154              	.L16:
+ 155 0060 00000000 		.word	IO004_Handle12
+ 156 0064 00000000 		.word	IO004_Handle10
+ 157 0068 00000000 		.word	IO004_Handle11
+ 158 006c 00000000 		.word	psx_status
+ 160              		.section	.text.psxLeControle,"ax",%progbits
+ 161              		.align	1
+ 162              		.global	psxLeControle
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	psxLeControle:
+ 167              		@ args = 0, pretend = 0, frame = 0
+ 168              		@ frame_needed = 0, uses_anonymous_args = 0
+ 169 0000 194B     		ldr	r3, .L21
+ 170 0002 70B5     		push	{r4, r5, r6, lr}
+ 171 0004 194D     		ldr	r5, .L21+4
+ 172 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 173 0008 5A68     		ldr	r2, [r3, #4]
+ 174 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 175 000c 6E68     		ldr	r6, [r5, #4]
+ 176 000e 0124     		movs	r4, #1
+ 177 0010 04FA00F1 		lsl	r1, r4, r0
+ 178 0014 1648     		ldr	r0, .L21+8
+ 179 0016 5160     		str	r1, [r2, #4]
+ 180 0018 04FA03F2 		lsl	r2, r4, r3
+ 181 001c 7260     		str	r2, [r6, #4]
+ 182 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+ 183 0020 4568     		ldr	r5, [r0, #4]
+ 184 0022 4FF48031 		mov	r1, #65536
+ 185 0026 01FA06F1 		lsl	r1, r1, r6
+ 186 002a 6960     		str	r1, [r5, #4]
+ 187 002c 4FF49670 		mov	r0, #300
+ 188 0030 FFF7FEFF 		bl	delay
+ 189 0034 2046     		mov	r0, r4
+ 190 0036 FFF7FEFF 		bl	psxTrocaByte
+ 191 003a 4220     		movs	r0, #66
+ 192 003c FFF7FEFF 		bl	psxTrocaByte
+ 193 0040 0C4C     		ldr	r4, .L21+12
+ 194 0042 2070     		strb	r0, [r4, #0]
+ 195 0044 0020     		movs	r0, #0
+ 196 0046 FFF7FEFF 		bl	psxTrocaByte
+ 197 004a 0024     		movs	r4, #0
+ 198              	.L19:
+ 199 004c 0020     		movs	r0, #0
+ 200 004e FFF7FEFF 		bl	psxTrocaByte
+ 201 0052 094B     		ldr	r3, .L21+16
+ 202 0054 1851     		str	r0, [r3, r4]
+ 203 0056 0434     		adds	r4, r4, #4
+ 204 0058 182C     		cmp	r4, #24
+ 205 005a F7D1     		bne	.L19
+ 206 005c 0122     		movs	r2, #1
+ 207 005e 02FA06F6 		lsl	r6, r2, r6
+ 208 0062 6E60     		str	r6, [r5, #4]
+ 209 0064 70BD     		pop	{r4, r5, r6, pc}
+ 210              	.L22:
+ 211 0066 00BF     		.align	2
+ 212              	.L21:
+ 213 0068 00000000 		.word	IO004_Handle12
+ 214 006c 00000000 		.word	IO004_Handle10
+ 215 0070 00000000 		.word	IO004_Handle11
+ 216 0074 00000000 		.word	psx_status
+ 217 0078 00000000 		.word	psxDado
+ 219              		.section	.text.psxExitConfigMode,"ax",%progbits
+ 220              		.align	1
+ 221              		.global	psxExitConfigMode
+ 222              		.thumb
+ 223              		.thumb_func
+ 225              	psxExitConfigMode:
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228 0000 1C4B     		ldr	r3, .L24
+ 229 0002 70B5     		push	{r4, r5, r6, lr}
+ 230 0004 1C4D     		ldr	r5, .L24+4
+ 231 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 232 0008 5A68     		ldr	r2, [r3, #4]
+ 233 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 234 000c 6E68     		ldr	r6, [r5, #4]
+ 235 000e 0124     		movs	r4, #1
+ 236 0010 04FA00F1 		lsl	r1, r4, r0
+ 237 0014 1948     		ldr	r0, .L24+8
+ 238 0016 5160     		str	r1, [r2, #4]
+ 239 0018 04FA03F2 		lsl	r2, r4, r3
+ 240 001c 7260     		str	r2, [r6, #4]
+ 241 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+ 242 0020 4568     		ldr	r5, [r0, #4]
+ 243 0022 4FF48031 		mov	r1, #65536
+ 244 0026 01FA06F1 		lsl	r1, r1, r6
+ 245 002a 6960     		str	r1, [r5, #4]
+ 246 002c 4FF49670 		mov	r0, #300
+ 247 0030 FFF7FEFF 		bl	delay
+ 248 0034 2046     		mov	r0, r4
+ 249 0036 FFF7FEFF 		bl	psxTrocaByte
+ 250 003a 4320     		movs	r0, #67
+ 251 003c FFF7FEFF 		bl	psxTrocaByte
+ 252 0040 0020     		movs	r0, #0
+ 253 0042 FFF7FEFF 		bl	psxTrocaByte
+ 254 0046 0020     		movs	r0, #0
+ 255 0048 FFF7FEFF 		bl	psxTrocaByte
+ 256 004c 5A20     		movs	r0, #90
+ 257 004e FFF7FEFF 		bl	psxTrocaByte
+ 258 0052 5A20     		movs	r0, #90
+ 259 0054 FFF7FEFF 		bl	psxTrocaByte
+ 260 0058 5A20     		movs	r0, #90
+ 261 005a FFF7FEFF 		bl	psxTrocaByte
+ 262 005e 5A20     		movs	r0, #90
+ 263 0060 FFF7FEFF 		bl	psxTrocaByte
+ 264 0064 04FA06F4 		lsl	r4, r4, r6
+ 265 0068 5A20     		movs	r0, #90
+ 266 006a FFF7FEFF 		bl	psxTrocaByte
+ 267 006e 6C60     		str	r4, [r5, #4]
+ 268 0070 70BD     		pop	{r4, r5, r6, pc}
+ 269              	.L25:
+ 270 0072 00BF     		.align	2
+ 271              	.L24:
+ 272 0074 00000000 		.word	IO004_Handle12
+ 273 0078 00000000 		.word	IO004_Handle10
+ 274 007c 00000000 		.word	IO004_Handle11
+ 276              		.section	.text.psxSetAnalogMode,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	psxSetAnalogMode
+ 279              		.thumb
+ 280              		.thumb_func
+ 282              	psxSetAnalogMode:
+ 283              		@ args = 0, pretend = 0, frame = 0
+ 284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 285 0000 1C4B     		ldr	r3, .L27
+ 286 0002 70B5     		push	{r4, r5, r6, lr}
+ 287 0004 1C4D     		ldr	r5, .L27+4
+ 288 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 289 0008 5A68     		ldr	r2, [r3, #4]
+ 290 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 291 000c 6E68     		ldr	r6, [r5, #4]
+ 292 000e 0124     		movs	r4, #1
+ 293 0010 04FA00F1 		lsl	r1, r4, r0
+ 294 0014 1948     		ldr	r0, .L27+8
+ 295 0016 5160     		str	r1, [r2, #4]
+ 296 0018 04FA03F2 		lsl	r2, r4, r3
+ 297 001c 7260     		str	r2, [r6, #4]
+ 298 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+ 299 0020 4568     		ldr	r5, [r0, #4]
+ 300 0022 4FF48031 		mov	r1, #65536
+ 301 0026 01FA06F1 		lsl	r1, r1, r6
+ 302 002a 6960     		str	r1, [r5, #4]
+ 303 002c 4FF49670 		mov	r0, #300
+ 304 0030 FFF7FEFF 		bl	delay
+ 305 0034 2046     		mov	r0, r4
+ 306 0036 FFF7FEFF 		bl	psxTrocaByte
+ 307 003a 4420     		movs	r0, #68
+ 308 003c FFF7FEFF 		bl	psxTrocaByte
+ 309 0040 0020     		movs	r0, #0
+ 310 0042 FFF7FEFF 		bl	psxTrocaByte
+ 311 0046 2046     		mov	r0, r4
+ 312 0048 FFF7FEFF 		bl	psxTrocaByte
+ 313 004c 0320     		movs	r0, #3
+ 314 004e FFF7FEFF 		bl	psxTrocaByte
+ 315 0052 0020     		movs	r0, #0
+ 316 0054 FFF7FEFF 		bl	psxTrocaByte
+ 317 0058 0020     		movs	r0, #0
+ 318 005a FFF7FEFF 		bl	psxTrocaByte
+ 319 005e 0020     		movs	r0, #0
+ 320 0060 FFF7FEFF 		bl	psxTrocaByte
+ 321 0064 04FA06F4 		lsl	r4, r4, r6
+ 322 0068 0020     		movs	r0, #0
+ 323 006a FFF7FEFF 		bl	psxTrocaByte
+ 324 006e 6C60     		str	r4, [r5, #4]
+ 325 0070 70BD     		pop	{r4, r5, r6, pc}
+ 326              	.L28:
+ 327 0072 00BF     		.align	2
+ 328              	.L27:
+ 329 0074 00000000 		.word	IO004_Handle12
+ 330 0078 00000000 		.word	IO004_Handle10
+ 331 007c 00000000 		.word	IO004_Handle11
+ 333              		.section	.text.psxEnterConfigMode,"ax",%progbits
+ 334              		.align	1
+ 335              		.global	psxEnterConfigMode
+ 336              		.thumb
+ 337              		.thumb_func
+ 339              	psxEnterConfigMode:
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+ 342 0000 164B     		ldr	r3, .L30
+ 343 0002 70B5     		push	{r4, r5, r6, lr}
+ 344 0004 164D     		ldr	r5, .L30+4
+ 345 0006 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 346 0008 5A68     		ldr	r2, [r3, #4]
+ 347 000a 6B78     		ldrb	r3, [r5, #1]	@ zero_extendqisi2
+ 348 000c 6E68     		ldr	r6, [r5, #4]
+ 349 000e 0124     		movs	r4, #1
+ 350 0010 04FA00F1 		lsl	r1, r4, r0
+ 351 0014 1348     		ldr	r0, .L30+8
+ 352 0016 5160     		str	r1, [r2, #4]
+ 353 0018 04FA03F2 		lsl	r2, r4, r3
+ 354 001c 7260     		str	r2, [r6, #4]
+ 355 001e 4678     		ldrb	r6, [r0, #1]	@ zero_extendqisi2
+ 356 0020 4568     		ldr	r5, [r0, #4]
+ 357 0022 4FF48031 		mov	r1, #65536
+ 358 0026 01FA06F1 		lsl	r1, r1, r6
+ 359 002a 6960     		str	r1, [r5, #4]
+ 360 002c 4FF49670 		mov	r0, #300
+ 361 0030 FFF7FEFF 		bl	delay
+ 362 0034 2046     		mov	r0, r4
+ 363 0036 FFF7FEFF 		bl	psxTrocaByte
+ 364 003a 4320     		movs	r0, #67
+ 365 003c FFF7FEFF 		bl	psxTrocaByte
+ 366 0040 0020     		movs	r0, #0
+ 367 0042 FFF7FEFF 		bl	psxTrocaByte
+ 368 0046 2046     		mov	r0, r4
+ 369 0048 FFF7FEFF 		bl	psxTrocaByte
+ 370 004c 04FA06F4 		lsl	r4, r4, r6
+ 371 0050 0020     		movs	r0, #0
+ 372 0052 FFF7FEFF 		bl	psxTrocaByte
+ 373 0056 6C60     		str	r4, [r5, #4]
+ 374 0058 70BD     		pop	{r4, r5, r6, pc}
+ 375              	.L31:
+ 376 005a 00BF     		.align	2
+ 377              	.L30:
+ 378 005c 00000000 		.word	IO004_Handle12
+ 379 0060 00000000 		.word	IO004_Handle10
+ 380 0064 00000000 		.word	IO004_Handle11
+ 382              		.section	.text.psxConfiguraControle,"ax",%progbits
+ 383              		.align	1
+ 384              		.global	psxConfiguraControle
+ 385              		.thumb
+ 386              		.thumb_func
+ 388              	psxConfiguraControle:
+ 389              		@ args = 0, pretend = 0, frame = 0
+ 390              		@ frame_needed = 0, uses_anonymous_args = 0
+ 391 0000 08B5     		push	{r3, lr}
+ 392 0002 FFF7FEFF 		bl	psxEnterConfigMode
+ 393 0006 FFF7FEFF 		bl	psxSetAnalogMode
+ 394 000a BDE80840 		pop	{r3, lr}
+ 395 000e FFF7FEBF 		b	psxExitConfigMode
+ 397              		.section	.text.pulse_R,"ax",%progbits
+ 398              		.align	1
+ 399              		.global	pulse_R
+ 400              		.thumb
+ 401              		.thumb_func
+ 403              	pulse_R:
+ 404              		@ args = 0, pretend = 0, frame = 0
+ 405              		@ frame_needed = 0, uses_anonymous_args = 0
+ 406 0000 38B5     		push	{r3, r4, r5, lr}
+ 407 0002 4FF49670 		mov	r0, #300
+ 408 0006 FFF7FEFF 		bl	delay
+ 409 000a 084B     		ldr	r3, .L34
+ 410 000c 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
+ 411 000e 5C68     		ldr	r4, [r3, #4]
+ 412 0010 0120     		movs	r0, #1
+ 413 0012 00FA05F0 		lsl	r0, r0, r5
+ 414 0016 6060     		str	r0, [r4, #4]
+ 415 0018 4FF49670 		mov	r0, #300
+ 416 001c FFF7FEFF 		bl	delay
+ 417 0020 4FF48031 		mov	r1, #65536
+ 418 0024 01FA05F5 		lsl	r5, r1, r5
+ 419 0028 6560     		str	r5, [r4, #4]
+ 420 002a 38BD     		pop	{r3, r4, r5, pc}
+ 421              	.L35:
+ 422              		.align	2
+ 423              	.L34:
+ 424 002c 00000000 		.word	IO004_Handle2
+ 426              		.section	.text.write_E,"ax",%progbits
+ 427              		.align	1
+ 428              		.global	write_E
+ 429              		.thumb
+ 430              		.thumb_func
+ 432              	write_E:
+ 433              		@ args = 0, pretend = 0, frame = 0
+ 434              		@ frame_needed = 0, uses_anonymous_args = 0
+ 435 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 436 0002 2A4B     		ldr	r3, .L49
+ 437 0004 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
+ 438 0006 5E68     		ldr	r6, [r3, #4]
+ 439 0008 0120     		movs	r0, #1
+ 440 000a 00FA07F0 		lsl	r0, r0, r7
+ 441 000e 7060     		str	r0, [r6, #4]
+ 442 0010 4FF47A70 		mov	r0, #1000
+ 443 0014 FFF7FEFF 		bl	delay
+ 444 0018 0725     		movs	r5, #7
+ 445              	.L37:
+ 446 001a 0724     		movs	r4, #7
+ 447              	.L40:
+ 448 001c 244B     		ldr	r3, .L49+4
+ 449 001e 0122     		movs	r2, #1
+ 450 0020 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
+ 451 0022 244B     		ldr	r3, .L49+8
+ 452 0024 02FA04F1 		lsl	r1, r2, r4
+ 453 0028 0142     		tst	r1, r0
+ 454 002a 05D0     		beq	.L38
+ 455 002c 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+ 456 002e 5868     		ldr	r0, [r3, #4]
+ 457 0030 02FA01F2 		lsl	r2, r2, r1
+ 458 0034 4260     		str	r2, [r0, #4]
+ 459 0036 06E0     		b	.L39
+ 460              	.L38:
+ 461 0038 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 462 003a 5A68     		ldr	r2, [r3, #4]
+ 463 003c 4FF48031 		mov	r1, #65536
+ 464 0040 01FA00F3 		lsl	r3, r1, r0
+ 465 0044 5360     		str	r3, [r2, #4]
+ 466              	.L39:
+ 467 0046 FFF7FEFF 		bl	pulse_R
+ 468 004a 14F1FF34 		adds	r4, r4, #-1
+ 469 004e E5D2     		bcs	.L40
+ 470 0050 013D     		subs	r5, r5, #1
+ 471 0052 022D     		cmp	r5, #2
+ 472 0054 E1D1     		bne	.L37
+ 473              	.L46:
+ 474 0056 0025     		movs	r5, #0
+ 475              	.L41:
+ 476 0058 0724     		movs	r4, #7
+ 477              	.L44:
+ 478 005a 174B     		ldr	r3, .L49+12
+ 479 005c 0122     		movs	r2, #1
+ 480 005e E95C     		ldrb	r1, [r5, r3]	@ zero_extendqisi2
+ 481 0060 02FA04F0 		lsl	r0, r2, r4
+ 482 0064 0842     		tst	r0, r1
+ 483 0066 1348     		ldr	r0, .L49+8
+ 484 0068 05D0     		beq	.L42
+ 485 006a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 486 006c 4168     		ldr	r1, [r0, #4]
+ 487 006e 02FA03F2 		lsl	r2, r2, r3
+ 488 0072 4A60     		str	r2, [r1, #4]
+ 489 0074 06E0     		b	.L43
+ 490              	.L42:
+ 491 0076 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 492 0078 4268     		ldr	r2, [r0, #4]
+ 493 007a 4FF48031 		mov	r1, #65536
+ 494 007e 01FA03F0 		lsl	r0, r1, r3
+ 495 0082 5060     		str	r0, [r2, #4]
+ 496              	.L43:
+ 497 0084 FFF7FEFF 		bl	pulse_R
+ 498 0088 14F1FF34 		adds	r4, r4, #-1
+ 499 008c E5D2     		bcs	.L44
+ 500 008e 0135     		adds	r5, r5, #1
+ 501 0090 052D     		cmp	r5, #5
+ 502 0092 E1D1     		bne	.L41
+ 503 0094 4FF48032 		mov	r2, #65536
+ 504 0098 02FA07F7 		lsl	r7, r2, r7
+ 505 009c 41F28830 		movw	r0, #5000
+ 506 00a0 7760     		str	r7, [r6, #4]
+ 507 00a2 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 508 00a6 FFF7FEBF 		b	delay
+ 509              	.L50:
+ 510 00aa 00BF     		.align	2
+ 511              	.L49:
+ 512 00ac 00000000 		.word	IO004_Handle6
+ 513 00b0 00000000 		.word	configuration
+ 514 00b4 00000000 		.word	IO004_Handle4
+ 515 00b8 00000000 		.word	data_E
+ 517              		.section	.text.configure_E,"ax",%progbits
+ 518              		.align	1
+ 519              		.global	configure_E
+ 520              		.thumb
+ 521              		.thumb_func
+ 523              	configure_E:
+ 524              		@ args = 0, pretend = 0, frame = 0
+ 525              		@ frame_needed = 0, uses_anonymous_args = 0
+ 526 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 527 0002 294B     		ldr	r3, .L58
+ 528 0004 C422     		movs	r2, #196
+ 529 0006 4F20     		movs	r0, #79
+ 530 0008 A321     		movs	r1, #163
+ 531 000a 1A70     		strb	r2, [r3, #0]
+ 532 000c 5870     		strb	r0, [r3, #1]
+ 533 000e 9970     		strb	r1, [r3, #2]
+ 534 0010 0020     		movs	r0, #0
+ 535 0012 EE24     		movs	r4, #238
+ 536 0014 DD25     		movs	r5, #221
+ 537 0016 CC26     		movs	r6, #204
+ 538 0018 BB27     		movs	r7, #187
+ 539 001a AA22     		movs	r2, #170
+ 540 001c 2821     		movs	r1, #40
+ 541 001e DC70     		strb	r4, [r3, #3]
+ 542 0020 1D71     		strb	r5, [r3, #4]
+ 543 0022 5E71     		strb	r6, [r3, #5]
+ 544 0024 9F71     		strb	r7, [r3, #6]
+ 545 0026 DA71     		strb	r2, [r3, #7]
+ 546 0028 1872     		strb	r0, [r3, #8]
+ 547 002a 5872     		strb	r0, [r3, #9]
+ 548 002c 9872     		strb	r0, [r3, #10]
+ 549 002e D872     		strb	r0, [r3, #11]
+ 550 0030 1873     		strb	r0, [r3, #12]
+ 551 0032 9873     		strb	r0, [r3, #14]
+ 552 0034 5973     		strb	r1, [r3, #13]
+ 553 0036 1D4B     		ldr	r3, .L58+4
+ 554 0038 1D4A     		ldr	r2, .L58+8
+ 555 003a 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
+ 556 003c 5C68     		ldr	r4, [r3, #4]
+ 557 003e 4FF48036 		mov	r6, #65536
+ 558 0042 06FA05F7 		lsl	r7, r6, r5
+ 559 0046 6760     		str	r7, [r4, #4]
+ 560 0048 5778     		ldrb	r7, [r2, #1]	@ zero_extendqisi2
+ 561 004a 5668     		ldr	r6, [r2, #4]
+ 562 004c 0120     		movs	r0, #1
+ 563 004e 00FA07F0 		lsl	r0, r0, r7
+ 564 0052 7060     		str	r0, [r6, #4]
+ 565 0054 0E25     		movs	r5, #14
+ 566              	.L52:
+ 567 0056 0724     		movs	r4, #7
+ 568              	.L55:
+ 569 0058 134B     		ldr	r3, .L58
+ 570 005a 0122     		movs	r2, #1
+ 571 005c E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
+ 572 005e 154B     		ldr	r3, .L58+12
+ 573 0060 02FA04F1 		lsl	r1, r2, r4
+ 574 0064 0142     		tst	r1, r0
+ 575 0066 05D0     		beq	.L53
+ 576 0068 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+ 577 006a 5868     		ldr	r0, [r3, #4]
+ 578 006c 02FA01F2 		lsl	r2, r2, r1
+ 579 0070 4260     		str	r2, [r0, #4]
+ 580 0072 06E0     		b	.L54
+ 581              	.L53:
+ 582 0074 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 583 0076 5A68     		ldr	r2, [r3, #4]
+ 584 0078 4FF48031 		mov	r1, #65536
+ 585 007c 01FA00F3 		lsl	r3, r1, r0
+ 586 0080 5360     		str	r3, [r2, #4]
+ 587              	.L54:
+ 588 0082 FFF7FEFF 		bl	pulse_R
+ 589 0086 14F1FF34 		adds	r4, r4, #-1
+ 590 008a E5D2     		bcs	.L55
+ 591 008c 15F1FF35 		adds	r5, r5, #-1
+ 592 0090 E1D2     		bcs	.L52
+ 593              	.L56:
+ 594 0092 4FF48032 		mov	r2, #65536
+ 595 0096 02FA07F7 		lsl	r7, r2, r7
+ 596 009a 4CF25030 		movw	r0, #50000
+ 597 009e 7760     		str	r7, [r6, #4]
+ 598 00a0 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 599 00a4 FFF7FEBF 		b	delay
+ 600              	.L59:
+ 601              		.align	2
+ 602              	.L58:
+ 603 00a8 00000000 		.word	configuration
+ 604 00ac 00000000 		.word	IO004_Handle6
+ 605 00b0 00000000 		.word	IO004_Handle1
+ 606 00b4 00000000 		.word	IO004_Handle4
+ 608              		.section	.text.read_R,"ax",%progbits
+ 609              		.align	1
+ 610              		.global	read_R
+ 611              		.thumb
+ 612              		.thumb_func
+ 614              	read_R:
+ 615              		@ args = 0, pretend = 0, frame = 0
+ 616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 617 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 618 0002 164B     		ldr	r3, .L67
+ 619 0004 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
+ 620 0006 5E68     		ldr	r6, [r3, #4]
+ 621 0008 4FF48030 		mov	r0, #65536
+ 622 000c 00FA07F0 		lsl	r0, r0, r7
+ 623 0010 7060     		str	r0, [r6, #4]
+ 624 0012 4CF25030 		movw	r0, #50000
+ 625 0016 FFF7FEFF 		bl	delay
+ 626 001a 0025     		movs	r5, #0
+ 627 001c 0724     		movs	r4, #7
+ 628              	.L62:
+ 629 001e 1049     		ldr	r1, .L67+4
+ 630 0020 4A68     		ldr	r2, [r1, #4]
+ 631 0022 4B78     		ldrb	r3, [r1, #1]	@ zero_extendqisi2
+ 632 0024 506A     		ldr	r0, [r2, #36]
+ 633 0026 20FA03F1 		lsr	r1, r0, r3
+ 634 002a CB07     		lsls	r3, r1, #31
+ 635 002c 04D5     		bpl	.L61
+ 636 002e 0122     		movs	r2, #1
+ 637 0030 02FA04F2 		lsl	r2, r2, r4
+ 638 0034 1543     		orrs	r5, r5, r2
+ 639 0036 EDB2     		uxtb	r5, r5
+ 640              	.L61:
+ 641 0038 FFF7FEFF 		bl	pulse_R
+ 642 003c 14F1FF34 		adds	r4, r4, #-1
+ 643 0040 EDD2     		bcs	.L62
+ 644 0042 0848     		ldr	r0, .L67+8
+ 645 0044 0123     		movs	r3, #1
+ 646 0046 0570     		strb	r5, [r0, #0]
+ 647 0048 03FA07F7 		lsl	r7, r3, r7
+ 648 004c 4CF25030 		movw	r0, #50000
+ 649 0050 7760     		str	r7, [r6, #4]
+ 650 0052 BDE8F840 		pop	{r3, r4, r5, r6, r7, lr}
+ 651 0056 FFF7FEBF 		b	delay
+ 652              	.L68:
+ 653 005a 00BF     		.align	2
+ 654              	.L67:
+ 655 005c 00000000 		.word	IO004_Handle6
+ 656 0060 00000000 		.word	IO004_Handle4
+ 657 0064 00000000 		.word	.LANCHOR0
+ 659              		.section	.text.printByteToInt,"ax",%progbits
+ 660              		.align	1
+ 661              		.global	printByteToInt
+ 662              		.thumb
+ 663              		.thumb_func
+ 665              	printByteToInt:
+ 666              		@ args = 0, pretend = 0, frame = 0
+ 667              		@ frame_needed = 0, uses_anonymous_args = 0
+ 668 0000 0A23     		movs	r3, #10
+ 669 0002 70B5     		push	{r4, r5, r6, lr}
+ 670 0004 B0FBF3F4 		udiv	r4, r0, r3
+ 671 0008 E5B2     		uxtb	r5, r4
+ 672 000a B5FBF3F1 		udiv	r1, r5, r3
+ 673 000e B1FBF3F6 		udiv	r6, r1, r3
+ 674 0012 0A4A     		ldr	r2, .L70
+ 675 0014 06FB1316 		mls	r6, r6, r3, r1
+ 676 0018 03FB1400 		mls	r0, r3, r4, r0
+ 677 001c 03FB1151 		mls	r1, r3, r1, r5
+ 678 0020 1268     		ldr	r2, [r2, #0]
+ 679 0022 3036     		adds	r6, r6, #48
+ 680 0024 3031     		adds	r1, r1, #48
+ 681 0026 3030     		adds	r0, r0, #48
+ 682 0028 F6B2     		uxtb	r6, r6
+ 683 002a C9B2     		uxtb	r1, r1
+ 684 002c C3B2     		uxtb	r3, r0
+ 685 002e C2F88061 		str	r6, [r2, #384]
+ 686 0032 C2F88011 		str	r1, [r2, #384]
+ 687 0036 C2F88031 		str	r3, [r2, #384]
+ 688 003a 70BD     		pop	{r4, r5, r6, pc}
+ 689              	.L71:
+ 690              		.align	2
+ 691              	.L70:
+ 692 003c 00000000 		.word	UART001_Handle0
+ 694              		.section	.text.VADC0_C0_2_IRQHandler,"ax",%progbits
+ 695              		.align	1
+ 696              		.global	VADC0_C0_2_IRQHandler
+ 697              		.thumb
+ 698              		.thumb_func
+ 700              	VADC0_C0_2_IRQHandler:
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+ 703              		@ link register save eliminated.
+ 704 0000 0148     		ldr	r0, .L73
+ 705 0002 0249     		ldr	r1, .L73+4
+ 706 0004 FFF7FEBF 		b	ADC001_GetResult
+ 707              	.L74:
+ 708              		.align	2
+ 709              	.L73:
+ 710 0008 00000000 		.word	ADC001_Handle0
+ 711 000c 00000000 		.word	result
+ 713              		.section	.text.updateButtonStates,"ax",%progbits
+ 714              		.align	1
+ 715              		.global	updateButtonStates
+ 716              		.thumb
+ 717              		.thumb_func
+ 719              	updateButtonStates:
+ 720              		@ args = 0, pretend = 0, frame = 0
+ 721              		@ frame_needed = 0, uses_anonymous_args = 0
+ 722              		@ link register save eliminated.
+ 723 0000 194B     		ldr	r3, .L76
+ 724 0002 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 725 0004 D878     		ldrb	r0, [r3, #3]	@ zero_extendqisi2
+ 726 0006 5979     		ldrb	r1, [r3, #5]	@ zero_extendqisi2
+ 727 0008 1A70     		strb	r2, [r3, #0]
+ 728 000a DA79     		ldrb	r2, [r3, #7]	@ zero_extendqisi2
+ 729 000c 9870     		strb	r0, [r3, #2]
+ 730 000e 587A     		ldrb	r0, [r3, #9]	@ zero_extendqisi2
+ 731 0010 1971     		strb	r1, [r3, #4]
+ 732 0012 9A71     		strb	r2, [r3, #6]
+ 733 0014 D97A     		ldrb	r1, [r3, #11]	@ zero_extendqisi2
+ 734 0016 5A7B     		ldrb	r2, [r3, #13]	@ zero_extendqisi2
+ 735 0018 1872     		strb	r0, [r3, #8]
+ 736 001a D87B     		ldrb	r0, [r3, #15]	@ zero_extendqisi2
+ 737 001c 9972     		strb	r1, [r3, #10]
+ 738 001e 1A73     		strb	r2, [r3, #12]
+ 739 0020 597C     		ldrb	r1, [r3, #17]	@ zero_extendqisi2
+ 740 0022 DA7C     		ldrb	r2, [r3, #19]	@ zero_extendqisi2
+ 741 0024 9873     		strb	r0, [r3, #14]
+ 742 0026 587D     		ldrb	r0, [r3, #21]	@ zero_extendqisi2
+ 743 0028 1974     		strb	r1, [r3, #16]
+ 744 002a 9A74     		strb	r2, [r3, #18]
+ 745 002c D97D     		ldrb	r1, [r3, #23]	@ zero_extendqisi2
+ 746 002e 5A7E     		ldrb	r2, [r3, #25]	@ zero_extendqisi2
+ 747 0030 1875     		strb	r0, [r3, #20]
+ 748 0032 D87E     		ldrb	r0, [r3, #27]	@ zero_extendqisi2
+ 749 0034 9975     		strb	r1, [r3, #22]
+ 750 0036 1A76     		strb	r2, [r3, #24]
+ 751 0038 597F     		ldrb	r1, [r3, #29]	@ zero_extendqisi2
+ 752 003a DA7F     		ldrb	r2, [r3, #31]	@ zero_extendqisi2
+ 753 003c 9876     		strb	r0, [r3, #26]
+ 754 003e 0020     		movs	r0, #0
+ 755 0040 1977     		strb	r1, [r3, #28]
+ 756 0042 9A77     		strb	r2, [r3, #30]
+ 757 0044 5870     		strb	r0, [r3, #1]
+ 758 0046 D870     		strb	r0, [r3, #3]
+ 759 0048 5871     		strb	r0, [r3, #5]
+ 760 004a D871     		strb	r0, [r3, #7]
+ 761 004c 5872     		strb	r0, [r3, #9]
+ 762 004e D872     		strb	r0, [r3, #11]
+ 763 0050 5873     		strb	r0, [r3, #13]
+ 764 0052 D873     		strb	r0, [r3, #15]
+ 765 0054 5874     		strb	r0, [r3, #17]
+ 766 0056 D874     		strb	r0, [r3, #19]
+ 767 0058 5875     		strb	r0, [r3, #21]
+ 768 005a D875     		strb	r0, [r3, #23]
+ 769 005c 5876     		strb	r0, [r3, #25]
+ 770 005e D876     		strb	r0, [r3, #27]
+ 771 0060 5877     		strb	r0, [r3, #29]
+ 772 0062 D877     		strb	r0, [r3, #31]
+ 773 0064 7047     		bx	lr
+ 774              	.L77:
+ 775 0066 00BF     		.align	2
+ 776              	.L76:
+ 777 0068 00000000 		.word	.LANCHOR1
+ 779              		.section	.text.startup.main,"ax",%progbits
+ 780              		.align	1
+ 781              		.global	main
+ 782              		.thumb
+ 783              		.thumb_func
+ 785              	main:
+ 786              		@ args = 0, pretend = 0, frame = 0
+ 787              		@ frame_needed = 0, uses_anonymous_args = 0
+ 788 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 789 0002 8D4B     		ldr	r3, .L223
+ 790 0004 5A6F     		ldr	r2, [r3, #116]
+ 791 0006 22F44040 		bic	r0, r2, #49152
+ 792 000a 5867     		str	r0, [r3, #116]
+ 793 000c 596F     		ldr	r1, [r3, #116]
+ 794 000e 5967     		str	r1, [r3, #116]
+ 795 0010 FFF7FEFF 		bl	DAVE_Init
+ 796 0014 FFF7FEFF 		bl	configure_E
+ 797              	.L216:
+ 798 0018 FFF7FEFF 		bl	psxHandShake
+ 799 001c FFF7FEFF 		bl	psxConfiguraControle
+ 800              	.L215:
+ 801 0020 864D     		ldr	r5, .L223+4
+ 802 0022 874E     		ldr	r6, .L223+8
+ 803 0024 3C24     		movs	r4, #60
+ 804 0026 2C70     		strb	r4, [r5, #0]
+ 805 0028 FFF7FEFF 		bl	psxLeControle
+ 806 002c 3778     		ldrb	r7, [r6, #0]	@ zero_extendqisi2
+ 807 002e 8C2F     		cmp	r7, #140
+ 808 0030 F2D1     		bne	.L216
+ 809              	.L80:
+ 810 0032 844C     		ldr	r4, .L223+12
+ 811 0034 2368     		ldr	r3, [r4, #0]
+ 812 0036 1D07     		lsls	r5, r3, #28
+ 813 0038 05D5     		bpl	.L82
+ 814 003a 834A     		ldr	r2, .L223+16
+ 815 003c 106A     		ldr	r0, [r2, #32]
+ 816 003e 10B1     		cbz	r0, .L82
+ 817 0040 0121     		movs	r1, #1
+ 818 0042 5177     		strb	r1, [r2, #29]
+ 819 0044 8047     		blx	r0
+ 820              	.L82:
+ 821 0046 2568     		ldr	r5, [r4, #0]
+ 822 0048 E907     		lsls	r1, r5, #31
+ 823 004a 05D5     		bpl	.L83
+ 824 004c 7E4E     		ldr	r6, .L223+16
+ 825 004e 776A     		ldr	r7, [r6, #36]
+ 826 0050 17B1     		cbz	r7, .L83
+ 827 0052 0124     		movs	r4, #1
+ 828 0054 F477     		strb	r4, [r6, #31]
+ 829 0056 B847     		blx	r7
+ 830              	.L83:
+ 831 0058 7A4D     		ldr	r5, .L223+12
+ 832 005a 6B68     		ldr	r3, [r5, #4]
+ 833 005c DA07     		lsls	r2, r3, #31
+ 834 005e 05D5     		bpl	.L84
+ 835 0060 794A     		ldr	r2, .L223+16
+ 836 0062 906A     		ldr	r0, [r2, #40]
+ 837 0064 10B1     		cbz	r0, .L84
+ 838 0066 0121     		movs	r1, #1
+ 839 0068 D170     		strb	r1, [r2, #3]
+ 840 006a 8047     		blx	r0
+ 841              	.L84:
+ 842 006c 6E68     		ldr	r6, [r5, #4]
+ 843 006e 7307     		lsls	r3, r6, #29
+ 844 0070 05D5     		bpl	.L85
+ 845 0072 754F     		ldr	r7, .L223+16
+ 846 0074 FC6A     		ldr	r4, [r7, #44]
+ 847 0076 14B1     		cbz	r4, .L85
+ 848 0078 0125     		movs	r5, #1
+ 849 007a 7D70     		strb	r5, [r7, #1]
+ 850 007c A047     		blx	r4
+ 851              	.L85:
+ 852 007e 714E     		ldr	r6, .L223+12
+ 853 0080 3368     		ldr	r3, [r6, #0]
+ 854 0082 5F07     		lsls	r7, r3, #29
+ 855 0084 05D5     		bpl	.L86
+ 856 0086 704A     		ldr	r2, .L223+16
+ 857 0088 106B     		ldr	r0, [r2, #48]
+ 858 008a 10B1     		cbz	r0, .L86
+ 859 008c 0121     		movs	r1, #1
+ 860 008e 5171     		strb	r1, [r2, #5]
+ 861 0090 8047     		blx	r0
+ 862              	.L86:
+ 863 0092 7768     		ldr	r7, [r6, #4]
+ 864 0094 3E07     		lsls	r6, r7, #28
+ 865 0096 05D5     		bpl	.L87
+ 866 0098 6B4C     		ldr	r4, .L223+16
+ 867 009a 656B     		ldr	r5, [r4, #52]
+ 868 009c 15B1     		cbz	r5, .L87
+ 869 009e 0126     		movs	r6, #1
+ 870 00a0 E671     		strb	r6, [r4, #7]
+ 871 00a2 A847     		blx	r5
+ 872              	.L87:
+ 873 00a4 674F     		ldr	r7, .L223+12
+ 874 00a6 7B68     		ldr	r3, [r7, #4]
+ 875 00a8 9D07     		lsls	r5, r3, #30
+ 876 00aa 05D5     		bpl	.L88
+ 877 00ac 664A     		ldr	r2, .L223+16
+ 878 00ae 906B     		ldr	r0, [r2, #56]
+ 879 00b0 10B1     		cbz	r0, .L88
+ 880 00b2 0121     		movs	r1, #1
+ 881 00b4 5172     		strb	r1, [r2, #9]
+ 882 00b6 8047     		blx	r0
+ 883              	.L88:
+ 884 00b8 3C68     		ldr	r4, [r7, #0]
+ 885 00ba A107     		lsls	r1, r4, #30
+ 886 00bc 05D5     		bpl	.L89
+ 887 00be 624D     		ldr	r5, .L223+16
+ 888 00c0 EE6B     		ldr	r6, [r5, #60]
+ 889 00c2 16B1     		cbz	r6, .L89
+ 890 00c4 0127     		movs	r7, #1
+ 891 00c6 EF72     		strb	r7, [r5, #11]
+ 892 00c8 B047     		blx	r6
+ 893              	.L89:
+ 894 00ca 5E4C     		ldr	r4, .L223+12
+ 895 00cc 6368     		ldr	r3, [r4, #4]
+ 896 00ce 1A06     		lsls	r2, r3, #24
+ 897 00d0 05D5     		bpl	.L90
+ 898 00d2 5D4A     		ldr	r2, .L223+16
+ 899 00d4 106C     		ldr	r0, [r2, #64]
+ 900 00d6 10B1     		cbz	r0, .L90
+ 901 00d8 0121     		movs	r1, #1
+ 902 00da D173     		strb	r1, [r2, #15]
+ 903 00dc 8047     		blx	r0
+ 904              	.L90:
+ 905 00de 6568     		ldr	r5, [r4, #4]
+ 906 00e0 EB06     		lsls	r3, r5, #27
+ 907 00e2 05D5     		bpl	.L91
+ 908 00e4 584E     		ldr	r6, .L223+16
+ 909 00e6 776C     		ldr	r7, [r6, #68]
+ 910 00e8 17B1     		cbz	r7, .L91
+ 911 00ea 0124     		movs	r4, #1
+ 912 00ec 7474     		strb	r4, [r6, #17]
+ 913 00ee B847     		blx	r7
+ 914              	.L91:
+ 915 00f0 544D     		ldr	r5, .L223+12
+ 916 00f2 6B68     		ldr	r3, [r5, #4]
+ 917 00f4 9F06     		lsls	r7, r3, #26
+ 918 00f6 05D5     		bpl	.L92
+ 919 00f8 534A     		ldr	r2, .L223+16
+ 920 00fa 906C     		ldr	r0, [r2, #72]
+ 921 00fc 10B1     		cbz	r0, .L92
+ 922 00fe 0121     		movs	r1, #1
+ 923 0100 D174     		strb	r1, [r2, #19]
+ 924 0102 8047     		blx	r0
+ 925              	.L92:
+ 926 0104 6E68     		ldr	r6, [r5, #4]
+ 927 0106 7606     		lsls	r6, r6, #25
+ 928 0108 05D5     		bpl	.L93
+ 929 010a 4F4F     		ldr	r7, .L223+16
+ 930 010c FC6C     		ldr	r4, [r7, #76]
+ 931 010e 14B1     		cbz	r4, .L93
+ 932 0110 0125     		movs	r5, #1
+ 933 0112 7D73     		strb	r5, [r7, #13]
+ 934 0114 A047     		blx	r4
+ 935              	.L93:
+ 936 0116 4B4E     		ldr	r6, .L223+12
+ 937 0118 3368     		ldr	r3, [r6, #0]
+ 938 011a 1D06     		lsls	r5, r3, #24
+ 939 011c 05D5     		bpl	.L94
+ 940 011e 4A4A     		ldr	r2, .L223+16
+ 941 0120 106D     		ldr	r0, [r2, #80]
+ 942 0122 10B1     		cbz	r0, .L94
+ 943 0124 0121     		movs	r1, #1
+ 944 0126 5175     		strb	r1, [r2, #21]
+ 945 0128 8047     		blx	r0
+ 946              	.L94:
+ 947 012a 3768     		ldr	r7, [r6, #0]
+ 948 012c BC06     		lsls	r4, r7, #26
+ 949 012e 05D5     		bpl	.L95
+ 950 0130 454C     		ldr	r4, .L223+16
+ 951 0132 656D     		ldr	r5, [r4, #84]
+ 952 0134 15B1     		cbz	r5, .L95
+ 953 0136 0126     		movs	r6, #1
+ 954 0138 E675     		strb	r6, [r4, #23]
+ 955 013a A847     		blx	r5
+ 956              	.L95:
+ 957 013c 414F     		ldr	r7, .L223+12
+ 958 013e 3B68     		ldr	r3, [r7, #0]
+ 959 0140 D906     		lsls	r1, r3, #27
+ 960 0142 05D5     		bpl	.L96
+ 961 0144 404A     		ldr	r2, .L223+16
+ 962 0146 906D     		ldr	r0, [r2, #88]
+ 963 0148 10B1     		cbz	r0, .L96
+ 964 014a 0121     		movs	r1, #1
+ 965 014c 5176     		strb	r1, [r2, #25]
+ 966 014e 8047     		blx	r0
+ 967              	.L96:
+ 968 0150 3C68     		ldr	r4, [r7, #0]
+ 969 0152 6206     		lsls	r2, r4, #25
+ 970 0154 05D5     		bpl	.L97
+ 971 0156 3C4D     		ldr	r5, .L223+16
+ 972 0158 EE6D     		ldr	r6, [r5, #92]
+ 973 015a 16B1     		cbz	r6, .L97
+ 974 015c 0127     		movs	r7, #1
+ 975 015e EF76     		strb	r7, [r5, #27]
+ 976 0160 B047     		blx	r6
+ 977              	.L97:
+ 978 0162 3848     		ldr	r0, .L223+12
+ 979 0164 394B     		ldr	r3, .L223+20
+ 980 0166 4169     		ldr	r1, [r0, #20]
+ 981 0168 C468     		ldr	r4, [r0, #12]
+ 982 016a 0022     		movs	r2, #0
+ 983 016c 1A70     		strb	r2, [r3, #0]
+ 984 016e 364B     		ldr	r3, .L223+16
+ 985 0170 7F39     		subs	r1, r1, #127
+ 986 0172 8DB2     		uxth	r5, r1
+ 987 0174 7F3C     		subs	r4, r4, #127
+ 988 0176 93F86010 		ldrb	r1, [r3, #96]	@ zero_extendqisi2
+ 989 017a A4B2     		uxth	r4, r4
+ 990 017c AFB2     		uxth	r7, r5
+ 991 017e A6B2     		uxth	r6, r4
+ 992 0180 0029     		cmp	r1, #0
+ 993 0182 3BD1     		bne	.L98
+ 994 0184 3BB2     		sxth	r3, r7
+ 995 0186 13F11E0F 		cmn	r3, #30
+ 996 018a 04DB     		blt	.L112
+ 997 018c 1E2B     		cmp	r3, #30
+ 998 018e 4FF00103 		mov	r3, #1
+ 999 0192 02DC     		bgt	.L99
+ 1000 0194 00E0     		b	.L217
+ 1001              	.L112:
+ 1002 0196 0B46     		mov	r3, r1
+ 1003              	.L217:
+ 1004 0198 0121     		movs	r1, #1
+ 1005              	.L99:
+ 1006 019a 32B2     		sxth	r2, r6
+ 1007 019c 12F11E0F 		cmn	r2, #30
+ 1008 01a0 04DB     		blt	.L114
+ 1009 01a2 1E2A     		cmp	r2, #30
+ 1010 01a4 4FF00102 		mov	r2, #1
+ 1011 01a8 03DC     		bgt	.L115
+ 1012 01aa 00E0     		b	.L218
+ 1013              	.L114:
+ 1014 01ac 0022     		movs	r2, #0
+ 1015              	.L218:
+ 1016 01ae 0120     		movs	r0, #1
+ 1017 01b0 00E0     		b	.L100
+ 1018              	.L115:
+ 1019 01b2 0020     		movs	r0, #0
+ 1020              	.L100:
+ 1021 01b4 3FB2     		sxth	r7, r7
+ 1022 01b6 002F     		cmp	r7, #0
+ 1023 01b8 01DD     		ble	.L101
+ 1024 01ba 6D00     		lsls	r5, r5, #1
+ 1025 01bc 02E0     		b	.L219
+ 1026              	.L101:
+ 1027 01be 6FF00107 		mvn	r7, #1
+ 1028 01c2 7D43     		muls	r5, r7, r5
+ 1029              	.L219:
+ 1030 01c4 1D4F     		ldr	r7, .L223+4
+ 1031 01c6 97F800E0 		ldrb	lr, [r7, #0]	@ zero_extendqisi2
+ 1032 01ca 204F     		ldr	r7, .L223+20
+ 1033 01cc ADB2     		uxth	r5, r5
+ 1034 01ce 15FB0EF5 		smulbb	r5, r5, lr
+ 1035 01d2 4FF0640C 		mov	ip, #100
+ 1036 01d6 36B2     		sxth	r6, r6
+ 1037 01d8 95FBFCF5 		sdiv	r5, r5, ip
+ 1038 01dc 002E     		cmp	r6, #0
+ 1039 01de 7D70     		strb	r5, [r7, #1]
+ 1040 01e0 01DD     		ble	.L103
+ 1041 01e2 6400     		lsls	r4, r4, #1
+ 1042 01e4 02E0     		b	.L220
+ 1043              	.L103:
+ 1044 01e6 6FF00105 		mvn	r5, #1
+ 1045 01ea 6C43     		muls	r4, r5, r4
+ 1046              	.L220:
+ 1047 01ec A4B2     		uxth	r4, r4
+ 1048 01ee 14FB0EF6 		smulbb	r6, r4, lr
+ 1049 01f2 6425     		movs	r5, #100
+ 1050 01f4 96FBF5F4 		sdiv	r4, r6, r5
+ 1051 01f8 BC70     		strb	r4, [r7, #2]
+ 1052 01fa 48E0     		b	.L105
+ 1053              	.L98:
+ 1054 01fc 30B2     		sxth	r0, r6
+ 1055 01fe 1E28     		cmp	r0, #30
+ 1056 0200 05DC     		bgt	.L116
+ 1057 0202 10F11E03 		adds	r3, r0, #30
+ 1058 0206 4FF00103 		mov	r3, #1
+ 1059 020a 03DB     		blt	.L117
+ 1060 020c 00E0     		b	.L221
+ 1061              	.L116:
+ 1062 020e 1346     		mov	r3, r2
+ 1063              	.L221:
+ 1064 0210 0121     		movs	r1, #1
+ 1065 0212 00E0     		b	.L106
+ 1066              	.L117:
+ 1067 0214 1146     		mov	r1, r2
+ 1068              	.L106:
+ 1069 0216 3AB2     		sxth	r2, r7
+ 1070 0218 1E2A     		cmp	r2, #30
+ 1071 021a 08DC     		bgt	.L118
+ 1072 021c 12F11E0F 		cmn	r2, #30
+ 1073 0220 B4BF     		ite	lt
+ 1074 0222 0020     		movlt	r0, #0
+ 1075 0224 0120     		movge	r0, #1
+ 1076 0226 002A     		cmp	r2, #0
+ 1077 0228 12DD     		ble	.L108
+ 1078 022a 0122     		movs	r2, #1
+ 1079 022c 01E0     		b	.L107
+ 1080              	.L118:
+ 1081 022e 0022     		movs	r2, #0
+ 1082 0230 0120     		movs	r0, #1
+ 1083              	.L107:
+ 1084 0232 6F00     		lsls	r7, r5, #1
+ 1085 0234 BDB2     		uxth	r5, r7
+ 1086 0236 10E0     		b	.L109
+ 1087              	.L224:
+ 1088              		.align	2
+ 1089              	.L223:
+ 1090 0238 00800248 		.word	1208123392
+ 1091 023c 00000000 		.word	pwm_max
+ 1092 0240 00000000 		.word	psx_status
+ 1093 0244 00000000 		.word	psxDado
+ 1094 0248 00000000 		.word	.LANCHOR1
+ 1095 024c 00000000 		.word	data_E
+ 1096              	.L108:
+ 1097 0250 6FF00107 		mvn	r7, #1
+ 1098 0254 7D43     		muls	r5, r7, r5
+ 1099 0256 ADB2     		uxth	r5, r5
+ 1100 0258 0122     		movs	r2, #1
+ 1101              	.L109:
+ 1102 025a 174F     		ldr	r7, .L225
+ 1103 025c 97F800E0 		ldrb	lr, [r7, #0]	@ zero_extendqisi2
+ 1104 0260 164F     		ldr	r7, .L225+4
+ 1105 0262 15FB0EF5 		smulbb	r5, r5, lr
+ 1106 0266 4FF0640C 		mov	ip, #100
+ 1107 026a 36B2     		sxth	r6, r6
+ 1108 026c 95FBFCF5 		sdiv	r5, r5, ip
+ 1109 0270 002E     		cmp	r6, #0
+ 1110 0272 BD70     		strb	r5, [r7, #2]
+ 1111 0274 01DD     		ble	.L110
+ 1112 0276 6400     		lsls	r4, r4, #1
+ 1113 0278 02E0     		b	.L222
+ 1114              	.L110:
+ 1115 027a 6FF00105 		mvn	r5, #1
+ 1116 027e 6C43     		muls	r4, r5, r4
+ 1117              	.L222:
+ 1118 0280 A4B2     		uxth	r4, r4
+ 1119 0282 14FB0EF6 		smulbb	r6, r4, lr
+ 1120 0286 6425     		movs	r5, #100
+ 1121 0288 96FBF5F4 		sdiv	r4, r6, r5
+ 1122 028c 7C70     		strb	r4, [r7, #1]
+ 1123              	.L105:
+ 1124 028e 0C4D     		ldr	r5, .L225+8
+ 1125 0290 0A4F     		ldr	r7, .L225+4
+ 1126 0292 6C88     		ldrh	r4, [r5, #2]
+ 1127 0294 5201     		lsls	r2, r2, #5
+ 1128 0296 42EA0010 		orr	r0, r2, r0, lsl #4
+ 1129 029a 41F00201 		orr	r1, r1, #2
+ 1130 029e 40EA0106 		orr	r6, r0, r1
+ 1131 02a2 46EAC303 		orr	r3, r6, r3, lsl #3
+ 1132 02a6 2209     		lsrs	r2, r4, #4
+ 1133 02a8 FB70     		strb	r3, [r7, #3]
+ 1134 02aa 3A71     		strb	r2, [r7, #4]
+ 1135 02ac FFF7FEFF 		bl	write_E
+ 1136 02b0 FFF7FEFF 		bl	updateButtonStates
+ 1137 02b4 B4E6     		b	.L215
+ 1138              	.L226:
+ 1139 02b6 00BF     		.align	2
+ 1140              	.L225:
+ 1141 02b8 00000000 		.word	pwm_max
+ 1142 02bc 00000000 		.word	data_E
+ 1143 02c0 00000000 		.word	result
+ 1145              		.section	.text.turbo,"ax",%progbits
+ 1146              		.align	1
+ 1147              		.global	turbo
+ 1148              		.thumb
+ 1149              		.thumb_func
+ 1151              	turbo:
+ 1152              		@ args = 0, pretend = 0, frame = 0
+ 1153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1154              		@ link register save eliminated.
+ 1155 0000 014B     		ldr	r3, .L228
+ 1156 0002 5F22     		movs	r2, #95
+ 1157 0004 1A70     		strb	r2, [r3, #0]
+ 1158 0006 7047     		bx	lr
+ 1159              	.L229:
+ 1160              		.align	2
+ 1161              	.L228:
+ 1162 0008 00000000 		.word	pwm_max
+ 1164              		.section	.text.shunt,"ax",%progbits
+ 1165              		.align	1
+ 1166              		.global	shunt
+ 1167              		.thumb
+ 1168              		.thumb_func
+ 1170              	shunt:
+ 1171              		@ args = 0, pretend = 0, frame = 0
+ 1172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1173              		@ link register save eliminated.
+ 1174 0000 014B     		ldr	r3, .L231
+ 1175 0002 2822     		movs	r2, #40
+ 1176 0004 1A70     		strb	r2, [r3, #0]
+ 1177 0006 7047     		bx	lr
+ 1178              	.L232:
+ 1179              		.align	2
+ 1180              	.L231:
+ 1181 0008 00000000 		.word	pwm_max
+ 1183              		.section	.text.flip,"ax",%progbits
+ 1184              		.align	1
+ 1185              		.global	flip
+ 1186              		.thumb
+ 1187              		.thumb_func
+ 1189              	flip:
+ 1190              		@ args = 0, pretend = 0, frame = 0
+ 1191              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1192              		@ link register save eliminated.
+ 1193 0000 044B     		ldr	r3, .L234
+ 1194 0002 93F86020 		ldrb	r2, [r3, #96]	@ zero_extendqisi2
+ 1195 0006 D2F10100 		rsbs	r0, r2, #1
+ 1196 000a 38BF     		it	cc
+ 1197 000c 0020     		movcc	r0, #0
+ 1198 000e 83F86000 		strb	r0, [r3, #96]
+ 1199 0012 7047     		bx	lr
+ 1200              	.L235:
+ 1201              		.align	2
+ 1202              	.L234:
+ 1203 0014 00000000 		.word	.LANCHOR1
+ 1205              		.comm	pwm_max,1,1
+ 1206              		.comm	result,4,2
+ 1207              		.global	flipped
+ 1208              		.comm	psx_status,1,1
+ 1209              		.comm	data_E,5,1
+ 1210              		.global	data_R
+ 1211              		.comm	configuration,15,1
+ 1212              		.comm	psxDado,24,4
+ 1213              		.global	select_state_before
+ 1214              		.global	start_state_before
+ 1215              		.global	down_state_before
+ 1216              		.global	up_state_before
+ 1217              		.global	right_state_before
+ 1218              		.global	left_state_before
+ 1219              		.global	circle_state_before
+ 1220              		.global	triangle_state_before
+ 1221              		.global	sqr_state_before
+ 1222              		.global	cross_state_before
+ 1223              		.global	r_tres_state_before
+ 1224              		.global	r_dois_state_before
+ 1225              		.global	r_um_state_before
+ 1226              		.global	l_tres_state_before
+ 1227              		.global	l_dois_state_before
+ 1228              		.global	l_um_state_before
+ 1229              		.global	select_state
+ 1230              		.global	start_state
+ 1231              		.global	down_state
+ 1232              		.global	up_state
+ 1233              		.global	right_state
+ 1234              		.global	left_state
+ 1235              		.global	circle_state
+ 1236              		.global	triangle_state
+ 1237              		.global	sqr_state
+ 1238              		.global	cross_state
+ 1239              		.global	r_tres_state
+ 1240              		.global	r_dois_state
+ 1241              		.global	r_um_state
+ 1242              		.global	l_tres_state
+ 1243              		.global	l_dois_state
+ 1244              		.global	l_um_state
+ 1245              		.global	select
+ 1246              		.global	start
+ 1247              		.global	down
+ 1248              		.global	up
+ 1249              		.global	right
+ 1250              		.global	left
+ 1251              		.global	circle
+ 1252              		.global	triangle
+ 1253              		.global	sqr
+ 1254              		.global	cross
+ 1255              		.global	r_tres
+ 1256              		.global	r_dois
+ 1257              		.global	r_um
+ 1258              		.global	l_tres
+ 1259              		.global	l_dois
+ 1260              		.global	l_um
+ 1261              		.data
+ 1262              		.set	.LANCHOR0,. + 0
+ 1265              	data_R:
+ 1266 0000 30       		.byte	48
+ 1267              		.bss
+ 1268              		.align	2
+ 1269              		.set	.LANCHOR1,. + 0
+ 1272              	l_um_state_before:
+ 1273 0000 00       		.space	1
+ 1276              	l_um_state:
+ 1277 0001 00       		.space	1
+ 1280              	l_dois_state_before:
+ 1281 0002 00       		.space	1
+ 1284              	l_dois_state:
+ 1285 0003 00       		.space	1
+ 1288              	l_tres_state_before:
+ 1289 0004 00       		.space	1
+ 1292              	l_tres_state:
+ 1293 0005 00       		.space	1
+ 1296              	r_um_state_before:
+ 1297 0006 00       		.space	1
+ 1300              	r_um_state:
+ 1301 0007 00       		.space	1
+ 1304              	r_dois_state_before:
+ 1305 0008 00       		.space	1
+ 1308              	r_dois_state:
+ 1309 0009 00       		.space	1
+ 1312              	r_tres_state_before:
+ 1313 000a 00       		.space	1
+ 1316              	r_tres_state:
+ 1317 000b 00       		.space	1
+ 1320              	cross_state_before:
+ 1321 000c 00       		.space	1
+ 1324              	cross_state:
+ 1325 000d 00       		.space	1
+ 1328              	sqr_state_before:
+ 1329 000e 00       		.space	1
+ 1332              	sqr_state:
+ 1333 000f 00       		.space	1
+ 1336              	triangle_state_before:
+ 1337 0010 00       		.space	1
+ 1340              	triangle_state:
+ 1341 0011 00       		.space	1
+ 1344              	circle_state_before:
+ 1345 0012 00       		.space	1
+ 1348              	circle_state:
+ 1349 0013 00       		.space	1
+ 1352              	left_state_before:
+ 1353 0014 00       		.space	1
+ 1356              	left_state:
+ 1357 0015 00       		.space	1
+ 1360              	right_state_before:
+ 1361 0016 00       		.space	1
+ 1364              	right_state:
+ 1365 0017 00       		.space	1
+ 1368              	up_state_before:
+ 1369 0018 00       		.space	1
+ 1372              	up_state:
+ 1373 0019 00       		.space	1
+ 1376              	down_state_before:
+ 1377 001a 00       		.space	1
+ 1380              	down_state:
+ 1381 001b 00       		.space	1
+ 1384              	start_state_before:
+ 1385 001c 00       		.space	1
+ 1388              	start_state:
+ 1389 001d 00       		.space	1
+ 1392              	select_state_before:
+ 1393 001e 00       		.space	1
+ 1396              	select_state:
+ 1397 001f 00       		.space	1
+ 1400              	start:
+ 1401 0020 00000000 		.space	4
+ 1404              	select:
+ 1405 0024 00000000 		.space	4
+ 1408              	l_dois:
+ 1409 0028 00000000 		.space	4
+ 1412              	l_um:
+ 1413 002c 00000000 		.space	4
+ 1416              	l_tres:
+ 1417 0030 00000000 		.space	4
+ 1420              	r_um:
+ 1421 0034 00000000 		.space	4
+ 1424              	r_dois:
+ 1425 0038 00000000 		.space	4
+ 1428              	r_tres:
+ 1429 003c 00000000 		.space	4
+ 1432              	sqr:
+ 1433 0040 00000000 		.space	4
+ 1436              	triangle:
+ 1437 0044 00000000 		.space	4
+ 1440              	circle:
+ 1441 0048 00000000 		.space	4
+ 1444              	cross:
+ 1445 004c 00000000 		.space	4
+ 1448              	left:
+ 1449 0050 00000000 		.space	4
+ 1452              	right:
+ 1453 0054 00000000 		.space	4
+ 1456              	up:
+ 1457 0058 00000000 		.space	4
+ 1460              	down:
+ 1461 005c 00000000 		.space	4
+ 1464              	flipped:
+ 1465 0060 00       		.space	1
+ 1466 0061 000000   		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:17     .text.delay:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:22     .text.delay:00000000 delay
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:39     .text.psxLeByte:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:44     .text.psxLeByte:00000000 psxLeByte
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:84     .text.psxLeByte:0000005c $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:88     .text.psxGravaByte:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:93     .text.psxGravaByte:00000000 psxGravaByte
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:140    .text.psxGravaByte:0000006c $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:144    .text.psxLeControle:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:149    .text.psxLeControle:00000000 psxLeControle
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:193    .text.psxLeControle:00000060 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:17     .text.delay:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:22     .text.delay:00000000 delay
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:39     .text.psxTrocaByte:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:44     .text.psxTrocaByte:00000000 psxTrocaByte
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:104    .text.psxTrocaByte:0000008c $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:109    .text.psxHandShake:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:114    .text.psxHandShake:00000000 psxHandShake
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:155    .text.psxHandShake:00000060 $d
+                            *COM*:00000001 psx_status
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:161    .text.psxLeControle:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:166    .text.psxLeControle:00000000 psxLeControle
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:213    .text.psxLeControle:00000068 $d
                             *COM*:00000018 psxDado
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:199    .text.pulse_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:204    .text.pulse_R:00000000 pulse_R
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:225    .text.pulse_R:0000002c $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:228    .text.write_E:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:233    .text.write_E:00000000 write_E
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:313    .text.write_E:000000ac $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:220    .text.psxExitConfigMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:225    .text.psxExitConfigMode:00000000 psxExitConfigMode
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:272    .text.psxExitConfigMode:00000074 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:277    .text.psxSetAnalogMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:282    .text.psxSetAnalogMode:00000000 psxSetAnalogMode
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:329    .text.psxSetAnalogMode:00000074 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:334    .text.psxEnterConfigMode:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:339    .text.psxEnterConfigMode:00000000 psxEnterConfigMode
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:378    .text.psxEnterConfigMode:0000005c $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:383    .text.psxConfiguraControle:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:388    .text.psxConfiguraControle:00000000 psxConfiguraControle
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:398    .text.pulse_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:403    .text.pulse_R:00000000 pulse_R
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:424    .text.pulse_R:0000002c $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:427    .text.write_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:432    .text.write_E:00000000 write_E
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:512    .text.write_E:000000ac $d
                             *COM*:0000000f configuration
-                            *COM*:00000004 data_E
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:319    .text.configure_E:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:324    .text.configure_E:00000000 configure_E
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:404    .text.configure_E:000000a8 $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:410    .text.startup.main:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:415    .text.startup.main:00000000 main
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:605    .text.startup.main:000001ac $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:611    .text.read_R:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:616    .text.read_R:00000000 read_R
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:657    .text.read_R:0000005c $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:662    .text.printByteToInt:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:667    .text.printByteToInt:00000000 printByteToInt
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:694    .text.printByteToInt:0000003c $d
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:718    .data:00000000 data_R
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:724    .bss:00000000 select
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:728    .bss:00000004 start
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:732    .bss:00000008 down
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:736    .bss:0000000c up
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:740    .bss:00000010 right
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:744    .bss:00000014 left
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:748    .bss:00000018 circle
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:752    .bss:0000001c triangle
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:756    .bss:00000020 sqr
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:760    .bss:00000024 cross
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:764    .bss:00000028 r2
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:768    .bss:0000002c r1
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:772    .bss:00000030 l2
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:776    .bss:00000034 l1
-C:\Users\Carlos\AppData\Local\Temp\cc1PGRnX.s:721    .bss:00000000 $d
+                            *COM*:00000005 data_E
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:518    .text.configure_E:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:523    .text.configure_E:00000000 configure_E
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:603    .text.configure_E:000000a8 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:609    .text.read_R:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:614    .text.read_R:00000000 read_R
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:655    .text.read_R:0000005c $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:660    .text.printByteToInt:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:665    .text.printByteToInt:00000000 printByteToInt
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:692    .text.printByteToInt:0000003c $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:695    .text.VADC0_C0_2_IRQHandler:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:700    .text.VADC0_C0_2_IRQHandler:00000000 VADC0_C0_2_IRQHandler
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:710    .text.VADC0_C0_2_IRQHandler:00000008 $d
+                            *COM*:00000004 result
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:714    .text.updateButtonStates:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:719    .text.updateButtonStates:00000000 updateButtonStates
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:777    .text.updateButtonStates:00000068 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:780    .text.startup.main:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:785    .text.startup.main:00000000 main
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1090   .text.startup.main:00000238 $d
+                            *COM*:00000001 pwm_max
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1097   .text.startup.main:00000250 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1141   .text.startup.main:000002b8 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1146   .text.turbo:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1151   .text.turbo:00000000 turbo
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1162   .text.turbo:00000008 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1165   .text.shunt:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1170   .text.shunt:00000000 shunt
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1181   .text.shunt:00000008 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1184   .text.flip:00000000 $t
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1189   .text.flip:00000000 flip
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1203   .text.flip:00000014 $d
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1464   .bss:00000060 flipped
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1265   .data:00000000 data_R
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1392   .bss:0000001e select_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1384   .bss:0000001c start_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1376   .bss:0000001a down_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1368   .bss:00000018 up_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1360   .bss:00000016 right_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1352   .bss:00000014 left_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1344   .bss:00000012 circle_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1336   .bss:00000010 triangle_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1328   .bss:0000000e sqr_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1320   .bss:0000000c cross_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1312   .bss:0000000a r_tres_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1304   .bss:00000008 r_dois_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1296   .bss:00000006 r_um_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1288   .bss:00000004 l_tres_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1280   .bss:00000002 l_dois_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1272   .bss:00000000 l_um_state_before
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1396   .bss:0000001f select_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1388   .bss:0000001d start_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1380   .bss:0000001b down_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1372   .bss:00000019 up_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1364   .bss:00000017 right_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1356   .bss:00000015 left_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1348   .bss:00000013 circle_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1340   .bss:00000011 triangle_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1332   .bss:0000000f sqr_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1324   .bss:0000000d cross_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1316   .bss:0000000b r_tres_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1308   .bss:00000009 r_dois_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1300   .bss:00000007 r_um_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1292   .bss:00000005 l_tres_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1284   .bss:00000003 l_dois_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1276   .bss:00000001 l_um_state
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1404   .bss:00000024 select
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1400   .bss:00000020 start
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1460   .bss:0000005c down
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1456   .bss:00000058 up
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1452   .bss:00000054 right
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1448   .bss:00000050 left
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1440   .bss:00000048 circle
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1436   .bss:00000044 triangle
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1432   .bss:00000040 sqr
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1444   .bss:0000004c cross
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1428   .bss:0000003c r_tres
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1424   .bss:00000038 r_dois
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1420   .bss:00000034 r_um
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1416   .bss:00000030 l_tres
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1408   .bss:00000028 l_dois
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1412   .bss:0000002c l_um
+C:\Users\Carlos\AppData\Local\Temp\cc3wAuqW.s:1268   .bss:00000000 $d
 
 UNDEFINED SYMBOLS
+IO004_Handle12
 IO004_Handle10
 IO004_Handle9
-IO004_Handle12
 IO004_Handle11
 IO004_Handle2
 IO004_Handle6
 IO004_Handle4
 IO004_Handle1
-DAVE_Init
-IO004_Handle8
-IO004_Handle7
 UART001_Handle0
+ADC001_GetResult
+ADC001_Handle0
+DAVE_Init
