@@ -102,7 +102,7 @@ ADCGROUP001_DynamicDataType ADCGROUP001_DynamicHandle0 =
 
 const ADCGROUP001_HandleType ADCGROUP001_Handle0 =
 {
-  .kGroupNo = (uint8_t)0,
+  .kGroupNo = (uint8_t)2,
   .kPostCalibration = (uint8_t)ADCGROUP001_AUTOPOSTCALIBRATION,
   .kArbitrationMode = (uint8_t)ADCGROUP001_RUNSPERMANENTLY,
   .kGrpBoundary0 = (uint16_t)0,  
@@ -112,12 +112,12 @@ const ADCGROUP001_HandleType ADCGROUP001_Handle0 =
   .kEMUXMode = (uint8_t)ADCGROUP001_SOFTWARECONTROLMODE,
   .kAnalogConverterCtrl = (uint8_t)ADCGROUP001_ANALOG_CONVERTER_ON,
   .VADCGlobalPtr= (VADC_GLOBAL_TypeDef*)(void*)VADC,
-  .VADCGroupPtr= (VADC_G_TypeDef*)(void*) VADC_G0,
+  .VADCGroupPtr= (VADC_G_TypeDef*)(void*) VADC_G2,
   .DynamicHandlePtr= &ADCGROUP001_DynamicHandle0,
-  .kConversionModeClass0 = (uint8_t)ADCGROUP001_8BIT,
-  .kConversionModeClass1 = (uint8_t)ADCGROUP001_8BIT,
-  .kEMUXConversionModeClass0 = (uint8_t)ADCGROUP001_8BIT,
-  .kEMUXConversionModeClass1 = (uint8_t)ADCGROUP001_8BIT,
+  .kConversionModeClass0 = (uint8_t)ADCGROUP001_12BIT,
+  .kConversionModeClass1 = (uint8_t)ADCGROUP001_12BIT,
+  .kEMUXConversionModeClass0 = (uint8_t)ADCGROUP001_12BIT,
+  .kEMUXConversionModeClass1 = (uint8_t)ADCGROUP001_12BIT,
   .kSampleTimeControlClass0 = (uint8_t)0,
   .kSampleTimeControlClass1 = (uint8_t)0,
   .kEMUXSampleTimeControlClass0 = (uint8_t)0,

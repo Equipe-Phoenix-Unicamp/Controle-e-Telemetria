@@ -591,12 +591,12 @@ This will add the enabled channels again in the scan sequence.</toolTipHelpDescr
   <provided xsi:type="ResourceModel:EnumerationParameter" name="Result Event Enable" evalFunction="function ForwardMapping()&#xD;&#xA;            {&#xD;&#xA;              var Res = SCM.getResource(&quot;temp_reseventenable&quot;);&#xD;&#xA;              var value = SCM.getIntValue(currentResource);&#xD;&#xA;              SCM.setIntValue(Res,value);&#xD;&#xA;            }&#xD;&#xA;            function BackwardMapping()&#xD;&#xA;            {&#xD;&#xA;              var Res = SCM.getResource(&quot;temp_reseventenable&quot;);&#xD;&#xA;              var value = SCM.getIntValue(Res);&#xD;&#xA;              SCM.setIntValue(currentResource,value);&#xD;&#xA;            }" URI="http://www.infineon.com/1.0.22/app/adc001/0/adc001_erwresulteventenable" downWardmappedList="//@consumed.7" multipleSelections="true">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <localValue xsi:type="ResourceModel:StringValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Enable the result event. due to which a result interrupt is generated when the conversion has finished.</toolTipHelpDescription>
     <item name="Enable at Initialization" evalFunction="&#xD;&#xA;            function ForwardMapping()&#xD;&#xA;            {&#xD;&#xA;              var Res = SCM.getResource(&quot;temp_reseventenable&quot;);&#xD;&#xA;              var value = SCM.getIntValue(currentResource);&#xD;&#xA;              if(value == 1){&#xD;&#xA;                SCM.setIntValue(Res,1);&#xD;&#xA;              }&#xD;&#xA;              else {&#xD;&#xA;                SCM.setIntValue(Res,0);&#xD;&#xA;              }&#xD;&#xA;            }&#xD;&#xA;            function BackwardMapping()&#xD;&#xA;            {&#xD;&#xA;              var Res = SCM.getResource(&quot;temp_reseventenable&quot;);&#xD;&#xA;              var value = SCM.getIntValue(Res);&#xD;&#xA;              if(value == 1){&#xD;&#xA;                SCM.setIntValue(currentResource,1);&#xD;&#xA;              }&#xD;&#xA;              else {&#xD;&#xA;                SCM.setIntValue(currentResource,0);&#xD;&#xA;              }&#xD;&#xA;            }&#xD;&#xA;" URI="http://www.infineon.com/1.0.22/app/adc001/0/adc001_erwresulteventenable/0" downWardmappedList="//@consumed.7" maxValue="1" minValue="0">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <localValue xsi:type="ResourceModel:StringValue" value="1"/>
-      <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+      <localValue xsi:type="ResourceModel:StringValue" value="0"/>
+      <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
       <toolTipHelpDescription>Disable/Enable the result event.</toolTipHelpDescription>
     </item>
   </provided>
@@ -1156,8 +1156,8 @@ to take part in the background scan sequence.</toolTipHelpDescription>
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/temp_reseventenable" upWardMappingList="//@provided.109 //@provided.109/@item.0" isSystemDefined="true">
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/temp_respos" upWardMappingList="//@provided.110 //@provided.110/@item.0 //@provided.110/@item.1" isSystemDefined="true">
@@ -1690,6 +1690,7 @@ to take part in the background scan sequence.</toolTipHelpDescription>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_dc/cev" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/glob_res/rev0" isSystemDefined="true">
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.11"/>
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.11"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_cg/select" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_bh/gch" isSystemDefined="true"/>
@@ -1781,10 +1782,12 @@ to take part in the background scan sequence.</toolTipHelpDescription>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_cb/select" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/backgnd/bgreqtrsel" isSystemDefined="true">
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.5"/>
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.5"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_ad/gch" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_bh/select" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/backgnd/global_signal" isSystemDefined="true">
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.6"/>
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.6"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_cc/gch" isSystemDefined="true"/>
@@ -1794,6 +1797,7 @@ to take part in the background scan sequence.</toolTipHelpDescription>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_df/cev" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_ba/cev" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/backgnd/bgreqgtsel" isSystemDefined="true">
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.7"/>
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.7"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_cb/cev" isSystemDefined="true"/>
@@ -1814,6 +1818,7 @@ to take part in the background scan sequence.</toolTipHelpDescription>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_ce/gch" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_ac/select" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/backgnd/sev0" isSystemDefined="true">
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.8"/>
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.8"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_ag/cev" isSystemDefined="true"/>
@@ -1837,6 +1842,7 @@ to take part in the background scan sequence.</toolTipHelpDescription>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_bc/gch" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_dh/gch" isSystemDefined="true"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/backgnd/bkg_select" isSystemDefined="true">
+    <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.9"/>
     <downWardmappedList xsi:type="ResourceModel:SignalDeclaration" href="../../VADC/VADC_0.dd#//@provided.9"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.22/app/adc001/0/channel_af/select" isSystemDefined="true"/>

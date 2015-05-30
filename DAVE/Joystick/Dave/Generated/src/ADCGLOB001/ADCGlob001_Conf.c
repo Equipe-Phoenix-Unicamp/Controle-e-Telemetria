@@ -124,13 +124,13 @@ const ADCGLOB001_HandleType ADCGLOB001_Handle0 =
   .kEMUXSampleTimeControlClass0= (uint8_t) 0,
                 
   .kEMUXSampleTimeControlClass1= (uint8_t) 0,         
-  .kConversionModeClass0    = (uint8_t) ADCGLOB001_8BIT,
+  .kConversionModeClass0    = (uint8_t) ADCGLOB001_12BIT,
              
-  .kConversionModeClass1     = (uint8_t) ADCGLOB001_8BIT,
+  .kConversionModeClass1     = (uint8_t) ADCGLOB001_12BIT,
         
-  .kEMUXConversionModeClass0   = (uint8_t) ADCGLOB001_8BIT,
+  .kEMUXConversionModeClass0   = (uint8_t) ADCGLOB001_12BIT,
           
-  .kEMUXConversionModeClass1   = (uint8_t) ADCGLOB001_8BIT,        
+  .kEMUXConversionModeClass1   = (uint8_t) ADCGLOB001_12BIT,        
   .keStartCalib           = (uint8_t) 1
           
 };

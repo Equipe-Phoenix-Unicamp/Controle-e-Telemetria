@@ -26,7 +26,7 @@
   27 0006 0000     		.section	.rodata
   28              		.align	2
   31              	ADC001_ChannelAAHandle:
-  32 0000 00       		.byte	0
+  32 0000 02       		.byte	2
   33 0001 00       		.byte	0
   34 0002 01       		.byte	1
   35              		.global	ADC001_ChannelHandlePtr
@@ -40,15 +40,15 @@
   47              	ADC001_Handle0:
   48 0004 00       		.space	1
   49 0005 01       		.byte	1
-  50 0006 01       		.byte	1
+  50 0006 00       		.byte	0
   51 0007 00       		.byte	0
-  52 0008 00       		.byte	0
+  52 0008 01       		.byte	1
   53 0009 00       		.byte	0
   54 000a 01       		.byte	1
   55 000b 00       		.byte	0
   56 000c 00       		.byte	0
   57 000d 00       		.byte	0
-  58 000e 01       		.byte	1
+  58 000e 00       		.byte	0
   59 000f 00       		.byte	0
   60 0010 00       		.byte	0
   61 0011 00       		.byte	0
@@ -64,7 +64,7 @@
   71 001b 00       		.byte	0
   72 001c 00       		.byte	0
   73 001d 00       		.byte	0
-  74 001e 00       		.byte	0
+  74 001e 01       		.byte	1
   75 001f 00       		.byte	0
   76 0020 00       		.byte	0
   77 0021 00       		.byte	0
@@ -80,9 +80,9 @@
   87 002b 00       		.byte	0
   88 002c 00       		.byte	0
   89 002d 00       		.byte	0
-  90 002e 01       		.byte	1
+  90 002e 00       		.byte	0
   91 002f 00       		.byte	0
-  92 0030 00       		.byte	0
+  92 0030 01       		.byte	1
   93 0031 00       		.byte	0
   94 0032 01       		.byte	1
   95 0033 00       		.space	1
@@ -94,7 +94,7 @@
  101 0039 00       		.byte	0
  102 003a 01       		.byte	1
  103 003b 00       		.byte	0
- 104 003c 01       		.byte	1
+ 104 003c 00       		.byte	0
  105 003d 00       		.byte	0
  106 003e 02       		.byte	2
  107 003f 00       		.space	1
@@ -113,13 +113,13 @@
  120              		.file 5 "../Dave/Generated/src/ADC001/ADC001_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 ADC001_Conf.c
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:24     .bss:00000000 ADC001_DynamicHandle
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:21     .bss:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:31     .rodata:00000000 ADC001_ChannelAAHandle
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:28     .rodata:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:40     .data:00000000 ADC001_ChannelHandlePtr
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:37     .data:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\cc0MItPP.s:47     .rodata:00000004 ADC001_Handle0
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:24     .bss:00000000 ADC001_DynamicHandle
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:21     .bss:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:31     .rodata:00000000 ADC001_ChannelAAHandle
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:28     .rodata:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:40     .data:00000000 ADC001_ChannelHandlePtr
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:37     .data:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccodCv0I.s:47     .rodata:00000004 ADC001_Handle0
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024

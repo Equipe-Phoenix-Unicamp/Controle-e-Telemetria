@@ -6,13 +6,13 @@
  */
 
 /* DADO3:
-BIT 0: BLAH2
-BIT 1: BUZINA
-BIT 2: ENABLE
-BIT 3: ALBH2
-BIT 4: BLAH1
-BIT 5: ALBH1
-*/
+ BIT 0: BLAH2
+ BIT 1: BUZINA
+ BIT 2: ENABLE
+ BIT 3: ALBH2
+ BIT 4: BLAH1
+ BIT 5: ALBH1
+ */
 
 /*
  * Potenciometro(costas)
@@ -95,8 +95,6 @@ BIT 5: ALBH1
 /***************************************************/
 
 #include <DAVE3.h>		//Declarations from DAVE3 Code Generation (includes SFR declaration)
-
-
 /***************************************************/
 /**************DECLARACAO DAS FUNCOES***************/
 /***************************************************/
@@ -193,12 +191,11 @@ uint8_t pwm_max;
 /***********************MAIN************************/
 /***************************************************/
 
-int main(void)
-{
+int main(void) {
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
-	PORT0->HWSEL &= ~0x0000c000UL; //Faz pin 0.7 funcionar
-	PORT0->HWSEL |= 0 << 14;
-	DAVE_Init();			// Initialization of DAVE Apps
+	PORT0 ->HWSEL &= ~0x0000c000UL; //Faz pin 0.7 funcionar
+	PORT0 ->HWSEL |= 0 << 14;
+	DAVE_Init(); // Initialization of DAVE Apps
 	//PORT0->HWSEL &= ~0x0000c000UL; //Faz pin 0.7 funcionar
 	//PORT0->HWSEL |= 0 << 14;
 	/*Etapa de inicializacao*/
@@ -209,9 +206,11 @@ int main(void)
 
 	psxHandShake();
 	psxConfiguraControle();
+	ADC001_GenerateLoadEvent(&ADC001_Handle0);
+	ADC001_GetResult(&ADC001_Handle0, &result);
 	/*Loop do controle*/
-	while(1)
-	{
+	while (1) {
+		ADC001_GetResult(&ADC001_Handle0, &result);
 		pwm_max = PWM_LIM;
 		/*Inicializa o que sera mandado*/
 		BOOLType blah2 = 1;
@@ -223,127 +222,119 @@ int main(void)
 		int16_t pow1, pow2;
 		/*Le controle*/
 		psxLeControle();
-		if (psx_status != 140)//Nao ta analogico
-		{
+		if (psx_status != 140) //Nao ta analogico
+				{
 			psxHandShake();
 			psxConfiguraControle();
 			continue;
 		}
 		/*Com dados do controle atribui valores e chama callbacks*/
-		if (START && start)
-		{
+		if (START && start) {
 			start_state = 1;
 			start();
 		}
-		if (SELECT && select)
-		{
+		if (SELECT && select) {
 			select_state = 1;
 			select();
 		}
-		if (L_DOIS && l_dois)
-		{
+		if (L_DOIS && l_dois) {
 			l_dois_state = 1;
 			l_dois();
 		}
-		if (L_UM && l_um)
-		{
+		if (L_UM && l_um) {
 			l_um_state = 1;
 			l_um();
 		}
-		if (L_TRES && l_tres)
-		{
+		if (L_TRES && l_tres) {
 			l_tres_state = 1;
 			l_tres();
 		}
-		if (R_UM && r_um)
-		{
+		if (R_UM && r_um) {
 			r_um_state = 1;
 			r_um();
 		}
-		if (R_DOIS && r_dois)
-		{
+		if (R_DOIS && r_dois) {
 			r_dois_state = 1;
 			r_dois();
 		}
-		if (R_TRES && r_tres)
-		{
+		if (R_TRES && r_tres) {
 			r_tres_state = 1;
 			r_tres();
 		}
-		if (SQR && sqr)
-		{
+		if (SQR && sqr) {
 			sqr_state = 1;
 			sqr();
 		}
-		if (TRIANGLE && triangle)
-		{
+		if (TRIANGLE && triangle) {
 			triangle_state = 1;
 			triangle();
 		}
-		if (CIRCLE && circle)
-		{
+		if (CIRCLE && circle) {
 			circle_state = 1;
 			circle();
 		}
-		if (CROSS && cross)
-		{
+		if (CROSS && cross) {
 			cross_state = 1;
 			cross();
 		}
-		if (LEFT && left)
-		{
+		if (LEFT && left) {
 			left_state = 1;
 			left();
 		}
-		if (RIGHT && right)
-		{
+		if (RIGHT && right) {
 			right_state = 1;
 			right();
 		}
-		if (UP && up)
-		{
+		if (UP && up) {
 			up_state = 1;
 			up();
 		}
-		if (DOWN && down)
-		{
+		if (DOWN && down) {
 			down_state = 1;
 			down();
 		}
 
-		//ADC001_GenerateLoadEvent(&ADC001_Handle0);
+		//
 
 		data_E[0] = 0;
 		//if (psxDado[5] == 0 && psxDado[3] == 0) continue; //Enquanto for zero nao faz nada -> tirar quando ligar o analogico
-		pow1 = (psxDado[5]-127);//<<1; //Analog esq //Subtrai 127 para saber o sentido
-		pow2 = (psxDado[3]-127);//<<1;
+		pow1 = (psxDado[5] - 127); //<<1; //Analog esq //Subtrai 127 para saber o sentido
+		pow2 = (psxDado[3] - 127); //<<1;
 		data_E[3] = 0;
 		int16_t temp; //Variavel para armazenamento temporario dos calculos
 		if (!flipped) //Robo virado, variavel atribuida pelo clique de um botao
 		{
-			if (pow1 < -30) albh2 = 0; //ok
-			else if (pow1 > 30) blah2 = 0; //ok
-			if (pow2 < -30) albh1 = 0;
-			else if (pow2 > 30) blah1 = 0;
-			temp = pow1>0?pow1*2:(-pow1)*2;
-			data_E[1] = temp*pwm_max/100;
-			temp = pow2>0?pow2*2:(-pow2)*2;
-			data_E[2] = temp*pwm_max/100;
-		}
-		else
-		{
-			if (pow2 > 30) albh2 = 0; //ok
-			else if (pow2 < -30) blah2 = 0; //ok
-			if (pow1 > 30) albh1 = 0;
-			else if (pow1 < -30) blah1 = 0;
-			temp = pow1>0?pow1*2:(-pow1)*2;
-			data_E[2] = temp*pwm_max/100;
-			temp = pow2>0?pow2*2:(-pow2)*2;
-			data_E[1] = temp*pwm_max/100;
+			if (pow1 < -30)
+				albh2 = 0; //ok
+			else if (pow1 > 30)
+				blah2 = 0; //ok
+			if (pow2 < -30)
+				albh1 = 0;
+			else if (pow2 > 30)
+				blah1 = 0;
+			temp = pow1 > 0 ? pow1 * 2 : (-pow1) * 2;
+			data_E[1] = temp * pwm_max / 100;
+			temp = pow2 > 0 ? pow2 * 2 : (-pow2) * 2;
+			data_E[2] = temp * pwm_max / 100;
+		} else {
+			if (pow2 > 30)
+				albh2 = 0; //ok
+			else if (pow2 < -30)
+				blah2 = 0; //ok
+			if (pow1 > 30)
+				albh1 = 0;
+			else if (pow1 < -30)
+				blah1 = 0;
+			temp = pow1 > 0 ? pow1 * 2 : (-pow1) * 2;
+			data_E[2] = temp * pwm_max / 100;
+			temp = pow2 > 0 ? pow2 * 2 : (-pow2) * 2;
+			data_E[1] = temp * pwm_max / 100;
 		}
 		//if (data_E[1] > 20 || data_E[2] > 20) enable = 1;
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2) | (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE) | (buzina << BUZINA);
-		data_E[4] = result.Result>>4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
+		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
+				| (buzina << BUZINA);
+		data_E[4] = result.Result >> 4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
 
 		write_E();
 		updateButtonStates();
@@ -355,16 +346,15 @@ int main(void)
 /***************FUNCOES DO TRANSCEPTOR**************/
 /***************************************************/
 
-void read_R()
-{
+void read_R() {
 	int i;
 	IO004_ResetPin(CE);
 	delay(50000);
 	uint8_t temp = 0;
 
-	for (i = 7; i > -1; i --)
-	{
-		if (IO004_ReadPin(DATA)) temp |= (1<<i);
+	for (i = 7; i > -1; i--) {
+		if (IO004_ReadPin(DATA))
+			temp |= (1 << i);
 		pulse_R();
 	}
 	data_R = temp;
@@ -372,86 +362,82 @@ void read_R()
 	delay(50000);
 }
 
-void pulse_R()
-{
+void pulse_R() {
 	delay(300);
 	IO004_SetPin(CLK1);
 	delay(300);
 	IO004_ResetPin(CLK1);
 }
 
-void configure_E()
-{
+void configure_E() {
 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
-	configuration[0] = 0xC4;//RF_CH# e OP_MODE 0b11011110
-	configuration[1] = 0x4F;//RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
-	configuration[2] = 0xA3;//addr_w
-	configuration[3] = 0xEE;//Comeco enderco CH1 00000001
-	configuration[4] = 0xDD;//0b00000000
-	configuration[5] = 0xCC;//0b11010100
-	configuration[6] = 0xBB;//0b11011111
-	configuration[7] = 0xAA;//Fim enderco CH1 0b11101010
-	configuration[8] = 0b00000000;//Comeco enderco CH2
+	configuration[0] = 0xC4; //RF_CH# e OP_MODE 0b11011110
+	configuration[1] = 0x4F; //RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+	configuration[2] = 0xA3; //addr_w
+	configuration[3] = 0xEE; //Comeco enderco CH1 00000001
+	configuration[4] = 0xDD; //0b00000000
+	configuration[5] = 0xCC; //0b11010100
+	configuration[6] = 0xBB; //0b11011111
+	configuration[7] = 0xAA; //Fim enderco CH1 0b11101010
+	configuration[8] = 0b00000000; //Comeco enderco CH2
 	configuration[9] = 0b00000000;
 	configuration[10] = 0b00000000;
 	configuration[11] = 0b00000000;
-	configuration[12] = 0b00000000;//Fim enderco CH2
-	configuration[13] = 0x28;//num bits enviados (1 byte nesse ex) TODO arrumar
+	configuration[12] = 0b00000000; //Fim enderco CH2
+	configuration[13] = 0x28; //num bits enviados (1 byte nesse ex) TODO arrumar
 	configuration[14] = 0b00000000;
 
 	IO004_ResetPin(CE);
 	IO004_SetPin(CS);
 	int i, j;
-	for (i = 14; i > -1; i--)
-	{
-		for (j = 7; j > -1; j--)
-		{
-			if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
-			else IO004_ResetPin(DATA);;
+	for (i = 14; i > -1; i--) {
+		for (j = 7; j > -1; j--) {
+			if ((configuration[i] & (1 << j)) > 0)
+				IO004_SetPin(DATA);
+			else
+				IO004_ResetPin(DATA);
+			;
 			pulse_R();
 		}
 	}
 	IO004_ResetPin(CS);
 	delay(50000);
 }
-void write_E()
-{
+void write_E() {
 	int i, j;
 	IO004_SetPin(CE);
 	delay(1000);
-	for (i = 7; i > 2 ; i --)
-	{
-		for (j = 7; j > -1; j --)
-		{
-			if ((configuration[i]&(1<<j))>0) IO004_SetPin(DATA);
-			else IO004_ResetPin(DATA);
+	for (i = 7; i > 2; i--) {
+		for (j = 7; j > -1; j--) {
+			if ((configuration[i] & (1 << j)) > 0)
+				IO004_SetPin(DATA);
+			else
+				IO004_ResetPin(DATA);
 			pulse_R();
 		}
 	}
-	for (i = 0; i < BYTES_TO_SEND; i++)
-	{
-		for (j = 7; j > -1; j --)
-		{
-			if ((data_E[i] & (1<<j))>0) IO004_SetPin(DATA);
-			else IO004_ResetPin(DATA);
+	for (i = 0; i < BYTES_TO_SEND; i++) {
+		for (j = 7; j > -1; j--) {
+			if ((data_E[i] & (1 << j)) > 0)
+				IO004_SetPin(DATA);
+			else
+				IO004_ResetPin(DATA);
 			pulse_R();
 		}
-	}//termina de enviar dados
+	} //termina de enviar dados
 	IO004_ResetPin(CE);
 	delay(5000);
 }
 /***************************************************/
 /****************FUNCOES DO CONTROLE****************/
 /***************************************************/
-void psxConfiguraControle()
-{
+void psxConfiguraControle() {
 	psxEnterConfigMode();
 	psxSetAnalogMode();
 	psxExitConfigMode();
 }
 
-void psxEnterConfigMode()
-{
+void psxEnterConfigMode() {
 	int psxByte = 0;
 	IO004_SetPin(CMD);
 	IO004_SetPin(CONT_CLK);
@@ -476,8 +462,7 @@ void psxEnterConfigMode()
 	IO004_SetPin(ATT);
 }
 
-void psxSetAnalogMode()
-{
+void psxSetAnalogMode() {
 	int psxByte = 0;
 	IO004_SetPin(CMD);
 	IO004_SetPin(CONT_CLK);
@@ -514,8 +499,7 @@ void psxSetAnalogMode()
 	IO004_SetPin(ATT);
 }
 
-void psxExitConfigMode()
-{
+void psxExitConfigMode() {
 	int psxByte = 0;
 	IO004_SetPin(CMD);
 	IO004_SetPin(CONT_CLK);
@@ -552,8 +536,7 @@ void psxExitConfigMode()
 	IO004_SetPin(ATT);
 }
 
-void psxLeControle()
-{
+void psxLeControle() {
 	int psxByte = 0;
 	int psxCont;
 
@@ -571,14 +554,13 @@ void psxLeControle()
 	psxByte = 0;
 	psxTrocaByte(psxByte);
 
-	for (psxCont = 0; psxCont<6; psxCont++)
+	for (psxCont = 0; psxCont < 6; psxCont++)
 		psxDado[psxCont] = psxTrocaByte(0);
 
 	IO004_SetPin(ATT);
 }
 
-void psxHandShake()
-{
+void psxHandShake() {
 	int psxByte = 0;
 
 	IO004_SetPin(CMD);
@@ -604,14 +586,12 @@ void psxHandShake()
 	IO004_SetPin(ATT);
 }
 
-int psxTrocaByte(int byteDado)
-{
+int psxTrocaByte(int byteDado) {
 	int c;
 	int aux = 0;
-	for (c=0;c<=7;c++)
-	{
+	for (c = 0; c <= 7; c++) {
 
-		if(byteDado & (0x01<<c))
+		if (byteDado & (0x01 << c))
 			IO004_SetPin(CMD);
 		else
 			IO004_ResetPin(CMD);
@@ -689,28 +669,24 @@ int psxTrocaByte(int byteDado)
 /*****************FUNCOES GERAIS********************/
 /***************************************************/
 
-void delay(long unsigned int i)
-{
-	while(i--)
-	{
+void delay(long unsigned int i) {
+	while (i--) {
 		__NOP();
 	}
 }
-void printByteToInt(char a)
-{
-	char c = a%10 + '0';
-	a /=10;
-	char d = a%10 + '0';
-	a /=10;
-	char e = a%10 + '0';
+void printByteToInt(char a) {
+	char c = a % 10 + '0';
+	a /= 10;
+	char d = a % 10 + '0';
+	a /= 10;
+	char e = a % 10 + '0';
 	UART001_WriteData(UART001_Handle0, e);
 	UART001_WriteData(UART001_Handle0, d);
 	UART001_WriteData(UART001_Handle0, c);
 
 }
 
-void adc_event(void)
-{
+void adc_event(void) {
 	ADC001_GetResult(&ADC001_Handle0, &result);
 }
 
@@ -718,8 +694,7 @@ void adc_event(void)
 /*****************FUNCOES BOTOES********************/
 /***************************************************/
 
-void updateButtonStates()
-{
+void updateButtonStates() {
 	l_um_state_before = l_um_state;
 	l_dois_state_before = l_dois_state;
 	l_tres_state_before = l_tres_state;
@@ -755,17 +730,14 @@ void updateButtonStates()
 	select_state = 0;
 }
 
-void turbo(void)
-{
+void turbo(void) {
 	pwm_max = 95;
 }
 
-void shunt(void)
-{
+void shunt(void) {
 	pwm_max = 40;
 }
 
-void flip(void)
-{
+void flip(void) {
 	flipped = !flipped;
 }

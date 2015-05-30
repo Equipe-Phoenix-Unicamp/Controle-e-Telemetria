@@ -93,7 +93,7 @@ const NVIC002_HandleType NVIC002_Handle0 = {
   /* Node Interrupt SubPriority */
   .SubPriority = 0,
   /* Interrupt enable for Node16 */
-  .InterruptEnable = 1
+  .InterruptEnable = 0
 }; 
 const NVIC002_HandleType * NVIC002_HandleArray[NVIC002_NUM_INSTANCES] =
 {

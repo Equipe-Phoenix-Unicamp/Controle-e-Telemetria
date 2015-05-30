@@ -34,8 +34,8 @@
     <toolTipHelpDescription>Allows user to enable interrupt during initialization</toolTipHelpDescription>
     <item name="Enable interrupt at initialization" evalFunction="" URI="http://www.infineon.com/1.0.28/app/nvic002/0/nvic002_erwenableint/0" maxValue="1" minValue="0">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <localValue xsi:type="ResourceModel:StringValue" value="1"/>
-      <globalValue xsi:type="ResourceModel:StringValue" value="1"/>
+      <localValue xsi:type="ResourceModel:StringValue" value="0"/>
+      <globalValue xsi:type="ResourceModel:StringValue" value="0"/>
       <toolTipHelpDescription>Enable Interrupt during initalization</toolTipHelpDescription>
     </item>
   </provided>

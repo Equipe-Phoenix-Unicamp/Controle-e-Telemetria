@@ -129,6 +129,7 @@ void read_R()
   data_R[1] = 0;
   data_R[2] = 0;
   data_R[3] = 0;
+  data_R[4] = 0;
   //Serial.print("\nRecebendo");
   int i;
   digitalWrite(CE_R, LOW);

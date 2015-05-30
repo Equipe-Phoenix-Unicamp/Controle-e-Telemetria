@@ -21,7 +21,7 @@
   21              		.align	2
   24              	IO001_Handle0:
   25 0000 0E       		.byte	14
-  26 0001 00       		.byte	0
+  26 0001 05       		.byte	5
   27 0002 0000     		.space	2
   28 0004 008E0248 		.word	1208126976
   29              		.text
@@ -32,8 +32,8 @@
   34              		.file 4 "../Dave/Generated/src/IO001/IO001_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 IO001_Conf.c
-C:\Users\Carlos\AppData\Local\Temp\ccfcnK3e.s:24     .rodata:00000000 IO001_Handle0
-C:\Users\Carlos\AppData\Local\Temp\ccfcnK3e.s:21     .rodata:00000000 $d
+C:\Users\Carlos\AppData\Local\Temp\ccpB5VyV.s:24     .rodata:00000000 IO001_Handle0
+C:\Users\Carlos\AppData\Local\Temp\ccpB5VyV.s:21     .rodata:00000000 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024

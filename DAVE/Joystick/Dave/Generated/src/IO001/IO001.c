@@ -120,11 +120,11 @@ void IO001_Init(void)
 {
    /* <<<DD_IO001_API_1>>> */
 
-  /* Configuration of Port 14 Pin 0 based on User configuration */
+  /* Configuration of Port 14 Pin 5 based on User configuration */
   /* Enable Digital Pad Input*/
-  IO001_Handle0.PortRegs->PDISC  &= (~((uint32_t)0x1U << 0));
+  IO001_Handle0.PortRegs->PDISC  &= (~((uint32_t)0x1U << 5));
   /*configure the Digital Input characteristics in IOCR register*/
-  IO001_Handle0.PortRegs->IOCR0 |= (0U << 3);
+  IO001_Handle0.PortRegs->IOCR4 |= (0U << 11);
 }
 
 void IO001_EnableDigitalInput(const IO001_HandleType* Handle,IO001_InputModeType Mode)
