@@ -19,7 +19,6 @@
         <File genName="UART001_Extern.h" genPath="Dave\Generated\inc\UART001\UART001_Extern.h" jetPath="UART001/1.0.24/Templates/UART001_Externh.jet" location="bin\CodeGenerator\uart001_externh_template.class"/>
         <File genName="NVIC002_Conf.h" genPath="Dave\Generated\inc\NVIC002\NVIC002_Conf.h" jetPath="NVIC002/1.0.28/Templates/NVIC002_Confh.jet" location="bin\CodeGenerator\nvic002_confh_template.class"/>
         <File genName="NVIC002_Extern.h" genPath="Dave\Generated\inc\NVIC002\NVIC002_Extern.h" jetPath="NVIC002/1.0.28/Templates/NVIC002_Externh.jet" location="bin\CodeGenerator\nvic002_externh_template.class"/>
-        <File genName="CLK001_Conf.h" genPath="Dave\Generated\inc\CLK001\CLK001_Conf.h" jetPath="CLK001/1.0.44/Templates/CLK001_Confh.jet" location="bin\CodeGenerator\clk001_confh_template.class"/>
         <File genName="ADCGlob001.h" genPath="Dave\Generated\inc\ADCGLOB001\ADCGlob001.h" jetPath="ADCGLOB001/1.0.28/Templates/ADCGlob001h.jet" location="bin\CodeGenerator\adcglob001h_template.class"/>
         <File genName="MULTIPLEXER.h" genPath="Dave\Generated\inc\DAVESupport\MULTIPLEXER.h" jetPath="DAVESUPPORT/1.0.44/Templates/MUX_H.jet" location="bin\CodeGenerator\mux_h_template.class"/>
         <File genName="DAVE3.h" genPath="Dave\Generated\inc\DAVESupport\DAVE3.h" jetPath="DAVESUPPORT/1.0.44/Templates/DAVE3_H.jet" location="bin\CodeGenerator\dave3_h_template.class"/>
@@ -29,8 +28,15 @@
         <File genName="ADCGlob001.c" genPath="Dave\Generated\src\ADCGLOB001\ADCGlob001.c" jetPath="ADCGLOB001/1.0.28/Templates/ADCGlob001c.jet" location="bin\CodeGenerator\adcglob001c_template.class"/>
         <File genName="IO001.c" genPath="Dave\Generated\src\IO001\IO001.c" jetPath="IO001/1.0.16/Templates/IO001c.jet" location="bin\CodeGenerator\io001c_template.class"/>
         <File genName="DAVE3.c" genPath="Dave\Generated\src\DAVESupport\DAVE3.c" jetPath="DAVESUPPORT/1.0.44/Templates/DAVE3_C.jet" location="bin\CodeGenerator\dave3_c_template.class"/>
-    <File genName="IO004.c" genPath="Dave\Generated\src\IO004\IO004.c" jetPath="IO004/1.0.22/Templates/IO004c.jet" location="bin\CodeGenerator\io004c_template.class"/>
-        <File genName="IO004_Conf.h" genPath="Dave\Generated\inc\IO004\IO004_Conf.h" jetPath="IO004/1.0.22/Templates/IO004_Confh.jet" location="bin\CodeGenerator\io004_confh_template.class"/>
+    <File genName="IO004_Conf.h" genPath="Dave\Generated\inc\IO004\IO004_Conf.h" jetPath="IO004/1.0.22/Templates/IO004_Confh.jet" location="bin\CodeGenerator\io004_confh_template.class"/>
         <File genName="IO004_Conf.c" genPath="Dave\Generated\src\IO004\IO004_Conf.c" jetPath="IO004/1.0.22/Templates/IO004_Confc.jet" location="bin\CodeGenerator\io004_confc_template.class"/>
+        <File genName="IO004.c" genPath="Dave\Generated\src\IO004\IO004.c" jetPath="IO004/1.0.22/Templates/IO004c.jet" location="bin\CodeGenerator\io004c_template.class"/>
+        <File genName="CCU4GLOBAL_Conf.h" genPath="Dave\Generated\inc\CCU4GLOBAL\CCU4GLOBAL_Conf.h" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Confh.jet" location="bin\CodeGenerator\ccu4global_confh_template.class"/>
+        <File genName="CLK001_Conf.h" genPath="Dave\Generated\inc\CLK001\CLK001_Conf.h" jetPath="CLK001/1.0.44/Templates/CLK001_Confh.jet" location="bin\CodeGenerator\clk001_confh_template.class"/>
+        <File genName="PWMSP001.c" genPath="Dave\Generated\src\PWMSP001\PWMSP001.c" jetPath="PWMSP001/1.0.34/Templates/PWMSP001c.jet" location="bin\CodeGenerator\pwmsp001c_template.class"/>
+        <File genName="CCU4GLOBAL_Conf.c" genPath="Dave\Generated\src\CCU4GLOBAL\CCU4GLOBAL_Conf.c" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Confc.jet" location="bin\CodeGenerator\ccu4global_confc_template.class"/>
+    <File genName="PWMSP001_Conf.h" genPath="Dave\Generated\inc\PWMSP001\PWMSP001_Conf.h" jetPath="PWMSP001/1.0.34/Templates/PWMSP001Confh.jet" location="bin\CodeGenerator\pwmsp001confh_template.class"/>
+        <File genName="CCU4GLOBAL_Extern.h" genPath="Dave\Generated\inc\CCU4GLOBAL\CCU4GLOBAL_Extern.h" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Externh.jet" location="bin\CodeGenerator\ccu4global_externh_template.class"/>
+        <File genName="PWMSP001_Conf.c" genPath="Dave\Generated\src\PWMSP001\PWMSP001_Conf.c" jetPath="PWMSP001/1.0.34/Templates/PWMSP001Confc.jet" location="bin\CodeGenerator\pwmsp001confc_template.class"/>
     </TemplateCaches>
 </Cache>

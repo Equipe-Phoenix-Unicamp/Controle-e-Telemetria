@@ -89,9 +89,23 @@ void DAVE_MUX_Init(void)
 {  
    	 
             	         
+                                     
+       /*        SCU Macro definitions     */                        
+        //********* Capture/Compare Unit 4 (CAPCOM4) CONFIGURATIONS ************************* 
+   	 
+            	         
+                                              
+   	 
+            	         
                                           
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                                      
+  WR_REG(PORT1->IOCR0, 0xb8U, PORT_IOCR_PC0_PCR_Pos, 0x13U);                /*P1.0 : PORT1_IOCR0_PC0_PCR and PORT1_IOCR0_PC0_OE */					   
+					                         
+  WR_REG(PORT1->IOCR0, 0xb80000U, PORT_IOCR_PC2_PCR_Pos, 0x13U);                /*P1.2 : PORT1_IOCR0_PC2_PCR and PORT1_IOCR0_PC2_OE */					   
+					                         
+  WR_REG(PORT1->IOCR0, 0xb8000000U, PORT_IOCR_PC3_PCR_Pos, 0x13U);                /*P1.3 : PORT1_IOCR0_PC3_PCR and PORT1_IOCR0_PC3_OE */					   
+					                         
   WR_REG(PORT2->IOCR0, PORT_IOCR_PC2_OE_Msk, PORT_IOCR_PC2_OE_Pos, PORT_IOCR_OE1);                /*    P2.2 : PORT2_IOCR0_PC2_OE */					   
 					                         
   WR_REG(PORT2->IOCR4, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P2.4 : PORT2_IOCR4_PC4_OE */					   
@@ -119,7 +133,7 @@ void DAVE_MUX_Init(void)
 *******************************************************************************/
  
 void DAVE_MUX_PreInit(void)
-{
+{        
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                   
 }

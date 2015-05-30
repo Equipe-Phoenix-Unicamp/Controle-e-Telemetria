@@ -92,11 +92,40 @@ void DAVE_Init(void)
 	DAVE_MUX_PreInit(); 
 	//  Initialization of app 'IO004'		     
 	IO004_Init();
+	 
+	//  Initialization of app 'CLK001'		     
+	CLK001_Init();
+	 
+	//  Initialization of app 'CCU4GLOBAL'		     
+	CCU4GLOBAL_Init();
+	 
+	//  Initialization of app 'PWMSP001'		     
+	PWMSP001_Init();
 	
       
 	//  MUX configurations
 	DAVE_MUX_Init();	
 } //  End of function DAVE_Init
 
+
+//****************************************************************************
+// @Function      void SystemInit_DAVE3(void) 
+//
+//----------------------------------------------------------------------------
+// @Description   This function initializes the Clock Init Functions.
+//
+//----------------------------------------------------------------------------
+// @Returnvalue   None
+//
+//----------------------------------------------------------------------------
+// @Parameters    None
+//
+//****************************************************************************
+
+void SystemInit_DAVE3(void)
+{
+	// CLK Initialisation
+	CLK001_Init();
+} //  End of function SystemInit_DAVE3
 
 
