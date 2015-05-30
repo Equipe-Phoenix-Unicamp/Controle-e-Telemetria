@@ -1,0 +1,791 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Tick_Handler,"ax",%progbits
+  20              		.align	2
+  21              		.global	Tick_Handler
+  22              		.thumb
+  23              		.thumb_func
+  25              	Tick_Handler:
+  26              	.LFB117:
+  27              		.file 1 "../Main.c"
+   1:../Main.c     **** /* =========================================================================== *
+   2:../Main.c     ****  * Copyright (c) 2014, Infineon Technologies AG                                *
+   3:../Main.c     ****  * All rights reserved.                                                        *
+   4:../Main.c     ****  *                                                                             *
+   5:../Main.c     ****  * Redistribution and use in source and binary forms, with or without          *
+   6:../Main.c     ****  * modification, are permitted provided that the following conditions are met: *
+   7:../Main.c     ****  * Redistributions of source code must retain the above copyright notice, this *
+   8:../Main.c     ****  * list of conditions and the following disclaimer. Redistributions in binary  *
+   9:../Main.c     ****  * form must reproduce the above copyright notice, this list of conditions and *
+  10:../Main.c     ****  * the following disclaimer in the documentation and/or other materials        *
+  11:../Main.c     ****  * provided with the distribution. Neither the name of the copyright holders   *
+  12:../Main.c     ****  * nor the names of its contributors may be used to endorse or promote         *
+  13:../Main.c     ****  * products derived from this software without specific prior written          *
+  14:../Main.c     ****  * permission.                                                                 *
+  15:../Main.c     ****  *                                                                                                 
+  16:../Main.c     ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" *
+  17:../Main.c     ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,       *
+  18:../Main.c     ****  * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR      *
+  19:../Main.c     ****  * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR           *
+  20:../Main.c     ****  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,       *
+  21:../Main.c     ****  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,         *
+  22:../Main.c     ****  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; *
+  23:../Main.c     ****  * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,    *
+  24:../Main.c     ****  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR     *
+  25:../Main.c     ****  * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF      *
+  26:../Main.c     ****  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                                  *
+  27:../Main.c     ****  * To improve the quality of the software, users are encouraged to share       *
+  28:../Main.c     ****  * modifications, enhancements or bug fixes with                               *
+  29:../Main.c     ****  * Infineon Technologies AG (dave@infineon.com).                               *
+  30:../Main.c     ****  *                                                                             *
+  31:../Main.c     ****  * ==========================================================================
+  32:../Main.c     ****  * ** PLATFORM : Infineon XMC4500 Series (Relax Kit)                          **
+  33:../Main.c     ****  **                                                                            **
+  34:../Main.c     ****  ** AUTHOR : Application Engineering Team                                      **
+  35:../Main.c     ****  **                                                                            **
+  36:../Main.c     ****  ** Project version update to  v 1.0.0  Initial Version  	                  **
+  37:../Main.c     ****  **                            v 1.0.2  Updated with latest apps,linker and    **
+  38:../Main.c     ****  **                                     startup files        	              **
+  39:../Main.c     ****  **                                                                            **
+  40:../Main.c     ****  ** MODIFICATION DATE : May, 27, 2014                                          **
+  41:../Main.c     ****  **                                                                            **
+  42:../Main.c     ****  *******************************************************************************/
+  43:../Main.c     **** 
+  44:../Main.c     **** /** @file Main.c
+  45:../Main.c     ****  *  @brief Main source file for this PWMSP001 demo. This file contains the main
+  46:../Main.c     ****  *  tasks of the demo and is responsible for the initial application hardware
+  47:../Main.c     ****  *  configuration
+  48:../Main.c     ****  */
+  49:../Main.c     **** 
+  50:../Main.c     **** /*******************************************************************************
+  51:../Main.c     ****  ** INCLUDE FILES                                                             **
+  52:../Main.c     ****  ******************************************************************************/
+  53:../Main.c     **** #include <DAVE3.h>			//Declarations from DAVE3 Code Generation (includes SFR declaration)
+  54:../Main.c     **** void Tick_Handler(void);
+  55:../Main.c     **** void delayms(uint32_t delay_ms);
+  56:../Main.c     **** void delayus(uint32_t delay_us);
+  57:../Main.c     **** void Software_Timers_Init(void);
+  58:../Main.c     **** void verifyChange(void);
+  59:../Main.c     **** 
+  60:../Main.c     **** uint32_t ticks = 0UL;
+  61:../Main.c     **** uint32_t lastTick = 0UL;
+  62:../Main.c     **** float value = 1.0;
+  63:../Main.c     **** float period = 17.0;
+  64:../Main.c     **** int status = 1;
+  65:../Main.c     **** 
+  66:../Main.c     **** 
+  67:../Main.c     **** /**
+  68:../Main.c     ****  * @brief main function
+  69:../Main.c     ****  * @param[in] None
+  70:../Main.c     ****  * @return None
+  71:../Main.c     ****  */
+  72:../Main.c     **** int main(void) {
+  73:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+  74:../Main.c     **** 
+  75:../Main.c     **** 	DAVE_Init(); // Initialization of DAVE Apps
+  76:../Main.c     **** 
+  77:../Main.c     **** 
+  78:../Main.c     **** 	ticks = 0;
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+  80:../Main.c     **** 	Software_Timers_Init();
+  81:../Main.c     **** 
+  82:../Main.c     **** 	while (1) {
+  83:../Main.c     **** 
+  84:../Main.c     **** 		//TODO: Change Handle
+  85:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle0) == 0) {
+  86:../Main.c     **** 			//delayms(100);
+  87:../Main.c     **** 			while (IO004_ReadPin(IO004_Handle0) == 0)
+  88:../Main.c     **** 				;
+  89:../Main.c     **** 			value += 0.1;
+  90:../Main.c     **** 			if (value > 2.0)
+  91:../Main.c     **** 				value = 2.0;
+  92:../Main.c     **** 		}
+  93:../Main.c     **** 
+  94:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle1) == 0) {
+  95:../Main.c     **** 			//delayms(100);
+  96:../Main.c     **** 			while (IO004_ReadPin(IO004_Handle1) == 0)
+  97:../Main.c     **** 				;
+  98:../Main.c     **** 			value -= 0.1;
+  99:../Main.c     **** 			if (value < 1.0)
+ 100:../Main.c     **** 				value = 1.0;
+ 101:../Main.c     **** 		}
+ 102:../Main.c     **** 
+ 103:../Main.c     **** 		verifyChange();
+ 104:../Main.c     **** 
+ 105:../Main.c     **** 	}
+ 106:../Main.c     **** 	return 0;
+ 107:../Main.c     **** }
+ 108:../Main.c     **** 
+ 109:../Main.c     **** /**
+ 110:../Main.c     ****  * @brief PWM_Period_Interrupt handler: executes every period match of PWMSP001/0.
+ 111:../Main.c     ****  * @param[in] None
+ 112:../Main.c     ****  * @return None
+ 113:../Main.c     ****  */
+ 114:../Main.c     **** 
+ 115:../Main.c     **** //void PWM_Period_Interrupt(void)
+ 116:../Main.c     **** //{
+ 117:../Main.c     **** //	static uint32_t state;
+ 118:../Main.c     **** //	status_t status;
+ 119:../Main.c     **** //	status = DAVEApp_SUCCESS;
+ 120:../Main.c     **** //	/* state machine to change the different duty cycle */
+ 121:../Main.c     **** //	switch(state)
+ 122:../Main.c     **** //	{
+ 123:../Main.c     **** //		/* Updating of duty cycle to 10% */
+ 124:../Main.c     **** //		case 0: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x8C9F); break;
+ 125:../Main.c     **** //		case 16000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x7CFF); break;
+ 126:../Main.c     **** //
+ 127:../Main.c     **** //		case 32000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x1F3F); break;
+ 128:../Main.c     **** //		case 34000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x2EDF); break;
+ 129:../Main.c     **** //		case 36000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x3E7F); break;
+ 130:../Main.c     **** //		case 38000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x4E1F); break;
+ 131:../Main.c     **** //		case 40000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x5DBF); break;
+ 132:../Main.c     **** //		case 42000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x6D5F); break;
+ 133:../Main.c     **** //
+ 134:../Main.c     **** //
+ 135:../Main.c     **** //		/* Updating of duty cycle to 90% */
+ 136:../Main.c     **** //		case 8000: status =  PWMSP001_SetCompare(&PWMSP001_Handle0, 0x0F9F); break;
+ 137:../Main.c     **** //
+ 138:../Main.c     **** //		default:	break;
+ 139:../Main.c     **** //	}
+ 140:../Main.c     **** //	if(status != DAVEApp_SUCCESS)
+ 141:../Main.c     **** //	{
+ 142:../Main.c     **** //	  PWMSP001_Stop((PWMSP001_HandleType*)&PWMSP001_Handle0);
+ 143:../Main.c     **** //	}
+ 144:../Main.c     **** //
+ 145:../Main.c     **** //	// Updating of the state machine
+ 146:../Main.c     **** //	state++;
+ 147:../Main.c     **** //	if(state>=44000)	state= 0;
+ 148:../Main.c     **** //}
+ 149:../Main.c     **** 
+ 150:../Main.c     **** void verifyChange(){
+ 151:../Main.c     **** 
+ 152:../Main.c     **** 
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 155:../Main.c     **** 		status =1;
+ 156:../Main.c     **** 		ticks = 0;
+ 157:../Main.c     **** 	}else if(status == 1 && ticks >= value*1000/SYSTM002_SYSTICK_INTERVAL){
+ 158:../Main.c     **** 		IO004_ResetPin(IO004_Handle2);
+ 159:../Main.c     **** 		status=0;
+ 160:../Main.c     **** 	}
+ 161:../Main.c     **** 
+ 162:../Main.c     **** }
+ 163:../Main.c     **** 
+ 164:../Main.c     **** void Software_Timers_Init() {
+ 165:../Main.c     **** 	handle_t TaskTimerId;
+ 166:../Main.c     **** 
+ 167:../Main.c     **** 	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+ 168:../Main.c     **** 			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+ 169:../Main.c     **** 	if (TaskTimerId != 0) {
+ 170:../Main.c     **** //Timer created successfully so start it
+ 171:../Main.c     **** 		SYSTM002_StartTimer(TaskTimerId);
+ 172:../Main.c     **** 	}
+ 173:../Main.c     **** }
+ 174:../Main.c     **** 
+ 175:../Main.c     **** void delayus(uint32_t delay_us) {
+ 176:../Main.c     **** 	uint32_t currenttick = ticks;
+ 177:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+ 178:../Main.c     **** 		;
+ 179:../Main.c     **** 	ticks = 0;
+ 180:../Main.c     **** }
+ 181:../Main.c     **** 
+ 182:../Main.c     **** void delayms(uint32_t delay_ms) {
+ 183:../Main.c     **** 	delayus(1000 * delay_ms);
+ 184:../Main.c     **** }
+ 185:../Main.c     **** 
+ 186:../Main.c     **** //1 tick por 100 us
+ 187:../Main.c     **** void Tick_Handler(void) {
+  28              		.loc 1 187 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 188:../Main.c     **** 	ticks++;
+  33              		.loc 1 188 0
+  34 0000 40F20003 		movw	r3, #:lower16:.LANCHOR0
+  35 0004 C0F20003 		movt	r3, #:upper16:.LANCHOR0
+  36 0008 1A68     		ldr	r2, [r3, #0]
+  37 000a 501C     		adds	r0, r2, #1
+  38 000c 1860     		str	r0, [r3, #0]
+  39 000e 7047     		bx	lr
+  40              		.cfi_endproc
+  41              	.LFE117:
+  43              		.section	.text.verifyChange,"ax",%progbits
+  44              		.align	2
+  45              		.global	verifyChange
+  46              		.thumb
+  47              		.thumb_func
+  49              	verifyChange:
+  50              	.LFB113:
+ 150:../Main.c     **** void verifyChange(){
+  51              		.loc 1 150 0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+  56              		.loc 1 153 0
+  57 0000 224B     		ldr	r3, .L11
+  58 0002 1A68     		ldr	r2, [r3, #0]
+ 150:../Main.c     **** void verifyChange(){
+  59              		.loc 1 150 0
+  60 0004 10B4     		push	{r4}
+  61              	.LCFI0:
+  62              		.cfi_def_cfa_offset 4
+  63              		.cfi_offset 4, -4
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+  64              		.loc 1 153 0
+  65 0006 AAB9     		cbnz	r2, .L3
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+  66              		.loc 1 153 0 is_stmt 0 discriminator 1
+  67 0008 D3ED012A 		flds	s5, [r3, #4]
+  68 000c 9FED203A 		flds	s6, .L11+4
+  69 0010 9FED204A 		flds	s8, .L11+8
+  70 0014 62EE833A 		fmuls	s7, s5, s6
+  71 0018 1F49     		ldr	r1, .L11+12
+  72 001a C3EE844A 		fdivs	s9, s7, s8
+  73 001e D1ED006A 		flds	s13, [r1, #0]	@ int
+  74 0022 B8EE665A 		fuitos	s10, s13
+  75 0026 B4EEE45A 		fcmpes	s10, s9
+  76 002a F1EE10FA 		fmstat
+  77 002e 22DA     		bge	.L10
+  78              	.L2:
+ 162:../Main.c     **** }
+  79              		.loc 1 162 0 is_stmt 1
+  80 0030 10BC     		pop	{r4}
+  81 0032 7047     		bx	lr
+  82              	.L3:
+ 157:../Main.c     **** 	}else if(status == 1 && ticks >= value*1000/SYSTM002_SYSTICK_INTERVAL){
+  83              		.loc 1 157 0
+  84 0034 012A     		cmp	r2, #1
+  85 0036 FBD1     		bne	.L2
+ 157:../Main.c     **** 	}else if(status == 1 && ticks >= value*1000/SYSTM002_SYSTICK_INTERVAL){
+  86              		.loc 1 157 0 is_stmt 0 discriminator 1
+  87 0038 93ED027A 		flds	s14, [r3, #8]
+  88 003c DFED147A 		flds	s15, .L11+4
+  89 0040 DFED140A 		flds	s1, .L11+8
+  90 0044 27EE270A 		fmuls	s0, s14, s15
+  91 0048 1348     		ldr	r0, .L11+12
+  92 004a 80EE201A 		fdivs	s2, s0, s1
+  93 004e D0ED001A 		flds	s3, [r0, #0]	@ int
+  94 0052 B8EE612A 		fuitos	s4, s3
+  95 0056 B4EEC12A 		fcmpes	s4, s2
+  96 005a F1EE10FA 		fmstat
+  97 005e E7DB     		blt	.L2
+ 158:../Main.c     **** 		IO004_ResetPin(IO004_Handle2);
+  98              		.loc 1 158 0 is_stmt 1
+  99 0060 0E4A     		ldr	r2, .L11+16
+ 100 0062 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 101 0064 5268     		ldr	r2, [r2, #4]
+ 102 0066 4FF48030 		mov	r0, #65536
+ 103 006a 00FA01F1 		lsl	r1, r0, r1
+ 104 006e 5160     		str	r1, [r2, #4]
+ 159:../Main.c     **** 		status=0;
+ 105              		.loc 1 159 0
+ 106 0070 0022     		movs	r2, #0
+ 107 0072 1A60     		str	r2, [r3, #0]
+ 108 0074 DCE7     		b	.L2
+ 109              	.L10:
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 110              		.loc 1 154 0
+ 111 0076 0948     		ldr	r0, .L11+16
+ 156:../Main.c     **** 		ticks = 0;
+ 112              		.loc 1 156 0
+ 113 0078 0A60     		str	r2, [r1, #0]
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 114              		.loc 1 154 0
+ 115 007a 4478     		ldrb	r4, [r0, #1]	@ zero_extendqisi2
+ 116 007c 4168     		ldr	r1, [r0, #4]
+ 117 007e 0122     		movs	r2, #1
+ 118 0080 02FA04F0 		lsl	r0, r2, r4
+ 119 0084 4860     		str	r0, [r1, #4]
+ 155:../Main.c     **** 		status =1;
+ 120              		.loc 1 155 0
+ 121 0086 1A60     		str	r2, [r3, #0]
+ 156:../Main.c     **** 		ticks = 0;
+ 122              		.loc 1 156 0
+ 123 0088 D2E7     		b	.L2
+ 124              	.L12:
+ 125 008a 00BF     		.align	2
+ 126              	.L11:
+ 127 008c 00000000 		.word	.LANCHOR1
+ 128 0090 00007A44 		.word	1148846080
+ 129 0094 0000C842 		.word	1120403456
+ 130 0098 00000000 		.word	.LANCHOR0
+ 131 009c 00000000 		.word	IO004_Handle2
+ 132              		.cfi_endproc
+ 133              	.LFE113:
+ 135              		.section	.text.Software_Timers_Init,"ax",%progbits
+ 136              		.align	2
+ 137              		.global	Software_Timers_Init
+ 138              		.thumb
+ 139              		.thumb_func
+ 141              	Software_Timers_Init:
+ 142              	.LFB114:
+ 164:../Main.c     **** void Software_Timers_Init() {
+ 143              		.loc 1 164 0
+ 144              		.cfi_startproc
+ 145              		@ args = 0, pretend = 0, frame = 0
+ 146              		@ frame_needed = 0, uses_anonymous_args = 0
+ 147 0000 08B5     		push	{r3, lr}
+ 148              	.LCFI1:
+ 149              		.cfi_def_cfa_offset 8
+ 150              		.cfi_offset 3, -8
+ 151              		.cfi_offset 14, -4
+ 167:../Main.c     **** 	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+ 152              		.loc 1 167 0
+ 153 0002 6420     		movs	r0, #100
+ 154 0004 0121     		movs	r1, #1
+ 155 0006 054A     		ldr	r2, .L16
+ 156 0008 0023     		movs	r3, #0
+ 157 000a FFF7FEFF 		bl	SYSTM002_CreateTimer
+ 158              	.LVL0:
+ 169:../Main.c     **** 	if (TaskTimerId != 0) {
+ 159              		.loc 1 169 0
+ 160 000e 00B9     		cbnz	r0, .L15
+ 161 0010 08BD     		pop	{r3, pc}
+ 162              	.L15:
+ 173:../Main.c     **** }
+ 163              		.loc 1 173 0
+ 164 0012 BDE80840 		pop	{r3, lr}
+ 171:../Main.c     **** 		SYSTM002_StartTimer(TaskTimerId);
+ 165              		.loc 1 171 0
+ 166 0016 FFF7FEBF 		b	SYSTM002_StartTimer
+ 167              	.LVL1:
+ 168              	.L17:
+ 169 001a 00BF     		.align	2
+ 170              	.L16:
+ 171 001c 00000000 		.word	Tick_Handler
+ 172              		.cfi_endproc
+ 173              	.LFE114:
+ 175              		.global	__aeabi_f2d
+ 176              		.global	__aeabi_dadd
+ 177              		.global	__aeabi_d2f
+ 178              		.global	__aeabi_dsub
+ 179              		.section	.text.startup.main,"ax",%progbits
+ 180              		.align	2
+ 181              		.global	main
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	main:
+ 186              	.LFB112:
+  72:../Main.c     **** int main(void) {
+ 187              		.loc 1 72 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191 0000 2DE9F84F 		push	{r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 192              	.LCFI2:
+ 193              		.cfi_def_cfa_offset 40
+ 194              		.cfi_offset 3, -40
+ 195              		.cfi_offset 4, -36
+ 196              		.cfi_offset 5, -32
+ 197              		.cfi_offset 6, -28
+ 198              		.cfi_offset 7, -24
+ 199              		.cfi_offset 8, -20
+ 200              		.cfi_offset 9, -16
+ 201              		.cfi_offset 10, -12
+ 202              		.cfi_offset 11, -8
+ 203              		.cfi_offset 14, -4
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+ 204              		.loc 1 79 0
+ 205 0004 4E4C     		ldr	r4, .L48+8
+  78:../Main.c     **** 	ticks = 0;
+ 206              		.loc 1 78 0
+ 207 0006 4F4D     		ldr	r5, .L48+12
+  72:../Main.c     **** int main(void) {
+ 208              		.loc 1 72 0
+ 209 0008 2DED068B 		fstmfdd	sp!, {d8, d9, d10}
+ 210              	.LCFI3:
+ 211              		.cfi_def_cfa_offset 64
+ 212              		.cfi_offset 80, -64
+ 213              		.cfi_offset 82, -56
+ 214              		.cfi_offset 84, -48
+  75:../Main.c     **** 	DAVE_Init(); // Initialization of DAVE Apps
+ 215              		.loc 1 75 0
+ 216 000c FFF7FEFF 		bl	DAVE_Init
+ 217              	.LVL2:
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+ 218              		.loc 1 79 0
+ 219 0010 9FED4DAA 		flds	s20, .L48+16
+ 220 0014 D4ED027A 		flds	s15, [r4, #8]
+ 221 0018 DFED4C9A 		flds	s19, .L48+20
+ 222 001c 27EE8A0A 		fmuls	s0, s15, s20
+  78:../Main.c     **** 	ticks = 0;
+ 223              		.loc 1 78 0
+ 224 0020 0023     		movs	r3, #0
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+ 225              		.loc 1 79 0
+ 226 0022 C0EE290A 		fdivs	s1, s0, s19
+  78:../Main.c     **** 	ticks = 0;
+ 227              		.loc 1 78 0
+ 228 0026 2B60     		str	r3, [r5, #0]
+ 229 0028 4FF4803A 		mov	sl, #65536
+  90:../Main.c     **** 			if (value > 2.0)
+ 230              		.loc 1 90 0
+ 231 002c F0EE008A 		fconsts	s17, #0
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+ 232              		.loc 1 79 0
+ 233 0030 BCEEE01A 		ftouizs	s2, s1
+  99:../Main.c     **** 			if (value < 1.0)
+ 234              		.loc 1 99 0
+ 235 0034 B7EE008A 		fconsts	s16, #112
+  79:../Main.c     **** 	lastTick = value*1000/SYSTM002_SYSTICK_INTERVAL;
+ 236              		.loc 1 79 0
+ 237 0038 85ED011A 		fsts	s2, [r5, #4]	@ int
+  80:../Main.c     **** 	Software_Timers_Init();
+ 238              		.loc 1 80 0
+ 239 003c FFF7FEFF 		bl	Software_Timers_Init
+ 240              	.LVL3:
+ 241 0040 4349     		ldr	r1, .L48+24
+ 242 0042 444A     		ldr	r2, .L48+28
+ 243 0044 444B     		ldr	r3, .L48+32
+ 244 0046 5078     		ldrb	r0, [r2, #1]	@ zero_extendqisi2
+ 245 0048 93F80190 		ldrb	r9, [r3, #1]	@ zero_extendqisi2
+ 246 004c D1F804B0 		ldr	fp, [r1, #4]
+ 247 0050 5668     		ldr	r6, [r2, #4]
+ 248 0052 D3F80480 		ldr	r8, [r3, #4]
+ 249 0056 2768     		ldr	r7, [r4, #0]
+ 250 0058 95ED009A 		flds	s18, [r5, #0]	@ int
+ 251 005c 4D78     		ldrb	r5, [r1, #1]	@ zero_extendqisi2
+ 252 005e B8EE499A 		fuitos	s18, s18
+ 253 0062 0121     		movs	r1, #1
+ 254 0064 D4ED021A 		flds	s3, [r4, #8]
+ 255              	.LBB6:
+ 256              	.LBB7:
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+ 257              		.loc 1 153 0
+ 258 0068 D4ED01AA 		flds	s21, [r4, #4]
+ 259 006c 0AFA09FA 		lsl	sl, sl, r9
+ 260 0070 01FA05F5 		lsl	r5, r1, r5
+ 261 0074 01FA00F4 		lsl	r4, r1, r0
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 262              		.loc 1 154 0
+ 263 0078 01FA09F9 		lsl	r9, r1, r9
+ 264              	.L46:
+ 265              	.LBE7:
+ 266              	.LBE6:
+  85:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle0) == 0) {
+ 267              		.loc 1 85 0
+ 268 007c DBF82420 		ldr	r2, [fp, #36]
+ 269 0080 1542     		tst	r5, r2
+ 270 0082 16D0     		beq	.L40
+ 271              	.L20:
+  94:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle1) == 0) {
+ 272              		.loc 1 94 0
+ 273 0084 706A     		ldr	r0, [r6, #36]
+ 274 0086 0442     		tst	r4, r0
+ 275 0088 2ED0     		beq	.L39
+ 276              	.L23:
+ 277              	.LBB11:
+ 278              	.LBB8:
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+ 279              		.loc 1 153 0
+ 280 008a 002F     		cmp	r7, #0
+ 281 008c 45D1     		bne	.L26
+ 282              	.L47:
+ 283 008e 6AEE8A2A 		fmuls	s5, s21, s20
+ 284 0092 82EEA93A 		fdivs	s6, s5, s19
+ 285 0096 B4EEC39A 		fcmpes	s18, s6
+ 286 009a F1EE10FA 		fmstat
+ 287 009e EDDB     		blt	.L46
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 288              		.loc 1 154 0
+ 289 00a0 C8F80490 		str	r9, [r8, #4]
+ 290              	.LBE8:
+ 291              	.LBE11:
+  85:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle0) == 0) {
+ 292              		.loc 1 85 0
+ 293 00a4 DBF82420 		ldr	r2, [fp, #36]
+ 294              	.LBB12:
+ 295              	.LBB9:
+ 154:../Main.c     **** 		IO004_SetPin(IO004_Handle2);
+ 296              		.loc 1 154 0
+ 297 00a8 0127     		movs	r7, #1
+ 298              	.LBE9:
+ 299              	.LBE12:
+  85:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle0) == 0) {
+ 300              		.loc 1 85 0
+ 301 00aa 1542     		tst	r5, r2
+ 302 00ac 9FED2B9A 		flds	s18, .L48+36
+ 303 00b0 E8D1     		bne	.L20
+ 304              	.L40:
+  87:../Main.c     **** 			while (IO004_ReadPin(IO004_Handle0) == 0)
+ 305              		.loc 1 87 0 discriminator 1
+ 306 00b2 DBF82430 		ldr	r3, [fp, #36]
+ 307 00b6 2B42     		tst	r3, r5
+ 308 00b8 FBD0     		beq	.L40
+  89:../Main.c     **** 			value += 0.1;
+ 309              		.loc 1 89 0
+ 310 00ba 11EE900A 		fmrs	r0, s3
+ 311 00be FFF7FEFF 		bl	__aeabi_f2d
+ 312              	.LVL4:
+ 313 00c2 1DA3     		adr	r3, .L48
+ 314 00c4 D3E90023 		ldrd	r2, [r3]
+ 315 00c8 FFF7FEFF 		bl	__aeabi_dadd
+ 316              	.LVL5:
+ 317 00cc FFF7FEFF 		bl	__aeabi_d2f
+ 318              	.LVL6:
+ 319 00d0 01EE900A 		fmsr	s3, r0
+  94:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle1) == 0) {
+ 320              		.loc 1 94 0
+ 321 00d4 706A     		ldr	r0, [r6, #36]
+  90:../Main.c     **** 			if (value > 2.0)
+ 322              		.loc 1 90 0
+ 323 00d6 F4EE681A 		fcmps	s3, s17
+ 324 00da F1EE10FA 		fmstat
+ 325 00de C8BF     		it	gt
+ 326 00e0 F0EE681A 		fcpysgt	s3, s17
+  94:../Main.c     **** 		if (IO004_ReadPin(IO004_Handle1) == 0) {
+ 327              		.loc 1 94 0
+ 328 00e4 0442     		tst	r4, r0
+ 329 00e6 D0D1     		bne	.L23
+ 330              	.L39:
+  96:../Main.c     **** 			while (IO004_ReadPin(IO004_Handle1) == 0)
+ 331              		.loc 1 96 0 discriminator 1
+ 332 00e8 716A     		ldr	r1, [r6, #36]
+ 333 00ea 2142     		tst	r1, r4
+ 334 00ec FCD0     		beq	.L39
+  98:../Main.c     **** 			value -= 0.1;
+ 335              		.loc 1 98 0
+ 336 00ee 11EE900A 		fmrs	r0, s3
+ 337 00f2 FFF7FEFF 		bl	__aeabi_f2d
+ 338              	.LVL7:
+ 339 00f6 10A3     		adr	r3, .L48
+ 340 00f8 D3E90023 		ldrd	r2, [r3]
+ 341 00fc FFF7FEFF 		bl	__aeabi_dsub
+ 342              	.LVL8:
+ 343 0100 FFF7FEFF 		bl	__aeabi_d2f
+ 344              	.LVL9:
+ 345 0104 01EE900A 		fmsr	s3, r0
+  99:../Main.c     **** 			if (value < 1.0)
+ 346              		.loc 1 99 0
+ 347 0108 F4EE481A 		fcmps	s3, s16
+ 348 010c F1EE10FA 		fmstat
+ 349 0110 48BF     		it	mi
+ 350 0112 F0EE481A 		fcpysmi	s3, s16
+ 351              	.LBB13:
+ 352              	.LBB10:
+ 153:../Main.c     **** 	if(status == 0 && ticks >= period*1000/SYSTM002_SYSTICK_INTERVAL){
+ 353              		.loc 1 153 0
+ 354 0116 002F     		cmp	r7, #0
+ 355 0118 B9D0     		beq	.L47
+ 356              	.L26:
+ 157:../Main.c     **** 	}else if(status == 1 && ticks >= value*1000/SYSTM002_SYSTICK_INTERVAL){
+ 357              		.loc 1 157 0
+ 358 011a 012F     		cmp	r7, #1
+ 359 011c AED1     		bne	.L46
+ 360 011e 21EE8A7A 		fmuls	s14, s3, s20
+ 361 0122 87EE292A 		fdivs	s4, s14, s19
+ 362 0126 B4EEC29A 		fcmpes	s18, s4
+ 363 012a F1EE10FA 		fmstat
+ 364 012e A5DB     		blt	.L46
+ 158:../Main.c     **** 		IO004_ResetPin(IO004_Handle2);
+ 365              		.loc 1 158 0
+ 366 0130 C8F804A0 		str	sl, [r8, #4]
+ 367 0134 0027     		movs	r7, #0
+ 368 0136 A1E7     		b	.L46
+ 369              	.L49:
+ 370              		.align	3
+ 371              	.L48:
+ 372 0138 9A999999 		.word	-1717986918
+ 373 013c 9999B93F 		.word	1069128089
+ 374 0140 00000000 		.word	.LANCHOR1
+ 375 0144 00000000 		.word	.LANCHOR0
+ 376 0148 00007A44 		.word	1148846080
+ 377 014c 0000C842 		.word	1120403456
+ 378 0150 00000000 		.word	IO004_Handle0
+ 379 0154 00000000 		.word	IO004_Handle1
+ 380 0158 00000000 		.word	IO004_Handle2
+ 381 015c 00000000 		.word	0
+ 382              	.LBE10:
+ 383              	.LBE13:
+ 384              		.cfi_endproc
+ 385              	.LFE112:
+ 387              		.section	.text.delayus,"ax",%progbits
+ 388              		.align	2
+ 389              		.global	delayus
+ 390              		.thumb
+ 391              		.thumb_func
+ 393              	delayus:
+ 394              	.LFB115:
+ 175:../Main.c     **** void delayus(uint32_t delay_us) {
+ 395              		.loc 1 175 0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399              		@ link register save eliminated.
+ 400              	.LVL10:
+ 177:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+ 401              		.loc 1 177 0
+ 402 0000 6328     		cmp	r0, #99
+ 403 0002 00D9     		bls	.L54
+ 404              	.L53:
+ 405 0004 FEE7     		b	.L53
+ 406              	.L54:
+ 179:../Main.c     **** 	ticks = 0;
+ 407              		.loc 1 179 0
+ 408 0006 024B     		ldr	r3, .L55
+ 409 0008 0022     		movs	r2, #0
+ 410 000a 1A60     		str	r2, [r3, #0]
+ 411 000c 7047     		bx	lr
+ 412              	.L56:
+ 413 000e 00BF     		.align	2
+ 414              	.L55:
+ 415 0010 00000000 		.word	.LANCHOR0
+ 416              		.cfi_endproc
+ 417              	.LFE115:
+ 419              		.section	.text.delayms,"ax",%progbits
+ 420              		.align	2
+ 421              		.global	delayms
+ 422              		.thumb
+ 423              		.thumb_func
+ 425              	delayms:
+ 426              	.LFB116:
+ 182:../Main.c     **** void delayms(uint32_t delay_ms) {
+ 427              		.loc 1 182 0
+ 428              		.cfi_startproc
+ 429              		@ args = 0, pretend = 0, frame = 0
+ 430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 431              		@ link register save eliminated.
+ 432              	.LVL11:
+ 183:../Main.c     **** 	delayus(1000 * delay_ms);
+ 433              		.loc 1 183 0
+ 434 0000 4FF47A73 		mov	r3, #1000
+ 435 0004 03FB00F0 		mul	r0, r3, r0
+ 436              	.LVL12:
+ 437              	.LBB14:
+ 438              	.LBB15:
+ 177:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+ 439              		.loc 1 177 0
+ 440 0008 6328     		cmp	r0, #99
+ 441 000a 00D9     		bls	.L61
+ 442              	.L60:
+ 443 000c FEE7     		b	.L60
+ 444              	.L61:
+ 179:../Main.c     **** 	ticks = 0;
+ 445              		.loc 1 179 0
+ 446 000e 0248     		ldr	r0, .L62
+ 447              	.LVL13:
+ 448 0010 0022     		movs	r2, #0
+ 449 0012 0260     		str	r2, [r0, #0]
+ 450 0014 7047     		bx	lr
+ 451              	.L63:
+ 452 0016 00BF     		.align	2
+ 453              	.L62:
+ 454 0018 00000000 		.word	.LANCHOR0
+ 455              	.LBE15:
+ 456              	.LBE14:
+ 457              		.cfi_endproc
+ 458              	.LFE116:
+ 460              		.global	status
+ 461              		.global	period
+ 462              		.global	value
+ 463              		.global	lastTick
+ 464              		.global	ticks
+ 465              		.data
+ 466              		.align	2
+ 467              		.set	.LANCHOR1,. + 0
+ 470              	status:
+ 471 0000 01000000 		.word	1
+ 474              	period:
+ 475 0004 00008841 		.word	1099431936
+ 478              	value:
+ 479 0008 0000803F 		.word	1065353216
+ 480              		.bss
+ 481              		.align	2
+ 482              		.set	.LANCHOR0,. + 0
+ 485              	ticks:
+ 486 0000 00000000 		.space	4
+ 489              	lastTick:
+ 490 0004 00000000 		.space	4
+ 491              		.text
+ 492              	.Letext0:
+ 493              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 494              		.file 3 "C:\\DAVE3_workspace\\ws3.1.10\\PWMSP001_Example1_RelaxKit\\Dave\\Generated\\inc\\DAVESupp
+ 495              		.file 4 "C:\\DAVE3_workspace\\ws3.1.10\\PWMSP001_Example1_RelaxKit\\Dave\\Generated\\inc\\DAVESupp
+ 496              		.file 5 "C:\\DAVE3_workspace\\ws3.1.10\\PWMSP001_Example1_RelaxKit\\Dave\\Generated\\inc\\DAVESupp
+ 497              		.file 6 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 498              		.file 7 "C:\\DAVE3_workspace\\ws3.1.10\\PWMSP001_Example1_RelaxKit\\Dave\\Generated\\inc\\DAVESupp
+ 499              		.file 8 "C:\\DAVE3_workspace\\ws3.1.10\\PWMSP001_Example1_RelaxKit\\Dave\\Generated\\inc\\DAVESupp
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:20     .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:25     .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:482    .bss:00000000 .LANCHOR0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:44     .text.verifyChange:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:49     .text.verifyChange:00000000 verifyChange
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:127    .text.verifyChange:0000008c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:136    .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:141    .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:171    .text.Software_Timers_Init:0000001c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:180    .text.startup.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:185    .text.startup.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:372    .text.startup.main:00000138 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:388    .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:393    .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:415    .text.delayus:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:420    .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:425    .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:454    .text.delayms:00000018 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:470    .data:00000000 status
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:474    .data:00000004 period
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:478    .data:00000008 value
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:489    .bss:00000004 lastTick
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:485    .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:466    .data:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAMTf0f.s:481    .bss:00000000 $d
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.138601bc4243ad38d6b156f545266b0e
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.uc_id.h.35.3616bd1d69628125fed3ac403d83aaef
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
+                           .group:00000000 wm4.SYSTM002_Conf.h.70.e893767dc4d518b087b4a20e349ac4d8
+                           .group:00000000 wm4.SYSTM002.h.98.0f398400b32186dea0837ac3b6c1ddcb
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+
+UNDEFINED SYMBOLS
+IO004_Handle2
+SYSTM002_CreateTimer
+SYSTM002_StartTimer
+__aeabi_f2d
+__aeabi_dadd
+__aeabi_d2f
+__aeabi_dsub
+DAVE_Init
+IO004_Handle0
+IO004_Handle1

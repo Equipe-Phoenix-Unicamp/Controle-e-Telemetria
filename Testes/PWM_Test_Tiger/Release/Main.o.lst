@@ -1,0 +1,289 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.section	.text.Tick_Handler,"ax",%progbits
+  17              		.align	1
+  18              		.global	Tick_Handler
+  19              		.thumb
+  20              		.thumb_func
+  22              	Tick_Handler:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25              		@ link register save eliminated.
+  26 0000 024B     		ldr	r3, .L2
+  27 0002 1A68     		ldr	r2, [r3, #0]
+  28 0004 501C     		adds	r0, r2, #1
+  29 0006 1860     		str	r0, [r3, #0]
+  30 0008 7047     		bx	lr
+  31              	.L3:
+  32 000a 00BF     		.align	2
+  33              	.L2:
+  34 000c 00000000 		.word	.LANCHOR0
+  36              		.section	.text.verifyChange,"ax",%progbits
+  37              		.align	1
+  38              		.global	verifyChange
+  39              		.thumb
+  40              		.thumb_func
+  42              	verifyChange:
+  43              		@ args = 0, pretend = 0, frame = 0
+  44              		@ frame_needed = 0, uses_anonymous_args = 0
+  45              		@ link register save eliminated.
+  46 0000 1749     		ldr	r1, .L14
+  47 0002 184B     		ldr	r3, .L14+4
+  48 0004 91ED006A 		flds	s12, [r1, #0]
+  49 0008 DFED176A 		flds	s13, .L14+8
+  50 000c DFED170A 		flds	s1, .L14+12
+  51 0010 26EE260A 		fmuls	s0, s12, s13
+  52 0014 0CCB     		ldmia	r3, {r2, r3}
+  53 0016 80EE201A 		fdivs	s2, s0, s1
+  54 001a D01A     		subs	r0, r2, r3
+  55 001c 07EE100A 		fmsr	s14, r0	@ int
+  56 0020 F8EE477A 		fuitos	s15, s14
+  57 0024 F4EEC17A 		fcmpes	s15, s2
+  58 0028 F1EE10FA 		fmstat
+  59 002c 05DB     		blt	.L11
+  60 002e 104B     		ldr	r3, .L14+16
+  61 0030 4FF48031 		mov	r1, #65536
+  62 0034 5A68     		ldr	r2, [r3, #4]
+  63 0036 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+  64 0038 0EE0     		b	.L12
+  65              	.L11:
+  66 003a D1ED011A 		flds	s3, [r1, #4]
+  67 003e 21EEA62A 		fmuls	s4, s3, s13
+  68 0042 C2EE202A 		fdivs	s5, s4, s1
+  69 0046 F4EEE27A 		fcmpes	s15, s5
+  70 004a F1EE10FA 		fmstat
+  71 004e 06DB     		blt	.L4
+  72 0050 074B     		ldr	r3, .L14+16
+  73 0052 5A68     		ldr	r2, [r3, #4]
+  74 0054 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+  75 0056 0121     		movs	r1, #1
+  76              	.L12:
+  77 0058 01FA00F0 		lsl	r0, r1, r0
+  78 005c 5060     		str	r0, [r2, #4]
+  79              	.L4:
+  80 005e 7047     		bx	lr
+  81              	.L15:
+  82              		.align	2
+  83              	.L14:
+  84 0060 00000000 		.word	.LANCHOR1
+  85 0064 00000000 		.word	.LANCHOR0
+  86 0068 00007A44 		.word	1148846080
+  87 006c 0000C842 		.word	1120403456
+  88 0070 00000000 		.word	IO004_Handle2
+  90              		.section	.text.Software_Timers_Init,"ax",%progbits
+  91              		.align	1
+  92              		.global	Software_Timers_Init
+  93              		.thumb
+  94              		.thumb_func
+  96              	Software_Timers_Init:
+  97              		@ args = 0, pretend = 0, frame = 0
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99 0000 08B5     		push	{r3, lr}
+ 100 0002 6420     		movs	r0, #100
+ 101 0004 0121     		movs	r1, #1
+ 102 0006 054A     		ldr	r2, .L18
+ 103 0008 0023     		movs	r3, #0
+ 104 000a FFF7FEFF 		bl	SYSTM002_CreateTimer
+ 105 000e 18B1     		cbz	r0, .L16
+ 106 0010 BDE80840 		pop	{r3, lr}
+ 107 0014 FFF7FEBF 		b	SYSTM002_StartTimer
+ 108              	.L16:
+ 109 0018 08BD     		pop	{r3, pc}
+ 110              	.L19:
+ 111 001a 00BF     		.align	2
+ 112              	.L18:
+ 113 001c 00000000 		.word	Tick_Handler
+ 115              		.global	__aeabi_f2d
+ 116              		.global	__aeabi_dadd
+ 117              		.global	__aeabi_d2f
+ 118              		.global	__aeabi_dsub
+ 119              		.section	.text.startup.main,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	main
+ 122              		.thumb
+ 123              		.thumb_func
+ 125              	main:
+ 126              		@ args = 0, pretend = 0, frame = 0
+ 127              		@ frame_needed = 0, uses_anonymous_args = 0
+ 128 0000 10B5     		push	{r4, lr}
+ 129 0002 FFF7FEFF 		bl	DAVE_Init
+ 130 0006 2C4B     		ldr	r3, .L42+8
+ 131 0008 0022     		movs	r2, #0
+ 132 000a 1A60     		str	r2, [r3, #0]
+ 133 000c 5A60     		str	r2, [r3, #4]
+ 134 000e FFF7FEFF 		bl	Software_Timers_Init
+ 135              	.L31:
+ 136 0012 2A48     		ldr	r0, .L42+12
+ 137 0014 4468     		ldr	r4, [r0, #4]
+ 138 0016 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 139 0018 616A     		ldr	r1, [r4, #36]
+ 140 001a 21FA03F1 		lsr	r1, r1, r3
+ 141 001e C807     		lsls	r0, r1, #31
+ 142 0020 1CD4     		bmi	.L22
+ 143 0022 0122     		movs	r2, #1
+ 144 0024 02FA03F0 		lsl	r0, r2, r3
+ 145              	.L23:
+ 146 0028 616A     		ldr	r1, [r4, #36]
+ 147 002a 0842     		tst	r0, r1
+ 148 002c FCD0     		beq	.L23
+ 149 002e 244C     		ldr	r4, .L42+16
+ 150 0030 2068     		ldr	r0, [r4, #0]	@ float
+ 151 0032 FFF7FEFF 		bl	__aeabi_f2d
+ 152 0036 1EA3     		adr	r3, .L42
+ 153 0038 D3E90023 		ldrd	r2, [r3]
+ 154 003c FFF7FEFF 		bl	__aeabi_dadd
+ 155 0040 FFF7FEFF 		bl	__aeabi_d2f
+ 156 0044 07EE100A 		fmsr	s14, r0
+ 157 0048 F0EE007A 		fconsts	s15, #0
+ 158 004c B4EEE77A 		fcmpes	s14, s15
+ 159 0050 F1EE10FA 		fmstat
+ 160 0054 2060     		str	r0, [r4, #0]	@ float
+ 161 0056 C8BF     		it	gt
+ 162 0058 C4ED007A 		fstsgt	s15, [r4, #0]
+ 163              	.L22:
+ 164 005c 194A     		ldr	r2, .L42+20
+ 165 005e 5368     		ldr	r3, [r2, #4]
+ 166 0060 5478     		ldrb	r4, [r2, #1]	@ zero_extendqisi2
+ 167 0062 586A     		ldr	r0, [r3, #36]
+ 168 0064 20FA04F0 		lsr	r0, r0, r4
+ 169 0068 C107     		lsls	r1, r0, #31
+ 170 006a 1CD4     		bmi	.L27
+ 171 006c 0121     		movs	r1, #1
+ 172 006e 01FA04F2 		lsl	r2, r1, r4
+ 173              	.L28:
+ 174 0072 586A     		ldr	r0, [r3, #36]
+ 175 0074 0242     		tst	r2, r0
+ 176 0076 FCD0     		beq	.L28
+ 177 0078 114C     		ldr	r4, .L42+16
+ 178 007a 2068     		ldr	r0, [r4, #0]	@ float
+ 179 007c FFF7FEFF 		bl	__aeabi_f2d
+ 180 0080 0BA3     		adr	r3, .L42
+ 181 0082 D3E90023 		ldrd	r2, [r3]
+ 182 0086 FFF7FEFF 		bl	__aeabi_dsub
+ 183 008a FFF7FEFF 		bl	__aeabi_d2f
+ 184 008e 00EE100A 		fmsr	s0, r0
+ 185 0092 F7EE000A 		fconsts	s1, #112
+ 186 0096 B4EEE00A 		fcmpes	s0, s1
+ 187 009a F1EE10FA 		fmstat
+ 188 009e 2060     		str	r0, [r4, #0]	@ float
+ 189 00a0 48BF     		it	mi
+ 190 00a2 C4ED000A 		fstsmi	s1, [r4, #0]
+ 191              	.L27:
+ 192 00a6 FFF7FEFF 		bl	verifyChange
+ 193 00aa B2E7     		b	.L31
+ 194              	.L43:
+ 195 00ac AFF30080 		.align	3
+ 196              	.L42:
+ 197 00b0 9A999999 		.word	-1717986918
+ 198 00b4 9999B93F 		.word	1069128089
+ 199 00b8 00000000 		.word	.LANCHOR0
+ 200 00bc 00000000 		.word	IO004_Handle0
+ 201 00c0 00000000 		.word	.LANCHOR1
+ 202 00c4 00000000 		.word	IO004_Handle1
+ 204              		.section	.text.delayus,"ax",%progbits
+ 205              		.align	1
+ 206              		.global	delayus
+ 207              		.thumb
+ 208              		.thumb_func
+ 210              	delayus:
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213              		@ link register save eliminated.
+ 214 0000 6328     		cmp	r0, #99
+ 215 0002 03D8     		bhi	.L45
+ 216 0004 024B     		ldr	r3, .L48
+ 217 0006 0022     		movs	r2, #0
+ 218 0008 1A60     		str	r2, [r3, #0]
+ 219 000a 7047     		bx	lr
+ 220              	.L45:
+ 221              	.L47:
+ 222 000c FEE7     		b	.L47
+ 223              	.L49:
+ 224 000e 00BF     		.align	2
+ 225              	.L48:
+ 226 0010 00000000 		.word	.LANCHOR0
+ 228              		.section	.text.delayms,"ax",%progbits
+ 229              		.align	1
+ 230              		.global	delayms
+ 231              		.thumb
+ 232              		.thumb_func
+ 234              	delayms:
+ 235              		@ args = 0, pretend = 0, frame = 0
+ 236              		@ frame_needed = 0, uses_anonymous_args = 0
+ 237              		@ link register save eliminated.
+ 238 0000 4FF47A73 		mov	r3, #1000
+ 239 0004 5843     		muls	r0, r3, r0
+ 240 0006 FFF7FEBF 		b	delayus
+ 242              		.global	status
+ 243              		.global	period
+ 244              		.global	value
+ 245              		.global	lastTick
+ 246              		.global	ticks
+ 247              		.data
+ 248              		.align	2
+ 249              		.set	.LANCHOR1,. + 0
+ 252              	value:
+ 253 0000 0000803F 		.word	1065353216
+ 256              	period:
+ 257 0004 00008841 		.word	1099431936
+ 260              	status:
+ 261 0008 01       		.byte	1
+ 262 0009 000000   		.bss
+ 263              		.align	2
+ 264              		.set	.LANCHOR0,. + 0
+ 267              	ticks:
+ 268 0000 00000000 		.space	4
+ 271              	lastTick:
+ 272 0004 00000000 		.space	4
+ 273              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:17     .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:22     .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:34     .text.Tick_Handler:0000000c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:37     .text.verifyChange:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:42     .text.verifyChange:00000000 verifyChange
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:84     .text.verifyChange:00000060 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:91     .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:96     .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:113    .text.Software_Timers_Init:0000001c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:120    .text.startup.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:125    .text.startup.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:197    .text.startup.main:000000b0 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:205    .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:210    .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:226    .text.delayus:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:229    .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:234    .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:260    .data:00000008 status
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:256    .data:00000004 period
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:252    .data:00000000 value
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:271    .bss:00000004 lastTick
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:267    .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:248    .data:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc3jYwaH.s:263    .bss:00000000 $d
+
+UNDEFINED SYMBOLS
+IO004_Handle2
+SYSTM002_CreateTimer
+SYSTM002_StartTimer
+__aeabi_f2d
+__aeabi_dadd
+__aeabi_d2f
+__aeabi_dsub
+DAVE_Init
+IO004_Handle0
+IO004_Handle1

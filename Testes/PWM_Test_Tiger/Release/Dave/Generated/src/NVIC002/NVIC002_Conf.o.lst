@@ -1,0 +1,35 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"NVIC002_Conf.c"
+  16              		.global	NVIC002_HandleArray
+  17              		.global	NVIC002_Handle0
+  18              		.section	.rodata
+  21              	NVIC002_Handle0:
+  22 0000 2E       		.byte	46
+  23 0001 3F       		.byte	63
+  24 0002 00       		.byte	0
+  25 0003 01       		.byte	1
+  26              		.data
+  27              		.align	2
+  30              	NVIC002_HandleArray:
+  31 0000 00000000 		.word	NVIC002_Handle0
+  32              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 NVIC002_Conf.c
+C:\Users\daniel\AppData\Local\Temp\ccTrdaue.s:30     .data:00000000 NVIC002_HandleArray
+C:\Users\daniel\AppData\Local\Temp\ccTrdaue.s:21     .rodata:00000000 NVIC002_Handle0
+C:\Users\daniel\AppData\Local\Temp\ccTrdaue.s:27     .data:00000000 $d
+
+NO UNDEFINED SYMBOLS
