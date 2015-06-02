@@ -1703,13 +1703,12 @@
  712 004c 80BD     		pop	{r7, pc}
  713              		.cfi_endproc
  714              	.LFE118:
- 716 004e 00BF     		.section	.text.CLK001_Init,"ax",%progbits
+ 716 004e 00BF     		.section	.text.CLK001_CCUClk_Init,"ax",%progbits
  717              		.align	2
- 718              		.global	CLK001_Init
- 719              		.thumb
- 720              		.thumb_func
- 722              	CLK001_Init:
- 723              	.LFB119:
+ 718              		.thumb
+ 719              		.thumb_func
+ 721              	CLK001_CCUClk_Init:
+ 722              	.LFB119:
  672:../Dave/Generated/src/CLK001/CLK001.c **** 
  673:../Dave/Generated/src/CLK001/CLK001.c **** #ifdef CLK001_USBCLK_EN
  674:../Dave/Generated/src/CLK001/CLK001.c **** /**
@@ -1833,9 +1832,42 @@
  792:../Dave/Generated/src/CLK001/CLK001.c ****   * @retval None
  793:../Dave/Generated/src/CLK001/CLK001.c ****   */
  794:../Dave/Generated/src/CLK001/CLK001.c ****   static void CLK001_CCUClk_Init(void){
+ 723              		.loc 1 794 0
+ 724              		.cfi_startproc
+ 725              		@ args = 0, pretend = 0, frame = 0
+ 726              		@ frame_needed = 1, uses_anonymous_args = 0
+ 727              		@ link register save eliminated.
+ 728 0000 80B4     		push	{r7}
+ 729              	.LCFI20:
+ 730              		.cfi_def_cfa_offset 4
+ 731              		.cfi_offset 7, -4
+ 732 0002 00AF     		add	r7, sp, #0
+ 733              	.LCFI21:
+ 734              		.cfi_def_cfa_register 7
  795:../Dave/Generated/src/CLK001/CLK001.c ****   /* Enable CCU Clock */
  796:../Dave/Generated/src/CLK001/CLK001.c ****   SCU_CLK->CLKSET |= (uint32_t)SCU_CLK_CLKSET_CCUCEN_Msk;
+ 735              		.loc 1 796 0
+ 736 0004 4FF48C43 		mov	r3, #17920
+ 737 0008 C5F20003 		movt	r3, 20480
+ 738 000c 4FF48C42 		mov	r2, #17920
+ 739 0010 C5F20002 		movt	r2, 20480
+ 740 0014 5268     		ldr	r2, [r2, #4]
+ 741 0016 42F01002 		orr	r2, r2, #16
+ 742 001a 5A60     		str	r2, [r3, #4]
  797:../Dave/Generated/src/CLK001/CLK001.c **** }
+ 743              		.loc 1 797 0
+ 744 001c BD46     		mov	sp, r7
+ 745 001e 80BC     		pop	{r7}
+ 746 0020 7047     		bx	lr
+ 747              		.cfi_endproc
+ 748              	.LFE119:
+ 750 0022 00BF     		.section	.text.CLK001_Init,"ax",%progbits
+ 751              		.align	2
+ 752              		.global	CLK001_Init
+ 753              		.thumb
+ 754              		.thumb_func
+ 756              	CLK001_Init:
+ 757              	.LFB120:
  798:../Dave/Generated/src/CLK001/CLK001.c **** #endif
  799:../Dave/Generated/src/CLK001/CLK001.c **** 
  800:../Dave/Generated/src/CLK001/CLK001.c **** #if (UC_SERIES == XMC45)
@@ -1978,43 +2010,43 @@
  937:../Dave/Generated/src/CLK001/CLK001.c ****   */
  938:../Dave/Generated/src/CLK001/CLK001.c **** void CLK001_Init(void)
  939:../Dave/Generated/src/CLK001/CLK001.c **** {
- 724              		.loc 1 939 0
- 725              		.cfi_startproc
- 726              		@ args = 0, pretend = 0, frame = 8
- 727              		@ frame_needed = 1, uses_anonymous_args = 0
- 728 0000 80B5     		push	{r7, lr}
- 729              	.LCFI20:
- 730              		.cfi_def_cfa_offset 8
- 731              		.cfi_offset 7, -8
- 732              		.cfi_offset 14, -4
- 733 0002 82B0     		sub	sp, sp, #8
- 734              	.LCFI21:
- 735              		.cfi_def_cfa_offset 16
- 736 0004 00AF     		add	r7, sp, #0
- 737              	.LCFI22:
- 738              		.cfi_def_cfa_register 7
+ 758              		.loc 1 939 0
+ 759              		.cfi_startproc
+ 760              		@ args = 0, pretend = 0, frame = 8
+ 761              		@ frame_needed = 1, uses_anonymous_args = 0
+ 762 0000 80B5     		push	{r7, lr}
+ 763              	.LCFI22:
+ 764              		.cfi_def_cfa_offset 8
+ 765              		.cfi_offset 7, -8
+ 766              		.cfi_offset 14, -4
+ 767 0002 82B0     		sub	sp, sp, #8
+ 768              	.LCFI23:
+ 769              		.cfi_def_cfa_offset 16
+ 770 0004 00AF     		add	r7, sp, #0
+ 771              	.LCFI24:
+ 772              		.cfi_def_cfa_register 7
  940:../Dave/Generated/src/CLK001/CLK001.c ****   uint32_t SysClkinitialized;
  941:../Dave/Generated/src/CLK001/CLK001.c ****   SysClkinitialized = 0UL; /* Default Value */
- 739              		.loc 1 941 0
- 740 0006 4FF00003 		mov	r3, #0
- 741 000a 7B60     		str	r3, [r7, #4]
+ 773              		.loc 1 941 0
+ 774 0006 4FF00003 		mov	r3, #0
+ 775 000a 7B60     		str	r3, [r7, #4]
  942:../Dave/Generated/src/CLK001/CLK001.c ****   /*  Function to check the clock status based on UI configuration */
  943:../Dave/Generated/src/CLK001/CLK001.c ****   if(CLK001_SysClk_Valid() == 0UL)
- 742              		.loc 1 943 0
- 743 000c FFF7FEFF 		bl	CLK001_SysClk_Valid
- 744 0010 0346     		mov	r3, r0
- 745 0012 002B     		cmp	r3, #0
- 746 0014 05D1     		bne	.L28
+ 776              		.loc 1 943 0
+ 777 000c FFF7FEFF 		bl	CLK001_SysClk_Valid
+ 778 0010 0346     		mov	r3, r0
+ 779 0012 002B     		cmp	r3, #0
+ 780 0014 05D1     		bne	.L29
  944:../Dave/Generated/src/CLK001/CLK001.c ****   {   
  945:../Dave/Generated/src/CLK001/CLK001.c ****     /*  Function to initialize the System Clock based on UI configuration */
  946:../Dave/Generated/src/CLK001/CLK001.c **** 	  SysClkinitialized |= CLK001_SysClk_Init();
- 747              		.loc 1 946 0
- 748 0016 FFF7FEFF 		bl	CLK001_SysClk_Init
- 749 001a 0346     		mov	r3, r0
- 750 001c 7A68     		ldr	r2, [r7, #4]
- 751 001e 1343     		orrs	r3, r3, r2
- 752 0020 7B60     		str	r3, [r7, #4]
- 753              	.L28:
+ 781              		.loc 1 946 0
+ 782 0016 FFF7FEFF 		bl	CLK001_SysClk_Init
+ 783 001a 0346     		mov	r3, r0
+ 784 001c 7A68     		ldr	r2, [r7, #4]
+ 785 001e 1343     		orrs	r3, r3, r2
+ 786 0020 7B60     		str	r3, [r7, #4]
+ 787              	.L29:
  947:../Dave/Generated/src/CLK001/CLK001.c ****   }
  948:../Dave/Generated/src/CLK001/CLK001.c **** 
  949:../Dave/Generated/src/CLK001/CLK001.c ****   #ifdef CLK001_USBCLK_EN
@@ -2027,9 +2059,16 @@
  956:../Dave/Generated/src/CLK001/CLK001.c **** 
  957:../Dave/Generated/src/CLK001/CLK001.c ****   #ifdef CLK001_CCUCLK_EN
  958:../Dave/Generated/src/CLK001/CLK001.c ****     if(SysClkinitialized == 1UL)
+ 788              		.loc 1 958 0
+ 789 0022 7B68     		ldr	r3, [r7, #4]
+ 790 0024 012B     		cmp	r3, #1
+ 791 0026 01D1     		bne	.L30
  959:../Dave/Generated/src/CLK001/CLK001.c ****     {
  960:../Dave/Generated/src/CLK001/CLK001.c ****       /*  Function to enable the CCU Clock based on UI configuration */
  961:../Dave/Generated/src/CLK001/CLK001.c ****       CLK001_CCUClk_Init();
+ 792              		.loc 1 961 0
+ 793 0028 FFF7FEFF 		bl	CLK001_CCUClk_Init
+ 794              	.L30:
  962:../Dave/Generated/src/CLK001/CLK001.c ****     }
  963:../Dave/Generated/src/CLK001/CLK001.c ****   #endif
  964:../Dave/Generated/src/CLK001/CLK001.c **** 
@@ -2061,22 +2100,22 @@
  990:../Dave/Generated/src/CLK001/CLK001.c **** 
  991:../Dave/Generated/src/CLK001/CLK001.c ****   /* Update the clock variable */
  992:../Dave/Generated/src/CLK001/CLK001.c ****   SystemCoreClockUpdate();
- 754              		.loc 1 992 0
- 755 0022 FFF7FEFF 		bl	SystemCoreClockUpdate
+ 795              		.loc 1 992 0
+ 796 002c FFF7FEFF 		bl	SystemCoreClockUpdate
  993:../Dave/Generated/src/CLK001/CLK001.c **** }
- 756              		.loc 1 993 0
- 757 0026 07F10807 		add	r7, r7, #8
- 758 002a BD46     		mov	sp, r7
- 759 002c 80BD     		pop	{r7, pc}
- 760              		.cfi_endproc
- 761              	.LFE119:
- 763 002e 00BF     		.section	.text.AllowPLLInitByStartup,"ax",%progbits
- 764              		.align	2
- 765              		.global	AllowPLLInitByStartup
- 766              		.thumb
- 767              		.thumb_func
- 769              	AllowPLLInitByStartup:
- 770              	.LFB120:
+ 797              		.loc 1 993 0
+ 798 0030 07F10807 		add	r7, r7, #8
+ 799 0034 BD46     		mov	sp, r7
+ 800 0036 80BD     		pop	{r7, pc}
+ 801              		.cfi_endproc
+ 802              	.LFE120:
+ 804              		.section	.text.AllowPLLInitByStartup,"ax",%progbits
+ 805              		.align	2
+ 806              		.global	AllowPLLInitByStartup
+ 807              		.thumb
+ 808              		.thumb_func
+ 810              	AllowPLLInitByStartup:
+ 811              	.LFB121:
  994:../Dave/Generated/src/CLK001/CLK001.c **** 
  995:../Dave/Generated/src/CLK001/CLK001.c **** /*
  996:../Dave/Generated/src/CLK001/CLK001.c ****  * This routine is called by CMSIS startup to find out if clock tree setup 
@@ -2096,61 +2135,63 @@
 1010:../Dave/Generated/src/CLK001/CLK001.c ****  */
 1011:../Dave/Generated/src/CLK001/CLK001.c **** uint32_t AllowPLLInitByStartup(void)
 1012:../Dave/Generated/src/CLK001/CLK001.c **** {
- 771              		.loc 1 1012 0
- 772              		.cfi_startproc
- 773              		@ args = 0, pretend = 0, frame = 0
- 774              		@ frame_needed = 1, uses_anonymous_args = 0
- 775              		@ link register save eliminated.
- 776 0000 80B4     		push	{r7}
- 777              	.LCFI23:
- 778              		.cfi_def_cfa_offset 4
- 779              		.cfi_offset 7, -4
- 780 0002 00AF     		add	r7, sp, #0
- 781              	.LCFI24:
- 782              		.cfi_def_cfa_register 7
+ 812              		.loc 1 1012 0
+ 813              		.cfi_startproc
+ 814              		@ args = 0, pretend = 0, frame = 0
+ 815              		@ frame_needed = 1, uses_anonymous_args = 0
+ 816              		@ link register save eliminated.
+ 817 0000 80B4     		push	{r7}
+ 818              	.LCFI25:
+ 819              		.cfi_def_cfa_offset 4
+ 820              		.cfi_offset 7, -4
+ 821 0002 00AF     		add	r7, sp, #0
+ 822              	.LCFI26:
+ 823              		.cfi_def_cfa_register 7
 1013:../Dave/Generated/src/CLK001/CLK001.c **** 	/*
 1014:../Dave/Generated/src/CLK001/CLK001.c **** 	 * Let the CStart know that there is no more a need to perform clock tree
 1015:../Dave/Generated/src/CLK001/CLK001.c **** 	 * initialization.
 1016:../Dave/Generated/src/CLK001/CLK001.c **** 	 */
 1017:../Dave/Generated/src/CLK001/CLK001.c **** 	return 0UL;
- 783              		.loc 1 1017 0
- 784 0004 4FF00003 		mov	r3, #0
+ 824              		.loc 1 1017 0
+ 825 0004 4FF00003 		mov	r3, #0
 1018:../Dave/Generated/src/CLK001/CLK001.c **** }
- 785              		.loc 1 1018 0
- 786 0008 1846     		mov	r0, r3
- 787 000a BD46     		mov	sp, r7
- 788 000c 80BC     		pop	{r7}
- 789 000e 7047     		bx	lr
- 790              		.cfi_endproc
- 791              	.LFE120:
- 793              		.text
- 794              	.Letext0:
- 795              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
- 796              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 797              		.file 5 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 826              		.loc 1 1018 0
+ 827 0008 1846     		mov	r0, r3
+ 828 000a BD46     		mov	sp, r7
+ 829 000c 80BC     		pop	{r7}
+ 830 000e 7047     		bx	lr
+ 831              		.cfi_endproc
+ 832              	.LFE121:
+ 834              		.text
+ 835              	.Letext0:
+ 836              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 837              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 838              		.file 5 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 CLK001.c
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:20     .bss:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:21     .bss:00000000 VCO
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:24     .bss:00000004 stepping_K2DIV
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:27     .text.CLK001_Delay:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:31     .text.CLK001_Delay:00000000 CLK001_Delay
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:108    .text.CLK001_SysClk_Valid:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:112    .text.CLK001_SysClk_Valid:00000000 CLK001_SysClk_Valid
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:157    .text.CLK001_BackupClkTrim:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:161    .text.CLK001_BackupClkTrim:00000000 CLK001_BackupClkTrim
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:232    .text.CLK001_SetMainPLLClkSrc:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:236    .text.CLK001_SetMainPLLClkSrc:00000000 CLK001_SetMainPLLClkSrc
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:349    .text.CLK001_ConfigMainPLL:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:353    .text.CLK001_ConfigMainPLL:00000000 CLK001_ConfigMainPLL
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:504    .text.CLK001_FreqStepupMainPLL:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:508    .text.CLK001_FreqStepupMainPLL:00000000 CLK001_FreqStepupMainPLL
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:660    .text.CLK001_SysClk_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:664    .text.CLK001_SysClk_Init:00000000 CLK001_SysClk_Init
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:717    .text.CLK001_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:722    .text.CLK001_Init:00000000 CLK001_Init
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:764    .text.AllowPLLInitByStartup:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:769    .text.AllowPLLInitByStartup:00000000 AllowPLLInitByStartup
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:20     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:21     .bss:00000000 VCO
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:24     .bss:00000004 stepping_K2DIV
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:27     .text.CLK001_Delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:31     .text.CLK001_Delay:00000000 CLK001_Delay
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:108    .text.CLK001_SysClk_Valid:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:112    .text.CLK001_SysClk_Valid:00000000 CLK001_SysClk_Valid
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:157    .text.CLK001_BackupClkTrim:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:161    .text.CLK001_BackupClkTrim:00000000 CLK001_BackupClkTrim
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:232    .text.CLK001_SetMainPLLClkSrc:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:236    .text.CLK001_SetMainPLLClkSrc:00000000 CLK001_SetMainPLLClkSrc
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:349    .text.CLK001_ConfigMainPLL:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:353    .text.CLK001_ConfigMainPLL:00000000 CLK001_ConfigMainPLL
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:504    .text.CLK001_FreqStepupMainPLL:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:508    .text.CLK001_FreqStepupMainPLL:00000000 CLK001_FreqStepupMainPLL
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:660    .text.CLK001_SysClk_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:664    .text.CLK001_SysClk_Init:00000000 CLK001_SysClk_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:717    .text.CLK001_CCUClk_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:721    .text.CLK001_CCUClk_Init:00000000 CLK001_CCUClk_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:751    .text.CLK001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:756    .text.CLK001_Init:00000000 CLK001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:805    .text.AllowPLLInitByStartup:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccE7syaI.s:810    .text.AllowPLLInitByStartup:00000000 AllowPLLInitByStartup
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
@@ -2167,7 +2208,7 @@ C:\Users\Carlos\AppData\Local\Temp\cc102KQ1.s:769    .text.AllowPLLInitByStartup
                            .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
                            .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
                            .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
-                           .group:00000000 wm4.CLK001_Conf.h.81.82a8db895dc146da001475dd68223522
+                           .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
 
 UNDEFINED SYMBOLS
 SystemCoreClockUpdate

@@ -28,12 +28,12 @@
   29 0008 40F09801 		orr	r1, r0, #152
   30 000c 1961     		str	r1, [r3, #16]
   31 000e 1A69     		ldr	r2, [r3, #16]
-  32 0010 22F43800 		bic	r0, r2, #12058624
-  33 0014 40F41801 		orr	r1, r0, #9961472
+  32 0010 22F43840 		bic	r0, r2, #47104
+  33 0014 40F41841 		orr	r1, r0, #38912
   34 0018 1961     		str	r1, [r3, #16]
   35 001a 1A69     		ldr	r2, [r3, #16]
-  36 001c 22F03840 		bic	r0, r2, #-1207959552
-  37 0020 40F01841 		orr	r1, r0, #-1744830464
+  36 001c 22F43800 		bic	r0, r2, #12058624
+  37 0020 40F41801 		orr	r1, r0, #9961472
   38 0024 1961     		str	r1, [r3, #16]
   39 0026 D3F81021 		ldr	r2, [r3, #272]
   40 002a 42F40000 		orr	r0, r2, #8388608
@@ -65,10 +65,10 @@
   69              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 MULTIPLEXER.c
-C:\Users\JMASS_~1\AppData\Local\Temp\cct0or0z.s:17     .text.DAVE_MUX_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cct0or0z.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\cct0or0z.s:55     .text.DAVE_MUX_Init:00000058 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cct0or0z.s:58     .text.DAVE_MUX_PreInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cct0or0z.s:63     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCkW9Gl.s:17     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCkW9Gl.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCkW9Gl.s:55     .text.DAVE_MUX_Init:00000058 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCkW9Gl.s:58     .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCkW9Gl.s:63     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
 
 NO UNDEFINED SYMBOLS

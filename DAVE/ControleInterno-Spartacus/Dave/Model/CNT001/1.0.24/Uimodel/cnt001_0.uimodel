@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ifx.davex.uimodel:UIDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ifx.davex.uimodel="com.ifx.davex.uimodel">
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="DefaultPage" displayName="EventCounter" className="IfxGroupBox" controlId="1318921227128">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group9" displayName="Counter Configurations" className="IfxGroupBox" controlId="1324267767101">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/cnt001/0/cnt001_activecountingedge" displayName="Active Edge for Counting" className="EnumerationType" paramName="app/cnt001/0/CNT001_ActiveCountingEdge:Active Edge for Counting" controlId="1318921307376">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/cnt001/0/cnt001_externalgating" displayName="Gating signal Configuration" className="EnumerationType" paramName="app/cnt001/0/cnt001_externalgating:Gating signal Configuration" controlId="1354013652068">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/cnt001/0/cnt001_lpfconfig" displayName="Low Pass filter" className="EnumerationType" paramName="app/cnt001/0/CNT001_LPFConfig:Configuration of the Low Pass filter" controlId="1318921317751">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/cnt001/0/cnt001_countmatch" displayName="Event Count match" className="IntegerType" paramName="app/cnt001/0/cnt001_Countmatch:Count match" controlId="1319193040364">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/CNT001/0/cnt001_erwstart" displayName="Start" className="EnumerationType" paramName="app/CNT001/0/cnt001_erwstart:Start" controlId="1324267691196">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group45" displayName="Interrupts" className="IfxGroupBox" controlId="1324267710741">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/CNT001/0/cnt001_erwcountmatch" displayName="Count Match" className="EnumerationType" paramName="app/CNT001/0/cnt001_erwcountmatch:Count Match Interrupt" controlId="1324267720194">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/CNT001/0/cnt001_erwrollover" displayName="Rollover" className="EnumerationType" paramName="app/CNT001/0/cnt001_erwrollover:Rollover Interrupt" controlId="1324267722940">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/CNT001/0/cnt001_erweventedge" displayName="Input event edge" className="EnumerationType" paramName="app/CNT001/0/cnt001_erweventedge:Event edge Interrupt" controlId="1324267731145">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/CNT001/0/cnt001_erwgating" displayName="Gating" className="EnumerationType" paramName="app/CNT001/0/cnt001_erwgating:Gating Interrupt" controlId="1324267734187">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout" numColumns="2"/>
+  </controls>
+</com.ifx.davex.uimodel:UIDataModel>

@@ -1,0 +1,1832 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.comm	configuration,15,4
+  20              		.comm	data_R,5,4
+  21              		.global	ticks
+  22              		.bss
+  23              		.align	2
+  26              	ticks:
+  27 0000 00000000 		.space	4
+  28              		.global	value
+  31              	value:
+  32 0004 00       		.space	1
+  33 0005 000000   		.section	.text.main,"ax",%progbits
+  34              		.align	2
+  35              		.global	main
+  36              		.thumb
+  37              		.thumb_func
+  39              	main:
+  40              	.LFB117:
+  41              		.file 1 "../Main.c"
+   1:../Main.c     **** /*
+   2:../Main.c     ****  * Main.c
+   3:../Main.c     ****  *
+   4:../Main.c     ****  *  Created on: May 9, 2015
+   5:../Main.c     ****  *      Author: JM
+   6:../Main.c     ****  */
+   7:../Main.c     **** 
+   8:../Main.c     **** #include <DAVE3.h> //Declarations from DAVE3 Code Generation (includes SFR declaration)
+   9:../Main.c     **** /* DADO3:
+  10:../Main.c     ****  BIT 0: BLAH2
+  11:../Main.c     ****  BIT 1: BUZINA
+  12:../Main.c     ****  BIT 2: ENABLE
+  13:../Main.c     ****  BIT 3: ALBH2
+  14:../Main.c     ****  BIT 4: BLAH1
+  15:../Main.c     ****  BIT 5: ALBH1
+  16:../Main.c     ****  */
+  17:../Main.c     **** 
+  18:../Main.c     **** /***************************************************
+  19:../Main.c     ****  * Codigo organizado para uso no XI WINTER CHALLENGE
+  20:../Main.c     ****  *Byte 0 : LEDS (? definido no spartacus, retirar quando trocar prgrama do feather)
+  21:../Main.c     ****  *Byte 1 : PWM 1
+  22:../Main.c     ****  *Byte 2 : PWM 2
+  23:../Main.c     ****  *Byte 3 : SENTIDOS
+  24:../Main.c     ****  *Byte 4 : PWM 3 (Arma)
+  25:../Main.c     ****  ***************************************************/
+  26:../Main.c     **** 
+  27:../Main.c     **** //TODO Separar partes do codigo em arquivos diferentes
+  28:../Main.c     **** /***************************************************/
+  29:../Main.c     **** /*************DECLARACAO DAS DEFINICOES*************/
+  30:../Main.c     **** /***************************************************/
+  31:../Main.c     **** 
+  32:../Main.c     **** #define NULL 0
+  33:../Main.c     **** 
+  34:../Main.c     **** //Defines referentes ao protocolo
+  35:../Main.c     **** #define BYTES_TO_RECEIVE 5
+  36:../Main.c     **** //Defines referentes ao byte DADO 3
+  37:../Main.c     **** #define	BLAH2		0		//LEFT-BACK
+  38:../Main.c     **** #define	BUZINA		1		//USELESS
+  39:../Main.c     **** #define	ENABLE		2		//USELESS
+  40:../Main.c     **** #define	ALBH2		3		//LEFT-FRONT
+  41:../Main.c     **** #define	BLAH1		4		//RIGHT-BACK
+  42:../Main.c     **** #define	ALBH1		5		//RIGHT-FRONT
+  43:../Main.c     **** #define	LEFT_BACK	BLAH2
+  44:../Main.c     **** #define	LEFT_FRONT	ALBH2
+  45:../Main.c     **** #define	RIGHT_BACK	BLAH1
+  46:../Main.c     **** #define	RIGHT_FRONT	ALBH1
+  47:../Main.c     **** 
+  48:../Main.c     **** //Defines referentes ao transceptor
+  49:../Main.c     **** #define CS	 	IO004_Handle10
+  50:../Main.c     **** #define CLK1 	IO004_Handle11
+  51:../Main.c     **** #define DATA 	IO004_Handle12
+  52:../Main.c     **** #define DR1		IO004_Handle13
+  53:../Main.c     **** #define CE 		IO004_Handle14
+  54:../Main.c     **** 
+  55:../Main.c     **** //Defines referentes ao driver da ponte H
+  56:../Main.c     **** #define ERR_INTRPT_LEFT		IO002_Handle1
+  57:../Main.c     **** #define DIR_LEFT			IO004_Handle6
+  58:../Main.c     **** #define Enable_LEFT			IO004_Handle7
+  59:../Main.c     **** #define DvrDis_LEFT			IO004_Handle8
+  60:../Main.c     **** #define ERR_Input_LEFT		IO004_Handle5
+  61:../Main.c     **** #define PWM_LEFT			&PWMSP001_Handle1
+  62:../Main.c     **** #define ERR_INTRPT_RIGHT	IO002_Handle0
+  63:../Main.c     **** #define DIR_RIGHT			IO004_Handle0
+  64:../Main.c     **** #define Enable_RIGHT		IO004_Handle1
+  65:../Main.c     **** #define DvrDis_RIGHT		IO004_Handle2
+  66:../Main.c     **** #define ERR_Input_RIGHT		IO004_Handle3
+  67:../Main.c     **** #define PWM_RIGHT			&PWMSP001_Handle0
+  68:../Main.c     **** 
+  69:../Main.c     **** //Define Faiscador
+  70:../Main.c     **** #define FAISCADOR			IO004_Handle9
+  71:../Main.c     **** #define GND					IO004_Handle4
+  72:../Main.c     **** 
+  73:../Main.c     **** //Define referentes a ponte H
+  74:../Main.c     **** 
+  75:../Main.c     **** #define PWM_DUTY_LIM_MAX 100
+  76:../Main.c     **** #define PWM_DUTY_LIM_MIN 10
+  77:../Main.c     **** #define DIR_FRONT_LEFT 1
+  78:../Main.c     **** #define DIR_REV_LEFT 0
+  79:../Main.c     **** #define DIR_FRONT_RIGHT 1
+  80:../Main.c     **** #define DIR_REV_RIGHT 0
+  81:../Main.c     **** #define PWM_MOTOR_CUT_OFF 20
+  82:../Main.c     **** #define PWM_MOTOR_RIGHT &PWMSP001_Handle0
+  83:../Main.c     **** #define PWM_MOTOR_LEFT &PWMSP001_Handle1
+  84:../Main.c     **** #define FREQ_MOTOR_LOCOMOTION 20000 //Hz
+  85:../Main.c     **** // Defines referentes aos sinais PWM para os ESCs
+  86:../Main.c     **** 
+  87:../Main.c     **** //#define PER_MOTOR_LOCOMOTION (1.0f/FREQ_MOTOR_LOCOMOTION) //s
+  88:../Main.c     **** //#define MAX_PER_MOTOR_LOCOMOTION 0.002f //s
+  89:../Main.c     **** //#define MIN_PER_MOTOR_LOCOMOTION 0.001f //s
+  90:../Main.c     **** //#define ZERO_PER_MOTOR_LOCOMOTION 0.0015f //s
+  91:../Main.c     **** //#define FREQ_MOTOR_WEAPON 60 //Hz
+  92:../Main.c     **** //#define PER_MOTOR_WEAPON (1.0f/FREQ_MOTOR_WEAPON) //s
+  93:../Main.c     **** //#define MAX_PER_MOTOR_WEAPON 0.002f //s
+  94:../Main.c     **** //#define MIN_PER_MOTOR_WEAPON 0.001f //s
+  95:../Main.c     **** //#define ZERO_PER_MOTOR_WEAPON 0.001f //s
+  96:../Main.c     **** //#define PWM_MOTOR_WEAPON &PWMSP001_Handle2
+  97:../Main.c     **** //#define PWM_MOTOR_CUT_OFF 20
+  98:../Main.c     **** //==============================
+  99:../Main.c     **** 
+ 100:../Main.c     **** /***************************************************/
+ 101:../Main.c     **** /**************DECLARACAO DAS FUNCOES***************/
+ 102:../Main.c     **** /***************************************************/
+ 103:../Main.c     **** 
+ 104:../Main.c     **** void Tick_Handler(void);
+ 105:../Main.c     **** void Testando_Handler(void);
+ 106:../Main.c     **** void interrupt_left(void);
+ 107:../Main.c     **** void interrupt_right(void);
+ 108:../Main.c     **** void delayms(uint32_t delay_ms);
+ 109:../Main.c     **** void delayus(uint32_t delay_us);
+ 110:../Main.c     **** void Software_Timers_Init(void);
+ 111:../Main.c     **** void WakeUp(void);
+ 112:../Main.c     **** void pulse_R(void);
+ 113:../Main.c     **** void configure_R(void);
+ 114:../Main.c     **** void read_R(void);
+ 115:../Main.c     **** void update_driver_signals(void);
+ 116:../Main.c     **** void delay(long unsigned int i);
+ 117:../Main.c     **** 
+ 118:../Main.c     **** /***************************************************/
+ 119:../Main.c     **** /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
+ 120:../Main.c     **** /***************************************************/
+ 121:../Main.c     **** 
+ 122:../Main.c     **** char configuration[15];
+ 123:../Main.c     **** unsigned char data_R[BYTES_TO_RECEIVE];
+ 124:../Main.c     **** uint32_t ticks = 0UL;
+ 125:../Main.c     **** bool value = 0UL;
+ 126:../Main.c     **** 
+ 127:../Main.c     **** int main(void) {
+  42              		.loc 1 127 0
+  43              		.cfi_startproc
+  44              		@ args = 0, pretend = 0, frame = 0
+  45              		@ frame_needed = 1, uses_anonymous_args = 0
+  46 0000 80B5     		push	{r7, lr}
+  47              	.LCFI0:
+  48              		.cfi_def_cfa_offset 8
+  49              		.cfi_offset 7, -8
+  50              		.cfi_offset 14, -4
+  51 0002 00AF     		add	r7, sp, #0
+  52              	.LCFI1:
+  53              		.cfi_def_cfa_register 7
+ 128:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+ 129:../Main.c     **** 
+ 130:../Main.c     **** 	DAVE_Init(); // Initialization of DAVE Apps
+  54              		.loc 1 130 0
+  55 0004 FFF7FEFF 		bl	DAVE_Init
+ 131:../Main.c     **** 
+ 132:../Main.c     **** 	Software_Timers_Init();
+  56              		.loc 1 132 0
+  57 0008 FFF7FEFF 		bl	Software_Timers_Init
+ 133:../Main.c     **** 	WakeUp();
+  58              		.loc 1 133 0
+  59 000c FFF7FEFF 		bl	WakeUp
+ 134:../Main.c     **** 	configure_R();
+  60              		.loc 1 134 0
+  61 0010 FFF7FEFF 		bl	configure_R
+ 135:../Main.c     **** 
+ 136:../Main.c     **** 	ticks = 0;
+  62              		.loc 1 136 0
+  63 0014 40F20003 		movw	r3, #:lower16:ticks
+  64 0018 C0F20003 		movt	r3, #:upper16:ticks
+  65 001c 4FF00002 		mov	r2, #0
+  66 0020 1A60     		str	r2, [r3, #0]
+ 137:../Main.c     **** 
+ 138:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_RIGHT);
+  67              		.loc 1 138 0
+  68 0022 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+  69 0026 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+  70 002a FFF7FEFF 		bl	PWMSP001_Start
+ 139:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+  71              		.loc 1 139 0
+  72 002e 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+  73 0032 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+  74 0036 4FF48041 		mov	r1, #16384
+  75 003a C4F29C61 		movt	r1, 18076
+  76 003e FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+ 140:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, 25.0f);
+  77              		.loc 1 140 0
+  78 0042 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+  79 0046 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+  80 004a 4FF00001 		mov	r1, #0
+  81 004e C4F2C811 		movt	r1, 16840
+  82 0052 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 141:../Main.c     **** 
+ 142:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_LEFT);
+  83              		.loc 1 142 0
+  84 0056 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+  85 005a C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+  86 005e FFF7FEFF 		bl	PWMSP001_Start
+ 143:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+  87              		.loc 1 143 0
+  88 0062 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+  89 0066 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+  90 006a 4FF48041 		mov	r1, #16384
+  91 006e C4F29C61 		movt	r1, 18076
+  92 0072 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+ 144:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, 25.0f);
+  93              		.loc 1 144 0
+  94 0076 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+  95 007a C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+  96 007e 4FF00001 		mov	r1, #0
+  97 0082 C4F2C811 		movt	r1, 16840
+  98 0086 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+  99 008a 00E0     		b	.L3
+ 100              	.L4:
+ 145:../Main.c     **** 
+ 146:../Main.c     **** 	while (1) {
+ 147:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
+ 148:../Main.c     **** 			read_R();
+ 149:../Main.c     **** 			update_driver_signals();
+ 150:../Main.c     **** 		}
+ 151:../Main.c     **** 	}
+ 101              		.loc 1 151 0
+ 102 008c 00BF     		nop
+ 103              	.L3:
+ 147:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
+ 104              		.loc 1 147 0
+ 105 008e 40F20003 		movw	r3, #:lower16:IO004_Handle13
+ 106 0092 C0F20003 		movt	r3, #:upper16:IO004_Handle13
+ 107 0096 5B68     		ldr	r3, [r3, #4]
+ 108 0098 5A6A     		ldr	r2, [r3, #36]
+ 109 009a 40F20003 		movw	r3, #:lower16:IO004_Handle13
+ 110 009e C0F20003 		movt	r3, #:upper16:IO004_Handle13
+ 111 00a2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 112 00a4 22FA03F3 		lsr	r3, r2, r3
+ 113 00a8 03F00103 		and	r3, r3, #1
+ 114 00ac 002B     		cmp	r3, #0
+ 115 00ae EDD0     		beq	.L4
+ 148:../Main.c     **** 			read_R();
+ 116              		.loc 1 148 0
+ 117 00b0 FFF7FEFF 		bl	read_R
+ 149:../Main.c     **** 			update_driver_signals();
+ 118              		.loc 1 149 0
+ 119 00b4 FFF7FEFF 		bl	update_driver_signals
+ 120              		.loc 1 151 0
+ 121 00b8 E8E7     		b	.L4
+ 122              		.cfi_endproc
+ 123              	.LFE117:
+ 125 00ba 00BF     		.section	.text.WakeUp,"ax",%progbits
+ 126              		.align	2
+ 127              		.global	WakeUp
+ 128              		.thumb
+ 129              		.thumb_func
+ 131              	WakeUp:
+ 132              	.LFB118:
+ 152:../Main.c     **** 	return 0;
+ 153:../Main.c     **** }
+ 154:../Main.c     **** 
+ 155:../Main.c     **** void WakeUp(void) {
+ 133              		.loc 1 155 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 1, uses_anonymous_args = 0
+ 137              		@ link register save eliminated.
+ 138 0000 80B4     		push	{r7}
+ 139              	.LCFI2:
+ 140              		.cfi_def_cfa_offset 4
+ 141              		.cfi_offset 7, -4
+ 142 0002 00AF     		add	r7, sp, #0
+ 143              	.LCFI3:
+ 144              		.cfi_def_cfa_register 7
+ 156:../Main.c     **** 
+ 157:../Main.c     **** 	//Enable
+ 158:../Main.c     **** //	IO004_TogglePin(IO004_Handle1);
+ 159:../Main.c     **** //	delayus(100);
+ 160:../Main.c     **** //	IO004_TogglePin(IO004_Handle1);
+ 161:../Main.c     **** 
+ 162:../Main.c     **** 	//DrvDis
+ 163:../Main.c     **** 	/*IO004_SetPin(IO004_Handle2);
+ 164:../Main.c     **** 	 delayms(1);
+ 165:../Main.c     **** 	 IO004_TogglePin(IO004_Handle2);*/
+ 166:../Main.c     **** 
+ 167:../Main.c     **** }
+ 145              		.loc 1 167 0
+ 146 0004 BD46     		mov	sp, r7
+ 147 0006 80BC     		pop	{r7}
+ 148 0008 7047     		bx	lr
+ 149              		.cfi_endproc
+ 150              	.LFE118:
+ 152 000a 00BF     		.section	.text.update_driver_signals,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	update_driver_signals
+ 155              		.thumb
+ 156              		.thumb_func
+ 158              	update_driver_signals:
+ 159              	.LFB119:
+ 168:../Main.c     **** 
+ 169:../Main.c     **** void update_driver_signals(void) {
+ 160              		.loc 1 169 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 24
+ 163              		@ frame_needed = 1, uses_anonymous_args = 0
+ 164 0000 80B5     		push	{r7, lr}
+ 165              	.LCFI4:
+ 166              		.cfi_def_cfa_offset 8
+ 167              		.cfi_offset 7, -8
+ 168              		.cfi_offset 14, -4
+ 169 0002 86B0     		sub	sp, sp, #24
+ 170              	.LCFI5:
+ 171              		.cfi_def_cfa_offset 32
+ 172 0004 00AF     		add	r7, sp, #0
+ 173              	.LCFI6:
+ 174              		.cfi_def_cfa_register 7
+ 170:../Main.c     **** 
+ 171:../Main.c     **** 	unsigned char direction = data_R[3];
+ 175              		.loc 1 171 0
+ 176 0006 40F20003 		movw	r3, #:lower16:data_R
+ 177 000a C0F20003 		movt	r3, #:upper16:data_R
+ 178 000e DB78     		ldrb	r3, [r3, #3]
+ 179 0010 FB71     		strb	r3, [r7, #7]
+ 172:../Main.c     **** 	float duty_motor_left = PWM_DUTY_LIM_MIN;
+ 180              		.loc 1 172 0
+ 181 0012 4FF00003 		mov	r3, #0
+ 182 0016 C4F22013 		movt	r3, 16672
+ 183 001a 7B61     		str	r3, [r7, #20]	@ float
+ 173:../Main.c     **** 	float duty_motor_right = PWM_DUTY_LIM_MIN;
+ 184              		.loc 1 173 0
+ 185 001c 4FF00003 		mov	r3, #0
+ 186 0020 C4F22013 		movt	r3, 16672
+ 187 0024 3B61     		str	r3, [r7, #16]	@ float
+ 174:../Main.c     **** 	float direction_motor_left = 0;
+ 188              		.loc 1 174 0
+ 189 0026 4FF00003 		mov	r3, #0
+ 190 002a FB60     		str	r3, [r7, #12]	@ float
+ 175:../Main.c     **** 	float direction_motor_right = 0;
+ 191              		.loc 1 175 0
+ 192 002c 4FF00003 		mov	r3, #0
+ 193 0030 BB60     		str	r3, [r7, #8]	@ float
+ 176:../Main.c     **** 
+ 177:../Main.c     **** 	if (direction & (1 << LEFT_FRONT)) {
+ 194              		.loc 1 177 0
+ 195 0032 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 196 0034 03F00803 		and	r3, r3, #8
+ 197 0038 002B     		cmp	r3, #0
+ 198 003a 1DD0     		beq	.L7
+ 178:../Main.c     **** 
+ 179:../Main.c     **** 		if (data_R[1] > PWM_MOTOR_CUT_OFF)
+ 199              		.loc 1 179 0
+ 200 003c 40F20003 		movw	r3, #:lower16:data_R
+ 201 0040 C0F20003 		movt	r3, #:upper16:data_R
+ 202 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 203 0046 142B     		cmp	r3, #20
+ 204 0048 12D9     		bls	.L8
+ 180:../Main.c     **** 			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
+ 205              		.loc 1 180 0
+ 206 004a 40F20003 		movw	r3, #:lower16:data_R
+ 207 004e C0F20003 		movt	r3, #:upper16:data_R
+ 208 0052 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 209 0054 07EE903A 		fmsr	s15, r3	@ int
+ 210 0058 B8EE677A 		fuitos	s14, s15
+ 211 005c DFED697A 		flds	s15, .L19
+ 212 0060 87EE277A 		fdivs	s14, s14, s15
+ 213 0064 DFED687A 		flds	s15, .L19+4
+ 214 0068 67EE277A 		fmuls	s15, s14, s15
+ 215 006c C7ED057A 		fsts	s15, [r7, #20]
+ 216              	.L8:
+ 181:../Main.c     **** 		direction_motor_left = DIR_FRONT_LEFT;
+ 217              		.loc 1 181 0
+ 218 0070 4FF07E53 		mov	r3, #1065353216
+ 219 0074 FB60     		str	r3, [r7, #12]	@ float
+ 220 0076 21E0     		b	.L9
+ 221              	.L7:
+ 182:../Main.c     **** 
+ 183:../Main.c     **** 	} else if (direction & (1 << LEFT_BACK)) {
+ 222              		.loc 1 183 0
+ 223 0078 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 224 007a 03F00103 		and	r3, r3, #1
+ 225 007e 002B     		cmp	r3, #0
+ 226 0080 1CD0     		beq	.L9
+ 184:../Main.c     **** 		if (data_R[1] > PWM_MOTOR_CUT_OFF)
+ 227              		.loc 1 184 0
+ 228 0082 40F20003 		movw	r3, #:lower16:data_R
+ 229 0086 C0F20003 		movt	r3, #:upper16:data_R
+ 230 008a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 231 008c 142B     		cmp	r3, #20
+ 232 008e 12D9     		bls	.L10
+ 185:../Main.c     **** 			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
+ 233              		.loc 1 185 0
+ 234 0090 40F20003 		movw	r3, #:lower16:data_R
+ 235 0094 C0F20003 		movt	r3, #:upper16:data_R
+ 236 0098 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 237 009a 07EE903A 		fmsr	s15, r3	@ int
+ 238 009e B8EE677A 		fuitos	s14, s15
+ 239 00a2 DFED587A 		flds	s15, .L19
+ 240 00a6 87EE277A 		fdivs	s14, s14, s15
+ 241 00aa DFED577A 		flds	s15, .L19+4
+ 242 00ae 67EE277A 		fmuls	s15, s14, s15
+ 243 00b2 C7ED057A 		fsts	s15, [r7, #20]
+ 244              	.L10:
+ 186:../Main.c     **** 		direction_motor_left = DIR_REV_LEFT;
+ 245              		.loc 1 186 0
+ 246 00b6 4FF00003 		mov	r3, #0
+ 247 00ba FB60     		str	r3, [r7, #12]	@ float
+ 248              	.L9:
+ 187:../Main.c     **** 	}
+ 188:../Main.c     **** 
+ 189:../Main.c     **** 	if (direction & (1 << RIGHT_FRONT)) {
+ 249              		.loc 1 189 0
+ 250 00bc FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 251 00be 03F02003 		and	r3, r3, #32
+ 252 00c2 002B     		cmp	r3, #0
+ 253 00c4 1DD0     		beq	.L11
+ 190:../Main.c     **** 
+ 191:../Main.c     **** 		if (data_R[2] > PWM_MOTOR_CUT_OFF)
+ 254              		.loc 1 191 0
+ 255 00c6 40F20003 		movw	r3, #:lower16:data_R
+ 256 00ca C0F20003 		movt	r3, #:upper16:data_R
+ 257 00ce 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 258 00d0 142B     		cmp	r3, #20
+ 259 00d2 12D9     		bls	.L12
+ 192:../Main.c     **** 			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
+ 260              		.loc 1 192 0
+ 261 00d4 40F20003 		movw	r3, #:lower16:data_R
+ 262 00d8 C0F20003 		movt	r3, #:upper16:data_R
+ 263 00dc 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 264 00de 07EE903A 		fmsr	s15, r3	@ int
+ 265 00e2 B8EE677A 		fuitos	s14, s15
+ 266 00e6 DFED477A 		flds	s15, .L19
+ 267 00ea 87EE277A 		fdivs	s14, s14, s15
+ 268 00ee DFED467A 		flds	s15, .L19+4
+ 269 00f2 67EE277A 		fmuls	s15, s14, s15
+ 270 00f6 C7ED047A 		fsts	s15, [r7, #16]
+ 271              	.L12:
+ 193:../Main.c     **** 		direction_motor_right = DIR_FRONT_RIGHT;
+ 272              		.loc 1 193 0
+ 273 00fa 4FF07E53 		mov	r3, #1065353216
+ 274 00fe BB60     		str	r3, [r7, #8]	@ float
+ 275 0100 21E0     		b	.L13
+ 276              	.L11:
+ 194:../Main.c     **** 
+ 195:../Main.c     **** 	} else if (direction & (1 << RIGHT_BACK)) {
+ 277              		.loc 1 195 0
+ 278 0102 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 279 0104 03F01003 		and	r3, r3, #16
+ 280 0108 002B     		cmp	r3, #0
+ 281 010a 1CD0     		beq	.L13
+ 196:../Main.c     **** 		if (data_R[2] > PWM_MOTOR_CUT_OFF)
+ 282              		.loc 1 196 0
+ 283 010c 40F20003 		movw	r3, #:lower16:data_R
+ 284 0110 C0F20003 		movt	r3, #:upper16:data_R
+ 285 0114 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 286 0116 142B     		cmp	r3, #20
+ 287 0118 12D9     		bls	.L14
+ 197:../Main.c     **** 			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
+ 288              		.loc 1 197 0
+ 289 011a 40F20003 		movw	r3, #:lower16:data_R
+ 290 011e C0F20003 		movt	r3, #:upper16:data_R
+ 291 0122 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 292 0124 07EE903A 		fmsr	s15, r3	@ int
+ 293 0128 B8EE677A 		fuitos	s14, s15
+ 294 012c DFED357A 		flds	s15, .L19
+ 295 0130 87EE277A 		fdivs	s14, s14, s15
+ 296 0134 DFED347A 		flds	s15, .L19+4
+ 297 0138 67EE277A 		fmuls	s15, s14, s15
+ 298 013c C7ED047A 		fsts	s15, [r7, #16]
+ 299              	.L14:
+ 198:../Main.c     **** 		direction_motor_right = DIR_REV_RIGHT;
+ 300              		.loc 1 198 0
+ 301 0140 4FF00003 		mov	r3, #0
+ 302 0144 BB60     		str	r3, [r7, #8]	@ float
+ 303              	.L13:
+ 199:../Main.c     **** 	}
+ 200:../Main.c     **** 
+ 201:../Main.c     **** 	if (direction_motor_left) {
+ 304              		.loc 1 201 0
+ 305 0146 D7ED037A 		flds	s15, [r7, #12]
+ 306 014a F5EE407A 		fcmpzs	s15
+ 307 014e F1EE10FA 		fmstat
+ 308 0152 0FD0     		beq	.L15
+ 202:../Main.c     **** 		IO004_SetPin(DIR_LEFT);
+ 309              		.loc 1 202 0
+ 310 0154 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 311 0158 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 312 015c 5A68     		ldr	r2, [r3, #4]
+ 313 015e 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 314 0162 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 315 0166 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 316 0168 4FF00101 		mov	r1, #1
+ 317 016c 01FA03F3 		lsl	r3, r1, r3
+ 318 0170 5360     		str	r3, [r2, #4]
+ 319 0172 0EE0     		b	.L16
+ 320              	.L15:
+ 203:../Main.c     **** 	} else {
+ 204:../Main.c     **** 		IO004_ResetPin(DIR_LEFT);
+ 321              		.loc 1 204 0
+ 322 0174 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 323 0178 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 324 017c 5A68     		ldr	r2, [r3, #4]
+ 325 017e 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 326 0182 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 327 0186 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 328 0188 4FF48031 		mov	r1, #65536
+ 329 018c 01FA03F3 		lsl	r3, r1, r3
+ 330 0190 5360     		str	r3, [r2, #4]
+ 331              	.L16:
+ 205:../Main.c     **** 	}
+ 206:../Main.c     **** 
+ 207:../Main.c     **** 	if (direction_motor_right) {
+ 332              		.loc 1 207 0
+ 333 0192 D7ED027A 		flds	s15, [r7, #8]
+ 334 0196 F5EE407A 		fcmpzs	s15
+ 335 019a F1EE10FA 		fmstat
+ 336 019e 0FD0     		beq	.L17
+ 208:../Main.c     **** 		IO004_SetPin(DIR_RIGHT);
+ 337              		.loc 1 208 0
+ 338 01a0 40F20003 		movw	r3, #:lower16:IO004_Handle0
+ 339 01a4 C0F20003 		movt	r3, #:upper16:IO004_Handle0
+ 340 01a8 5A68     		ldr	r2, [r3, #4]
+ 341 01aa 40F20003 		movw	r3, #:lower16:IO004_Handle0
+ 342 01ae C0F20003 		movt	r3, #:upper16:IO004_Handle0
+ 343 01b2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 344 01b4 4FF00101 		mov	r1, #1
+ 345 01b8 01FA03F3 		lsl	r3, r1, r3
+ 346 01bc 5360     		str	r3, [r2, #4]
+ 347 01be 0EE0     		b	.L18
+ 348              	.L17:
+ 209:../Main.c     **** 	} else {
+ 210:../Main.c     **** 		IO004_ResetPin(DIR_RIGHT);
+ 349              		.loc 1 210 0
+ 350 01c0 40F20003 		movw	r3, #:lower16:IO004_Handle0
+ 351 01c4 C0F20003 		movt	r3, #:upper16:IO004_Handle0
+ 352 01c8 5A68     		ldr	r2, [r3, #4]
+ 353 01ca 40F20003 		movw	r3, #:lower16:IO004_Handle0
+ 354 01ce C0F20003 		movt	r3, #:upper16:IO004_Handle0
+ 355 01d2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 356 01d4 4FF48031 		mov	r1, #65536
+ 357 01d8 01FA03F3 		lsl	r3, r1, r3
+ 358 01dc 5360     		str	r3, [r2, #4]
+ 359              	.L18:
+ 211:../Main.c     **** 	}
+ 212:../Main.c     **** 
+ 213:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, duty_motor_right);
+ 360              		.loc 1 213 0
+ 361 01de 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+ 362 01e2 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+ 363 01e6 3969     		ldr	r1, [r7, #16]	@ float
+ 364 01e8 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 214:../Main.c     **** 
+ 215:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, duty_motor_left);
+ 365              		.loc 1 215 0
+ 366 01ec 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+ 367 01f0 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+ 368 01f4 7969     		ldr	r1, [r7, #20]	@ float
+ 369 01f6 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 216:../Main.c     **** 
+ 217:../Main.c     **** }
+ 370              		.loc 1 217 0
+ 371 01fa 07F11807 		add	r7, r7, #24
+ 372 01fe BD46     		mov	sp, r7
+ 373 0200 80BD     		pop	{r7, pc}
+ 374              	.L20:
+ 375 0202 00BF     		.align	2
+ 376              	.L19:
+ 377 0204 00007F43 		.word	1132396544
+ 378 0208 0000C842 		.word	1120403456
+ 379              		.cfi_endproc
+ 380              	.LFE119:
+ 382              		.section	.text.Software_Timers_Init,"ax",%progbits
+ 383              		.align	2
+ 384              		.global	Software_Timers_Init
+ 385              		.thumb
+ 386              		.thumb_func
+ 388              	Software_Timers_Init:
+ 389              	.LFB120:
+ 218:../Main.c     **** 
+ 219:../Main.c     **** void Software_Timers_Init() {
+ 390              		.loc 1 219 0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 8
+ 393              		@ frame_needed = 1, uses_anonymous_args = 0
+ 394 0000 80B5     		push	{r7, lr}
+ 395              	.LCFI7:
+ 396              		.cfi_def_cfa_offset 8
+ 397              		.cfi_offset 7, -8
+ 398              		.cfi_offset 14, -4
+ 399 0002 82B0     		sub	sp, sp, #8
+ 400              	.LCFI8:
+ 401              		.cfi_def_cfa_offset 16
+ 402 0004 00AF     		add	r7, sp, #0
+ 403              	.LCFI9:
+ 404              		.cfi_def_cfa_register 7
+ 220:../Main.c     **** 	handle_t TaskTimerId;
+ 221:../Main.c     **** 
+ 222:../Main.c     **** 	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+ 405              		.loc 1 222 0
+ 406 0006 4FF06400 		mov	r0, #100
+ 407 000a 4FF00101 		mov	r1, #1
+ 408 000e 40F20002 		movw	r2, #:lower16:Tick_Handler
+ 409 0012 C0F20002 		movt	r2, #:upper16:Tick_Handler
+ 410 0016 4FF00003 		mov	r3, #0
+ 411 001a FFF7FEFF 		bl	SYSTM002_CreateTimer
+ 412 001e 7860     		str	r0, [r7, #4]
+ 223:../Main.c     **** 			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+ 224:../Main.c     **** 	if (TaskTimerId != 0) {
+ 413              		.loc 1 224 0
+ 414 0020 7B68     		ldr	r3, [r7, #4]
+ 415 0022 002B     		cmp	r3, #0
+ 416 0024 02D0     		beq	.L21
+ 225:../Main.c     **** //Timer created successfully so start it
+ 226:../Main.c     **** 		SYSTM002_StartTimer(TaskTimerId);
+ 417              		.loc 1 226 0
+ 418 0026 7868     		ldr	r0, [r7, #4]
+ 419 0028 FFF7FEFF 		bl	SYSTM002_StartTimer
+ 420              	.L21:
+ 227:../Main.c     **** 	}
+ 228:../Main.c     **** }
+ 421              		.loc 1 228 0
+ 422 002c 07F10807 		add	r7, r7, #8
+ 423 0030 BD46     		mov	sp, r7
+ 424 0032 80BD     		pop	{r7, pc}
+ 425              		.cfi_endproc
+ 426              	.LFE120:
+ 428              		.section	.text.delayus,"ax",%progbits
+ 429              		.align	2
+ 430              		.global	delayus
+ 431              		.thumb
+ 432              		.thumb_func
+ 434              	delayus:
+ 435              	.LFB121:
+ 229:../Main.c     **** 
+ 230:../Main.c     **** void delayus(uint32_t delay_us) {
+ 436              		.loc 1 230 0
+ 437              		.cfi_startproc
+ 438              		@ args = 0, pretend = 0, frame = 16
+ 439              		@ frame_needed = 1, uses_anonymous_args = 0
+ 440              		@ link register save eliminated.
+ 441 0000 80B4     		push	{r7}
+ 442              	.LCFI10:
+ 443              		.cfi_def_cfa_offset 4
+ 444              		.cfi_offset 7, -4
+ 445 0002 85B0     		sub	sp, sp, #20
+ 446              	.LCFI11:
+ 447              		.cfi_def_cfa_offset 24
+ 448 0004 00AF     		add	r7, sp, #0
+ 449              	.LCFI12:
+ 450              		.cfi_def_cfa_register 7
+ 451 0006 7860     		str	r0, [r7, #4]
+ 231:../Main.c     **** 	uint32_t currenttick = ticks;
+ 452              		.loc 1 231 0
+ 453 0008 40F20003 		movw	r3, #:lower16:ticks
+ 454 000c C0F20003 		movt	r3, #:upper16:ticks
+ 455 0010 1B68     		ldr	r3, [r3, #0]
+ 456 0012 FB60     		str	r3, [r7, #12]
+ 232:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+ 457              		.loc 1 232 0
+ 458 0014 00BF     		nop
+ 459              	.L24:
+ 460              		.loc 1 232 0 is_stmt 0 discriminator 1
+ 461 0016 40F20003 		movw	r3, #:lower16:ticks
+ 462 001a C0F20003 		movt	r3, #:upper16:ticks
+ 463 001e 1A68     		ldr	r2, [r3, #0]
+ 464 0020 FB68     		ldr	r3, [r7, #12]
+ 465 0022 D21A     		subs	r2, r2, r3
+ 466 0024 7968     		ldr	r1, [r7, #4]
+ 467 0026 48F21F53 		movw	r3, #34079
+ 468 002a C5F2EB13 		movt	r3, 20971
+ 469 002e A3FB0103 		umull	r0, r3, r3, r1
+ 470 0032 4FEA5313 		lsr	r3, r3, #5
+ 471 0036 9A42     		cmp	r2, r3
+ 472 0038 EDD3     		bcc	.L24
+ 233:../Main.c     **** 		;
+ 234:../Main.c     **** 	ticks = 0;
+ 473              		.loc 1 234 0 is_stmt 1
+ 474 003a 40F20003 		movw	r3, #:lower16:ticks
+ 475 003e C0F20003 		movt	r3, #:upper16:ticks
+ 476 0042 4FF00002 		mov	r2, #0
+ 477 0046 1A60     		str	r2, [r3, #0]
+ 235:../Main.c     **** }
+ 478              		.loc 1 235 0
+ 479 0048 07F11407 		add	r7, r7, #20
+ 480 004c BD46     		mov	sp, r7
+ 481 004e 80BC     		pop	{r7}
+ 482 0050 7047     		bx	lr
+ 483              		.cfi_endproc
+ 484              	.LFE121:
+ 486 0052 00BF     		.section	.text.delayms,"ax",%progbits
+ 487              		.align	2
+ 488              		.global	delayms
+ 489              		.thumb
+ 490              		.thumb_func
+ 492              	delayms:
+ 493              	.LFB122:
+ 236:../Main.c     **** 
+ 237:../Main.c     **** void delayms(uint32_t delay_ms) {
+ 494              		.loc 1 237 0
+ 495              		.cfi_startproc
+ 496              		@ args = 0, pretend = 0, frame = 8
+ 497              		@ frame_needed = 1, uses_anonymous_args = 0
+ 498 0000 80B5     		push	{r7, lr}
+ 499              	.LCFI13:
+ 500              		.cfi_def_cfa_offset 8
+ 501              		.cfi_offset 7, -8
+ 502              		.cfi_offset 14, -4
+ 503 0002 82B0     		sub	sp, sp, #8
+ 504              	.LCFI14:
+ 505              		.cfi_def_cfa_offset 16
+ 506 0004 00AF     		add	r7, sp, #0
+ 507              	.LCFI15:
+ 508              		.cfi_def_cfa_register 7
+ 509 0006 7860     		str	r0, [r7, #4]
+ 238:../Main.c     **** 	delayus(1000 * delay_ms);
+ 510              		.loc 1 238 0
+ 511 0008 7B68     		ldr	r3, [r7, #4]
+ 512 000a 4FF47A72 		mov	r2, #1000
+ 513 000e 02FB03F3 		mul	r3, r2, r3
+ 514 0012 1846     		mov	r0, r3
+ 515 0014 FFF7FEFF 		bl	delayus
+ 239:../Main.c     **** }
+ 516              		.loc 1 239 0
+ 517 0018 07F10807 		add	r7, r7, #8
+ 518 001c BD46     		mov	sp, r7
+ 519 001e 80BD     		pop	{r7, pc}
+ 520              		.cfi_endproc
+ 521              	.LFE122:
+ 523              		.section	.text.Tick_Handler,"ax",%progbits
+ 524              		.align	2
+ 525              		.global	Tick_Handler
+ 526              		.thumb
+ 527              		.thumb_func
+ 529              	Tick_Handler:
+ 530              	.LFB123:
+ 240:../Main.c     **** 
+ 241:../Main.c     **** void Tick_Handler(void) {
+ 531              		.loc 1 241 0
+ 532              		.cfi_startproc
+ 533              		@ args = 0, pretend = 0, frame = 0
+ 534              		@ frame_needed = 1, uses_anonymous_args = 0
+ 535              		@ link register save eliminated.
+ 536 0000 80B4     		push	{r7}
+ 537              	.LCFI16:
+ 538              		.cfi_def_cfa_offset 4
+ 539              		.cfi_offset 7, -4
+ 540 0002 00AF     		add	r7, sp, #0
+ 541              	.LCFI17:
+ 542              		.cfi_def_cfa_register 7
+ 242:../Main.c     **** 	ticks++;
+ 543              		.loc 1 242 0
+ 544 0004 40F20003 		movw	r3, #:lower16:ticks
+ 545 0008 C0F20003 		movt	r3, #:upper16:ticks
+ 546 000c 1B68     		ldr	r3, [r3, #0]
+ 547 000e 03F10102 		add	r2, r3, #1
+ 548 0012 40F20003 		movw	r3, #:lower16:ticks
+ 549 0016 C0F20003 		movt	r3, #:upper16:ticks
+ 550 001a 1A60     		str	r2, [r3, #0]
+ 243:../Main.c     **** }
+ 551              		.loc 1 243 0
+ 552 001c BD46     		mov	sp, r7
+ 553 001e 80BC     		pop	{r7}
+ 554 0020 7047     		bx	lr
+ 555              		.cfi_endproc
+ 556              	.LFE123:
+ 558 0022 00BF     		.section	.text.Testando_Handler,"ax",%progbits
+ 559              		.align	2
+ 560              		.global	Testando_Handler
+ 561              		.thumb
+ 562              		.thumb_func
+ 564              	Testando_Handler:
+ 565              	.LFB124:
+ 244:../Main.c     **** 
+ 245:../Main.c     **** void Testando_Handler(void) {
+ 566              		.loc 1 245 0
+ 567              		.cfi_startproc
+ 568              		@ args = 0, pretend = 0, frame = 0
+ 569              		@ frame_needed = 1, uses_anonymous_args = 0
+ 570              		@ link register save eliminated.
+ 571 0000 80B4     		push	{r7}
+ 572              	.LCFI18:
+ 573              		.cfi_def_cfa_offset 4
+ 574              		.cfi_offset 7, -4
+ 575 0002 00AF     		add	r7, sp, #0
+ 576              	.LCFI19:
+ 577              		.cfi_def_cfa_register 7
+ 246:../Main.c     **** 
+ 247:../Main.c     **** 	uint32_t status;
+ 248:../Main.c     **** 
+ 249:../Main.c     **** 	/*status = RD_REG(ERU001_Handle0.ERURegs->EXICON[ERU001_Handle0.InputChannel],ERU_EXICON_FL_Msk , 
+ 250:../Main.c     **** 
+ 251:../Main.c     **** 	 if(status)
+ 252:../Main.c     **** 	 {
+ 253:../Main.c     **** 	 IO004_ResetPin(IO004_Handle6);		// ERU event received, turn on LED
+ 254:../Main.c     **** 	 ERU001_ClearFlag(ERU001_Handle0);	// Clears the Status Flag
+ 255:../Main.c     **** 	 }*/
+ 256:../Main.c     **** }
+ 578              		.loc 1 256 0
+ 579 0004 BD46     		mov	sp, r7
+ 580 0006 80BC     		pop	{r7}
+ 581 0008 7047     		bx	lr
+ 582              		.cfi_endproc
+ 583              	.LFE124:
+ 585 000a 00BF     		.section	.text.ERU0_3_IRQHandler,"ax",%progbits
+ 586              		.align	2
+ 587              		.global	ERU0_3_IRQHandler
+ 588              		.thumb
+ 589              		.thumb_func
+ 591              	ERU0_3_IRQHandler:
+ 592              	.LFB125:
+ 257:../Main.c     **** 
+ 258:../Main.c     **** void interrupt_left(void) {
+ 593              		.loc 1 258 0
+ 594              		.cfi_startproc
+ 595              		@ args = 0, pretend = 0, frame = 0
+ 596              		@ frame_needed = 1, uses_anonymous_args = 0
+ 597              		@ link register save eliminated.
+ 598 0000 80B4     		push	{r7}
+ 599              	.LCFI20:
+ 600              		.cfi_def_cfa_offset 4
+ 601              		.cfi_offset 7, -4
+ 602 0002 00AF     		add	r7, sp, #0
+ 603              	.LCFI21:
+ 604              		.cfi_def_cfa_register 7
+ 259:../Main.c     **** 
+ 260:../Main.c     **** }
+ 605              		.loc 1 260 0
+ 606 0004 BD46     		mov	sp, r7
+ 607 0006 80BC     		pop	{r7}
+ 608 0008 7047     		bx	lr
+ 609              		.cfi_endproc
+ 610              	.LFE125:
+ 612 000a 00BF     		.section	.text.ERU1_0_IRQHandler,"ax",%progbits
+ 613              		.align	2
+ 614              		.global	ERU1_0_IRQHandler
+ 615              		.thumb
+ 616              		.thumb_func
+ 618              	ERU1_0_IRQHandler:
+ 619              	.LFB126:
+ 261:../Main.c     **** 
+ 262:../Main.c     **** void interrupt_right(void) {
+ 620              		.loc 1 262 0
+ 621              		.cfi_startproc
+ 622              		@ args = 0, pretend = 0, frame = 0
+ 623              		@ frame_needed = 1, uses_anonymous_args = 0
+ 624              		@ link register save eliminated.
+ 625 0000 80B4     		push	{r7}
+ 626              	.LCFI22:
+ 627              		.cfi_def_cfa_offset 4
+ 628              		.cfi_offset 7, -4
+ 629 0002 00AF     		add	r7, sp, #0
+ 630              	.LCFI23:
+ 631              		.cfi_def_cfa_register 7
+ 263:../Main.c     **** 
+ 264:../Main.c     **** }
+ 632              		.loc 1 264 0
+ 633 0004 BD46     		mov	sp, r7
+ 634 0006 80BC     		pop	{r7}
+ 635 0008 7047     		bx	lr
+ 636              		.cfi_endproc
+ 637              	.LFE126:
+ 639 000a 00BF     		.section	.text.read_R,"ax",%progbits
+ 640              		.align	2
+ 641              		.global	read_R
+ 642              		.thumb
+ 643              		.thumb_func
+ 645              	read_R:
+ 646              	.LFB127:
+ 265:../Main.c     **** 
+ 266:../Main.c     **** /***************************************************/
+ 267:../Main.c     **** /***************FUNCOES DO TRANSCEPTOR**************/
+ 268:../Main.c     **** /***************************************************/
+ 269:../Main.c     **** 
+ 270:../Main.c     **** void read_R() {
+ 647              		.loc 1 270 0
+ 648              		.cfi_startproc
+ 649              		@ args = 0, pretend = 0, frame = 16
+ 650              		@ frame_needed = 1, uses_anonymous_args = 0
+ 651 0000 80B5     		push	{r7, lr}
+ 652              	.LCFI24:
+ 653              		.cfi_def_cfa_offset 8
+ 654              		.cfi_offset 7, -8
+ 655              		.cfi_offset 14, -4
+ 656 0002 84B0     		sub	sp, sp, #16
+ 657              	.LCFI25:
+ 658              		.cfi_def_cfa_offset 24
+ 659 0004 00AF     		add	r7, sp, #0
+ 660              	.LCFI26:
+ 661              		.cfi_def_cfa_register 7
+ 271:../Main.c     **** 	int i, j;
+ 272:../Main.c     **** 	IO004_ResetPin(CE);
+ 662              		.loc 1 272 0
+ 663 0006 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 664 000a C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 665 000e 5A68     		ldr	r2, [r3, #4]
+ 666 0010 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 667 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 668 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 669 001a 4FF48031 		mov	r1, #65536
+ 670 001e 01FA03F3 		lsl	r3, r1, r3
+ 671 0022 5360     		str	r3, [r2, #4]
+ 273:../Main.c     **** 	delay(50000);
+ 672              		.loc 1 273 0
+ 673 0024 4CF25030 		movw	r0, #50000
+ 674 0028 FFF7FEFF 		bl	delay
+ 274:../Main.c     **** 	uint8_t temp = 0;
+ 675              		.loc 1 274 0
+ 676 002c 4FF00003 		mov	r3, #0
+ 677 0030 FB71     		strb	r3, [r7, #7]
+ 275:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 678              		.loc 1 275 0
+ 679 0032 4FF00003 		mov	r3, #0
+ 680 0036 BB60     		str	r3, [r7, #8]
+ 681 0038 36E0     		b	.L31
+ 682              	.L35:
+ 276:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 683              		.loc 1 276 0
+ 684 003a 4FF00703 		mov	r3, #7
+ 685 003e FB60     		str	r3, [r7, #12]
+ 686 0040 20E0     		b	.L32
+ 687              	.L34:
+ 277:../Main.c     **** 			if (IO004_ReadPin(DATA))
+ 688              		.loc 1 277 0
+ 689 0042 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 690 0046 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 691 004a 5B68     		ldr	r3, [r3, #4]
+ 692 004c 5A6A     		ldr	r2, [r3, #36]
+ 693 004e 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 694 0052 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 695 0056 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 696 0058 22FA03F3 		lsr	r3, r2, r3
+ 697 005c 03F00103 		and	r3, r3, #1
+ 698 0060 002B     		cmp	r3, #0
+ 699 0062 09D0     		beq	.L33
+ 278:../Main.c     **** 				temp |= (1 << i);
+ 700              		.loc 1 278 0
+ 701 0064 4FF00102 		mov	r2, #1
+ 702 0068 FB68     		ldr	r3, [r7, #12]
+ 703 006a 02FA03F3 		lsl	r3, r2, r3
+ 704 006e DAB2     		uxtb	r2, r3
+ 705 0070 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 706 0072 1343     		orrs	r3, r3, r2
+ 707 0074 DBB2     		uxtb	r3, r3
+ 708 0076 FB71     		strb	r3, [r7, #7]
+ 709              	.L33:
+ 279:../Main.c     **** 			pulse_R();
+ 710              		.loc 1 279 0
+ 711 0078 FFF7FEFF 		bl	pulse_R
+ 276:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 712              		.loc 1 276 0
+ 713 007c FB68     		ldr	r3, [r7, #12]
+ 714 007e 03F1FF33 		add	r3, r3, #-1
+ 715 0082 FB60     		str	r3, [r7, #12]
+ 716              	.L32:
+ 276:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 717              		.loc 1 276 0 is_stmt 0 discriminator 1
+ 718 0084 FB68     		ldr	r3, [r7, #12]
+ 719 0086 002B     		cmp	r3, #0
+ 720 0088 DBDA     		bge	.L34
+ 280:../Main.c     **** 		}
+ 281:../Main.c     **** 		data_R[j] = temp;
+ 721              		.loc 1 281 0 is_stmt 1
+ 722 008a 40F20003 		movw	r3, #:lower16:data_R
+ 723 008e C0F20003 		movt	r3, #:upper16:data_R
+ 724 0092 BA68     		ldr	r2, [r7, #8]
+ 725 0094 9B18     		adds	r3, r3, r2
+ 726 0096 FA79     		ldrb	r2, [r7, #7]
+ 727 0098 1A70     		strb	r2, [r3, #0]
+ 282:../Main.c     **** 		temp = 0;
+ 728              		.loc 1 282 0
+ 729 009a 4FF00003 		mov	r3, #0
+ 730 009e FB71     		strb	r3, [r7, #7]
+ 275:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 731              		.loc 1 275 0
+ 732 00a0 BB68     		ldr	r3, [r7, #8]
+ 733 00a2 03F10103 		add	r3, r3, #1
+ 734 00a6 BB60     		str	r3, [r7, #8]
+ 735              	.L31:
+ 275:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 736              		.loc 1 275 0 is_stmt 0 discriminator 1
+ 737 00a8 BB68     		ldr	r3, [r7, #8]
+ 738 00aa 042B     		cmp	r3, #4
+ 739 00ac C5DD     		ble	.L35
+ 283:../Main.c     **** 	}
+ 284:../Main.c     **** 	IO004_SetPin(CE);
+ 740              		.loc 1 284 0 is_stmt 1
+ 741 00ae 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 742 00b2 C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 743 00b6 5A68     		ldr	r2, [r3, #4]
+ 744 00b8 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 745 00bc C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 746 00c0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 747 00c2 4FF00101 		mov	r1, #1
+ 748 00c6 01FA03F3 		lsl	r3, r1, r3
+ 749 00ca 5360     		str	r3, [r2, #4]
+ 285:../Main.c     **** 	delay(50000);
+ 750              		.loc 1 285 0
+ 751 00cc 4CF25030 		movw	r0, #50000
+ 752 00d0 FFF7FEFF 		bl	delay
+ 286:../Main.c     **** }
+ 753              		.loc 1 286 0
+ 754 00d4 07F11007 		add	r7, r7, #16
+ 755 00d8 BD46     		mov	sp, r7
+ 756 00da 80BD     		pop	{r7, pc}
+ 757              		.cfi_endproc
+ 758              	.LFE127:
+ 760              		.section	.text.pulse_R,"ax",%progbits
+ 761              		.align	2
+ 762              		.global	pulse_R
+ 763              		.thumb
+ 764              		.thumb_func
+ 766              	pulse_R:
+ 767              	.LFB128:
+ 287:../Main.c     **** 
+ 288:../Main.c     **** void pulse_R() {
+ 768              		.loc 1 288 0
+ 769              		.cfi_startproc
+ 770              		@ args = 0, pretend = 0, frame = 0
+ 771              		@ frame_needed = 1, uses_anonymous_args = 0
+ 772 0000 80B5     		push	{r7, lr}
+ 773              	.LCFI27:
+ 774              		.cfi_def_cfa_offset 8
+ 775              		.cfi_offset 7, -8
+ 776              		.cfi_offset 14, -4
+ 777 0002 00AF     		add	r7, sp, #0
+ 778              	.LCFI28:
+ 779              		.cfi_def_cfa_register 7
+ 289:../Main.c     **** 	delay(300);
+ 780              		.loc 1 289 0
+ 781 0004 4FF49670 		mov	r0, #300
+ 782 0008 FFF7FEFF 		bl	delay
+ 290:../Main.c     **** 	IO004_SetPin(CLK1);
+ 783              		.loc 1 290 0
+ 784 000c 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 785 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 786 0014 5A68     		ldr	r2, [r3, #4]
+ 787 0016 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 788 001a C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 789 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 790 0020 4FF00101 		mov	r1, #1
+ 791 0024 01FA03F3 		lsl	r3, r1, r3
+ 792 0028 5360     		str	r3, [r2, #4]
+ 291:../Main.c     **** 	delay(300);
+ 793              		.loc 1 291 0
+ 794 002a 4FF49670 		mov	r0, #300
+ 795 002e FFF7FEFF 		bl	delay
+ 292:../Main.c     **** 	IO004_ResetPin(CLK1);
+ 796              		.loc 1 292 0
+ 797 0032 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 798 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 799 003a 5A68     		ldr	r2, [r3, #4]
+ 800 003c 40F20003 		movw	r3, #:lower16:IO004_Handle11
+ 801 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle11
+ 802 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 803 0046 4FF48031 		mov	r1, #65536
+ 804 004a 01FA03F3 		lsl	r3, r1, r3
+ 805 004e 5360     		str	r3, [r2, #4]
+ 293:../Main.c     **** }
+ 806              		.loc 1 293 0
+ 807 0050 80BD     		pop	{r7, pc}
+ 808              		.cfi_endproc
+ 809              	.LFE128:
+ 811 0052 00BF     		.section	.text.configure_R,"ax",%progbits
+ 812              		.align	2
+ 813              		.global	configure_R
+ 814              		.thumb
+ 815              		.thumb_func
+ 817              	configure_R:
+ 818              	.LFB129:
+ 294:../Main.c     **** 
+ 295:../Main.c     **** void configure_R() {
+ 819              		.loc 1 295 0
+ 820              		.cfi_startproc
+ 821              		@ args = 0, pretend = 0, frame = 8
+ 822              		@ frame_needed = 1, uses_anonymous_args = 0
+ 823 0000 80B5     		push	{r7, lr}
+ 824              	.LCFI29:
+ 825              		.cfi_def_cfa_offset 8
+ 826              		.cfi_offset 7, -8
+ 827              		.cfi_offset 14, -4
+ 828 0002 82B0     		sub	sp, sp, #8
+ 829              	.LCFI30:
+ 830              		.cfi_def_cfa_offset 16
+ 831 0004 00AF     		add	r7, sp, #0
+ 832              	.LCFI31:
+ 833              		.cfi_def_cfa_register 7
+ 296:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
+ 297:../Main.c     **** 	configuration[0] = 0xC5; //RF_CH# e OP_MODE 0b11000101
+ 834              		.loc 1 297 0
+ 835 0006 40F20003 		movw	r3, #:lower16:configuration
+ 836 000a C0F20003 		movt	r3, #:upper16:configuration
+ 837 000e 4FF0C502 		mov	r2, #197
+ 838 0012 1A70     		strb	r2, [r3, #0]
+ 298:../Main.c     **** 	configuration[1] = 0x4F; //RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+ 839              		.loc 1 298 0
+ 840 0014 40F20003 		movw	r3, #:lower16:configuration
+ 841 0018 C0F20003 		movt	r3, #:upper16:configuration
+ 842 001c 4FF04F02 		mov	r2, #79
+ 843 0020 5A70     		strb	r2, [r3, #1]
+ 299:../Main.c     **** 	configuration[2] = 0xA3; //addr_w
+ 844              		.loc 1 299 0
+ 845 0022 40F20003 		movw	r3, #:lower16:configuration
+ 846 0026 C0F20003 		movt	r3, #:upper16:configuration
+ 847 002a 4FF0A302 		mov	r2, #163
+ 848 002e 9A70     		strb	r2, [r3, #2]
+ 300:../Main.c     **** 	configuration[3] = 0xEE; //Comeco enderco CH1 00000001
+ 849              		.loc 1 300 0
+ 850 0030 40F20003 		movw	r3, #:lower16:configuration
+ 851 0034 C0F20003 		movt	r3, #:upper16:configuration
+ 852 0038 4FF0EE02 		mov	r2, #238
+ 853 003c DA70     		strb	r2, [r3, #3]
+ 301:../Main.c     **** 	configuration[4] = 0xDD; //0b00000000
+ 854              		.loc 1 301 0
+ 855 003e 40F20003 		movw	r3, #:lower16:configuration
+ 856 0042 C0F20003 		movt	r3, #:upper16:configuration
+ 857 0046 4FF0DD02 		mov	r2, #221
+ 858 004a 1A71     		strb	r2, [r3, #4]
+ 302:../Main.c     **** 	configuration[5] = 0xCC; //0b11010100
+ 859              		.loc 1 302 0
+ 860 004c 40F20003 		movw	r3, #:lower16:configuration
+ 861 0050 C0F20003 		movt	r3, #:upper16:configuration
+ 862 0054 4FF0CC02 		mov	r2, #204
+ 863 0058 5A71     		strb	r2, [r3, #5]
+ 303:../Main.c     **** 	configuration[6] = 0xBB; //0b11011111
+ 864              		.loc 1 303 0
+ 865 005a 40F20003 		movw	r3, #:lower16:configuration
+ 866 005e C0F20003 		movt	r3, #:upper16:configuration
+ 867 0062 4FF0BB02 		mov	r2, #187
+ 868 0066 9A71     		strb	r2, [r3, #6]
+ 304:../Main.c     **** 	configuration[7] = 0xAA; //Fim enderco CH1 0b11101010
+ 869              		.loc 1 304 0
+ 870 0068 40F20003 		movw	r3, #:lower16:configuration
+ 871 006c C0F20003 		movt	r3, #:upper16:configuration
+ 872 0070 4FF0AA02 		mov	r2, #170
+ 873 0074 DA71     		strb	r2, [r3, #7]
+ 305:../Main.c     **** 	configuration[8] = 0b00000000; //Comeco enderco CH2
+ 874              		.loc 1 305 0
+ 875 0076 40F20003 		movw	r3, #:lower16:configuration
+ 876 007a C0F20003 		movt	r3, #:upper16:configuration
+ 877 007e 4FF00002 		mov	r2, #0
+ 878 0082 1A72     		strb	r2, [r3, #8]
+ 306:../Main.c     **** 	configuration[9] = 0b00000000;
+ 879              		.loc 1 306 0
+ 880 0084 40F20003 		movw	r3, #:lower16:configuration
+ 881 0088 C0F20003 		movt	r3, #:upper16:configuration
+ 882 008c 4FF00002 		mov	r2, #0
+ 883 0090 5A72     		strb	r2, [r3, #9]
+ 307:../Main.c     **** 	configuration[10] = 0b00000000;
+ 884              		.loc 1 307 0
+ 885 0092 40F20003 		movw	r3, #:lower16:configuration
+ 886 0096 C0F20003 		movt	r3, #:upper16:configuration
+ 887 009a 4FF00002 		mov	r2, #0
+ 888 009e 9A72     		strb	r2, [r3, #10]
+ 308:../Main.c     **** 	configuration[11] = 0b00000000;
+ 889              		.loc 1 308 0
+ 890 00a0 40F20003 		movw	r3, #:lower16:configuration
+ 891 00a4 C0F20003 		movt	r3, #:upper16:configuration
+ 892 00a8 4FF00002 		mov	r2, #0
+ 893 00ac DA72     		strb	r2, [r3, #11]
+ 309:../Main.c     **** 	configuration[12] = 0b00000000; //Fim enderco CH2
+ 894              		.loc 1 309 0
+ 895 00ae 40F20003 		movw	r3, #:lower16:configuration
+ 896 00b2 C0F20003 		movt	r3, #:upper16:configuration
+ 897 00b6 4FF00002 		mov	r2, #0
+ 898 00ba 1A73     		strb	r2, [r3, #12]
+ 310:../Main.c     **** 	configuration[13] = 0x28; //num bits enviados (1 byte nesse ex) TODO arrumar
+ 899              		.loc 1 310 0
+ 900 00bc 40F20003 		movw	r3, #:lower16:configuration
+ 901 00c0 C0F20003 		movt	r3, #:upper16:configuration
+ 902 00c4 4FF02802 		mov	r2, #40
+ 903 00c8 5A73     		strb	r2, [r3, #13]
+ 311:../Main.c     **** 	configuration[14] = 0b00000000;
+ 904              		.loc 1 311 0
+ 905 00ca 40F20003 		movw	r3, #:lower16:configuration
+ 906 00ce C0F20003 		movt	r3, #:upper16:configuration
+ 907 00d2 4FF00002 		mov	r2, #0
+ 908 00d6 9A73     		strb	r2, [r3, #14]
+ 312:../Main.c     **** 
+ 313:../Main.c     **** 	IO004_ResetPin(CE);
+ 909              		.loc 1 313 0
+ 910 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 911 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 912 00e0 5A68     		ldr	r2, [r3, #4]
+ 913 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 914 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 915 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 916 00ec 4FF48031 		mov	r1, #65536
+ 917 00f0 01FA03F3 		lsl	r3, r1, r3
+ 918 00f4 5360     		str	r3, [r2, #4]
+ 314:../Main.c     **** 	IO004_SetPin(CS);
+ 919              		.loc 1 314 0
+ 920 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 921 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 922 00fe 5A68     		ldr	r2, [r3, #4]
+ 923 0100 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 924 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 925 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 926 010a 4FF00101 		mov	r1, #1
+ 927 010e 01FA03F3 		lsl	r3, r1, r3
+ 928 0112 5360     		str	r3, [r2, #4]
+ 315:../Main.c     **** 	int i, j;
+ 316:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 929              		.loc 1 316 0
+ 930 0114 4FF00E03 		mov	r3, #14
+ 931 0118 7B60     		str	r3, [r7, #4]
+ 932 011a 3FE0     		b	.L38
+ 933              	.L43:
+ 317:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 934              		.loc 1 317 0
+ 935 011c 4FF00703 		mov	r3, #7
+ 936 0120 3B60     		str	r3, [r7, #0]
+ 937 0122 34E0     		b	.L39
+ 938              	.L42:
+ 318:../Main.c     **** 			if ((configuration[i] & (1 << j)) > 0)
+ 939              		.loc 1 318 0
+ 940 0124 40F20003 		movw	r3, #:lower16:configuration
+ 941 0128 C0F20003 		movt	r3, #:upper16:configuration
+ 942 012c 7A68     		ldr	r2, [r7, #4]
+ 943 012e 9B18     		adds	r3, r3, r2
+ 944 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 945 0132 1A46     		mov	r2, r3
+ 946 0134 4FF00101 		mov	r1, #1
+ 947 0138 3B68     		ldr	r3, [r7, #0]
+ 948 013a 01FA03F3 		lsl	r3, r1, r3
+ 949 013e 1340     		ands	r3, r3, r2
+ 950 0140 002B     		cmp	r3, #0
+ 951 0142 0FDD     		ble	.L40
+ 319:../Main.c     **** 				IO004_SetPin(DATA);
+ 952              		.loc 1 319 0
+ 953 0144 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 954 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 955 014c 5A68     		ldr	r2, [r3, #4]
+ 956 014e 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 957 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 958 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 959 0158 4FF00101 		mov	r1, #1
+ 960 015c 01FA03F3 		lsl	r3, r1, r3
+ 961 0160 5360     		str	r3, [r2, #4]
+ 962 0162 0EE0     		b	.L41
+ 963              	.L40:
+ 320:../Main.c     **** 			else
+ 321:../Main.c     **** 				IO004_ResetPin(DATA);
+ 964              		.loc 1 321 0
+ 965 0164 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 966 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 967 016c 5A68     		ldr	r2, [r3, #4]
+ 968 016e 40F20003 		movw	r3, #:lower16:IO004_Handle12
+ 969 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle12
+ 970 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 971 0178 4FF48031 		mov	r1, #65536
+ 972 017c 01FA03F3 		lsl	r3, r1, r3
+ 973 0180 5360     		str	r3, [r2, #4]
+ 974              	.L41:
+ 322:../Main.c     **** 			;
+ 323:../Main.c     **** 			pulse_R();
+ 975              		.loc 1 323 0
+ 976 0182 FFF7FEFF 		bl	pulse_R
+ 317:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 977              		.loc 1 317 0
+ 978 0186 3B68     		ldr	r3, [r7, #0]
+ 979 0188 03F1FF33 		add	r3, r3, #-1
+ 980 018c 3B60     		str	r3, [r7, #0]
+ 981              	.L39:
+ 317:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 982              		.loc 1 317 0 is_stmt 0 discriminator 1
+ 983 018e 3B68     		ldr	r3, [r7, #0]
+ 984 0190 002B     		cmp	r3, #0
+ 985 0192 C7DA     		bge	.L42
+ 316:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 986              		.loc 1 316 0 is_stmt 1
+ 987 0194 7B68     		ldr	r3, [r7, #4]
+ 988 0196 03F1FF33 		add	r3, r3, #-1
+ 989 019a 7B60     		str	r3, [r7, #4]
+ 990              	.L38:
+ 316:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 991              		.loc 1 316 0 is_stmt 0 discriminator 1
+ 992 019c 7B68     		ldr	r3, [r7, #4]
+ 993 019e 002B     		cmp	r3, #0
+ 994 01a0 BCDA     		bge	.L43
+ 324:../Main.c     **** 		}
+ 325:../Main.c     **** 	}
+ 326:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
+ 995              		.loc 1 326 0 is_stmt 1
+ 996 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle12
+ 997 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle12
+ 998 01aa 4FF00301 		mov	r1, #3
+ 999 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 327:../Main.c     **** 	IO004_ResetPin(CS);
+ 1000              		.loc 1 327 0
+ 1001 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1002 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1003 01ba 5A68     		ldr	r2, [r3, #4]
+ 1004 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle10
+ 1005 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle10
+ 1006 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1007 01c6 4FF48031 		mov	r1, #65536
+ 1008 01ca 01FA03F3 		lsl	r3, r1, r3
+ 1009 01ce 5360     		str	r3, [r2, #4]
+ 328:../Main.c     **** 	IO004_SetPin(CE);
+ 1010              		.loc 1 328 0
+ 1011 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 1012 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 1013 01d8 5A68     		ldr	r2, [r3, #4]
+ 1014 01da 40F20003 		movw	r3, #:lower16:IO004_Handle14
+ 1015 01de C0F20003 		movt	r3, #:upper16:IO004_Handle14
+ 1016 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1017 01e4 4FF00101 		mov	r1, #1
+ 1018 01e8 01FA03F3 		lsl	r3, r1, r3
+ 1019 01ec 5360     		str	r3, [r2, #4]
+ 329:../Main.c     **** 	delay(50000);
+ 1020              		.loc 1 329 0
+ 1021 01ee 4CF25030 		movw	r0, #50000
+ 1022 01f2 FFF7FEFF 		bl	delay
+ 330:../Main.c     **** }
+ 1023              		.loc 1 330 0
+ 1024 01f6 07F10807 		add	r7, r7, #8
+ 1025 01fa BD46     		mov	sp, r7
+ 1026 01fc 80BD     		pop	{r7, pc}
+ 1027              		.cfi_endproc
+ 1028              	.LFE129:
+ 1030 01fe 00BF     		.section	.text.delay,"ax",%progbits
+ 1031              		.align	2
+ 1032              		.global	delay
+ 1033              		.thumb
+ 1034              		.thumb_func
+ 1036              	delay:
+ 1037              	.LFB130:
+ 331:../Main.c     **** 
+ 332:../Main.c     **** /***************************************************/
+ 333:../Main.c     **** /*****************FUNCOES GERAIS********************/
+ 334:../Main.c     **** /***************************************************/
+ 335:../Main.c     **** 
+ 336:../Main.c     **** void delay(long unsigned int i) {
+ 1038              		.loc 1 336 0
+ 1039              		.cfi_startproc
+ 1040              		@ args = 0, pretend = 0, frame = 8
+ 1041              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1042              		@ link register save eliminated.
+ 1043 0000 80B4     		push	{r7}
+ 1044              	.LCFI32:
+ 1045              		.cfi_def_cfa_offset 4
+ 1046              		.cfi_offset 7, -4
+ 1047 0002 83B0     		sub	sp, sp, #12
+ 1048              	.LCFI33:
+ 1049              		.cfi_def_cfa_offset 16
+ 1050 0004 00AF     		add	r7, sp, #0
+ 1051              	.LCFI34:
+ 1052              		.cfi_def_cfa_register 7
+ 1053 0006 7860     		str	r0, [r7, #4]
+ 337:../Main.c     **** 	while (i--) {
+ 1054              		.loc 1 337 0
+ 1055 0008 00E0     		b	.L45
+ 1056              	.L46:
+ 1057              	.LBB4:
+ 1058              	.LBB5:
+ 1059              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+   1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
+   2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
+   3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
+   4:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @version  V3.20
+   5:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @date     05. March 2013
+   6:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   7:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @note
+   8:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  *
+   9:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  ******************************************************************************/
+  10:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Copyright (c) 2009 - 2013 ARM LIMITED
+  11:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  12:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    All rights reserved.
+  13:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    Redistribution and use in source and binary forms, with or without
+  14:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    modification, are permitted provided that the following conditions are met:
+  15:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions of source code must retain the above copyright
+  16:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer.
+  17:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      notice, this list of conditions and the following disclaimer in the
+  19:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      documentation and/or other materials provided with the distribution.
+  20:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  21:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      to endorse or promote products derived from this software without
+  22:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****      specific prior written permission.
+  23:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    *
+  24:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  27:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  28:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  29:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  30:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  31:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  32:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  33:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  34:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    POSSIBILITY OF SUCH DAMAGE.
+  35:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****    ---------------------------------------------------------------------------*/
+  36:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  37:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  38:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __CORE_CMINSTR_H
+  39:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CORE_CMINSTR_H
+  40:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  41:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  42:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ##########################  Core Instruction Access  ######################### */
+  43:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  44:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   Access to dedicated instructions
+  45:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   @{
+  46:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** */
+  47:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  48:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  49:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* ARM armcc specific functions */
+  50:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  51:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if (__ARMCC_VERSION < 400677)
+  52:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  53:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+  54:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  55:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  56:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+  57:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  58:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+  59:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  60:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __NOP                             __nop
+  61:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  62:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  63:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Interrupt
+  64:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  65:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+  66:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     until one of a number of events occurs.
+  67:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  68:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFI                             __wfi
+  69:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  70:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  71:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Wait For Event
+  72:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  73:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+  74:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+  75:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  76:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __WFE                             __wfe
+  77:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  78:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  79:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Send Event
+  80:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  81:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+  82:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  83:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SEV                             __sev
+  84:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  85:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  86:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+  87:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  88:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+  89:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+  90:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     memory, after the instruction has been completed.
+  91:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+  92:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ISB()                           __isb(0xF)
+  93:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  94:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  95:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+  96:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+  97:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+  98:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+  99:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 100:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DSB()                           __dsb(0xF)
+ 101:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 102:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 103:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 104:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 105:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 106:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 107:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 108:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __DMB()                           __dmb(0xF)
+ 109:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 110:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 111:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 112:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 113:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 114:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 115:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 116:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 117:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 118:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __REV                             __rev
+ 119:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 120:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 121:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order (16 bit)
+ 122:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 123:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in two unsigned short values.
+ 124:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 125:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 126:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 127:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 128:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 129:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+ 130:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 131:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   rev16 r0, r0
+ 132:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 133:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 134:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 135:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 136:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse byte order in signed short value
+ 137:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 138:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the byte order in a signed short value with sign extension to integer.
+ 139:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 140:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 141:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 142:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 143:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 144:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+ 145:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 146:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   revsh r0, r0
+ 147:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   bx lr
+ 148:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** }
+ 149:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 150:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 151:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 152:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Rotate Right in unsigned value (32 bit)
+ 153:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 154:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function Rotate Right (immediate) provides the value of the contents of a register rotated
+ 155:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 156:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 157:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Number of Bits to rotate
+ 158:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Rotated value
+ 159:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 160:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __ROR                             __ror
+ 161:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 162:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 163:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Breakpoint
+ 164:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 165:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function causes the processor to enter Debug state.
+ 166:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     Debug tools can use this to investigate system state when the instruction at a particular addre
+ 167:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 168:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  is ignored by the processor.
+ 169:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****                    If required, a debugger can use it to store additional information about the bre
+ 170:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 171:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __BKPT(value)                       __breakpoint(value)
+ 172:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 173:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 174:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if       (__CORTEX_M >= 0x03)
+ 175:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 176:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Reverse bit order of value
+ 177:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 178:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function reverses the bit order of the given value.
+ 179:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 180:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 181:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return               Reversed value
+ 182:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 183:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __RBIT                            __rbit
+ 184:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 185:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 186:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (8 bit)
+ 187:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 188:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 8 bit value.
+ 189:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 190:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 191:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 192:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 193:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXB(ptr)                     ((uint8_t ) __ldrex(ptr))
+ 194:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 195:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 196:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (16 bit)
+ 197:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 198:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 16 bit values.
+ 199:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 200:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 201:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 202:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 203:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXH(ptr)                     ((uint16_t) __ldrex(ptr))
+ 204:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 205:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 206:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  LDR Exclusive (32 bit)
+ 207:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 208:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive LDR command for 32 bit values.
+ 209:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 210:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 211:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 212:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 213:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __LDREXW(ptr)                     ((uint32_t ) __ldrex(ptr))
+ 214:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 215:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 216:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (8 bit)
+ 217:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 218:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 8 bit values.
+ 219:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 220:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 221:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 222:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 223:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 224:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 225:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXB(value, ptr)              __strex(value, ptr)
+ 226:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 227:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 228:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (16 bit)
+ 229:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 230:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 16 bit values.
+ 231:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 232:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 233:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 234:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 235:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 236:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 237:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXH(value, ptr)              __strex(value, ptr)
+ 238:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 239:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 240:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  STR Exclusive (32 bit)
+ 241:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 242:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function performs a exclusive STR command for 32 bit values.
+ 243:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 244:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to store
+ 245:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 246:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          0  Function succeeded
+ 247:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return          1  Function failed
+ 248:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 249:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __STREXW(value, ptr)              __strex(value, ptr)
+ 250:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 251:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 252:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Remove the exclusive lock
+ 253:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 254:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function removes the exclusive lock which is created by LDREX.
+ 255:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 256:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 257:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLREX                           __clrex
+ 258:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 259:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 260:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Signed Saturate
+ 261:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 262:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates a signed value.
+ 263:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 264:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 265:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (1..32)
+ 266:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 267:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 268:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __SSAT                            __ssat
+ 269:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 270:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 271:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Unsigned Saturate
+ 272:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 273:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function saturates an unsigned value.
+ 274:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 275:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 276:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (0..31)
+ 277:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             Saturated value
+ 278:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 279:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __USAT                            __usat
+ 280:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 281:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 282:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  Count leading zeros
+ 283:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 284:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     This function counts the number of leading zeros of a data value.
+ 285:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 286:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \param [in]  value  Value to count the leading zeros
+ 287:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     \return             number of leading zeros in value
+ 288:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 289:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CLZ                             __clz
+ 290:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 291:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif /* (__CORTEX_M >= 0x03) */
+ 292:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 293:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 294:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 295:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __ICCARM__ ) /*------------------ ICC Compiler -------------------*/
+ 296:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* IAR iccarm specific functions */
+ 297:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 298:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_iar.h>
+ 299:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 300:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 301:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __TMS470__ ) /*---------------- TI CCS Compiler ------------------*/
+ 302:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* TI CCS specific functions */
+ 303:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 304:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #include <cmsis_ccs.h>
+ 305:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 306:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 307:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 308:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* GNU gcc specific functions */
+ 309:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 310:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 311:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * For thumb1, use low register (r0-r7), specified by constrant "l"
+ 312:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * Otherwise, use general registers, specified by constrant "r" */
+ 313:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 314:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 315:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 316:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #else
+ 317:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 318:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 319:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** #endif
+ 320:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 321:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /** \brief  No Operation
+ 322:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** 
+ 323:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+ 324:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  */
+ 325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
+ 326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
+ 327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
+ 1060              		.loc 2 327 0
+ 1061              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 1062 000a 00BF     		nop
+ 1063              	@ 0 "" 2
+ 1064              		.thumb
+ 1065              	.L45:
+ 1066              	.LBE5:
+ 1067              	.LBE4:
+ 1068              		.loc 1 337 0 discriminator 1
+ 1069 000c 7B68     		ldr	r3, [r7, #4]
+ 1070 000e 002B     		cmp	r3, #0
+ 1071 0010 0CBF     		ite	eq
+ 1072 0012 0023     		moveq	r3, #0
+ 1073 0014 0123     		movne	r3, #1
+ 1074 0016 DBB2     		uxtb	r3, r3
+ 1075 0018 7A68     		ldr	r2, [r7, #4]
+ 1076 001a 02F1FF32 		add	r2, r2, #-1
+ 1077 001e 7A60     		str	r2, [r7, #4]
+ 1078 0020 002B     		cmp	r3, #0
+ 1079 0022 F2D1     		bne	.L46
+ 338:../Main.c     **** 
+ 339:../Main.c     **** 		__NOP();
+ 340:../Main.c     **** 	}
+ 341:../Main.c     **** }
+ 1080              		.loc 1 341 0
+ 1081 0024 07F10C07 		add	r7, r7, #12
+ 1082 0028 BD46     		mov	sp, r7
+ 1083 002a 80BC     		pop	{r7}
+ 1084 002c 7047     		bx	lr
+ 1085              		.cfi_endproc
+ 1086              	.LFE130:
+ 1088 002e 00BF     		.text
+ 1089              	.Letext0:
+ 1090              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 1091              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 1092              		.file 5 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 1093              		.file 6 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 1094              		.file 7 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 1095              		.file 8 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 1096              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 1097              		.file 10 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESupp
+ 1098              		.file 11 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESupp
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+                            *COM*:0000000f configuration
+                            *COM*:00000005 data_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:26     .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:23     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:31     .bss:00000004 value
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:34     .text.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:39     .text.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:388    .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:131    .text.WakeUp:00000000 WakeUp
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:817    .text.configure_R:00000000 configure_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:645    .text.read_R:00000000 read_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:158    .text.update_driver_signals:00000000 update_driver_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:126    .text.WakeUp:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:153    .text.update_driver_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:377    .text.update_driver_signals:00000204 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:383    .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:529    .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:429    .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:434    .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:487    .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:492    .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:524    .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:559    .text.Testando_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:564    .text.Testando_Handler:00000000 Testando_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:586    .text.ERU0_3_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:591    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:613    .text.ERU1_0_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:618    .text.ERU1_0_IRQHandler:00000000 ERU1_0_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:640    .text.read_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:1036   .text.delay:00000000 delay
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:766    .text.pulse_R:00000000 pulse_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:761    .text.pulse_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:812    .text.configure_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccYFGMfX.s:1031   .text.delay:00000000 $t
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
+                           .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
+                           .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
+                           .group:00000000 wm4.newlib.h.8.a9901dc52d1357e3e94003403d43f8b5
+                           .group:00000000 wm4.features.h.22.b72b3baab2bb2eab3661375590100b6b
+                           .group:00000000 wm4.config.h.193.5fb8ef056cdff92dec3dee9552839d8c
+                           .group:00000000 wm4._ansi.h.23.7aefdac4826acebbfc9f3822a0aeb14c
+                           .group:00000000 wm4.stdint.h.20.54ad762faa59e3c05491630641c8d8bf
+                           .group:00000000 wm4.core_cmInstr.h.39.3d3d1b4a79aef37532666dc6ee87c6ac
+                           .group:00000000 wm4.core_cm4_simd.h.43.b5d1d38735af6366227b4256d330cf13
+                           .group:00000000 wm4.core_cm4.h.178.e5ef5ce66d198d7f00f9d0076e267c41
+                           .group:00000000 wm4.system_XMC4500.h.29.827f68baa362c84f2abae4ab67dde7c9
+                           .group:00000000 wm4.XMC4500.h.198.8e022f279ff353ed081df898dc7b9cf3
+                           .group:00000000 wm4.stddef.h.40.50cf36416e06376af8a9dca28536f2e4
+                           .group:00000000 wm4.types.h.60.e75c47576398c648cdcf9000ace5e3d8
+                           .group:00000000 wm4.MULTIPLEXER.h.46.4a863fbae1c79f0db26da3ce2dc30d02
+                           .group:00000000 wm4.CCU8PWMLIB.h.74.725ec81203769525cc7a424597055f47
+                           .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
+                           .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
+                           .group:00000000 wm4.uc_id.h.35.6a563b5a45d32cec26f5b514b510065d
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
+                           .group:00000000 wm4.CCU4Global_Conf.h.63.10a5fc586e1563647b9633c45b1b739e
+                           .group:00000000 wm4.PWMSP001.h.57.29b732b86baf3e81f49153f5f495912e
+                           .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.CNT001.h.53.54b2229008e37b1970e63d1faf193d82
+                           .group:00000000 wm4.SYSTM002_Conf.h.70.e893767dc4d518b087b4a20e349ac4d8
+                           .group:00000000 wm4.SYSTM002.h.98.0f398400b32186dea0837ac3b6c1ddcb
+                           .group:00000000 wm4.IO002_Conf.h.51.87e2c8c60b647393fe9ced2cae198f63
+                           .group:00000000 wm4.ERU001_Conf.h.69.cbf5f28f16df40bf2ec07157d45ebab0
+                           .group:00000000 wm4.ERU002_Conf.h.49.2f1d75b23a08c83bd296d7c11c7e280b
+                           .group:00000000 wm4.NVIC002_Conf.h.63.13943eb720fa25e7207fa08ab410f2a7
+
+UNDEFINED SYMBOLS
+DAVE_Init
+PWMSP001_Handle0
+PWMSP001_Start
+PWMSP001_SetPwmFreq
+PWMSP001_SetDutyCycle
+PWMSP001_Handle1
+IO004_Handle13
+IO004_Handle6
+IO004_Handle0
+SYSTM002_CreateTimer
+SYSTM002_StartTimer
+IO004_Handle14
+IO004_Handle12
+IO004_Handle11
+IO004_Handle10
+IO004_DisableOutputDriver

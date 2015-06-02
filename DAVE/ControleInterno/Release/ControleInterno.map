@@ -61,7 +61,7 @@ LOAD c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-n
 END GROUP
                 0x00000800                stack_size = 0x800
 
-.text           0x08000000     0x1a9c load address 0x0c000000
+.text           0x08000000     0x1b40 load address 0x0c000000
                 0x08000000                sText = .
  *(.Xmc4500.reset)
  .Xmc4500.reset
@@ -195,213 +195,213 @@ END GROUP
                 0x0800041c                SystemInit
  .text          0x08000620        0x0 Main.o
  .text.start_PWM_signals
-                0x08000620       0x2c Main.o
+                0x08000620       0x6c Main.o
                 0x08000620                start_PWM_signals
  .text.update_PWM_signals
-                0x0800064c       0x54 Main.o
-                0x0800064c                update_PWM_signals
- .text.delay    0x080006a0        0xc Main.o
-                0x080006a0                delay
- .text.pulse_R  0x080006ac       0x30 Main.o
-                0x080006ac                pulse_R
+                0x0800068c       0xb8 Main.o
+                0x0800068c                update_PWM_signals
+ .text.delay    0x08000744        0xc Main.o
+                0x08000744                delay
+ .text.pulse_R  0x08000750       0x30 Main.o
+                0x08000750                pulse_R
  .text.configure_R
-                0x080006dc       0xd0 Main.o
-                0x080006dc                configure_R
- .text.read_R   0x080007ac       0x74 Main.o
-                0x080007ac                read_R
+                0x08000780       0xd0 Main.o
+                0x08000780                configure_R
+ .text.read_R   0x08000850       0x74 Main.o
+                0x08000850                read_R
  .text.startup.main
-                0x08000820       0x30 Main.o
-                0x08000820                main
- .text          0x08000850        0x0 Lib/System_LibcStubs.o
- .text._open    0x08000850        0x6 Lib/System_LibcStubs.o
-                0x08000850                _open
- .text._lseek   0x08000856        0x6 Lib/System_LibcStubs.o
-                0x08000856                _lseek
- .text._read    0x0800085c        0x4 Lib/System_LibcStubs.o
-                0x0800085c                _read
- .text._write   0x08000860        0x6 Lib/System_LibcStubs.o
-                0x08000860                _write
- .text._close   0x08000866        0x6 Lib/System_LibcStubs.o
-                0x08000866                _close
- .text._fstat   0x0800086c        0xe Lib/System_LibcStubs.o
-                0x0800086c                _fstat
- .text._link    0x0800087a        0xe Lib/System_LibcStubs.o
-                0x0800087a                _link
- .text._unlink  0x08000888        0x6 Lib/System_LibcStubs.o
-                0x08000888                _unlink
- *fill*         0x0800088e        0x2 00
- .text._sbrk    0x08000890       0x38 Lib/System_LibcStubs.o
-                0x08000890                _sbrk
- .text._times   0x080008c8        0x6 Lib/System_LibcStubs.o
-                0x080008c8                _times
- .text._wait    0x080008ce        0x6 Lib/System_LibcStubs.o
-                0x080008ce                _wait
- .text._kill    0x080008d4        0x6 Lib/System_LibcStubs.o
-                0x080008d4                _kill
- .text._fork    0x080008da        0x6 Lib/System_LibcStubs.o
-                0x080008da                _fork
- .text._getpid  0x080008e0        0x6 Lib/System_LibcStubs.o
-                0x080008e0                _getpid
- .text._exit    0x080008e6        0x2 Lib/System_LibcStubs.o
-                0x080008e6                _exit
- .text._init    0x080008e8        0x2 Lib/System_LibcStubs.o
-                0x080008e8                _init
- .text._isatty  0x080008ea        0x6 Lib/System_LibcStubs.o
-                0x080008ea                _isatty
- .text          0x080008f0        0x0 Dave/Generated/src/RESET001/RESET001.o
+                0x080008c4       0x30 Main.o
+                0x080008c4                main
+ .text          0x080008f4        0x0 Lib/System_LibcStubs.o
+ .text._open    0x080008f4        0x6 Lib/System_LibcStubs.o
+                0x080008f4                _open
+ .text._lseek   0x080008fa        0x6 Lib/System_LibcStubs.o
+                0x080008fa                _lseek
+ .text._read    0x08000900        0x4 Lib/System_LibcStubs.o
+                0x08000900                _read
+ .text._write   0x08000904        0x6 Lib/System_LibcStubs.o
+                0x08000904                _write
+ .text._close   0x0800090a        0x6 Lib/System_LibcStubs.o
+                0x0800090a                _close
+ .text._fstat   0x08000910        0xe Lib/System_LibcStubs.o
+                0x08000910                _fstat
+ .text._link    0x0800091e        0xe Lib/System_LibcStubs.o
+                0x0800091e                _link
+ .text._unlink  0x0800092c        0x6 Lib/System_LibcStubs.o
+                0x0800092c                _unlink
+ *fill*         0x08000932        0x2 00
+ .text._sbrk    0x08000934       0x38 Lib/System_LibcStubs.o
+                0x08000934                _sbrk
+ .text._times   0x0800096c        0x6 Lib/System_LibcStubs.o
+                0x0800096c                _times
+ .text._wait    0x08000972        0x6 Lib/System_LibcStubs.o
+                0x08000972                _wait
+ .text._kill    0x08000978        0x6 Lib/System_LibcStubs.o
+                0x08000978                _kill
+ .text._fork    0x0800097e        0x6 Lib/System_LibcStubs.o
+                0x0800097e                _fork
+ .text._getpid  0x08000984        0x6 Lib/System_LibcStubs.o
+                0x08000984                _getpid
+ .text._exit    0x0800098a        0x2 Lib/System_LibcStubs.o
+                0x0800098a                _exit
+ .text._init    0x0800098c        0x2 Lib/System_LibcStubs.o
+                0x0800098c                _init
+ .text._isatty  0x0800098e        0x6 Lib/System_LibcStubs.o
+                0x0800098e                _isatty
+ .text          0x08000994        0x0 Dave/Generated/src/RESET001/RESET001.o
  .text.RESET001_AssertReset
-                0x080008f0       0x14 Dave/Generated/src/RESET001/RESET001.o
-                0x080008f0                RESET001_AssertReset
+                0x08000994       0x14 Dave/Generated/src/RESET001/RESET001.o
+                0x08000994                RESET001_AssertReset
  .text.RESET001_DeassertReset
-                0x08000904       0x14 Dave/Generated/src/RESET001/RESET001.o
-                0x08000904                RESET001_DeassertReset
+                0x080009a8       0x14 Dave/Generated/src/RESET001/RESET001.o
+                0x080009a8                RESET001_DeassertReset
  .text.RESET001_GetResetInfo
-                0x08000918        0xc Dave/Generated/src/RESET001/RESET001.o
-                0x08000918                RESET001_GetResetInfo
+                0x080009bc        0xc Dave/Generated/src/RESET001/RESET001.o
+                0x080009bc                RESET001_GetResetInfo
  .text.RESET001_GetStatus
-                0x08000924       0x1c Dave/Generated/src/RESET001/RESET001.o
-                0x08000924                RESET001_GetStatus
+                0x080009c8       0x1c Dave/Generated/src/RESET001/RESET001.o
+                0x080009c8                RESET001_GetStatus
  .text.RESET001_ClearResetInfo
-                0x08000940       0x10 Dave/Generated/src/RESET001/RESET001.o
-                0x08000940                RESET001_ClearResetInfo
- .text          0x08000950        0x0 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080009e4       0x10 Dave/Generated/src/RESET001/RESET001.o
+                0x080009e4                RESET001_ClearResetInfo
+ .text          0x080009f4        0x0 Dave/Generated/src/PWMSP001/PWMSP001.o
  .text.PWMSP001_Deinit
-                0x08000950       0x8e Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000950                PWMSP001_Deinit
+                0x080009f4       0x8e Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080009f4                PWMSP001_Deinit
  .text.PWMSP001_Start
-                0x080009de       0xd8 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x080009de                PWMSP001_Start
+                0x08000a82       0xd8 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000a82                PWMSP001_Start
  .text.PWMSP001_Stop
-                0x08000ab6       0x50 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000ab6                PWMSP001_Stop
+                0x08000b5a       0x50 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000b5a                PWMSP001_Stop
  .text.PWMSP001_SetCompare
-                0x08000b06       0x3e Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000b06                PWMSP001_SetCompare
+                0x08000baa       0x3e Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000baa                PWMSP001_SetCompare
  .text.PWMSP001_lSetCompareEdgeAlign
-                0x08000b44       0x1c Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000b44                PWMSP001_lSetCompareEdgeAlign
+                0x08000be8       0x1c Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000be8                PWMSP001_lSetCompareEdgeAlign
  .text.PWMSP001_lSetCompareEdgeAlignTimerConcat
-                0x08000b60       0x44 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000b60                PWMSP001_lSetCompareEdgeAlignTimerConcat
+                0x08000c04       0x44 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000c04                PWMSP001_lSetCompareEdgeAlignTimerConcat
  .text.PWMSP001_lSetCompareCenterAlign
-                0x08000ba4       0x1c Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000ba4                PWMSP001_lSetCompareCenterAlign
+                0x08000c48       0x1c Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000c48                PWMSP001_lSetCompareCenterAlign
  .text.PWMSP001_SetDutyCycle
-                0x08000bc0       0x38 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000bc0                PWMSP001_SetDutyCycle
+                0x08000c64       0x38 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000c64                PWMSP001_SetDutyCycle
  .text.PWMSP001_lSetDutyEdgeAlign
-                0x08000bf8       0x48 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000bf8                PWMSP001_lSetDutyEdgeAlign
+                0x08000c9c       0x48 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000c9c                PWMSP001_lSetDutyEdgeAlign
  .text.PWMSP001_lSetDutyEdgeAlignTimerConcat
-                0x08000c40       0x7c Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000c40                PWMSP001_lSetDutyEdgeAlignTimerConcat
+                0x08000ce4       0x7c Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000ce4                PWMSP001_lSetDutyEdgeAlignTimerConcat
  .text.PWMSP001_lSetDutyCenterAlign
-                0x08000cbc       0x44 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000cbc                PWMSP001_lSetDutyCenterAlign
+                0x08000d60       0x44 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000d60                PWMSP001_lSetDutyCenterAlign
  .text.PWMSP001_SetPeriodAndCompare
-                0x08000d00       0x46 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000d00                PWMSP001_SetPeriodAndCompare
+                0x08000da4       0x46 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000da4                PWMSP001_SetPeriodAndCompare
  .text.PWMSP001_SetPeriod
-                0x08000d46       0x64 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000d46                PWMSP001_SetPeriod
+                0x08000dea       0x64 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000dea                PWMSP001_SetPeriod
  .text.PWMSP001_lSetPwmFreqTimerConcat
-                0x08000daa       0x40 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000daa                PWMSP001_lSetPwmFreqTimerConcat
- *fill*         0x08000dea        0x2 00
+                0x08000e4e       0x40 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000e4e                PWMSP001_lSetPwmFreqTimerConcat
+ *fill*         0x08000e8e        0x2 00
  .text.PWMSP001_SetPwmFreq
-                0x08000dec       0x98 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000dec                PWMSP001_SetPwmFreq
+                0x08000e90       0x98 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000e90                PWMSP001_SetPwmFreq
  .text.PWMSP001_SetPwmFreqAndDutyCycle
-                0x08000e84       0xa4 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000e84                PWMSP001_SetPwmFreqAndDutyCycle
+                0x08000f28       0xa4 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000f28                PWMSP001_SetPwmFreqAndDutyCycle
  .text.PWMSP001_SetTimerVal
-                0x08000f28       0x2a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000f28                PWMSP001_SetTimerVal
+                0x08000fcc       0x2a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000fcc                PWMSP001_SetTimerVal
  .text.PWMSP001_GetTimerStatus
-                0x08000f52       0x2a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000f52                PWMSP001_GetTimerStatus
+                0x08000ff6       0x2a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08000ff6                PWMSP001_GetTimerStatus
  .text.PWMSP001_GetTimerRegsVal
-                0x08000f7c       0x52 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000f7c                PWMSP001_GetTimerRegsVal
+                0x08001020       0x52 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08001020                PWMSP001_GetTimerRegsVal
  .text.PWMSP001_GetPeriodReg
-                0x08000fce       0x32 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08000fce                PWMSP001_GetPeriodReg
+                0x08001072       0x32 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08001072                PWMSP001_GetPeriodReg
  .text.PWMSP001_SWRequestShadowTransfer
-                0x08001000       0x46 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08001000                PWMSP001_SWRequestShadowTransfer
+                0x080010a4       0x46 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080010a4                PWMSP001_SWRequestShadowTransfer
  .text.PWMSP001_ResetTrapFlag
-                0x08001046       0x50 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08001046                PWMSP001_ResetTrapFlag
+                0x080010ea       0x50 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080010ea                PWMSP001_ResetTrapFlag
  .text.PWMSP001_lConfigureSecondSlice
-                0x08001096      0x14a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08001096                PWMSP001_lConfigureSecondSlice
+                0x0800113a      0x14a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x0800113a                PWMSP001_lConfigureSecondSlice
  .text.PWMSP001_lInit
-                0x080011e0      0x1a8 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x080011e0                PWMSP001_lInit
+                0x08001284      0x1a8 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08001284                PWMSP001_lInit
  .text.PWMSP001_Init
-                0x08001388       0xa8 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08001388                PWMSP001_Init
+                0x0800142c       0xa8 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x0800142c                PWMSP001_Init
  .text.PWMSP001_EnableEvent
-                0x08001430       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x08001430                PWMSP001_EnableEvent
+                0x080014d4       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080014d4                PWMSP001_EnableEvent
  .text.PWMSP001_DisableEvent
-                0x0800146a       0x3e Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x0800146a                PWMSP001_DisableEvent
+                0x0800150e       0x3e Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x0800150e                PWMSP001_DisableEvent
  .text.PWMSP001_ClearPendingEvent
-                0x080014a8       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x080014a8                PWMSP001_ClearPendingEvent
+                0x0800154c       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x0800154c                PWMSP001_ClearPendingEvent
  .text.PWMSP001_SetPendingEvent
-                0x080014e2       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x080014e2                PWMSP001_SetPendingEvent
+                0x08001586       0x3a Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x08001586                PWMSP001_SetPendingEvent
  .text.PWMSP001_GetPendingEvent
-                0x0800151c       0x38 Dave/Generated/src/PWMSP001/PWMSP001.o
-                0x0800151c                PWMSP001_GetPendingEvent
- .text          0x08001554        0x0 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o
- .text          0x08001554        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
- .text          0x08001554        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
- .text          0x08001554        0x0 Dave/Generated/src/IO004/IO004.o
+                0x080015c0       0x38 Dave/Generated/src/PWMSP001/PWMSP001.o
+                0x080015c0                PWMSP001_GetPendingEvent
+ .text          0x080015f8        0x0 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o
+ .text          0x080015f8        0x0 Dave/Generated/src/LIBS/CCU8PWMLIB.o
+ .text          0x080015f8        0x0 Dave/Generated/src/LIBS/MOTORLIB.o
+ .text          0x080015f8        0x0 Dave/Generated/src/IO004/IO004.o
  .text.IO004_Init
-                0x08001554       0xa0 Dave/Generated/src/IO004/IO004.o
-                0x08001554                IO004_Init
+                0x080015f8       0xa0 Dave/Generated/src/IO004/IO004.o
+                0x080015f8                IO004_Init
  .text.IO004_DisableOutputDriver
-                0x080015f4       0xb2 Dave/Generated/src/IO004/IO004.o
-                0x080015f4                IO004_DisableOutputDriver
+                0x08001698       0xb2 Dave/Generated/src/IO004/IO004.o
+                0x08001698                IO004_DisableOutputDriver
  .text.IO004_EnableOutputDriver
-                0x080016a6       0xb2 Dave/Generated/src/IO004/IO004.o
-                0x080016a6                IO004_EnableOutputDriver
- .text          0x08001758        0x0 Dave/Generated/src/IO004/IO004_Conf.o
- .text          0x08001758        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x0800174a       0xb2 Dave/Generated/src/IO004/IO004.o
+                0x0800174a                IO004_EnableOutputDriver
+ .text          0x080017fc        0x0 Dave/Generated/src/IO004/IO004_Conf.o
+ .text          0x080017fc        0x0 Dave/Generated/src/DAVESupport/DAVE3.o
  .text.DAVE_Init
-                0x08001758       0x38 Dave/Generated/src/DAVESupport/DAVE3.o
-                0x08001758                DAVE_Init
+                0x080017fc       0x38 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x080017fc                DAVE_Init
  .text.SystemInit_DAVE3
-                0x08001790        0x4 Dave/Generated/src/DAVESupport/DAVE3.o
-                0x08001790                SystemInit_DAVE3
- .text          0x08001794        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08001834        0x4 Dave/Generated/src/DAVESupport/DAVE3.o
+                0x08001834                SystemInit_DAVE3
+ .text          0x08001838        0x0 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
  .text.DAVE_MUX_Init
-                0x08001794       0x5c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x08001794                DAVE_MUX_Init
+                0x08001838       0x5c Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08001838                DAVE_MUX_Init
  .text.DAVE_MUX_PreInit
-                0x080017f0        0x2 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
-                0x080017f0                DAVE_MUX_PreInit
- .text          0x080017f2        0x0 Dave/Generated/src/CLK001/CLK001.o
+                0x08001894        0x2 Dave/Generated/src/DAVESupport/MULTIPLEXER.o
+                0x08001894                DAVE_MUX_PreInit
+ .text          0x08001896        0x0 Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Delay
-                0x080017f2       0x1e Dave/Generated/src/CLK001/CLK001.o
+                0x08001896       0x1e Dave/Generated/src/CLK001/CLK001.o
  .text.CLK001_Init
-                0x08001810      0x1c8 Dave/Generated/src/CLK001/CLK001.o
-                0x08001810                CLK001_Init
+                0x080018b4      0x1c8 Dave/Generated/src/CLK001/CLK001.o
+                0x080018b4                CLK001_Init
  .text.AllowPLLInitByStartup
-                0x080019d8        0x4 Dave/Generated/src/CLK001/CLK001.o
-                0x080019d8                AllowPLLInitByStartup
- .text          0x080019dc        0x0 Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL.o
+                0x08001a7c        0x4 Dave/Generated/src/CLK001/CLK001.o
+                0x08001a7c                AllowPLLInitByStartup
+ .text          0x08001a80        0x0 Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL.o
  .text.CCU4GLOBAL_Init
-                0x080019dc       0x2c Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL.o
-                0x080019dc                CCU4GLOBAL_Init
- .text          0x08001a08        0x0 Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL_Conf.o
- .text          0x08001a08        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libc.a(lib_a-init.o)
+                0x08001a80       0x2c Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL.o
+                0x08001a80                CCU4GLOBAL_Init
+ .text          0x08001aac        0x0 Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL_Conf.o
+ .text          0x08001aac        0x0 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libc.a(lib_a-init.o)
  .text.__libc_init_array
-                0x08001a08       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libc.a(lib_a-init.o)
-                0x08001a08                __libc_init_array
+                0x08001aac       0x94 c:/dave-3.1.10/arm-gcc/bin/../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/lib/armv7e-m\libc.a(lib_a-init.o)
+                0x08001aac                __libc_init_array
  *(.glue*)
  .glue_7        0x00000000        0x0 linker stubs
  .glue_7t       0x00000000        0x0 linker stubs
@@ -410,68 +410,68 @@ END GROUP
  *(.vfp11_veneer)
  .vfp11_veneer  0x00000000        0x0 linker stubs
  *(.init)
-                0x08001a9c                __preinit_array_start = .
+                0x08001b40                __preinit_array_start = .
  *(.preinit_array)
-                0x08001a9c                __preinit_array_end = .
-                0x08001a9c                __init_array_start = .
+                0x08001b40                __preinit_array_end = .
+                0x08001b40                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
-                0x08001a9c                __init_array_end = .
+                0x08001b40                __init_array_end = .
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
  *(.fini)
-                0x08001a9c                __fini_array_start = .
+                0x08001b40                __fini_array_start = .
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0x08001a9c                __fini_array_end = .
+                0x08001b40                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x08001a9c                __extab_start = .
+                0x08001b40                __extab_start = .
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  .ARM.extab.Xmc4500.reset
-                0x08001a9c        0x0 Startup/startup_XMC4500.o
+                0x08001b40        0x0 Startup/startup_XMC4500.o
  .ARM.extab.Xmc4500.postreset
-                0x08001a9c        0x0 Startup/startup_XMC4500.o
-                0x08001a9c                . = ALIGN (0x4)
-                0x08001a9c                __extab_end = ABSOLUTE (.)
+                0x08001b40        0x0 Startup/startup_XMC4500.o
+                0x08001b40                . = ALIGN (0x4)
+                0x08001b40                __extab_end = ABSOLUTE (.)
 
-.iplt           0x08001a9c        0x0 load address 0x0c001a9c
+.iplt           0x08001b40        0x0 load address 0x0c001b40
  .iplt          0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ARM.exidx      0x08001a9c       0x10 load address 0x0c001a9c
-                0x08001a9c                __exidx_start = .
+.ARM.exidx      0x08001b40       0x10 load address 0x0c001b40
+                0x08001b40                __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.Xmc4500.reset
-                0x08001a9c        0x8 Startup/startup_XMC4500.o
+                0x08001b40        0x8 Startup/startup_XMC4500.o
  .ARM.exidx.Xmc4500.postreset
-                0x08001aa4        0x8 Startup/startup_XMC4500.o
-                0x08001aac                . = ALIGN (0x4)
-                0x08001aac                __exidx_end = ABSOLUTE (.)
+                0x08001b48        0x8 Startup/startup_XMC4500.o
+                0x08001b50                . = ALIGN (0x4)
+                0x08001b50                __exidx_end = ABSOLUTE (.)
 
-.rodata         0x08001aac      0x10c load address 0x0c001aac
+.rodata         0x08001b50      0x10c load address 0x0c001b50
  *(.rodata .rodata.*)
- .rodata        0x08001aac       0xd8 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o
-                0x08001aac                PWMSP001_Handle2
-                0x08001af4                PWMSP001_Handle1
-                0x08001b3c                PWMSP001_Handle0
- .rodata        0x08001b84       0x28 Dave/Generated/src/IO004/IO004_Conf.o
-                0x08001b84                IO004_Handle6
-                0x08001b8c                IO004_Handle5
-                0x08001b94                IO004_Handle4
-                0x08001b9c                IO004_Handle2
-                0x08001ba4                IO004_Handle1
- .rodata        0x08001bac        0xc Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL_Conf.o
-                0x08001bac                CCU4Global_Handle0
+ .rodata        0x08001b50       0xd8 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o
+                0x08001b50                PWMSP001_Handle2
+                0x08001b98                PWMSP001_Handle1
+                0x08001be0                PWMSP001_Handle0
+ .rodata        0x08001c28       0x28 Dave/Generated/src/IO004/IO004_Conf.o
+                0x08001c28                IO004_Handle6
+                0x08001c30                IO004_Handle5
+                0x08001c38                IO004_Handle4
+                0x08001c40                IO004_Handle2
+                0x08001c48                IO004_Handle1
+ .rodata        0x08001c50        0xc Dave/Generated/src/CCU4GLOBAL/CCU4GLOBAL_Conf.o
+                0x08001c50                CCU4Global_Handle0
  *(.gnu.linkonce.r*)
 
-.rel.dyn        0x08001bb8        0x0 load address 0x0c001bb8
+.rel.dyn        0x08001c5c        0x0 load address 0x0c001c5c
  .rel.iplt      0x00000000        0x0 Startup/startup_XMC4500.o
-                0x08001bc0                . = ALIGN (0x10)
-                0x0c001bc0                eROData = (. | 0x4000000)
+                0x08001c60                . = ALIGN (0x10)
+                0x0c001c60                eROData = (. | 0x4000000)
 
 Stack           0x10000000      0x800
                 0x10000800                . = (. + stack_size)
@@ -484,7 +484,7 @@ Stack           0x10000000      0x800
                 0x10000800                __data3_end = .
                 0x00000000                __data3_size = (__data3_end - __data3_start)
 
-.data           0x20000000        0x8 load address 0x0c001bc0
+.data           0x20000000        0x8 load address 0x0c001c60
                 0x20000000                __Xmc4500_sData = .
  *(.data)
  .data          0x20000000        0x0 Startup/startup_XMC4500.o
@@ -512,17 +512,17 @@ Stack           0x10000000      0x800
                 0x20000008                __Xmc4500_eData = ALIGN (0x4)
                 0x00000008                __Xmc4500_Data_Size = (__Xmc4500_eData - __Xmc4500_sData)
 
-.igot.plt       0x20000008        0x0 load address 0x0c001bc8
+.igot.plt       0x20000008        0x0 load address 0x0c001c68
  .igot.plt      0x00000000        0x0 Startup/startup_XMC4500.o
 
-.ram_code       0x10000800        0x0 load address 0x0c001bc8
+.ram_code       0x10000800        0x0 load address 0x0c001c68
                 0x10000800                __ram_code_start = .
  *(.ram_code)
                 0x10000800                __ram_code_end = .
-                0x0c001bc8                __ram_code_load = LOADADDR (.ram_code)
+                0x0c001c68                __ram_code_load = LOADADDR (.ram_code)
                 0x00000000                __ram_code_size = (__ram_code_end - __ram_code_start)
 
-.bss            0x20000008       0x30 load address 0x0c001bc8
+.bss            0x20000008       0x30 load address 0x0c001c68
                 0x20000008                __Xmc4500_sBSS = .
  *(.bss)
  .bss           0x20000008        0x0 Startup/startup_XMC4500.o

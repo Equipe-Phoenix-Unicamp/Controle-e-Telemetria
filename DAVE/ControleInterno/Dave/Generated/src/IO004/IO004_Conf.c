@@ -106,6 +106,14 @@ const IO004_HandleType IO004_Handle6 = {
   .PortPin  = 2U,   /* Mapped Pin */
   .PortRegs = (IO004_PORTS_TypeDef*)PORT2_BASE /* Port Base Address*/		
 };
+   
+
+
+const IO004_HandleType IO004_Handle7 = {
+  .PortNr   = 1U , /* Mapped Port */
+  .PortPin  = 14U,   /* Mapped Pin */
+  .PortRegs = (IO004_PORTS_TypeDef*)PORT1_BASE /* Port Base Address*/		
+};
 
 /*CODE_BLOCK_END*/
 

@@ -1,0 +1,97 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"MULTIPLEXER.c"
+  16              		.section	.text.DAVE_MUX_Init,"ax",%progbits
+  17              		.align	1
+  18              		.global	DAVE_MUX_Init
+  19              		.thumb
+  20              		.thumb_func
+  22              	DAVE_MUX_Init:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25              		@ link register save eliminated.
+  26 0000 1B4B     		ldr	r3, .L2
+  27 0002 1A68     		ldr	r2, [r3, #0]
+  28 0004 22F44070 		bic	r0, r2, #768
+  29 0008 40F48071 		orr	r1, r0, #256
+  30 000c 1960     		str	r1, [r3, #0]
+  31 000e 9A69     		ldr	r2, [r3, #24]
+  32 0010 42F00100 		orr	r0, r2, #1
+  33 0014 9861     		str	r0, [r3, #24]
+  34 0016 9969     		ldr	r1, [r3, #24]
+  35 0018 21F07002 		bic	r2, r1, #112
+  36 001c 42F03000 		orr	r0, r2, #48
+  37 0020 9861     		str	r0, [r3, #24]
+  38 0022 144B     		ldr	r3, .L2+4
+  39 0024 1448     		ldr	r0, .L2+8
+  40 0026 1968     		ldr	r1, [r3, #0]
+  41 0028 41F00F02 		orr	r2, r1, #15
+  42 002c 1A60     		str	r2, [r3, #0]
+  43 002e 0369     		ldr	r3, [r0, #16]
+  44 0030 43F40001 		orr	r1, r3, #8388608
+  45 0034 0161     		str	r1, [r0, #16]
+  46 0036 4269     		ldr	r2, [r0, #20]
+  47 0038 42F40003 		orr	r3, r2, #8388608
+  48 003c 4361     		str	r3, [r0, #20]
+  49 003e C169     		ldr	r1, [r0, #28]
+  50 0040 21F0B802 		bic	r2, r1, #184
+  51 0044 42F09803 		orr	r3, r2, #152
+  52 0048 C361     		str	r3, [r0, #28]
+  53 004a D0F81011 		ldr	r1, [r0, #272]
+  54 004e 41F08002 		orr	r2, r1, #128
+  55 0052 C0F81021 		str	r2, [r0, #272]
+  56 0056 D0F81031 		ldr	r3, [r0, #272]
+  57 005a 43F40041 		orr	r1, r3, #32768
+  58 005e C0F81011 		str	r1, [r0, #272]
+  59 0062 D0F81821 		ldr	r2, [r0, #280]
+  60 0066 42F40043 		orr	r3, r2, #32768
+  61 006a C0F81831 		str	r3, [r0, #280]
+  62 006e 7047     		bx	lr
+  63              	.L3:
+  64              		.align	2
+  65              	.L2:
+  66 0070 00480050 		.word	1342195712
+  67 0074 00C20040 		.word	1073791488
+  68 0078 00800248 		.word	1208123392
+  70              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
+  71              		.align	1
+  72              		.global	DAVE_MUX_PreInit
+  73              		.thumb
+  74              		.thumb_func
+  76              	DAVE_MUX_PreInit:
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  80 0000 034B     		ldr	r3, .L5
+  81 0002 5A6F     		ldr	r2, [r3, #116]
+  82 0004 22F44030 		bic	r0, r2, #196608
+  83 0008 40F40031 		orr	r1, r0, #131072
+  84 000c 5967     		str	r1, [r3, #116]
+  85 000e 7047     		bx	lr
+  86              	.L6:
+  87              		.align	2
+  88              	.L5:
+  89 0010 00800248 		.word	1208123392
+  91              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 MULTIPLEXER.c
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:17     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:66     .text.DAVE_MUX_Init:00000070 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:71     .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:76     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:89     .text.DAVE_MUX_PreInit:00000010 $d
+
+NO UNDEFINED SYMBOLS

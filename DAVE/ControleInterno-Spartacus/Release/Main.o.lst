@@ -1,0 +1,188 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.section	.text.Tick_Handler,"ax",%progbits
+  17              		.align	1
+  18              		.global	Tick_Handler
+  19              		.thumb
+  20              		.thumb_func
+  22              	Tick_Handler:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25              		@ link register save eliminated.
+  26 0000 024B     		ldr	r3, .L2
+  27 0002 1A68     		ldr	r2, [r3, #0]
+  28 0004 501C     		adds	r0, r2, #1
+  29 0006 1860     		str	r0, [r3, #0]
+  30 0008 7047     		bx	lr
+  31              	.L3:
+  32 000a 00BF     		.align	2
+  33              	.L2:
+  34 000c 00000000 		.word	.LANCHOR0
+  36              		.section	.text.WakeUp,"ax",%progbits
+  37              		.align	1
+  38              		.global	WakeUp
+  39              		.thumb
+  40              		.thumb_func
+  42              	WakeUp:
+  43              		@ args = 0, pretend = 0, frame = 0
+  44              		@ frame_needed = 0, uses_anonymous_args = 0
+  45              		@ link register save eliminated.
+  46 0000 044B     		ldr	r3, .L7
+  47 0002 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+  48 0004 5A68     		ldr	r2, [r3, #4]
+  49 0006 4FF00111 		mov	r1, #65537
+  50 000a 01FA00F3 		lsl	r3, r1, r0
+  51 000e 5360     		str	r3, [r2, #4]
+  52              	.L5:
+  53 0010 FEE7     		b	.L5
+  54              	.L8:
+  55 0012 00BF     		.align	2
+  56              	.L7:
+  57 0014 00000000 		.word	IO004_Handle1
+  59              		.section	.text.Software_Timers_Init,"ax",%progbits
+  60              		.align	1
+  61              		.global	Software_Timers_Init
+  62              		.thumb
+  63              		.thumb_func
+  65              	Software_Timers_Init:
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 08B5     		push	{r3, lr}
+  69 0002 6420     		movs	r0, #100
+  70 0004 0121     		movs	r1, #1
+  71 0006 054A     		ldr	r2, .L11
+  72 0008 0023     		movs	r3, #0
+  73 000a FFF7FEFF 		bl	SYSTM002_CreateTimer
+  74 000e 18B1     		cbz	r0, .L9
+  75 0010 BDE80840 		pop	{r3, lr}
+  76 0014 FFF7FEBF 		b	SYSTM002_StartTimer
+  77              	.L9:
+  78 0018 08BD     		pop	{r3, pc}
+  79              	.L12:
+  80 001a 00BF     		.align	2
+  81              	.L11:
+  82 001c 00000000 		.word	Tick_Handler
+  84              		.section	.text.delayus,"ax",%progbits
+  85              		.align	1
+  86              		.global	delayus
+  87              		.thumb
+  88              		.thumb_func
+  90              	delayus:
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  94 0000 6328     		cmp	r0, #99
+  95 0002 03D8     		bhi	.L14
+  96 0004 024B     		ldr	r3, .L17
+  97 0006 0022     		movs	r2, #0
+  98 0008 1A60     		str	r2, [r3, #0]
+  99 000a 7047     		bx	lr
+ 100              	.L14:
+ 101              	.L16:
+ 102 000c FEE7     		b	.L16
+ 103              	.L18:
+ 104 000e 00BF     		.align	2
+ 105              	.L17:
+ 106 0010 00000000 		.word	.LANCHOR0
+ 108              		.section	.text.startup.main,"ax",%progbits
+ 109              		.align	1
+ 110              		.global	main
+ 111              		.thumb
+ 112              		.thumb_func
+ 114              	main:
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117 0000 08B5     		push	{r3, lr}
+ 118 0002 FFF7FEFF 		bl	DAVE_Init
+ 119 0006 074B     		ldr	r3, .L20
+ 120 0008 0022     		movs	r2, #0
+ 121 000a 1A60     		str	r2, [r3, #0]
+ 122 000c FFF7FEFF 		bl	Software_Timers_Init
+ 123 0010 0548     		ldr	r0, .L20+4
+ 124 0012 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 125 0014 4268     		ldr	r2, [r0, #4]
+ 126 0016 4FF00111 		mov	r1, #65537
+ 127 001a 01FA03F0 		lsl	r0, r1, r3
+ 128 001e 5060     		str	r0, [r2, #4]
+ 129 0020 FFF7FEFF 		bl	WakeUp
+ 130              	.L21:
+ 131              		.align	2
+ 132              	.L20:
+ 133 0024 00000000 		.word	.LANCHOR0
+ 134 0028 00000000 		.word	IO004_Handle0
+ 136              		.section	.text.delayms,"ax",%progbits
+ 137              		.align	1
+ 138              		.global	delayms
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	delayms:
+ 143              		@ args = 0, pretend = 0, frame = 0
+ 144              		@ frame_needed = 0, uses_anonymous_args = 0
+ 145              		@ link register save eliminated.
+ 146 0000 4FF47A73 		mov	r3, #1000
+ 147 0004 5843     		muls	r0, r3, r0
+ 148 0006 FFF7FEBF 		b	delayus
+ 150              		.section	.text.ERU0_3_IRQHandler,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	ERU0_3_IRQHandler
+ 153              		.thumb
+ 154              		.thumb_func
+ 156              	ERU0_3_IRQHandler:
+ 157              		@ args = 0, pretend = 0, frame = 0
+ 158              		@ frame_needed = 0, uses_anonymous_args = 0
+ 159              		@ link register save eliminated.
+ 160 0000 7047     		bx	lr
+ 162              		.global	value
+ 163              		.global	ticks
+ 164              		.bss
+ 165              		.align	2
+ 166              		.set	.LANCHOR0,. + 0
+ 169              	ticks:
+ 170 0000 00000000 		.space	4
+ 173              	value:
+ 174 0004 00       		.space	1
+ 175 0005 000000   		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:17     .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:22     .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:34     .text.Tick_Handler:0000000c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:37     .text.WakeUp:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:42     .text.WakeUp:00000000 WakeUp
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:57     .text.WakeUp:00000014 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:60     .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:65     .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:82     .text.Software_Timers_Init:0000001c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:85     .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:90     .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:106    .text.delayus:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:109    .text.startup.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:114    .text.startup.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:133    .text.startup.main:00000024 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:137    .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:142    .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:151    .text.ERU0_3_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:156    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:173    .bss:00000004 value
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:169    .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\ccX1VQFF.s:165    .bss:00000000 $d
+
+UNDEFINED SYMBOLS
+IO004_Handle1
+SYSTM002_CreateTimer
+SYSTM002_StartTimer
+DAVE_Init
+IO004_Handle0

@@ -36,8 +36,8 @@
   38 0012 01       		.byte	1
   39 0013 00       		.byte	0
   40 0014 00C00040 		.word	1073790976
-  41 0018 00C10040 		.word	1073791232
-  42 001c 00C10040 		.word	1073791232
+  41 0018 00C40040 		.word	1073792000
+  42 001c 00C40040 		.word	1073792000
   43 0020 00       		.byte	0
   44 0021 00       		.byte	0
   45 0022 0A       		.byte	10
@@ -50,8 +50,8 @@
   52 0034 00       		.byte	0
   53 0035 00       		.byte	0
   54 0036 00       		.byte	0
-  55 0037 00       		.byte	0
-  56 0038 00       		.byte	0
+  55 0037 03       		.byte	3
+  56 0038 03       		.byte	3
   57 0039 000000   		.space	3
   58 003c 00000000 		.word	PWMSP001_DynamicData2
   59 0040 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
@@ -71,8 +71,8 @@
   75 005a 01       		.byte	1
   76 005b 00       		.byte	0
   77 005c 00C00040 		.word	1073790976
-  78 0060 00C40040 		.word	1073792000
-  79 0064 00C40040 		.word	1073792000
+  78 0060 00C30040 		.word	1073791744
+  79 0064 00C30040 		.word	1073791744
   80 0068 00       		.byte	0
   81 0069 00       		.byte	0
   82 006a 0A       		.byte	10
@@ -85,8 +85,8 @@
   89 007c 00       		.byte	0
   90 007d 00       		.byte	0
   91 007e 00       		.byte	0
-  92 007f 03       		.byte	3
-  93 0080 03       		.byte	3
+  92 007f 02       		.byte	2
+  93 0080 02       		.byte	2
   94 0081 000000   		.space	3
   95 0084 00000000 		.word	PWMSP001_DynamicData1
   96 0088 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
@@ -136,14 +136,14 @@
  148              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:26     .rodata:00000000 PWMSP001_Handle2
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:138    .bss:00000000 PWMSP001_DynamicData2
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:63     .rodata:00000048 PWMSP001_Handle1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:142    .bss:00000001 PWMSP001_DynamicData1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:100    .rodata:00000090 PWMSP001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:146    .bss:00000002 PWMSP001_DynamicData0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:23     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwZFREG.s:139    .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:26     .rodata:00000000 PWMSP001_Handle2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:138    .bss:00000000 PWMSP001_DynamicData2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:63     .rodata:00000048 PWMSP001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:142    .bss:00000001 PWMSP001_DynamicData1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:100    .rodata:00000090 PWMSP001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:146    .bss:00000002 PWMSP001_DynamicData0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:23     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccVHTdvb.s:139    .bss:00000000 $d
 
 UNDEFINED SYMBOLS
 PWMSP001_lSetCompareEdgeAlign

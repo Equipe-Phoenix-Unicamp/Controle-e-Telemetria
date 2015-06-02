@@ -41,5 +41,10 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
                            .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
                            .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
+                           .group:00000000 wm4.CCU4Global_Conf.h.63.a52fac0daa39b5f58343578312b4eb54
+                           .group:00000000 wm4.PWMSP001.h.57.29b732b86baf3e81f49153f5f495912e
 
 NO UNDEFINED SYMBOLS

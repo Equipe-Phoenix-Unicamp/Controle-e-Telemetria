@@ -6,7 +6,7 @@
         <Memory_Model/>
     </COMPILER>
     <DEVICE>
-        <Sales_Code>XMC4500-F100x1024-AB</Sales_Code>
+        <Sales_Code>XMC4500-F100x1024-AC</Sales_Code>
         <Description/>
     </DEVICE>
     <Generated_Files>

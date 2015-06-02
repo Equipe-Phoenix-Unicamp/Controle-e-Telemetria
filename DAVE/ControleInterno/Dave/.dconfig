@@ -6,6 +6,7 @@
     <ResourceReserve/>
     <Solver>
         <SolverBndMap>
+            <BindMap MUri="port/p/1/pad/14" Proxy="app/io004/7/pin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/perbridge" Proxy="app/clk001/0/perbridge"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ccu" Proxy="app/clk001/0/ccu"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/clk001/0/pll"/>
@@ -13,13 +14,13 @@
             <BindMap MUri="peripheral/scu/0/rstctrl/0/mcanreset" Proxy="app/reset001/0/mcanreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu4reset/2" Proxy="app/reset001/0/ccu4reset2"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu4reset/3" Proxy="app/reset001/0/ccu4reset3"/>
-            <BindMap MUri="port/p/1/pad/3" Proxy="app/pwmsp001/2/pin_directoutput"/>
+            <BindMap MUri="port/p/1/pad/0" Proxy="app/pwmsp001/2/pin_directoutput"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/rcurst" Proxy="app/reset001/0/rcurst"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ebureset" Proxy="app/reset001/0/ebureset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/wdtreset" Proxy="app/reset001/0/wdtreset"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sdmmc" Proxy="app/clk001/0/mmc"/>
             <BindMap MUri="peripheral/scu/0/pwrctrl/0/hibernate" Proxy="app/clk001/0/hibernate"/>
-            <BindMap MUri="peripheral/ccu4/0/cc4/0" Proxy="app/pwmsp001/2/slice"/>
+            <BindMap MUri="peripheral/ccu4/0/cc4/3" Proxy="app/pwmsp001/2/slice"/>
             <BindMap MUri="port/p/2/pad/3" Proxy="app/io004/5/pin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/extclk" Proxy="app/clk001/0/rgextclk"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/vadcreset" Proxy="app/reset001/0/vadcreset"/>
@@ -39,7 +40,7 @@
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dacreset" Proxy="app/reset001/0/dacreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ledtsreset" Proxy="app/reset001/0/ledtsreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/pportreset" Proxy="app/reset001/0/pportreset"/>
-            <BindMap MUri="peripheral/ccu4/0/cc4/3" Proxy="app/pwmsp001/1/slice"/>
+            <BindMap MUri="peripheral/ccu4/0/cc4/2" Proxy="app/pwmsp001/1/slice"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/2" Proxy="app/reset001/0/usicreset2"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/1" Proxy="app/reset001/0/usicreset1"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/0" Proxy="app/reset001/0/usicreset0"/>
@@ -53,7 +54,7 @@
             <BindMap MUri="peripheral/ccu4/0/cc4/1" Proxy="app/pwmsp001/0/slice"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dmareset/0" Proxy="app/reset001/0/dmareset0"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/fcereset" Proxy="app/reset001/0/fcereset"/>
-            <BindMap MUri="port/p/1/pad/0" Proxy="app/pwmsp001/1/pin_directoutput"/>
+            <BindMap MUri="port/p/1/pad/1" Proxy="app/pwmsp001/1/pin_directoutput"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu4reset/0" Proxy="app/reset001/0/ccu4reset0"/>
             <BindMap MUri="port/p/2/pad/2" Proxy="app/io004/6/pin"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu4reset/1" Proxy="app/reset001/0/ccu4reset1"/>

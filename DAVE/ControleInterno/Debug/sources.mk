@@ -19,7 +19,11 @@ SUBDIRS := \
 Startup \
 . \
 Lib \
+Dave/Generated/src/RESET001 \
+Dave/Generated/src/PWMSP001 \
 Dave/Generated/src/LIBS \
 Dave/Generated/src/IO004 \
 Dave/Generated/src/DAVESupport \
+Dave/Generated/src/CLK001 \
+Dave/Generated/src/CCU4GLOBAL \
 

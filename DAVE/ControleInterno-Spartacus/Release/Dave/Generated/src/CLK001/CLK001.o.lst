@@ -1,0 +1,286 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"CLK001.c"
+  16              		.section	.text.CLK001_Delay,"ax",%progbits
+  17              		.align	1
+  18              		.thumb
+  19              		.thumb_func
+  21              	CLK001_Delay:
+  22              		@ args = 0, pretend = 0, frame = 8
+  23              		@ frame_needed = 0, uses_anonymous_args = 0
+  24              		@ link register save eliminated.
+  25 0000 82B0     		sub	sp, sp, #8
+  26 0002 0022     		movs	r2, #0
+  27              	.L4:
+  28 0004 0192     		str	r2, [sp, #4]
+  29 0006 019B     		ldr	r3, [sp, #4]
+  30 0008 8342     		cmp	r3, r0
+  31 000a 06D2     		bcs	.L6
+  32              	.L3:
+  33              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+  34 000c 00BF     		nop
+  35              	@ 0 "" 2
+  36              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+  37 000e 00BF     		nop
+  38              	@ 0 "" 2
+  39              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+  40 0010 00BF     		nop
+  41              	@ 0 "" 2
+  42              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+  43 0012 00BF     		nop
+  44              	@ 0 "" 2
+  45              		.thumb
+  46 0014 0199     		ldr	r1, [sp, #4]
+  47 0016 4A1C     		adds	r2, r1, #1
+  48 0018 F4E7     		b	.L4
+  49              	.L6:
+  50 001a 02B0     		add	sp, sp, #8
+  51 001c 7047     		bx	lr
+  53              		.section	.text.CLK001_Init,"ax",%progbits
+  54              		.align	1
+  55              		.global	CLK001_Init
+  56              		.thumb
+  57              		.thumb_func
+  59              	CLK001_Init:
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 38B5     		push	{r3, r4, r5, lr}
+  63 0002 644B     		ldr	r3, .L43
+  64 0004 6448     		ldr	r0, .L43+4
+  65 0006 5A68     		ldr	r2, [r3, #4]
+  66 0008 1040     		ands	r0, r0, r2
+  67 000a 0028     		cmp	r0, #0
+  68 000c 00F0AB80 		beq	.L9
+  69              	.L8:
+  70 0010 6249     		ldr	r1, .L43+8
+  71 0012 0C68     		ldr	r4, [r1, #0]
+  72 0014 E207     		lsls	r2, r4, #31
+  73 0016 03D4     		bmi	.L22
+  74              	.L21:
+  75 0018 4D68     		ldr	r5, [r1, #4]
+  76 001a 45F00103 		orr	r3, r5, #1
+  77 001e 4B60     		str	r3, [r1, #4]
+  78              	.L22:
+  79 0020 5F48     		ldr	r0, .L43+12
+  80 0022 0268     		ldr	r2, [r0, #0]
+  81 0024 9105     		lsls	r1, r2, #22
+  82 0026 03D5     		bpl	.L10
+  83 0028 8168     		ldr	r1, [r0, #8]
+  84 002a 41F40074 		orr	r4, r1, #512
+  85 002e 8460     		str	r4, [r0, #8]
+  86              	.L10:
+  87 0030 584D     		ldr	r5, .L43
+  88 0032 6B68     		ldr	r3, [r5, #4]
+  89 0034 23F48010 		bic	r0, r3, #1048576
+  90 0038 6860     		str	r0, [r5, #4]
+  91 003a 6420     		movs	r0, #100
+  92 003c FFF7FEFF 		bl	CLK001_Delay
+  93 0040 6A68     		ldr	r2, [r5, #4]
+  94 0042 42F40021 		orr	r1, r2, #524288
+  95 0046 6420     		movs	r0, #100
+  96 0048 6960     		str	r1, [r5, #4]
+  97 004a FFF7FEFF 		bl	CLK001_Delay
+  98 004e 6C68     		ldr	r4, [r5, #4]
+  99 0050 5449     		ldr	r1, .L43+16
+ 100 0052 24F48033 		bic	r3, r4, #65536
+ 101 0056 23F00200 		bic	r0, r3, #2
+ 102 005a 6860     		str	r0, [r5, #4]
+ 103 005c 4A68     		ldr	r2, [r1, #4]
+ 104 005e 12F0300F 		tst	r2, #48
+ 105 0062 1CD0     		beq	.L11
+ 106 0064 4C68     		ldr	r4, [r1, #4]
+ 107 0066 24F03003 		bic	r3, r4, #48
+ 108 006a 4B60     		str	r3, [r1, #4]
+ 109 006c 4868     		ldr	r0, [r1, #4]
+ 110 006e 40F44032 		orr	r2, r0, #196608
+ 111 0072 4A60     		str	r2, [r1, #4]
+ 112 0074 E968     		ldr	r1, [r5, #12]
+ 113 0076 21F00104 		bic	r4, r1, #1
+ 114 007a EC60     		str	r4, [r5, #12]
+ 115 007c 6B68     		ldr	r3, [r5, #4]
+ 116 007e 23F40030 		bic	r0, r3, #131072
+ 117 0082 6860     		str	r0, [r5, #4]
+ 118 0084 44F25064 		movw	r4, #18000
+ 119              	.L13:
+ 120 0088 424D     		ldr	r5, .L43
+ 121 008a 0A20     		movs	r0, #10
+ 122 008c FFF7FEFF 		bl	CLK001_Delay
+ 123 0090 2A68     		ldr	r2, [r5, #0]
+ 124 0092 02F46071 		and	r1, r2, #896
+ 125 0096 B1F5607F 		cmp	r1, #896
+ 126 009a 68D1     		bne	.L40
+ 127              	.L12:
+ 128 009c 2B68     		ldr	r3, [r5, #0]
+ 129              	.L11:
+ 130 009e 3D4B     		ldr	r3, .L43
+ 131 00a0 1868     		ldr	r0, [r3, #0]
+ 132 00a2 4207     		lsls	r2, r0, #29
+ 133 00a4 2DD4     		bmi	.L15
+ 134 00a6 404A     		ldr	r2, .L43+20
+ 135 00a8 4049     		ldr	r1, .L43+24
+ 136 00aa 1325     		movs	r5, #19
+ 137 00ac 82E82200 		stmia	r2, {r1, r5}
+ 138 00b0 5D68     		ldr	r5, [r3, #4]
+ 139 00b2 3F4A     		ldr	r2, .L43+28
+ 140 00b4 45F00101 		orr	r1, r5, #1
+ 141 00b8 5960     		str	r1, [r3, #4]
+ 142 00ba 5C68     		ldr	r4, [r3, #4]
+ 143 00bc 44F01000 		orr	r0, r4, #16
+ 144 00c0 5860     		str	r0, [r3, #4]
+ 145 00c2 9A60     		str	r2, [r3, #8]
+ 146 00c4 5D68     		ldr	r5, [r3, #4]
+ 147 00c6 45F04001 		orr	r1, r5, #64
+ 148 00ca 5960     		str	r1, [r3, #4]
+ 149 00cc 5C68     		ldr	r4, [r3, #4]
+ 150 00ce 24F01000 		bic	r0, r4, #16
+ 151 00d2 5860     		str	r0, [r3, #4]
+ 152 00d4 5A68     		ldr	r2, [r3, #4]
+ 153 00d6 42F48025 		orr	r5, r2, #262144
+ 154 00da 5D60     		str	r5, [r3, #4]
+ 155 00dc 44F25064 		movw	r4, #18000
+ 156              	.L17:
+ 157 00e0 0A20     		movs	r0, #10
+ 158 00e2 FFF7FEFF 		bl	CLK001_Delay
+ 159 00e6 2B4B     		ldr	r3, .L43
+ 160 00e8 1968     		ldr	r1, [r3, #0]
+ 161 00ea 11F0040F 		tst	r1, #4
+ 162 00ee 1846     		mov	r0, r3
+ 163 00f0 40D0     		beq	.L41
+ 164              	.L16:
+ 165 00f2 0268     		ldr	r2, [r0, #0]
+ 166 00f4 274D     		ldr	r5, .L43
+ 167 00f6 5407     		lsls	r4, r2, #29
+ 168 00f8 03D5     		bpl	.L15
+ 169 00fa 6B68     		ldr	r3, [r5, #4]
+ 170 00fc 23F00101 		bic	r1, r3, #1
+ 171 0100 6960     		str	r1, [r5, #4]
+ 172              	.L15:
+ 173 0102 2C48     		ldr	r0, .L43+32
+ 174 0104 2949     		ldr	r1, .L43+24
+ 175 0106 C468     		ldr	r4, [r0, #12]
+ 176 0108 44F48035 		orr	r5, r4, #65536
+ 177 010c 214C     		ldr	r4, .L43
+ 178 010e C560     		str	r5, [r0, #12]
+ 179 0110 6268     		ldr	r2, [r4, #4]
+ 180 0112 254D     		ldr	r5, .L43+20
+ 181 0114 22F04003 		bic	r3, r2, #64
+ 182 0118 6360     		str	r3, [r4, #4]
+ 183 011a 6420     		movs	r0, #100
+ 184 011c 2960     		str	r1, [r5, #0]
+ 185 011e FFF7FEFF 		bl	CLK001_Delay
+ 186 0122 2548     		ldr	r0, .L43+36
+ 187 0124 A060     		str	r0, [r4, #8]
+ 188 0126 6420     		movs	r0, #100
+ 189 0128 FFF7FEFF 		bl	CLK001_Delay
+ 190 012c 234B     		ldr	r3, .L43+40
+ 191 012e 0422     		movs	r2, #4
+ 192 0130 6A60     		str	r2, [r5, #4]
+ 193 0132 9620     		movs	r0, #150
+ 194 0134 A360     		str	r3, [r4, #8]
+ 195 0136 FFF7FEFF 		bl	CLK001_Delay
+ 196 013a 2149     		ldr	r1, .L43+44
+ 197 013c A160     		str	r1, [r4, #8]
+ 198 013e A068     		ldr	r0, [r4, #8]
+ 199 0140 C0F30363 		ubfx	r3, r0, #24, #4
+ 200 0144 002B     		cmp	r3, #0
+ 201 0146 23D1     		bne	.L23
+ 202 0148 A268     		ldr	r2, [r4, #8]
+ 203 014a C2F30621 		ubfx	r1, r2, #8, #7
+ 204 014e 2729     		cmp	r1, #39
+ 205 0150 13D0     		beq	.L42
+ 206              	.L19:
+ 207 0152 1C4A     		ldr	r2, .L43+48
+ 208 0154 0521     		movs	r1, #5
+ 209 0156 012B     		cmp	r3, #1
+ 210 0158 D160     		str	r1, [r2, #12]
+ 211 015a 04D1     		bne	.L9
+ 212 015c 1548     		ldr	r0, .L43+32
+ 213 015e 4368     		ldr	r3, [r0, #4]
+ 214 0160 43F01001 		orr	r1, r3, #16
+ 215 0164 4160     		str	r1, [r0, #4]
+ 216              	.L9:
+ 217 0166 BDE83840 		pop	{r3, r4, r5, lr}
+ 218 016a FFF7FEBF 		b	SystemCoreClockUpdate
+ 219              	.L40:
+ 220 016e 013C     		subs	r4, r4, #1
+ 221 0170 8AD1     		bne	.L13
+ 222 0172 93E7     		b	.L12
+ 223              	.L41:
+ 224 0174 013C     		subs	r4, r4, #1
+ 225 0176 B3D1     		bne	.L17
+ 226 0178 BBE7     		b	.L16
+ 227              	.L42:
+ 228 017a A068     		ldr	r0, [r4, #8]
+ 229 017c 4006     		lsls	r0, r0, #25
+ 230 017e E8D1     		bne	.L19
+ 231 0180 A368     		ldr	r3, [r4, #8]
+ 232 0182 C3F30642 		ubfx	r2, r3, #16, #7
+ 233 0186 D11E     		subs	r1, r2, #3
+ 234 0188 4842     		rsbs	r0, r1, #0
+ 235 018a 50EB0103 		adcs	r3, r0, r1
+ 236 018e E0E7     		b	.L19
+ 237              	.L23:
+ 238 0190 0023     		movs	r3, #0
+ 239 0192 DEE7     		b	.L19
+ 240              	.L44:
+ 241              		.align	2
+ 242              	.L43:
+ 243 0194 10470050 		.word	1342195472
+ 244 0198 02000100 		.word	65538
+ 245 019c 00420050 		.word	1342194176
+ 246 01a0 00440050 		.word	1342194688
+ 247 01a4 00470050 		.word	1342195456
+ 248 01a8 00000000 		.word	.LANCHOR0
+ 249 01ac 00389C1C 		.word	480000000
+ 250 01b0 00271300 		.word	1255168
+ 251 01b4 00460050 		.word	1342195200
+ 252 01b8 00270700 		.word	468736
+ 253 01bc 00270400 		.word	272128
+ 254 01c0 00270300 		.word	206592
+ 255 01c4 60410050 		.word	1342194016
+ 257              		.section	.text.AllowPLLInitByStartup,"ax",%progbits
+ 258              		.align	1
+ 259              		.global	AllowPLLInitByStartup
+ 260              		.thumb
+ 261              		.thumb_func
+ 263              	AllowPLLInitByStartup:
+ 264              		@ args = 0, pretend = 0, frame = 0
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266              		@ link register save eliminated.
+ 267 0000 0020     		movs	r0, #0
+ 268 0002 7047     		bx	lr
+ 270              		.bss
+ 271              		.align	2
+ 272              		.set	.LANCHOR0,. + 0
+ 275              	VCO:
+ 276 0000 00000000 		.space	4
+ 279              	stepping_K2DIV:
+ 280 0004 00000000 		.space	4
+ 281              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 CLK001.c
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:17     .text.CLK001_Delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:21     .text.CLK001_Delay:00000000 CLK001_Delay
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:54     .text.CLK001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:59     .text.CLK001_Init:00000000 CLK001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:243    .text.CLK001_Init:00000194 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:258    .text.AllowPLLInitByStartup:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:263    .text.AllowPLLInitByStartup:00000000 AllowPLLInitByStartup
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:271    .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:275    .bss:00000000 VCO
+C:\Users\JMASS_~1\AppData\Local\Temp\ccN64VQc.s:279    .bss:00000004 stepping_K2DIV
+
+UNDEFINED SYMBOLS
+SystemCoreClockUpdate

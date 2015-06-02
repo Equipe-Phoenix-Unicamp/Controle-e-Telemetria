@@ -888,8 +888,8 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="ALIAS0" URI="http://www.infineon.com/0.1.37/peripheral/vadc/0/group/2/ch/0/galias_alias0" maxValue="31" minValue="0" startPos="0" stopPos="4" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Alias Value for CH0 Conversion Requests</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="RESREG" URI="http://www.infineon.com/0.1.37/peripheral/vadc/0/group/2/ch/0/gchctr_resreg" maxValue="15" minValue="0" startPos="16" stopPos="19" accessPermission="rw">

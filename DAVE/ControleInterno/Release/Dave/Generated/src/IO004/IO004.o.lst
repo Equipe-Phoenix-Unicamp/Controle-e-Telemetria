@@ -259,13 +259,13 @@
  265              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:17     .text.IO004_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:22     .text.IO004_Init:00000000 IO004_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:87     .text.IO004_Init:0000008c $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:94     .text.IO004_DisableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:99     .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:180    .text.IO004_EnableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccdmyQqe.s:185    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:17     .text.IO004_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:22     .text.IO004_Init:00000000 IO004_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:87     .text.IO004_Init:0000008c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:94     .text.IO004_DisableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:99     .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:180    .text.IO004_EnableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccZTS9Zj.s:185    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
 
 UNDEFINED SYMBOLS
 IO004_Handle1

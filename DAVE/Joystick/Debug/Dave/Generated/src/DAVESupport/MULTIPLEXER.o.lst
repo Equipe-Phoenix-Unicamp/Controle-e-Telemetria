@@ -370,101 +370,90 @@
  171:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					 						          						          						          						          						          						       
  172:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                                                                                    
  173:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                   /*VADC GROUP2 Mux Related SFR/Bitfields Configurations*/  						                 
- 174:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(VADC_G2->ALIAS, VADC_G_ALIAS_ALIAS0_Msk, VADC_G_ALIAS_ALIAS0_Pos,1); 
- 201              		.loc 1 174 0
- 202 01ec 4FF49843 		mov	r3, #19456
- 203 01f0 C4F20003 		movt	r3, 16384
- 204 01f4 4FF49842 		mov	r2, #19456
- 205 01f8 C4F20002 		movt	r2, 16384
- 206 01fc D2F8B020 		ldr	r2, [r2, #176]
- 207 0200 22F01F02 		bic	r2, r2, #31
- 208 0204 42F00102 		orr	r2, r2, #1
- 209 0208 C3F8B020 		str	r2, [r3, #176]
- 175:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****    						          
- 176:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 177:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					 						          						          						          						          						          						       
- 178:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                                                                                    
- 179:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                   /*VADC GROUP3 Mux Related SFR/Bitfields Configurations*/  						                 
- 180:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 181:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					 						          						          						          						          						          						       
- 182:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                                                                                    
- 183:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                /*VADC GLOBAL RESULT Mux Related SFR/Bitfields Configurations*/  						          
- 184:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(VADC->GLOBEVNP, VADC_GLOBEVNP_REV0NP_Msk, VADC_GLOBEVNP_REV0NP_Pos,2); 
- 210              		.loc 1 184 0
- 211 020c 4FF04023 		mov	r3, #1073758208
- 212 0210 4FF04022 		mov	r2, #1073758208
- 213 0214 D2F84021 		ldr	r2, [r2, #320]
- 214 0218 22F47022 		bic	r2, r2, #983040
- 215 021c 42F40032 		orr	r2, r2, #131072
- 216 0220 C3F84021 		str	r2, [r3, #320]
- 185:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                  						                     						                                 
- 186:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                /*VADC BACKGROUND Source Mux Related SFR/Bitfields Configurations*/  						         
- 187:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** }
- 217              		.loc 1 187 0
- 218 0224 07F11C07 		add	r7, r7, #28
- 219 0228 BD46     		mov	sp, r7
- 220 022a 80BC     		pop	{r7}
- 221 022c 7047     		bx	lr
- 222              		.cfi_endproc
- 223              	.LFE117:
- 225 022e 00BF     		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
- 226              		.align	2
- 227              		.global	DAVE_MUX_PreInit
- 228              		.thumb
- 229              		.thumb_func
- 231              	DAVE_MUX_PreInit:
- 232              	.LFB118:
- 188:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 189:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 190:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*******************************************************************************
- 191:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Syntax           : void DAVE_MUX_PreInit(void)                             **
+ 174:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
+ 175:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					 						          						          						          						          						          						       
+ 176:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                                                                                    
+ 177:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                   /*VADC GROUP3 Mux Related SFR/Bitfields Configurations*/  						                 
+ 178:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
+ 179:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 					 						          						          						          						          						          						       
+ 180:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                                                                                                    
+ 181:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                /*VADC GLOBAL RESULT Mux Related SFR/Bitfields Configurations*/  						          
+ 182:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****   WR_REG(VADC->GLOBEVNP, VADC_GLOBEVNP_REV0NP_Msk, VADC_GLOBEVNP_REV0NP_Pos,2); 
+ 201              		.loc 1 182 0
+ 202 01ec 4FF04023 		mov	r3, #1073758208
+ 203 01f0 4FF04022 		mov	r2, #1073758208
+ 204 01f4 D2F84021 		ldr	r2, [r2, #320]
+ 205 01f8 22F47022 		bic	r2, r2, #983040
+ 206 01fc 42F40032 		orr	r2, r2, #131072
+ 207 0200 C3F84021 		str	r2, [r3, #320]
+ 183:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                  						                     						                                 
+ 184:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****                /*VADC BACKGROUND Source Mux Related SFR/Bitfields Configurations*/  						         
+ 185:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** }
+ 208              		.loc 1 185 0
+ 209 0204 07F11C07 		add	r7, r7, #28
+ 210 0208 BD46     		mov	sp, r7
+ 211 020a 80BC     		pop	{r7}
+ 212 020c 7047     		bx	lr
+ 213              		.cfi_endproc
+ 214              	.LFE117:
+ 216 020e 00BF     		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
+ 217              		.align	2
+ 218              		.global	DAVE_MUX_PreInit
+ 219              		.thumb
+ 220              		.thumb_func
+ 222              	DAVE_MUX_PreInit:
+ 223              	.LFB118:
+ 186:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
+ 187:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
+ 188:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*******************************************************************************
+ 189:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Syntax           : void DAVE_MUX_PreInit(void)                             **
+ 190:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
+ 191:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Reentrancy       : None                                                    **
  192:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 193:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Reentrancy       : None                                                    **
+ 193:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Parameters (in)  : void                                                    **
  194:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 195:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Parameters (in)  : void                                                    **
+ 195:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Parameters (out) : none                                                    **
  196:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 197:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Parameters (out) : none                                                    **
+ 197:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Return value     : none                                                    **
  198:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 199:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Return value     : none                                                    **
+ 199:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Description      : This is the Mux configuration                           **
  200:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 201:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** ** Description      : This is the Mux configuration                           **
- 202:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** **                                                                            **
- 203:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** *******************************************************************************/
- 204:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****  
- 205:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** void DAVE_MUX_PreInit(void)
- 206:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** {            
- 233              		.loc 1 206 0
- 234              		.cfi_startproc
- 235              		@ args = 0, pretend = 0, frame = 0
- 236              		@ frame_needed = 1, uses_anonymous_args = 0
- 237              		@ link register save eliminated.
- 238 0000 80B4     		push	{r7}
- 239              	.LCFI3:
- 240              		.cfi_def_cfa_offset 4
- 241              		.cfi_offset 7, -4
- 242 0002 00AF     		add	r7, sp, #0
- 243              	.LCFI4:
- 244              		.cfi_def_cfa_register 7
- 207:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
- 208:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                       
- 209:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** }
- 245              		.loc 1 209 0
- 246 0004 BD46     		mov	sp, r7
- 247 0006 80BC     		pop	{r7}
- 248 0008 7047     		bx	lr
- 249              		.cfi_endproc
- 250              	.LFE118:
- 252 000a 00BF     		.text
- 253              	.Letext0:
- 254              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
- 255              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 256              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 201:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** *******************************************************************************/
+ 202:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c ****  
+ 203:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** void DAVE_MUX_PreInit(void)
+ 204:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** {            
+ 224              		.loc 1 204 0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 0
+ 227              		@ frame_needed = 1, uses_anonymous_args = 0
+ 228              		@ link register save eliminated.
+ 229 0000 80B4     		push	{r7}
+ 230              	.LCFI3:
+ 231              		.cfi_def_cfa_offset 4
+ 232              		.cfi_offset 7, -4
+ 233 0002 00AF     		add	r7, sp, #0
+ 234              	.LCFI4:
+ 235              		.cfi_def_cfa_register 7
+ 205:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** 
+ 206:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                       
+ 207:../Dave/Generated/src/DAVESupport/MULTIPLEXER.c **** }
+ 236              		.loc 1 207 0
+ 237 0004 BD46     		mov	sp, r7
+ 238 0006 80BC     		pop	{r7}
+ 239 0008 7047     		bx	lr
+ 240              		.cfi_endproc
+ 241              	.LFE118:
+ 243 000a 00BF     		.text
+ 244              	.Letext0:
+ 245              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 246              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 247              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 MULTIPLEXER.c
-C:\Users\Carlos\AppData\Local\Temp\ccu0YTi9.s:20     .text.DAVE_MUX_Init:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccu0YTi9.s:25     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
-C:\Users\Carlos\AppData\Local\Temp\ccu0YTi9.s:226    .text.DAVE_MUX_PreInit:00000000 $t
-C:\Users\Carlos\AppData\Local\Temp\ccu0YTi9.s:231    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEw90HA.s:20     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEw90HA.s:25     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEw90HA.s:217    .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEw90HA.s:222    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

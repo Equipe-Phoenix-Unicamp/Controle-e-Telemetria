@@ -52,20 +52,28 @@
   62 0021 02       		.byte	2
   63 0022 0000     		.space	2
   64 0024 00820248 		.word	1208123904
-  65              		.text
-  66              	.Letext0:
-  67              		.file 1 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
-  68              		.file 2 "C:\\Users\\Carlos\\Documents\\GitHub\\Controle-e-Telemetria\\DAVE\\ControleInterno\\Dave\
-  69              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
-  70              		.file 4 "../Dave/Generated/src/IO004/IO004_Conf.c"
+  65              		.global	IO004_Handle7
+  66              		.align	2
+  69              	IO004_Handle7:
+  70 0028 01       		.byte	1
+  71 0029 0E       		.byte	14
+  72 002a 0000     		.space	2
+  73 002c 00810248 		.word	1208123648
+  74              		.text
+  75              	.Letext0:
+  76              		.file 1 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+  77              		.file 2 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+  78              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+  79              		.file 4 "../Dave/Generated/src/IO004/IO004_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004_Conf.c
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:24     .rodata:00000000 IO004_Handle1
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:21     .rodata:00000000 $d
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:33     .rodata:00000008 IO004_Handle2
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:42     .rodata:00000010 IO004_Handle4
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:51     .rodata:00000018 IO004_Handle5
-C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:60     .rodata:00000020 IO004_Handle6
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:24     .rodata:00000000 IO004_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:21     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:33     .rodata:00000008 IO004_Handle2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:42     .rodata:00000010 IO004_Handle4
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:51     .rodata:00000018 IO004_Handle5
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:60     .rodata:00000020 IO004_Handle6
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpkq9hM.s:69     .rodata:00000028 IO004_Handle7
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
@@ -86,5 +94,10 @@ C:\Users\Carlos\AppData\Local\Temp\ccN8SR5B.s:60     .rodata:00000020 IO004_Hand
                            .group:00000000 wm4.MOTORLIB.h.62.951091d95913dd2ff36d761323a1771d
                            .group:00000000 wm4.DBG001.h.116.d6d9e7459a0faa3905c97c1d2edb339d
                            .group:00000000 wm4.IO004.h.53.442ea5eb47ad9eedc675253aa35f3107
+                           .group:00000000 wm4.uc_id.h.35.fa57ecd9f559d2767f56c96da2848c12
+                           .group:00000000 wm4.CLK001_Const.h.50.e5e9c2ddc89f4cc9e7b93e9648fa94e4
+                           .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
+                           .group:00000000 wm4.CCU4Global_Conf.h.63.a52fac0daa39b5f58343578312b4eb54
+                           .group:00000000 wm4.PWMSP001.h.57.29b732b86baf3e81f49153f5f495912e
 
 NO UNDEFINED SYMBOLS

@@ -73,7 +73,7 @@
   </provided>
   <consumed xsi:type="ResourceModel:ProxyResource" evalFunction="function resourceCondition() {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value = Solver.getSoftwareId().substring(0,1).compareTo(&quot;1&quot;);&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var constr = &quot;&quot;;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if (value == 0) {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;constr=&quot;reserved([port,p,AA,pad,_],app_pin) \n uri_element_range(AA,[2])&quot;;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;} else {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;constr=&quot;reserved([port,p,AA,pad,_],app_pin) \n uri_element_range(AA,[14,15])&quot;;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;Solver.setConstraintString(constr);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;return true;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}" URI="http://www.infineon.com/1.0.16/app/io001/0/pin">
     <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../P14/P14_14.dd#//@provided.0"/>
-    <requiredResource uriString="port/p/14/pad/5" uriType="LOCALTYPE"/>
+    <requiredResource uriString="port/p/14/pad/4" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.16/app/io001/0/io001_inputchardummy" upWardMappingList="//@provided.2 //@provided.2/@item.0 //@provided.2/@item.1 //@provided.2/@item.2 //@provided.2/@item.3 //@provided.2/@item.4 //@provided.2/@item.5 //@provided.2/@item.6 //@provided.2/@item.7" isSystemDefined="true">
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>

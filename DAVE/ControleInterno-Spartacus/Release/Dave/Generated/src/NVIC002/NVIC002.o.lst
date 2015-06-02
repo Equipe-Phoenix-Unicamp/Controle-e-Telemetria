@@ -1,0 +1,93 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"NVIC002.c"
+  16              		.section	.text.NVIC002_Init,"ax",%progbits
+  17              		.align	1
+  18              		.global	NVIC002_Init
+  19              		.thumb
+  20              		.thumb_func
+  22              	NVIC002_Init:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  26 0002 204A     		ldr	r2, .L8
+  27 0004 204B     		ldr	r3, .L8+4
+  28 0006 D168     		ldr	r1, [r2, #12]
+  29 0008 1B68     		ldr	r3, [r3, #0]
+  30 000a C1F30222 		ubfx	r2, r1, #8, #3
+  31 000e 1878     		ldrb	r0, [r3, #0]	@ zero_extendqisi2
+  32 0010 5E78     		ldrb	r6, [r3, #1]	@ zero_extendqisi2
+  33 0012 93F802C0 		ldrb	ip, [r3, #2]	@ zero_extendqisi2
+  34 0016 C2F10707 		rsb	r7, r2, #7
+  35 001a C5B2     		uxtb	r5, r0
+  36 001c 062F     		cmp	r7, #6
+  37 001e 28BF     		it	cs
+  38 0020 0627     		movcs	r7, #6
+  39 0022 02B1     		cbz	r2, .L2
+  40 0024 013A     		subs	r2, r2, #1
+  41              	.L2:
+  42 0026 0124     		movs	r4, #1
+  43 0028 04FA02F1 		lsl	r1, r4, r2
+  44 002c 04FA07F4 		lsl	r4, r4, r7
+  45 0030 013C     		subs	r4, r4, #1
+  46 0032 0139     		subs	r1, r1, #1
+  47 0034 3440     		ands	r4, r4, r6
+  48 0036 04FA02F2 		lsl	r2, r4, r2
+  49 003a 01EA0C01 		and	r1, r1, ip
+  50 003e 1143     		orrs	r1, r1, r2
+  51 0040 6AB2     		sxtb	r2, r5
+  52 0042 002A     		cmp	r2, #0
+  53 0044 4FEA8101 		lsl	r1, r1, #2
+  54 0048 06DA     		bge	.L3
+  55 004a 104A     		ldr	r2, .L8+8
+  56 004c 00F00F00 		and	r0, r0, #15
+  57 0050 8018     		adds	r0, r0, r2
+  58 0052 C9B2     		uxtb	r1, r1
+  59 0054 0176     		strb	r1, [r0, #24]
+  60 0056 06E0     		b	.L4
+  61              	.L3:
+  62 0058 02F16042 		add	r2, r2, #-536870912
+  63 005c C8B2     		uxtb	r0, r1
+  64 005e 02F56141 		add	r1, r2, #57600
+  65 0062 81F80003 		strb	r0, [r1, #768]
+  66              	.L4:
+  67 0066 DA78     		ldrb	r2, [r3, #3]	@ zero_extendqisi2
+  68 0068 012A     		cmp	r2, #1
+  69 006a 09D1     		bne	.L1
+  70 006c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+  71 006e 59B2     		sxtb	r1, r3
+  72 0070 4809     		lsrs	r0, r1, #5
+  73 0072 03F01F03 		and	r3, r3, #31
+  74 0076 0649     		ldr	r1, .L8+12
+  75 0078 02FA03F2 		lsl	r2, r2, r3
+  76 007c 41F82020 		str	r2, [r1, r0, lsl #2]
+  77              	.L1:
+  78 0080 F0BD     		pop	{r4, r5, r6, r7, pc}
+  79              	.L9:
+  80 0082 00BF     		.align	2
+  81              	.L8:
+  82 0084 00ED00E0 		.word	-536810240
+  83 0088 00000000 		.word	NVIC002_HandleArray
+  84 008c FCEC00E0 		.word	-536810244
+  85 0090 00E100E0 		.word	-536813312
+  87              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 NVIC002.c
+C:\Users\JMASS_~1\AppData\Local\Temp\ccm62NjI.s:17     .text.NVIC002_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccm62NjI.s:22     .text.NVIC002_Init:00000000 NVIC002_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccm62NjI.s:82     .text.NVIC002_Init:00000084 $d
+
+UNDEFINED SYMBOLS
+NVIC002_HandleArray
