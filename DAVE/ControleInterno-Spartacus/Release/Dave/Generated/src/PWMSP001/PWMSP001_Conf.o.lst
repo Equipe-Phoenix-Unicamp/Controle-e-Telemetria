@@ -13,55 +13,96 @@
   13              		.eabi_attribute 18, 4
   14              		.thumb
   15              		.file	"PWMSP001_Conf.c"
-  16              		.global	PWMSP001_Handle0
-  17              		.global	PWMSP001_DynamicData0
-  18              		.section	.rodata
-  19              		.align	2
-  22              	PWMSP001_Handle0:
-  23 0000 01       		.byte	1
-  24 0001 01       		.byte	1
-  25 0002 0000     		.space	2
-  26 0004 04568541 		.word	1099257348
-  27 0008 E8030000 		.word	1000
-  28 000c 00       		.byte	0
-  29 000d 00       		.byte	0
-  30 000e 00       		.byte	0
-  31 000f 00       		.byte	0
-  32 0010 01       		.byte	1
-  33 0011 00       		.byte	0
-  34 0012 01       		.byte	1
-  35 0013 00       		.byte	0
-  36 0014 00C00040 		.word	1073790976
-  37 0018 00C40040 		.word	1073792000
-  38 001c 00C40040 		.word	1073792000
-  39 0020 00       		.byte	0
-  40 0021 00       		.byte	0
-  41 0022 01       		.byte	1
-  42 0023 00       		.byte	0
-  43 0024 00       		.byte	0
-  44 0025 000000   		.space	3
-  45 0028 CF070000 		.word	1999
-  46 002c FFFF0000 		.word	65535
-  47 0030 00000000 		.word	0
-  48 0034 00       		.byte	0
-  49 0035 00       		.byte	0
-  50 0036 00       		.byte	0
-  51 0037 03       		.byte	3
-  52 0038 03       		.byte	3
-  53 0039 000000   		.space	3
-  54 003c 00000000 		.word	PWMSP001_DynamicData0
-  55 0040 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
-  56 0044 00000000 		.word	PWMSP001_lSetDutyEdgeAlign
-  57              		.bss
-  60              	PWMSP001_DynamicData0:
-  61 0000 00       		.space	1
-  62              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  16              		.global	PWMSP001_Handle1
+  17              		.global	PWMSP001_DynamicData1
+  18              		.global	PWMSP001_Handle0
+  19              		.global	PWMSP001_DynamicData0
+  20              		.section	.rodata
+  21              		.align	2
+  24              	PWMSP001_Handle1:
+  25 0000 01       		.byte	1
+  26 0001 00       		.byte	0
+  27 0002 0000     		.space	2
+  28 0004 04568541 		.word	1099257348
+  29 0008 1F4E0000 		.word	19999
+  30 000c 00       		.byte	0
+  31 000d 00       		.byte	0
+  32 000e 00       		.byte	0
+  33 000f 00       		.byte	0
+  34 0010 00       		.byte	0
+  35 0011 00       		.byte	0
+  36 0012 01       		.byte	1
+  37 0013 00       		.byte	0
+  38 0014 00400140 		.word	1073823744
+  39 0018 00430140 		.word	1073824512
+  40 001c 00430140 		.word	1073824512
+  41 0020 00       		.byte	0
+  42 0021 00       		.byte	0
+  43 0022 01       		.byte	1
+  44 0023 00       		.byte	0
+  45 0024 00       		.byte	0
+  46 0025 000000   		.space	3
+  47 0028 3E9C0000 		.word	39998
+  48 002c FFFF0000 		.word	65535
+  49 0030 00000000 		.word	0
+  50 0034 00       		.byte	0
+  51 0035 00       		.byte	0
+  52 0036 00       		.byte	0
+  53 0037 02       		.byte	2
+  54 0038 02       		.byte	2
+  55 0039 000000   		.space	3
+  56 003c 00000000 		.word	PWMSP001_DynamicData1
+  57 0040 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
+  58 0044 00000000 		.word	PWMSP001_lSetDutyEdgeAlign
+  61              	PWMSP001_Handle0:
+  62 0048 01       		.byte	1
+  63 0049 00       		.byte	0
+  64 004a 0000     		.space	2
+  65 004c 04568541 		.word	1099257348
+  66 0050 DC050000 		.word	1500
+  67 0054 00       		.byte	0
+  68 0055 00       		.byte	0
+  69 0056 00       		.byte	0
+  70 0057 00       		.byte	0
+  71 0058 00       		.byte	0
+  72 0059 00       		.byte	0
+  73 005a 01       		.byte	1
+  74 005b 00       		.byte	0
+  75 005c 00C00040 		.word	1073790976
+  76 0060 00C30040 		.word	1073791744
+  77 0064 00C30040 		.word	1073791744
+  78 0068 00       		.byte	0
+  79 0069 00       		.byte	0
+  80 006a 01       		.byte	1
+  81 006b 00       		.byte	0
+  82 006c 00       		.byte	0
+  83 006d 000000   		.space	3
+  84 0070 B70B0000 		.word	2999
+  85 0074 FFFF0000 		.word	65535
+  86 0078 00000000 		.word	0
+  87 007c 00       		.byte	0
+  88 007d 00       		.byte	0
+  89 007e 00       		.byte	0
+  90 007f 02       		.byte	2
+  91 0080 02       		.byte	2
+  92 0081 000000   		.space	3
+  93 0084 00000000 		.word	PWMSP001_DynamicData0
+  94 0088 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
+  95 008c 00000000 		.word	PWMSP001_lSetDutyEdgeAlign
+  96              		.bss
+  99              	PWMSP001_DynamicData1:
+ 100 0000 00       		.space	1
+ 103              	PWMSP001_DynamicData0:
+ 104 0001 00       		.space	1
+ 105              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccbsYO01.s:22     .rodata:00000000 PWMSP001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccbsYO01.s:60     .bss:00000000 PWMSP001_DynamicData0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccbsYO01.s:19     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccbsYO01.s:61     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:24     .rodata:00000000 PWMSP001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:99     .bss:00000000 PWMSP001_DynamicData1
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:61     .rodata:00000048 PWMSP001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:103    .bss:00000001 PWMSP001_DynamicData0
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:21     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cclijidr.s:100    .bss:00000000 $d
 
 UNDEFINED SYMBOLS
 PWMSP001_lSetCompareEdgeAlign

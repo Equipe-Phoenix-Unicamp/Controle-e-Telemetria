@@ -14,24 +14,32 @@
   14              		.thumb
   15              		.file	"ERU002_Conf.c"
   16              		.global	ERU002_HandleArray
-  17              		.global	ERU002_Handle0
-  18              		.section	.rodata
-  19              		.align	2
-  22              	ERU002_Handle0:
-  23 0000 00480050 		.word	1342195712
-  24 0004 03000000 		.word	3
-  25 0008 00000000 		.word	0
-  26 000c 00000000 		.word	0
-  27              		.data
-  28              		.align	2
-  31              	ERU002_HandleArray:
-  32 0000 00000000 		.word	ERU002_Handle0
-  33              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  17              		.global	ERU002_Handle1
+  18              		.global	ERU002_Handle0
+  19              		.section	.rodata
+  20              		.align	2
+  23              	ERU002_Handle1:
+  24 0000 00480050 		.word	1342195712
+  25 0004 03000000 		.word	3
+  26 0008 00000000 		.word	0
+  27 000c 00000000 		.word	0
+  30              	ERU002_Handle0:
+  31 0010 00400440 		.word	1074020352
+  32 0014 00000000 		.word	0
+  33 0018 00000000 		.word	0
+  34 001c 00000000 		.word	0
+  35              		.data
+  36              		.align	2
+  39              	ERU002_HandleArray:
+  40 0000 00000000 		.word	ERU002_Handle0
+  41 0004 00000000 		.word	ERU002_Handle1
+  42              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 ERU002_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\cca3o9ad.s:31     .data:00000000 ERU002_HandleArray
-C:\Users\JMASS_~1\AppData\Local\Temp\cca3o9ad.s:22     .rodata:00000000 ERU002_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\cca3o9ad.s:19     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cca3o9ad.s:28     .data:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwvDnm8.s:39     .data:00000000 ERU002_HandleArray
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwvDnm8.s:23     .rodata:00000000 ERU002_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwvDnm8.s:30     .rodata:00000010 ERU002_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwvDnm8.s:20     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwvDnm8.s:36     .data:00000000 $d
 
 NO UNDEFINED SYMBOLS

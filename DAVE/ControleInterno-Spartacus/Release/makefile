@@ -39,47 +39,47 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 SECONDARY_FLASH += \
-Feather-PonteH.hex \
+ControleInterno-Spartacus.hex \
 
 SECONDARY_LIST += \
-Feather-PonteH.lst \
+ControleInterno-Spartacus.lst \
 
 SECONDARY_SIZE += \
-Feather-PonteH.siz \
+ControleInterno-Spartacus.siz \
 
 
 # All Target
-all: Feather-PonteH.elf secondary-outputs
+all: ControleInterno-Spartacus.elf secondary-outputs
 
 # Tool invocations
-Feather-PonteH.elf: $(OBJS) ../Feather-PonteH.ld $(USER_OBJS)
+ControleInterno-Spartacus.elf: $(OBJS) ../ControleInterno-Spartacus.ld $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM-GCC C Linker'
-	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-gcc" -T"../Feather-PonteH.ld" -nostartfiles -L"C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/Lib" -L"C:\DAVE-3.1.10\eclipse\/../Examples/Lib" -L"C:\DAVE-3.1.10\eclipse\/../emWin/Start/GUI" -Wl,-Map,"Feather-PonteH.map" -mcpu=cortex-m4 -mthumb -o "Feather-PonteH.elf" "@makefile.rsp" $(USER_OBJS) $(LIBS)
+	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-gcc" -T"../ControleInterno-Spartacus.ld" -nostartfiles -L"C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/Lib" -L"C:\DAVE-3.1.10\eclipse\/../Examples/Lib" -L"C:\DAVE-3.1.10\eclipse\/../emWin/Start/GUI" -Wl,-Map,"ControleInterno-Spartacus.map" -mcpu=cortex-m4 -mthumb -o "ControleInterno-Spartacus.elf" "@makefile.rsp" $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-Feather-PonteH.hex: Feather-PonteH.elf
+ControleInterno-Spartacus.hex: ControleInterno-Spartacus.elf
 	@echo 'Invoking: ARM-GCC Create Flash Image'
-	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-objcopy" -O ihex "Feather-PonteH.elf"  "Feather-PonteH.hex"
+	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-objcopy" -O ihex "ControleInterno-Spartacus.elf"  "ControleInterno-Spartacus.hex"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Feather-PonteH.lst: Feather-PonteH.elf
+ControleInterno-Spartacus.lst: ControleInterno-Spartacus.elf
 	@echo 'Invoking: ARM-GCC Create Listing'
-	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-objdump" -h -S "Feather-PonteH.elf" > "Feather-PonteH.lst"
+	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-objdump" -h -S "ControleInterno-Spartacus.elf" > "ControleInterno-Spartacus.lst"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Feather-PonteH.siz: Feather-PonteH.elf
+ControleInterno-Spartacus.siz: ControleInterno-Spartacus.elf
 	@echo 'Invoking: ARM-GCC Print Size'
-	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-size"  --format=berkeley Feather-PonteH.elf
+	"C:\DAVE-3.1.10\ARM-GCC/bin/arm-none-eabi-size"  --format=berkeley ControleInterno-Spartacus.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(SECONDARY_FLASH)$(S_DEPS)$(ARM_GCC_FOR_XMC_LINKER_OUTPUT_TYPE_OUTPUTS)$(SECONDARY_LIST) Feather-PonteH.elf
+	-$(RM) $(SECONDARY_SIZE)$(OBJS)$(C_DEPS)$(SECONDARY_FLASH)$(S_DEPS)$(ARM_GCC_FOR_XMC_LINKER_OUTPUT_TYPE_OUTPUTS)$(SECONDARY_LIST) ControleInterno-Spartacus.elf
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_LIST) $(SECONDARY_SIZE)

@@ -22,7 +22,7 @@
   23              		@ args = 0, pretend = 0, frame = 0
   24              		@ frame_needed = 0, uses_anonymous_args = 0
   25              		@ link register save eliminated.
-  26 0000 1B4B     		ldr	r3, .L2
+  26 0000 354B     		ldr	r3, .L2
   27 0002 1A68     		ldr	r2, [r3, #0]
   28 0004 22F44070 		bic	r0, r2, #768
   29 0008 40F48071 		orr	r1, r0, #256
@@ -34,64 +34,97 @@
   35 0018 21F07002 		bic	r2, r1, #112
   36 001c 42F03000 		orr	r0, r2, #48
   37 0020 9861     		str	r0, [r3, #24]
-  38 0022 144B     		ldr	r3, .L2+4
-  39 0024 1448     		ldr	r0, .L2+8
-  40 0026 1968     		ldr	r1, [r3, #0]
-  41 0028 41F00F02 		orr	r2, r1, #15
-  42 002c 1A60     		str	r2, [r3, #0]
-  43 002e 0369     		ldr	r3, [r0, #16]
-  44 0030 43F40001 		orr	r1, r3, #8388608
-  45 0034 0161     		str	r1, [r0, #16]
-  46 0036 4269     		ldr	r2, [r0, #20]
-  47 0038 42F40003 		orr	r3, r2, #8388608
-  48 003c 4361     		str	r3, [r0, #20]
-  49 003e C169     		ldr	r1, [r0, #28]
-  50 0040 21F0B802 		bic	r2, r1, #184
-  51 0044 42F09803 		orr	r3, r2, #152
-  52 0048 C361     		str	r3, [r0, #28]
-  53 004a D0F81011 		ldr	r1, [r0, #272]
-  54 004e 41F08002 		orr	r2, r1, #128
-  55 0052 C0F81021 		str	r2, [r0, #272]
-  56 0056 D0F81031 		ldr	r3, [r0, #272]
-  57 005a 43F40041 		orr	r1, r3, #32768
-  58 005e C0F81011 		str	r1, [r0, #272]
-  59 0062 D0F81821 		ldr	r2, [r0, #280]
-  60 0066 42F40043 		orr	r3, r2, #32768
-  61 006a C0F81831 		str	r3, [r0, #280]
-  62 006e 7047     		bx	lr
-  63              	.L3:
-  64              		.align	2
-  65              	.L2:
-  66 0070 00480050 		.word	1342195712
-  67 0074 00C20040 		.word	1073791488
-  68 0078 00800248 		.word	1208123392
-  70              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
-  71              		.align	1
-  72              		.global	DAVE_MUX_PreInit
-  73              		.thumb
-  74              		.thumb_func
-  76              	DAVE_MUX_PreInit:
-  77              		@ args = 0, pretend = 0, frame = 0
-  78              		@ frame_needed = 0, uses_anonymous_args = 0
-  79              		@ link register save eliminated.
-  80 0000 034B     		ldr	r3, .L5
-  81 0002 5A6F     		ldr	r2, [r3, #116]
-  82 0004 22F44030 		bic	r0, r2, #196608
-  83 0008 40F40031 		orr	r1, r0, #131072
-  84 000c 5967     		str	r1, [r3, #116]
-  85 000e 7047     		bx	lr
-  86              	.L6:
-  87              		.align	2
-  88              	.L5:
-  89 0010 00800248 		.word	1208123392
-  91              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  38 0022 2E4B     		ldr	r3, .L2+4
+  39 0024 2E48     		ldr	r0, .L2+8
+  40 0026 1969     		ldr	r1, [r3, #16]
+  41 0028 41F00102 		orr	r2, r1, #1
+  42 002c 1A61     		str	r2, [r3, #16]
+  43 002e 0368     		ldr	r3, [r0, #0]
+  44 0030 23F00F01 		bic	r1, r3, #15
+  45 0034 41F00E02 		orr	r2, r1, #14
+  46 0038 0260     		str	r2, [r0, #0]
+  47 003a 2A48     		ldr	r0, .L2+12
+  48 003c 436F     		ldr	r3, [r0, #116]
+  49 003e 23F44041 		bic	r1, r3, #49152
+  50 0042 4167     		str	r1, [r0, #116]
+  51 0044 4269     		ldr	r2, [r0, #20]
+  52 0046 42F00043 		orr	r3, r2, #-2147483648
+  53 004a 4361     		str	r3, [r0, #20]
+  54 004c C169     		ldr	r1, [r0, #28]
+  55 004e 21F03842 		bic	r2, r1, #-1207959552
+  56 0052 42F01843 		orr	r3, r2, #-1744830464
+  57 0056 C361     		str	r3, [r0, #28]
+  58 0058 00F58070 		add	r0, r0, #256
+  59 005c 0169     		ldr	r1, [r0, #16]
+  60 005e 41F08002 		orr	r2, r1, #128
+  61 0062 0261     		str	r2, [r0, #16]
+  62 0064 0369     		ldr	r3, [r0, #16]
+  63 0066 23F43841 		bic	r1, r3, #47104
+  64 006a 41F41842 		orr	r2, r1, #38912
+  65 006e 0261     		str	r2, [r0, #16]
+  66 0070 0369     		ldr	r3, [r0, #16]
+  67 0072 43F40001 		orr	r1, r3, #8388608
+  68 0076 0161     		str	r1, [r0, #16]
+  69 0078 0269     		ldr	r2, [r0, #16]
+  70 007a 42F00043 		orr	r3, r2, #-2147483648
+  71 007e 0361     		str	r3, [r0, #16]
+  72 0080 8169     		ldr	r1, [r0, #24]
+  73 0082 41F08002 		orr	r2, r1, #128
+  74 0086 8261     		str	r2, [r0, #24]
+  75 0088 D0F81031 		ldr	r3, [r0, #272]
+  76 008c 43F40001 		orr	r1, r3, #8388608
+  77 0090 C0F81011 		str	r1, [r0, #272]
+  78 0094 D0F81421 		ldr	r2, [r0, #276]
+  79 0098 42F08003 		orr	r3, r2, #128
+  80 009c C0F81431 		str	r3, [r0, #276]
+  81 00a0 D0F81411 		ldr	r1, [r0, #276]
+  82 00a4 41F40042 		orr	r2, r1, #32768
+  83 00a8 C0F81421 		str	r2, [r0, #276]
+  84 00ac D0F81831 		ldr	r3, [r0, #280]
+  85 00b0 43F08001 		orr	r1, r3, #128
+  86 00b4 C0F81811 		str	r1, [r0, #280]
+  87 00b8 D0F81022 		ldr	r2, [r0, #528]
+  88 00bc 42F00043 		orr	r3, r2, #-2147483648
+  89 00c0 C0F81032 		str	r3, [r0, #528]
+  90 00c4 D0F81412 		ldr	r1, [r0, #532]
+  91 00c8 21F0B802 		bic	r2, r1, #184
+  92 00cc 42F09803 		orr	r3, r2, #152
+  93 00d0 C0F81432 		str	r3, [r0, #532]
+  94 00d4 7047     		bx	lr
+  95              	.L3:
+  96 00d6 00BF     		.align	2
+  97              	.L2:
+  98 00d8 00480050 		.word	1342195712
+  99 00dc 00400440 		.word	1074020352
+ 100 00e0 00C20040 		.word	1073791488
+ 101 00e4 00800248 		.word	1208123392
+ 103              		.section	.text.DAVE_MUX_PreInit,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	DAVE_MUX_PreInit
+ 106              		.thumb
+ 107              		.thumb_func
+ 109              	DAVE_MUX_PreInit:
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 0, uses_anonymous_args = 0
+ 112              		@ link register save eliminated.
+ 113 0000 034B     		ldr	r3, .L5
+ 114 0002 5A6F     		ldr	r2, [r3, #116]
+ 115 0004 22F44030 		bic	r0, r2, #196608
+ 116 0008 40F40031 		orr	r1, r0, #131072
+ 117 000c 5967     		str	r1, [r3, #116]
+ 118 000e 7047     		bx	lr
+ 119              	.L6:
+ 120              		.align	2
+ 121              	.L5:
+ 122 0010 00800248 		.word	1208123392
+ 124              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 MULTIPLEXER.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:17     .text.DAVE_MUX_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:66     .text.DAVE_MUX_Init:00000070 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:71     .text.DAVE_MUX_PreInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:76     .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccAJZyWB.s:89     .text.DAVE_MUX_PreInit:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:17     .text.DAVE_MUX_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:22     .text.DAVE_MUX_Init:00000000 DAVE_MUX_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:98     .text.DAVE_MUX_Init:000000d8 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:104    .text.DAVE_MUX_PreInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:109    .text.DAVE_MUX_PreInit:00000000 DAVE_MUX_PreInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccMgZyCy.s:122    .text.DAVE_MUX_PreInit:00000010 $d
 
 NO UNDEFINED SYMBOLS

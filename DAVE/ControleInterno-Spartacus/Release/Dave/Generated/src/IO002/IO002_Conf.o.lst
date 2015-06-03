@@ -14,41 +14,66 @@
   14              		.thumb
   15              		.file	"IO002_Conf.c"
   16              		.global	IO002_HandleArr
-  17              		.global	IO002_Handle0
-  18              		.section	.rodata
-  19              		.align	2
-  22              	IO002_Handle0:
-  23 0000 00       		.byte	0
-  24 0001 08       		.byte	8
-  25 0002 0000     		.space	2
-  26 0004 00000000 		.word	0
-  27 0008 00000000 		.word	0
-  28 000c 00000000 		.word	0
-  29 0010 00000000 		.word	0
-  30 0014 00000000 		.word	0
-  31 0018 00000000 		.word	0
-  32 001c 00000000 		.word	0
-  33 0020 00000000 		.word	0
-  34 0024 00000000 		.word	0
-  35 0028 00000000 		.space	8
-  35      00000000 
-  36 0030 07000000 		.word	7
-  37 0034 00000000 		.word	0
-  38 0038 00000000 		.space	8
-  38      00000000 
-  39 0040 00800248 		.word	1208123392
-  40 0044 00000000 		.space	4
-  41 0048 44800248 		.word	1208123460
-  42              		.data
-  43              		.align	2
-  46              	IO002_HandleArr:
-  47 0000 00000000 		.word	IO002_Handle0
-  48              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  17              		.global	IO002_Handle1
+  18              		.global	IO002_Handle0
+  19              		.section	.rodata
+  20              		.align	2
+  23              	IO002_Handle1:
+  24 0000 00       		.byte	0
+  25 0001 08       		.byte	8
+  26 0002 0000     		.space	2
+  27 0004 00000000 		.word	0
+  28 0008 00000000 		.word	0
+  29 000c 00000000 		.word	0
+  30 0010 00000000 		.word	0
+  31 0014 00000000 		.word	0
+  32 0018 00000000 		.word	0
+  33 001c 00000000 		.word	0
+  34 0020 00000000 		.word	0
+  35 0024 00000000 		.word	0
+  36 0028 00000000 		.space	8
+  36      00000000 
+  37 0030 07000000 		.word	7
+  38 0034 00000000 		.word	0
+  39 0038 00000000 		.space	8
+  39      00000000 
+  40 0040 00800248 		.word	1208123392
+  41 0044 00000000 		.space	4
+  42 0048 44800248 		.word	1208123460
+  45              	IO002_Handle0:
+  46 004c 01       		.byte	1
+  47 004d 05       		.byte	5
+  48 004e 0000     		.space	2
+  49 0050 00000000 		.word	0
+  50 0054 00000000 		.word	0
+  51 0058 00000000 		.word	0
+  52 005c 00000000 		.word	0
+  53 0060 00000000 		.word	0
+  54 0064 00000000 		.word	0
+  55 0068 00000000 		.word	0
+  56 006c 00000000 		.word	0
+  57 0070 00000000 		.word	0
+  58 0074 00007000 		.word	7340032
+  59 0078 14000000 		.word	20
+  60 007c 00000000 		.space	16
+  60      00000000 
+  60      00000000 
+  60      00000000 
+  61 008c 00810248 		.word	1208123648
+  62 0090 40810248 		.word	1208123712
+  63 0094 00000000 		.space	4
+  64              		.data
+  65              		.align	2
+  68              	IO002_HandleArr:
+  69 0000 00000000 		.word	IO002_Handle0
+  70 0004 00000000 		.word	IO002_Handle1
+  71              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 IO002_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccjNnekn.s:46     .data:00000000 IO002_HandleArr
-C:\Users\JMASS_~1\AppData\Local\Temp\ccjNnekn.s:22     .rodata:00000000 IO002_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccjNnekn.s:19     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccjNnekn.s:43     .data:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCzIq7H.s:68     .data:00000000 IO002_HandleArr
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCzIq7H.s:23     .rodata:00000000 IO002_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCzIq7H.s:45     .rodata:0000004c IO002_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCzIq7H.s:20     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccCzIq7H.s:65     .data:00000000 $d
 
 NO UNDEFINED SYMBOLS

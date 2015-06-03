@@ -478,38 +478,38 @@
  508              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 CNT001.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:17     .text.CNT001_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:22     .text.CNT001_lInit:00000000 CNT001_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:116    .text.CNT001_Deinit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:121    .text.CNT001_Deinit:00000000 CNT001_Deinit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:160    .text.CNT001_Deinit:0000004c $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:163    .text.CNT001_Start:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:168    .text.CNT001_Start:00000000 CNT001_Start
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:195    .text.CNT001_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:200    .text.CNT001_Init:00000000 CNT001_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:220    .text.CNT001_Init:00000024 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:223    .text.CNT001_Stop:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:228    .text.CNT001_Stop:00000000 CNT001_Stop
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:259    .text.CNT001_GetEvtCountValue:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:264    .text.CNT001_GetEvtCountValue:00000000 CNT001_GetEvtCountValue
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:282    .text.CNT001_GetCountMatch:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:287    .text.CNT001_GetCountMatch:00000000 CNT001_GetCountMatch
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:303    .text.CNT001_SetCountMatch:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:308    .text.CNT001_SetCountMatch:00000000 CNT001_SetCountMatch
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:341    .text.CNT001_GetTimerStatus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:346    .text.CNT001_GetTimerStatus:00000000 CNT001_GetTimerStatus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:364    .text.CNT001_EnableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:369    .text.CNT001_EnableEvent:00000000 CNT001_EnableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:387    .text.CNT001_DisableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:392    .text.CNT001_DisableEvent:00000000 CNT001_DisableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:410    .text.CNT001_ClearPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:415    .text.CNT001_ClearPendingEvent:00000000 CNT001_ClearPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:433    .text.CNT001_SetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:438    .text.CNT001_SetPendingEvent:00000000 CNT001_SetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:456    .text.CNT001_GetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:461    .text.CNT001_GetPendingEvent:00000000 CNT001_GetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:486    .text.CNT001_ResetCounter:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccr0gpje.s:491    .text.CNT001_ResetCounter:00000000 CNT001_ResetCounter
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:17     .text.CNT001_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:22     .text.CNT001_lInit:00000000 CNT001_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:116    .text.CNT001_Deinit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:121    .text.CNT001_Deinit:00000000 CNT001_Deinit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:160    .text.CNT001_Deinit:0000004c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:163    .text.CNT001_Start:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:168    .text.CNT001_Start:00000000 CNT001_Start
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:195    .text.CNT001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:200    .text.CNT001_Init:00000000 CNT001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:220    .text.CNT001_Init:00000024 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:223    .text.CNT001_Stop:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:228    .text.CNT001_Stop:00000000 CNT001_Stop
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:259    .text.CNT001_GetEvtCountValue:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:264    .text.CNT001_GetEvtCountValue:00000000 CNT001_GetEvtCountValue
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:282    .text.CNT001_GetCountMatch:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:287    .text.CNT001_GetCountMatch:00000000 CNT001_GetCountMatch
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:303    .text.CNT001_SetCountMatch:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:308    .text.CNT001_SetCountMatch:00000000 CNT001_SetCountMatch
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:341    .text.CNT001_GetTimerStatus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:346    .text.CNT001_GetTimerStatus:00000000 CNT001_GetTimerStatus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:364    .text.CNT001_EnableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:369    .text.CNT001_EnableEvent:00000000 CNT001_EnableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:387    .text.CNT001_DisableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:392    .text.CNT001_DisableEvent:00000000 CNT001_DisableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:410    .text.CNT001_ClearPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:415    .text.CNT001_ClearPendingEvent:00000000 CNT001_ClearPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:433    .text.CNT001_SetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:438    .text.CNT001_SetPendingEvent:00000000 CNT001_SetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:456    .text.CNT001_GetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:461    .text.CNT001_GetPendingEvent:00000000 CNT001_GetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:486    .text.CNT001_ResetCounter:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccBK8AGD.s:491    .text.CNT001_ResetCounter:00000000 CNT001_ResetCounter
 
 UNDEFINED SYMBOLS
 CCU4GLOBAL_Init

@@ -82,19 +82,12 @@
 #define PWM_MOTOR_RIGHT &PWMSP001_Handle0
 #define PWM_MOTOR_LEFT &PWMSP001_Handle1
 #define FREQ_MOTOR_LOCOMOTION 20000 //Hz
-// Defines referentes aos sinais PWM para os ESCs
 
-//#define PER_MOTOR_LOCOMOTION (1.0f/FREQ_MOTOR_LOCOMOTION) //s
-//#define MAX_PER_MOTOR_LOCOMOTION 0.002f //s
-//#define MIN_PER_MOTOR_LOCOMOTION 0.001f //s
-//#define ZERO_PER_MOTOR_LOCOMOTION 0.0015f //s
-//#define FREQ_MOTOR_WEAPON 60 //Hz
-//#define PER_MOTOR_WEAPON (1.0f/FREQ_MOTOR_WEAPON) //s
-//#define MAX_PER_MOTOR_WEAPON 0.002f //s
-//#define MIN_PER_MOTOR_WEAPON 0.001f //s
-//#define ZERO_PER_MOTOR_WEAPON 0.001f //s
-//#define PWM_MOTOR_WEAPON &PWMSP001_Handle2
-//#define PWM_MOTOR_CUT_OFF 20
+
+//Defines referentes ao fail safe
+#define RUNNING 1
+#define FAIL 0
+
 //==============================
 
 /***************************************************/
@@ -114,6 +107,7 @@ void configure_R(void);
 void read_R(void);
 void update_driver_signals(void);
 void delay(long unsigned int i);
+void start_driver_signals(void);
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -122,7 +116,13 @@ void delay(long unsigned int i);
 char configuration[15];
 unsigned char data_R[BYTES_TO_RECEIVE];
 uint32_t ticks = 0UL;
+uint32_t status_ticks = 0UL;
 bool value = 0UL;
+
+
+/***************************************************/
+/***********************MAIN************************/
+/***************************************************/
 
 int main(void) {
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
@@ -134,19 +134,20 @@ int main(void) {
 	configure_R();
 
 	ticks = 0;
-
-	PWMSP001_Start(PWM_MOTOR_RIGHT);
-	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, 25.0f);
-
-	PWMSP001_Start(PWM_MOTOR_LEFT);
-	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, 25.0f);
+	status_ticks = 0;
+	char status = RUNNING;
+	start_driver_signals();
 
 	while (1) {
 		if (IO004_ReadPin(DR1)) {
+			status_ticks = 0;
 			read_R();
 			update_driver_signals();
+		} else {
+			if (status_ticks > 5000) { //0.5s
+				status = FAIL;
+				start_driver_signals();
+			}
 		}
 	}
 	return 0;
@@ -163,6 +164,18 @@ void WakeUp(void) {
 	/*IO004_SetPin(IO004_Handle2);
 	 delayms(1);
 	 IO004_TogglePin(IO004_Handle2);*/
+
+}
+
+void start_driver_signals(void) {
+
+	PWMSP001_Start(PWM_MOTOR_RIGHT);
+	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, PWM_DUTY_LIM_MIN);
+
+	PWMSP001_Start(PWM_MOTOR_LEFT);
+	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, PWM_DUTY_LIM_MIN);
 
 }
 
@@ -214,32 +227,6 @@ void update_driver_signals(void) {
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, duty_motor_left);
 
-}
-
-void Software_Timers_Init() {
-	handle_t TaskTimerId;
-
-	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
-			SYSTM002_PERIODIC, &Tick_Handler, NULL);
-	if (TaskTimerId != 0) {
-//Timer created successfully so start it
-		SYSTM002_StartTimer(TaskTimerId);
-	}
-}
-
-void delayus(uint32_t delay_us) {
-	uint32_t currenttick = ticks;
-	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
-		;
-	ticks = 0;
-}
-
-void delayms(uint32_t delay_ms) {
-	delayus(1000 * delay_ms);
-}
-
-void Tick_Handler(void) {
-	ticks++;
 }
 
 void Testando_Handler(void) {
@@ -330,8 +317,35 @@ void configure_R() {
 }
 
 /***************************************************/
-/*****************FUNCOES GERAIS********************/
+/****************FUNCOES TEMPORAIS******************/
 /***************************************************/
+
+void Software_Timers_Init() {
+	handle_t TaskTimerId;
+
+	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+	if (TaskTimerId != 0) {
+//Timer created successfully so start it
+		SYSTM002_StartTimer(TaskTimerId);
+	}
+}
+
+void delayus(uint32_t delay_us) {
+	uint32_t currenttick = ticks;
+	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+		;
+	ticks = 0;
+}
+
+void delayms(uint32_t delay_ms) {
+	delayus(1000 * delay_ms);
+}
+
+void Tick_Handler(void) {
+	ticks++;
+	status_ticks++;
+}
 
 void delay(long unsigned int i) {
 	while (i--) {

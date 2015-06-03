@@ -60,132 +60,135 @@
   63              	ERU002_Init:
   64              		@ args = 0, pretend = 0, frame = 0
   65              		@ frame_needed = 0, uses_anonymous_args = 0
-  66              		@ link register save eliminated.
-  67 0000 014B     		ldr	r3, .L9
-  68 0002 1868     		ldr	r0, [r3, #0]
-  69 0004 FFF7FEBF 		b	ERU002_lInit
-  70              	.L10:
-  71              		.align	2
-  72              	.L9:
-  73 0008 00000000 		.word	ERU002_HandleArray
-  75              		.section	.text.ERU002_SetPeripheralTrigInputSrc,"ax",%progbits
-  76              		.align	1
-  77              		.global	ERU002_SetPeripheralTrigInputSrc
-  78              		.thumb
-  79              		.thumb_func
-  81              	ERU002_SetPeripheralTrigInputSrc:
-  82              		@ args = 0, pretend = 0, frame = 0
-  83              		@ frame_needed = 0, uses_anonymous_args = 0
-  84              		@ link register save eliminated.
-  85 0000 0329     		cmp	r1, #3
-  86 0002 0368     		ldr	r3, [r0, #0]
-  87 0004 0BD8     		bhi	.L14
-  88 0006 53B1     		cbz	r3, .L14
-  89 0008 4268     		ldr	r2, [r0, #4]
-  90 000a 0832     		adds	r2, r2, #8
-  91 000c 53F82200 		ldr	r0, [r3, r2, lsl #2]
-  92 0010 20F00300 		bic	r0, r0, #3
-  93 0014 0143     		orrs	r1, r1, r0
-  94 0016 43F82210 		str	r1, [r3, r2, lsl #2]
-  95 001a 0120     		movs	r0, #1
-  96 001c 7047     		bx	lr
-  97              	.L14:
-  98 001e 0F20     		movs	r0, #15
-  99 0020 7047     		bx	lr
- 101              		.section	.text.ERU002_GetPatternResult,"ax",%progbits
- 102              		.align	1
- 103              		.global	ERU002_GetPatternResult
- 104              		.thumb
- 105              		.thumb_func
- 107              	ERU002_GetPatternResult:
- 108              		@ args = 0, pretend = 0, frame = 16
- 109              		@ frame_needed = 0, uses_anonymous_args = 0
- 110 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
- 111 0002 04AC     		add	r4, sp, #16
- 112 0004 04E90F00 		stmdb	r4, {r0, r1, r2, r3}
- 113 0008 019B     		ldr	r3, [sp, #4]
- 114 000a 0098     		ldr	r0, [sp, #0]
- 115 000c 03F10802 		add	r2, r3, #8
- 116 0010 50F82210 		ldr	r1, [r0, r2, lsl #2]
- 117 0014 C1F3C000 		ubfx	r0, r1, #3, #1
- 118 0018 04B0     		add	sp, sp, #16
- 119 001a 10BD     		pop	{r4, pc}
- 121              		.section	.text.ERU002_EnablePatternDetection,"ax",%progbits
- 122              		.align	1
- 123              		.global	ERU002_EnablePatternDetection
- 124              		.thumb
- 125              		.thumb_func
- 127              	ERU002_EnablePatternDetection:
- 128              		@ args = 0, pretend = 0, frame = 0
- 129              		@ frame_needed = 0, uses_anonymous_args = 0
- 130              		@ link register save eliminated.
- 131 0000 40B1     		cbz	r0, .L16
- 132 0002 4268     		ldr	r2, [r0, #4]
- 133 0004 0368     		ldr	r3, [r0, #0]
- 134 0006 0832     		adds	r2, r2, #8
- 135 0008 53F82210 		ldr	r1, [r3, r2, lsl #2]
- 136 000c 41F00400 		orr	r0, r1, #4
- 137 0010 43F82200 		str	r0, [r3, r2, lsl #2]
- 138              	.L16:
- 139 0014 7047     		bx	lr
- 141              		.section	.text.ERU002_DisablePatternDetection,"ax",%progbits
- 142              		.align	1
- 143              		.global	ERU002_DisablePatternDetection
- 144              		.thumb
- 145              		.thumb_func
- 147              	ERU002_DisablePatternDetection:
- 148              		@ args = 0, pretend = 0, frame = 0
- 149              		@ frame_needed = 0, uses_anonymous_args = 0
- 150              		@ link register save eliminated.
- 151 0000 40B1     		cbz	r0, .L21
- 152 0002 4268     		ldr	r2, [r0, #4]
- 153 0004 0368     		ldr	r3, [r0, #0]
- 154 0006 0832     		adds	r2, r2, #8
- 155 0008 53F82210 		ldr	r1, [r3, r2, lsl #2]
- 156 000c 21F00400 		bic	r0, r1, #4
- 157 0010 43F82200 		str	r0, [r3, r2, lsl #2]
- 158              	.L21:
- 159 0014 7047     		bx	lr
- 161              		.section	.text.ERU002_SelectServiceRequestMode,"ax",%progbits
- 162              		.align	1
- 163              		.global	ERU002_SelectServiceRequestMode
- 164              		.thumb
- 165              		.thumb_func
- 167              	ERU002_SelectServiceRequestMode:
- 168              		@ args = 0, pretend = 0, frame = 0
- 169              		@ frame_needed = 0, uses_anonymous_args = 0
- 170              		@ link register save eliminated.
- 171 0000 60B1     		cbz	r0, .L26
- 172 0002 4268     		ldr	r2, [r0, #4]
- 173 0004 0368     		ldr	r3, [r0, #0]
- 174 0006 0832     		adds	r2, r2, #8
- 175 0008 0901     		lsls	r1, r1, #4
- 176 000a 53F82200 		ldr	r0, [r3, r2, lsl #2]
- 177 000e 01F03001 		and	r1, r1, #48
- 178 0012 20F03000 		bic	r0, r0, #48
- 179 0016 0143     		orrs	r1, r1, r0
- 180 0018 43F82210 		str	r1, [r3, r2, lsl #2]
- 181              	.L26:
- 182 001c 7047     		bx	lr
- 184              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  66 0000 10B5     		push	{r4, lr}
+  67 0002 044C     		ldr	r4, .L9
+  68 0004 2068     		ldr	r0, [r4, #0]
+  69 0006 FFF7FEFF 		bl	ERU002_lInit
+  70 000a 6068     		ldr	r0, [r4, #4]
+  71 000c BDE81040 		pop	{r4, lr}
+  72 0010 FFF7FEBF 		b	ERU002_lInit
+  73              	.L10:
+  74              		.align	2
+  75              	.L9:
+  76 0014 00000000 		.word	ERU002_HandleArray
+  78              		.section	.text.ERU002_SetPeripheralTrigInputSrc,"ax",%progbits
+  79              		.align	1
+  80              		.global	ERU002_SetPeripheralTrigInputSrc
+  81              		.thumb
+  82              		.thumb_func
+  84              	ERU002_SetPeripheralTrigInputSrc:
+  85              		@ args = 0, pretend = 0, frame = 0
+  86              		@ frame_needed = 0, uses_anonymous_args = 0
+  87              		@ link register save eliminated.
+  88 0000 0329     		cmp	r1, #3
+  89 0002 0368     		ldr	r3, [r0, #0]
+  90 0004 0BD8     		bhi	.L14
+  91 0006 53B1     		cbz	r3, .L14
+  92 0008 4268     		ldr	r2, [r0, #4]
+  93 000a 0832     		adds	r2, r2, #8
+  94 000c 53F82200 		ldr	r0, [r3, r2, lsl #2]
+  95 0010 20F00300 		bic	r0, r0, #3
+  96 0014 0143     		orrs	r1, r1, r0
+  97 0016 43F82210 		str	r1, [r3, r2, lsl #2]
+  98 001a 0120     		movs	r0, #1
+  99 001c 7047     		bx	lr
+ 100              	.L14:
+ 101 001e 0F20     		movs	r0, #15
+ 102 0020 7047     		bx	lr
+ 104              		.section	.text.ERU002_GetPatternResult,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	ERU002_GetPatternResult
+ 107              		.thumb
+ 108              		.thumb_func
+ 110              	ERU002_GetPatternResult:
+ 111              		@ args = 0, pretend = 0, frame = 16
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113 0000 1FB5     		push	{r0, r1, r2, r3, r4, lr}
+ 114 0002 04AC     		add	r4, sp, #16
+ 115 0004 04E90F00 		stmdb	r4, {r0, r1, r2, r3}
+ 116 0008 019B     		ldr	r3, [sp, #4]
+ 117 000a 0098     		ldr	r0, [sp, #0]
+ 118 000c 03F10802 		add	r2, r3, #8
+ 119 0010 50F82210 		ldr	r1, [r0, r2, lsl #2]
+ 120 0014 C1F3C000 		ubfx	r0, r1, #3, #1
+ 121 0018 04B0     		add	sp, sp, #16
+ 122 001a 10BD     		pop	{r4, pc}
+ 124              		.section	.text.ERU002_EnablePatternDetection,"ax",%progbits
+ 125              		.align	1
+ 126              		.global	ERU002_EnablePatternDetection
+ 127              		.thumb
+ 128              		.thumb_func
+ 130              	ERU002_EnablePatternDetection:
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              		@ link register save eliminated.
+ 134 0000 40B1     		cbz	r0, .L16
+ 135 0002 4268     		ldr	r2, [r0, #4]
+ 136 0004 0368     		ldr	r3, [r0, #0]
+ 137 0006 0832     		adds	r2, r2, #8
+ 138 0008 53F82210 		ldr	r1, [r3, r2, lsl #2]
+ 139 000c 41F00400 		orr	r0, r1, #4
+ 140 0010 43F82200 		str	r0, [r3, r2, lsl #2]
+ 141              	.L16:
+ 142 0014 7047     		bx	lr
+ 144              		.section	.text.ERU002_DisablePatternDetection,"ax",%progbits
+ 145              		.align	1
+ 146              		.global	ERU002_DisablePatternDetection
+ 147              		.thumb
+ 148              		.thumb_func
+ 150              	ERU002_DisablePatternDetection:
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              		@ link register save eliminated.
+ 154 0000 40B1     		cbz	r0, .L21
+ 155 0002 4268     		ldr	r2, [r0, #4]
+ 156 0004 0368     		ldr	r3, [r0, #0]
+ 157 0006 0832     		adds	r2, r2, #8
+ 158 0008 53F82210 		ldr	r1, [r3, r2, lsl #2]
+ 159 000c 21F00400 		bic	r0, r1, #4
+ 160 0010 43F82200 		str	r0, [r3, r2, lsl #2]
+ 161              	.L21:
+ 162 0014 7047     		bx	lr
+ 164              		.section	.text.ERU002_SelectServiceRequestMode,"ax",%progbits
+ 165              		.align	1
+ 166              		.global	ERU002_SelectServiceRequestMode
+ 167              		.thumb
+ 168              		.thumb_func
+ 170              	ERU002_SelectServiceRequestMode:
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		@ link register save eliminated.
+ 174 0000 60B1     		cbz	r0, .L26
+ 175 0002 4268     		ldr	r2, [r0, #4]
+ 176 0004 0368     		ldr	r3, [r0, #0]
+ 177 0006 0832     		adds	r2, r2, #8
+ 178 0008 0901     		lsls	r1, r1, #4
+ 179 000a 53F82200 		ldr	r0, [r3, r2, lsl #2]
+ 180 000e 01F03001 		and	r1, r1, #48
+ 181 0012 20F03000 		bic	r0, r0, #48
+ 182 0016 0143     		orrs	r1, r1, r0
+ 183 0018 43F82210 		str	r1, [r3, r2, lsl #2]
+ 184              	.L26:
+ 185 001c 7047     		bx	lr
+ 187              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 ERU002.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:17     .text.ERU002_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:22     .text.ERU002_lInit:00000000 ERU002_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:55     .text.ERU002_lInit:00000044 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:58     .text.ERU002_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:63     .text.ERU002_Init:00000000 ERU002_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:73     .text.ERU002_Init:00000008 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:76     .text.ERU002_SetPeripheralTrigInputSrc:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:81     .text.ERU002_SetPeripheralTrigInputSrc:00000000 ERU002_SetPeripheralTrigInputSrc
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:102    .text.ERU002_GetPatternResult:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:107    .text.ERU002_GetPatternResult:00000000 ERU002_GetPatternResult
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:122    .text.ERU002_EnablePatternDetection:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:127    .text.ERU002_EnablePatternDetection:00000000 ERU002_EnablePatternDetection
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:142    .text.ERU002_DisablePatternDetection:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:147    .text.ERU002_DisablePatternDetection:00000000 ERU002_DisablePatternDetection
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:162    .text.ERU002_SelectServiceRequestMode:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccqkVHXW.s:167    .text.ERU002_SelectServiceRequestMode:00000000 ERU002_SelectServiceRequestMode
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:17     .text.ERU002_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:22     .text.ERU002_lInit:00000000 ERU002_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:55     .text.ERU002_lInit:00000044 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:58     .text.ERU002_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:63     .text.ERU002_Init:00000000 ERU002_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:76     .text.ERU002_Init:00000014 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:79     .text.ERU002_SetPeripheralTrigInputSrc:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:84     .text.ERU002_SetPeripheralTrigInputSrc:00000000 ERU002_SetPeripheralTrigInputSrc
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:105    .text.ERU002_GetPatternResult:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:110    .text.ERU002_GetPatternResult:00000000 ERU002_GetPatternResult
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:125    .text.ERU002_EnablePatternDetection:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:130    .text.ERU002_EnablePatternDetection:00000000 ERU002_EnablePatternDetection
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:145    .text.ERU002_DisablePatternDetection:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:150    .text.ERU002_DisablePatternDetection:00000000 ERU002_DisablePatternDetection
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:165    .text.ERU002_SelectServiceRequestMode:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccvx8t4F.s:170    .text.ERU002_SelectServiceRequestMode:00000000 ERU002_SelectServiceRequestMode
 
 UNDEFINED SYMBOLS
 RESET001_GetStatus

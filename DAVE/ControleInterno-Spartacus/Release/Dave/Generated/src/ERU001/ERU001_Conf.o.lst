@@ -14,29 +14,42 @@
   14              		.thumb
   15              		.file	"ERU001_Conf.c"
   16              		.global	ERU001_HandleArray
-  17              		.global	ERU001_Handle0
-  18              		.section	.rodata
-  19              		.align	2
-  22              	ERU001_Handle0:
-  23 0000 00480050 		.word	1342195712
-  24 0004 02       		.byte	2
-  25 0005 01       		.byte	1
-  26 0006 01       		.byte	1
-  27 0007 00       		.byte	0
-  28 0008 01       		.byte	1
-  29 0009 00       		.byte	0
-  30 000a 01       		.byte	1
-  31 000b 00       		.space	1
-  32              		.data
-  33              		.align	2
-  36              	ERU001_HandleArray:
-  37 0000 00000000 		.word	ERU001_Handle0
-  38              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+  17              		.global	ERU001_Handle1
+  18              		.global	ERU001_Handle0
+  19              		.section	.rodata
+  20              		.align	2
+  23              	ERU001_Handle1:
+  24 0000 00480050 		.word	1342195712
+  25 0004 02       		.byte	2
+  26 0005 01       		.byte	1
+  27 0006 00       		.byte	0
+  28 0007 00       		.byte	0
+  29 0008 01       		.byte	1
+  30 0009 00       		.byte	0
+  31 000a 01       		.byte	1
+  32 000b 00       		.space	1
+  35              	ERU001_Handle0:
+  36 000c 00400440 		.word	1074020352
+  37 0010 00       		.byte	0
+  38 0011 01       		.byte	1
+  39 0012 01       		.byte	1
+  40 0013 00       		.byte	0
+  41 0014 01       		.byte	1
+  42 0015 00       		.byte	0
+  43 0016 01       		.byte	1
+  44 0017 00       		.space	1
+  45              		.data
+  46              		.align	2
+  49              	ERU001_HandleArray:
+  50 0000 00000000 		.word	ERU001_Handle0
+  51 0004 00000000 		.word	ERU001_Handle1
+  52              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 ERU001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoDHwge.s:36     .data:00000000 ERU001_HandleArray
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoDHwge.s:22     .rodata:00000000 ERU001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoDHwge.s:19     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoDHwge.s:33     .data:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc9tYxXj.s:49     .data:00000000 ERU001_HandleArray
+C:\Users\JMASS_~1\AppData\Local\Temp\cc9tYxXj.s:23     .rodata:00000000 ERU001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\cc9tYxXj.s:35     .rodata:0000000c ERU001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\cc9tYxXj.s:20     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc9tYxXj.s:46     .data:00000000 $d
 
 NO UNDEFINED SYMBOLS
