@@ -101,6 +101,9 @@ void DAVE_Init(void)
 	 
 	//  Initialization of app 'PWMSP001'		     
 	PWMSP001_Init();
+	 
+	//  Initialization of app 'SYSTM002'		     
+	SYSTM002_Init();
 	
       
 	//  MUX configurations

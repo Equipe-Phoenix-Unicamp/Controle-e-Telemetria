@@ -154,14 +154,14 @@
  166              		.file 5 "../Dave/Generated/src/PWMSP001/PWMSP001_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:24     .bss:00000000 PWMSP001_DynamicData0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:21     .bss:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:31     .rodata:00000000 PWMSP001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:28     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:71     .bss:00000004 PWMSP001_DynamicData1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:78     .rodata:00000048 PWMSP001_Handle1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:118    .bss:00000008 PWMSP001_DynamicData2
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:125    .rodata:00000090 PWMSP001_Handle2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:24     .bss:00000000 PWMSP001_DynamicData0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:21     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:31     .rodata:00000000 PWMSP001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:28     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:71     .bss:00000004 PWMSP001_DynamicData1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:78     .rodata:00000048 PWMSP001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:118    .bss:00000008 PWMSP001_DynamicData2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:125    .rodata:00000090 PWMSP001_Handle2
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024
@@ -187,6 +187,8 @@ C:\Users\JMASS_~1\AppData\Local\Temp\ccZhfogp.s:125    .rodata:00000090 PWMSP001
                            .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
                            .group:00000000 wm4.CCU4Global_Conf.h.63.a52fac0daa39b5f58343578312b4eb54
                            .group:00000000 wm4.PWMSP001.h.57.29b732b86baf3e81f49153f5f495912e
+                           .group:00000000 wm4.SYSTM002_Conf.h.70.e893767dc4d518b087b4a20e349ac4d8
+                           .group:00000000 wm4.SYSTM002.h.98.0f398400b32186dea0837ac3b6c1ddcb
 
 UNDEFINED SYMBOLS
 PWMSP001_lSetCompareEdgeAlign

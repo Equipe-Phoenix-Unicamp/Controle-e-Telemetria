@@ -36,12 +36,17 @@
  *Byte 4 : PWM 3 (Arma)
  ***************************************************/
 
+
+#include <DAVE3.h>
+
 //TODO Separar partes do codigo em arquivos diferentes
 /***************************************************/
 /*************DECLARACAO DAS DEFINICOES*************/
 /***************************************************/
 
 #define NULL 0
+#define _TRUE 1
+#define _FALSE 0
 //Defines referentes aos limites
 #define PWM_LIM 60
 
@@ -81,10 +86,20 @@
 #define PWM_MOTOR_LEFT &PWMSP001_Handle1
 #define PWM_MOTOR_WEAPON &PWMSP001_Handle2
 #define PWM_MOTOR_CUT_OFF 20
-//==============================
 
-#include <DAVE3.h>		//Declarations from DAVE3 Code Generation (includes SFR declaration)
-//#include
+//Defines referentes ao fail safe
+#define RUNNING 1
+#define FAIL 0
+#define TICK_FAIL_SAFE 5000 //0.5s
+//defines referentes ao controle de direcao locomocao
+#define DIR_FRONT 0
+#define DIR_BACK 1
+#define TICK_BREAK_PWM 1500 //150ms
+#define TICK_ZERO_PWM 5000 //500ms
+#define STATUS_BREAK 0
+#define STATUS_ZERO 1
+#define STATUS_NORMAL 2
+//==============================
 
 /***************************************************/
 /**************DECLARACAO DAS FUNCOES***************/
@@ -100,6 +115,10 @@ void start_PWM_signals(void);
 void start_PWM_signals_test(void);
 void update_PWM_signals(void);
 void update_PWM_signals_test(float per_teste);
+void Tick_Handler(void);
+void delayms(uint32_t delay_ms);
+void delayus(uint32_t delay_us);
+void Software_Timers_Init();
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -107,6 +126,16 @@ void update_PWM_signals_test(float per_teste);
 
 char configuration[15];
 unsigned char data_R[BYTES_TO_RECEIVE];
+int status_ticks;
+uint32_t ticks = 0UL;
+int block_pwm_update_tick_left;
+int block_pwm_update_tick_right;
+unsigned char last_direction_right = DIR_FRONT;
+unsigned char last_direction_left = DIR_FRONT;
+unsigned char block_left = 0;
+unsigned char block_right = 0;
+unsigned char status_block_left = STATUS_NORMAL;
+unsigned char status_block_right = STATUS_NORMAL;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -124,13 +153,24 @@ int main(void) {
 //	start_PWM_signals_test();
 
 	float per_teste = MIN_PER_MOTOR_LOCOMOTION;
-	int status = 0;
+	char status = RUNNING;
+	status_ticks = 0;
+	ticks = 0;
+	block_pwm_update_tick_left = 0;
+	block_pwm_update_tick_right = 0;
+	Software_Timers_Init();
 
 	/*Loop do codigo*/
 	while (1) {
 		if (IO004_ReadPin(DR1)) {
+			status_ticks = 0;
 			read_R();
 			update_PWM_signals();
+		} else {
+			if (status_ticks > TICK_FAIL_SAFE) { //0.5s
+				status = FAIL;
+				start_PWM_signals();
+			}
 		}
 
 //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
@@ -174,27 +214,27 @@ int main(void) {
 	return 0;
 }
 
-void start_PWM_signals_test(void) {
-
-	PWMSP001_Start(PWM_MOTOR_RIGHT);
-	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
-			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
-
-	PWMSP001_Start(PWM_MOTOR_LEFT);
-	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
-			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
-
-}
-void update_PWM_signals_test(float per_teste) {
-
-	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
-			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
-
-	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
-			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
-}
+//void start_PWM_signals_test(void) {
+//
+//	PWMSP001_Start(PWM_MOTOR_RIGHT);
+//	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+//	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+//			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+//
+//	PWMSP001_Start(PWM_MOTOR_LEFT);
+//	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+//	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+//			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+//
+//}
+//void update_PWM_signals_test(float per_teste) {
+//
+//	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+//			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+//
+//	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+//			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+//}
 
 /***************************************************/
 /**********INICIALIZA OS SINAIS DE PWM COM *********/
@@ -236,36 +276,94 @@ void update_PWM_signals(void) {
 			* (MAX_PER_MOTOR_WEAPON - MIN_PER_MOTOR_WEAPON)
 			/ 255+ MIN_PER_MOTOR_WEAPON;
 
-	if (direction & (1 << LEFT_FRONT)) {
+	if (((direction & (1 << LEFT_FRONT)) && last_direction_left == DIR_BACK)
+			|| ((direction & (1 << LEFT_BACK))
+					&& last_direction_left == DIR_FRONT)) {
+		if (!block_left) {
+			block_left = _TRUE;
+			block_pwm_update_tick_left = TICK_BREAK_PWM;
+			status_block_left = STATUS_BREAK;
+		} else {
+			block_left = _FALSE;
+			status_block_left = STATUS_NORMAL;
+		}
 
-		if (data_R[1] > PWM_MOTOR_CUT_OFF)
-			per_motor_left =
-					(((float) data_R[1]) / 255)
-							* (MAX_PER_MOTOR_LOCOMOTION
-									- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
-
-	} else if (direction & (1 << LEFT_BACK)) {
-		if (data_R[1] > PWM_MOTOR_CUT_OFF)
-			per_motor_left =
-					(((float) data_R[1]) / 255)
-							* (ZERO_PER_MOTOR_LOCOMOTION
-									- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
 	}
 
-	if (direction & (1 << RIGHT_FRONT)) {
+	if (((direction & (1 << RIGHT_FRONT)) && last_direction_right == DIR_FRONT)
+			|| ((direction & (1 << RIGHT_BACK))
+					&& last_direction_right == DIR_BACK)) {
+		if (!block_right) {
+			block_right = _TRUE;
+			block_pwm_update_tick_right = TICK_BREAK_PWM;
+			status_block_right = STATUS_BREAK;
+		} else {
+			block_right = _FALSE;
+			status_block_right = STATUS_NORMAL;
+		}
+	}
 
-		if (data_R[2] > PWM_MOTOR_CUT_OFF)
-			per_motor_right =
-					(((float) data_R[2]) / 255)
-							* (MAX_PER_MOTOR_LOCOMOTION
-									- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
+	if (!block_left) {
+		//caso normal
+		if (direction & (1 << LEFT_FRONT)) {
 
-	} else if (direction & (1 << RIGHT_BACK)) {
-		if (data_R[2] > PWM_MOTOR_CUT_OFF)
-			per_motor_right =
-					(((float) data_R[2]) / 255)
-							* (ZERO_PER_MOTOR_LOCOMOTION
-									- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
+			if (data_R[1] > PWM_MOTOR_CUT_OFF)
+				per_motor_left =
+						(((float) data_R[1]) / 255)
+								* (MAX_PER_MOTOR_LOCOMOTION
+										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
+
+			last_direction_left = DIR_FRONT;
+		} else if (direction & (1 << LEFT_BACK)) {
+			if (data_R[1] > PWM_MOTOR_CUT_OFF)
+				per_motor_left =
+						(((float) data_R[1]) / 255)
+								* (ZERO_PER_MOTOR_LOCOMOTION
+										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
+			last_direction_left = DIR_BACK;
+		}
+	} else {
+
+		if (block_pwm_update_tick_left <= 0 && status_block_left == STATUS_BREAK) {
+			block_pwm_update_tick_left = TICK_BREAK_PWM;
+			status_block_left = STATUS_ZERO;
+		} else if (block_pwm_update_tick_left
+				<= 0&& status_block_left == STATUS_ZERO) {
+			status_block_left = STATUS_NORMAL;
+			block_left = _FALSE;
+		}
+	}
+
+	if (!block_right) {
+		//caso normal
+		if (direction & (1 << RIGHT_FRONT)) {
+
+			if (data_R[2] > PWM_MOTOR_CUT_OFF)
+				per_motor_right =
+						(((float) data_R[2]) / 255)
+								* (MAX_PER_MOTOR_LOCOMOTION
+										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
+
+			last_direction_right = DIR_FRONT;
+		} else if (direction & (1 << RIGHT_BACK)) {
+			if (data_R[2] > PWM_MOTOR_CUT_OFF)
+				per_motor_right =
+						(((float) data_R[2]) / 255)
+								* (ZERO_PER_MOTOR_LOCOMOTION
+										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
+			last_direction_right = DIR_BACK;
+		}
+	} else {
+
+		if (block_pwm_update_tick_right
+				<= 0&& status_block_right == STATUS_BREAK) {
+			block_pwm_update_tick_right = TICK_BREAK_PWM;
+			status_block_right = STATUS_ZERO;
+		} else if (block_pwm_update_tick_right
+				<= 0&& status_block_right == STATUS_ZERO) {
+			status_block_right = STATUS_NORMAL;
+			block_right = _FALSE;
+		}
 	}
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
@@ -360,8 +458,37 @@ void configure_R() {
 }
 
 /***************************************************/
-/*****************FUNCOES GERAIS********************/
+/****************FUNCOES TEMPORAIS******************/
 /***************************************************/
+
+void Software_Timers_Init() {
+	handle_t TaskTimerId;
+
+	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+	if (TaskTimerId != 0) {
+//Timer created successfully so start it
+		SYSTM002_StartTimer(TaskTimerId);
+	}
+}
+
+void delayus(uint32_t delay_us) {
+	uint32_t currenttick = ticks;
+	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+		;
+	ticks = 0;
+}
+
+void delayms(uint32_t delay_ms) {
+	delayus(1000 * delay_ms);
+}
+
+void Tick_Handler(void) {
+	ticks++;
+	status_ticks++;
+	block_pwm_update_tick_left--;
+	block_pwm_update_tick_right--;
+}
 
 void delay(long unsigned int i) {
 	while (i--) {

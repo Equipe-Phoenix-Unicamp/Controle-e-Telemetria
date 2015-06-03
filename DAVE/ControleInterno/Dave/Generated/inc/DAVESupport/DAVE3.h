@@ -78,6 +78,7 @@ void SystemInit_DAVE3(void);
 	#include "../../inc/RESET001/RESET001.h" 
 	#include "../../inc/CCU4GLOBAL/CCU4GLOBAL.h" 
 	#include "../../inc/PWMSP001/PWMSP001.h" 
+	#include "../../inc/SYSTM002/SYSTM002.h" 
 
                          
 

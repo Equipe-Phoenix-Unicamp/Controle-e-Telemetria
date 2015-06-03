@@ -894,12 +894,12 @@
  657              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
 DEFINED SYMBOLS
                             *ABS*:00000000 IO004.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:20     .text.IO004_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:25     .text.IO004_Init:00000000 IO004_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:259    .text.IO004_DisableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:264    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:456    .text.IO004_EnableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:461    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:20     .text.IO004_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:25     .text.IO004_Init:00000000 IO004_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:259    .text.IO004_DisableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:264    .text.IO004_DisableOutputDriver:00000000 IO004_DisableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:456    .text.IO004_EnableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccTOH4FP.s:461    .text.IO004_EnableOutputDriver:00000000 IO004_EnableOutputDriver
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
@@ -926,6 +926,8 @@ C:\Users\JMASS_~1\AppData\Local\Temp\ccoS5UCF.s:461    .text.IO004_EnableOutputD
                            .group:00000000 wm4.CLK001_Conf.h.81.2b7f5ec7311f4adf3e25cf7854109544
                            .group:00000000 wm4.CCU4Global_Conf.h.63.a52fac0daa39b5f58343578312b4eb54
                            .group:00000000 wm4.PWMSP001.h.57.29b732b86baf3e81f49153f5f495912e
+                           .group:00000000 wm4.SYSTM002_Conf.h.70.e893767dc4d518b087b4a20e349ac4d8
+                           .group:00000000 wm4.SYSTM002.h.98.0f398400b32186dea0837ac3b6c1ddcb
 
 UNDEFINED SYMBOLS
 IO004_Handle1

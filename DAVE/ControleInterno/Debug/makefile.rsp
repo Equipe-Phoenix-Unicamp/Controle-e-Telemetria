@@ -2,6 +2,7 @@ Startup/startup_XMC4500.o
 Startup/system_XMC4500.o
 Main.o
 Lib/System_LibcStubs.o
+Dave/Generated/src/SYSTM002/SYSTM002.o
 Dave/Generated/src/RESET001/RESET001.o
 Dave/Generated/src/PWMSP001/PWMSP001.o
 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o

@@ -19,6 +19,7 @@ SUBDIRS := \
 Startup \
 . \
 Lib \
+Dave/Generated/src/SYSTM002 \
 Dave/Generated/src/RESET001 \
 Dave/Generated/src/PWMSP001 \
 Dave/Generated/src/LIBS \

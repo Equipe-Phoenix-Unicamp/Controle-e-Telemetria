@@ -30,7 +30,10 @@ Dave/Generated/src/DAVESupport/DAVE3.d Dave/Generated/src/DAVESupport/DAVE3.o: \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/CCU4GLOBAL/CCU4Global_Conf.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/CCU4GLOBAL/CCU4Global_Extern.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/PWMSP001/PWMSP001.h \
- ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/PWMSP001/PWMSP001_Conf.h
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/PWMSP001/PWMSP001_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/DAVE3.h:
 
@@ -93,3 +96,9 @@ C:\DAVE-3.1.10\eclipse\/../CMSIS/Infineon/Include/uc_id.h:
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/PWMSP001/PWMSP001.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/PWMSP001/PWMSP001_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h:

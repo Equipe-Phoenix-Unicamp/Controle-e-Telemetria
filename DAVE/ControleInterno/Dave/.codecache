@@ -38,5 +38,6 @@
         <File genName="CLK001_Conf.h" genPath="Dave\Generated\inc\CLK001\CLK001_Conf.h" jetPath="CLK001/1.0.44/Templates/CLK001_Confh.jet" location="bin\CodeGenerator\clk001_confh_template.class"/>
         <File genName="CCU4GLOBAL_Conf.h" genPath="Dave\Generated\inc\CCU4GLOBAL\CCU4GLOBAL_Conf.h" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Confh.jet" location="bin\CodeGenerator\ccu4global_confh_template.class"/>
         <File genName="CCU4GLOBAL_Conf.c" genPath="Dave\Generated\src\CCU4GLOBAL\CCU4GLOBAL_Conf.c" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Confc.jet" location="bin\CodeGenerator\ccu4global_confc_template.class"/>
+    <File genName="SYSTM002_Conf.h" genPath="Dave\Generated\inc\SYSTM002\SYSTM002_Conf.h" jetPath="SYSTM002/1.0.12/Templates/SYSTM002_Confh.jet" location="bin\CodeGenerator\systm002_confh_template.class"/>
     </TemplateCaches>
 </Cache>

@@ -71,6 +71,11 @@
                 <Path>\Dave\Generated\src\RESET001\RESET001.c</Path>
                 <Type>C File</Type>
             </Source_File>
+            <Source_File>
+                <File_Name>SYSTM002.c</File_Name>
+                <Path>\Dave\Generated\src\SYSTM002\SYSTM002.c</Path>
+                <Type>C File</Type>
+            </Source_File>
         </Source_Files>
         <Header_Files>
             <Header_File>
@@ -166,6 +171,16 @@
             <Header_File>
                 <File_Name>RESET001.h</File_Name>
                 <Path>\Dave\Generated\inc\RESET001\RESET001.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>SYSTM002.h</File_Name>
+                <Path>\Dave\Generated\inc\SYSTM002\SYSTM002.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>SYSTM002_Conf.h</File_Name>
+                <Path>\Dave\Generated\inc\SYSTM002\SYSTM002_Conf.h</Path>
                 <Type>H File</Type>
             </Header_File>
         </Header_Files>

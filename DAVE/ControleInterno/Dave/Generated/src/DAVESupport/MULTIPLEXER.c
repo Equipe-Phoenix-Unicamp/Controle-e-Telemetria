@@ -97,6 +97,9 @@ void DAVE_MUX_Init(void)
                                               
    	 
             	         
+                                              
+   	 
+            	         
                                           
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                                      
@@ -133,7 +136,7 @@ void DAVE_MUX_Init(void)
 *******************************************************************************/
  
 void DAVE_MUX_PreInit(void)
-{        
+{            
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                   
 }
