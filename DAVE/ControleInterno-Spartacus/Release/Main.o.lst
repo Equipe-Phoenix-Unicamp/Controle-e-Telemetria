@@ -55,14 +55,14 @@
   60 0000 70B5     		push	{r4, r5, r6, lr}
   61 0002 0E4C     		ldr	r4, .L6
   62 0004 0E4E     		ldr	r6, .L6+4
-  63 0006 0F4D     		ldr	r5, .L6+8
-  64 0008 2046     		mov	r0, r4
-  65 000a FFF7FEFF 		bl	PWMSP001_Start
-  66 000e 3146     		mov	r1, r6	@ float
-  67 0010 2046     		mov	r0, r4
-  68 0012 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+  63 0006 2046     		mov	r0, r4
+  64 0008 FFF7FEFF 		bl	PWMSP001_Start
+  65 000c 3146     		mov	r1, r6	@ float
+  66 000e 2046     		mov	r0, r4
+  67 0010 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+  68 0014 0025     		movs	r5, #0
   69 0016 2046     		mov	r0, r4
-  70 0018 0B4C     		ldr	r4, .L6+12
+  70 0018 0A4C     		ldr	r4, .L6+8
   71 001a 2946     		mov	r1, r5	@ float
   72 001c FFF7FEFF 		bl	PWMSP001_SetDutyCycle
   73 0020 2046     		mov	r0, r4
@@ -79,527 +79,526 @@
   84              	.L6:
   85 003c 00000000 		.word	PWMSP001_Handle0
   86 0040 00409C46 		.word	1184645120
-  87 0044 00002041 		.word	1092616192
-  88 0048 00000000 		.word	PWMSP001_Handle1
-  90              		.section	.text.update_driver_signals,"ax",%progbits
-  91              		.align	1
-  92              		.global	update_driver_signals
-  93              		.thumb
-  94              		.thumb_func
-  96              	update_driver_signals:
-  97              		@ args = 0, pretend = 0, frame = 0
-  98              		@ frame_needed = 0, uses_anonymous_args = 0
-  99 0000 08B5     		push	{r3, lr}
- 100 0002 2DED028B 		fstmfdd	sp!, {d8}
- 101 0006 4A4A     		ldr	r2, .L28
- 102 0008 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
- 103 000a 03F00801 		and	r1, r3, #8
- 104 000e C8B2     		uxtb	r0, r1
- 105 0010 88B1     		cbz	r0, .L9
- 106 0012 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
- 107 0014 1429     		cmp	r1, #20
- 108 0016 22D9     		bls	.L17
- 109 0018 07EE101A 		fmsr	s14, r1	@ int
- 110 001c 9FED452A 		flds	s4, .L28+4
- 111 0020 F8EE471A 		fuitos	s3, s14
- 112 0024 9FED443A 		flds	s6, .L28+8
- 113 0028 C1EE822A 		fdivs	s5, s3, s4
- 114 002c F7EE006A 		fconsts	s13, #112
- 115 0030 22EE838A 		fmuls	s16, s5, s6
- 116 0034 1AE0     		b	.L10
- 117              	.L9:
- 118 0036 D907     		lsls	r1, r3, #31
- 119 0038 14D5     		bpl	.L19
- 120 003a 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
- 121 003c 142A     		cmp	r2, #20
- 122 003e 11D9     		bls	.L19
- 123 0040 07EE902A 		fmsr	s15, r2	@ int
- 124 0044 9FED3B0A 		flds	s0, .L28+4
- 125 0048 B8EE678A 		fuitos	s16, s15
- 126 004c 9FED3A1A 		flds	s2, .L28+8
- 127 0050 C8EE000A 		fdivs	s1, s16, s0
- 128 0054 DFED396A 		flds	s13, .L28+12
- 129 0058 20EE818A 		fmuls	s16, s1, s2
- 130 005c 06E0     		b	.L10
- 131              	.L17:
- 132 005e F7EE006A 		fconsts	s13, #112
- 133 0062 01E0     		b	.L23
+  87 0044 00000000 		.word	PWMSP001_Handle1
+  89              		.section	.text.update_driver_signals,"ax",%progbits
+  90              		.align	1
+  91              		.global	update_driver_signals
+  92              		.thumb
+  93              		.thumb_func
+  95              	update_driver_signals:
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 0, uses_anonymous_args = 0
+  98 0000 08B5     		push	{r3, lr}
+  99 0002 2DED028B 		fstmfdd	sp!, {d8}
+ 100 0006 4C4A     		ldr	r2, .L26
+ 101 0008 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 102 000a 03F00801 		and	r1, r3, #8
+ 103 000e C8B2     		uxtb	r0, r1
+ 104 0010 88B1     		cbz	r0, .L9
+ 105 0012 5178     		ldrb	r1, [r2, #1]	@ zero_extendqisi2
+ 106 0014 1E29     		cmp	r1, #30
+ 107 0016 22D9     		bls	.L17
+ 108 0018 01EE901A 		fmsr	s3, r1	@ int
+ 109 001c DFED472A 		flds	s5, .L26+4
+ 110 0020 B8EE612A 		fuitos	s4, s3
+ 111 0024 DFED463A 		flds	s7, .L26+8
+ 112 0028 82EE223A 		fdivs	s6, s4, s5
+ 113 002c B7EE007A 		fconsts	s14, #112
+ 114 0030 23EE238A 		fmuls	s16, s6, s7
+ 115 0034 1CE0     		b	.L10
+ 116              	.L9:
+ 117 0036 D907     		lsls	r1, r3, #31
+ 118 0038 16D5     		bpl	.L19
+ 119 003a 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 120 003c 1E2A     		cmp	r2, #30
+ 121 003e 13D9     		bls	.L19
+ 122 0040 07EE902A 		fmsr	s15, r2	@ int
+ 123 0044 9FED3D0A 		flds	s0, .L26+4
+ 124 0048 B8EE678A 		fuitos	s16, s15
+ 125 004c 9FED3C1A 		flds	s2, .L26+8
+ 126 0050 C8EE000A 		fdivs	s1, s16, s0
+ 127 0054 9FED3B7A 		flds	s14, .L26+12
+ 128 0058 20EE818A 		fmuls	s16, s1, s2
+ 129 005c 08E0     		b	.L10
+ 130              	.L17:
+ 131 005e B7EE007A 		fconsts	s14, #112
+ 132 0062 9FED388A 		flds	s16, .L26+12
+ 133 0066 03E0     		b	.L10
  134              	.L19:
- 135 0064 DFED356A 		flds	s13, .L28+12
- 136              	.L23:
- 137 0068 B2EE048A 		fconsts	s16, #36
- 138              	.L10:
- 139 006c 03F02000 		and	r0, r3, #32
- 140 0070 C2B2     		uxtb	r2, r0
- 141 0072 92B1     		cbz	r2, .L11
- 142 0074 2E4B     		ldr	r3, .L28
- 143 0076 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
- 144 0078 1429     		cmp	r1, #20
- 145 007a 25D9     		bls	.L20
- 146 007c 00EE101A 		fmsr	s0, r1	@ int
- 147 0080 9FED2C1A 		flds	s2, .L28+4
- 148 0084 F8EE400A 		fuitos	s1, s0
- 149 0088 9FED2B7A 		flds	s14, .L28+8
- 150 008c C0EE811A 		fdivs	s3, s1, s2
- 151 0090 F7EE003A 		fconsts	s7, #112
- 152 0094 61EE877A 		fmuls	s15, s3, s14
- 153 0098 1DE0     		b	.L12
- 154              	.L11:
- 155 009a 03F01003 		and	r3, r3, #16
- 156 009e D9B2     		uxtb	r1, r3
- 157 00a0 A9B1     		cbz	r1, .L22
- 158 00a2 2348     		ldr	r0, .L28
- 159 00a4 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
- 160 00a6 142A     		cmp	r2, #20
- 161 00a8 11D9     		bls	.L22
- 162 00aa 04EE102A 		fmsr	s8, r2	@ int
- 163 00ae 9FED215A 		flds	s10, .L28+4
- 164 00b2 F8EE444A 		fuitos	s9, s8
- 165 00b6 9FED206A 		flds	s12, .L28+8
- 166 00ba C4EE855A 		fdivs	s11, s9, s10
- 167 00be DFED1F3A 		flds	s7, .L28+12
- 168 00c2 65EE867A 		fmuls	s15, s11, s12
- 169 00c6 06E0     		b	.L12
- 170              	.L20:
- 171 00c8 F7EE003A 		fconsts	s7, #112
- 172 00cc 01E0     		b	.L24
+ 135 0068 9FED367A 		flds	s14, .L26+12
+ 136 006c B0EE478A 		fcpys	s16, s14
+ 137              	.L10:
+ 138 0070 03F02000 		and	r0, r3, #32
+ 139 0074 C2B2     		uxtb	r2, r0
+ 140 0076 92B1     		cbz	r2, .L11
+ 141 0078 2F4B     		ldr	r3, .L26
+ 142 007a 9978     		ldrb	r1, [r3, #2]	@ zero_extendqisi2
+ 143 007c 1E29     		cmp	r1, #30
+ 144 007e 25D9     		bls	.L20
+ 145 0080 00EE101A 		fmsr	s0, r1	@ int
+ 146 0084 9FED2D1A 		flds	s2, .L26+4
+ 147 0088 F8EE400A 		fuitos	s1, s0
+ 148 008c 9FED2C2A 		flds	s4, .L26+8
+ 149 0090 C0EE811A 		fdivs	s3, s1, s2
+ 150 0094 B7EE004A 		fconsts	s8, #112
+ 151 0098 61EE826A 		fmuls	s13, s3, s4
+ 152 009c 1FE0     		b	.L12
+ 153              	.L11:
+ 154 009e 03F01003 		and	r3, r3, #16
+ 155 00a2 D9B2     		uxtb	r1, r3
+ 156 00a4 B9B1     		cbz	r1, .L22
+ 157 00a6 2448     		ldr	r0, .L26
+ 158 00a8 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+ 159 00aa 1E2A     		cmp	r2, #30
+ 160 00ac 13D9     		bls	.L22
+ 161 00ae 04EE902A 		fmsr	s9, r2	@ int
+ 162 00b2 DFED225A 		flds	s11, .L26+4
+ 163 00b6 B8EE645A 		fuitos	s10, s9
+ 164 00ba DFED217A 		flds	s15, .L26+8
+ 165 00be 85EE256A 		fdivs	s12, s10, s11
+ 166 00c2 9FED204A 		flds	s8, .L26+12
+ 167 00c6 66EE276A 		fmuls	s13, s12, s15
+ 168 00ca 08E0     		b	.L12
+ 169              	.L20:
+ 170 00cc B7EE004A 		fconsts	s8, #112
+ 171 00d0 DFED1C6A 		flds	s13, .L26+12
+ 172 00d4 03E0     		b	.L12
  173              	.L22:
- 174 00ce DFED1B3A 		flds	s7, .L28+12
- 175              	.L24:
- 176 00d2 F2EE047A 		fconsts	s15, #36
- 177              	.L12:
- 178 00d6 1A48     		ldr	r0, .L28+16
- 179 00d8 F5EE406A 		fcmpzs	s13
- 180 00dc F1EE10FA 		fmstat
- 181 00e0 4268     		ldr	r2, [r0, #4]
- 182 00e2 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 183 00e4 01D0     		beq	.L13
- 184 00e6 0121     		movs	r1, #1
- 185 00e8 01E0     		b	.L25
- 186              	.L13:
- 187 00ea 4FF48031 		mov	r1, #65536
- 188              	.L25:
- 189 00ee 01FA03F0 		lsl	r0, r1, r3
- 190 00f2 F5EE403A 		fcmpzs	s7
- 191 00f6 134B     		ldr	r3, .L28+20
- 192 00f8 5060     		str	r0, [r2, #4]
- 193 00fa F1EE10FA 		fmstat
- 194 00fe 5A68     		ldr	r2, [r3, #4]
- 195 0100 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 196 0102 01D0     		beq	.L15
- 197 0104 0121     		movs	r1, #1
- 198 0106 01E0     		b	.L26
- 199              	.L15:
- 200 0108 4FF48031 		mov	r1, #65536
- 201              	.L26:
- 202 010c 01FA00F3 		lsl	r3, r1, r0
- 203 0110 5360     		str	r3, [r2, #4]
- 204 0112 17EE901A 		fmrs	r1, s15
- 205 0116 0C48     		ldr	r0, .L28+24
- 206 0118 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 207 011c 0B48     		ldr	r0, .L28+28
- 208 011e 18EE101A 		fmrs	r1, s16
- 209 0122 BDEC028B 		fldmfdd	sp!, {d8}
- 210 0126 BDE80840 		pop	{r3, lr}
- 211 012a FFF7FEBF 		b	PWMSP001_SetDutyCycle
- 212              	.L29:
- 213 012e 00BF     		.align	2
- 214              	.L28:
- 215 0130 00000000 		.word	data_R
- 216 0134 00007F43 		.word	1132396544
- 217 0138 0000C842 		.word	1120403456
- 218 013c 00000000 		.word	0
- 219 0140 00000000 		.word	IO004_Handle6
- 220 0144 00000000 		.word	IO004_Handle0
- 221 0148 00000000 		.word	PWMSP001_Handle0
- 222 014c 00000000 		.word	PWMSP001_Handle1
- 224              		.section	.text.Testando_Handler,"ax",%progbits
- 225              		.align	1
- 226              		.global	Testando_Handler
- 227              		.thumb
- 228              		.thumb_func
- 230              	Testando_Handler:
- 231              		@ args = 0, pretend = 0, frame = 0
- 232              		@ frame_needed = 0, uses_anonymous_args = 0
- 233              		@ link register save eliminated.
- 234 0000 7047     		bx	lr
- 236              		.section	.text.ERU0_3_IRQHandler,"ax",%progbits
- 237              		.align	1
- 238              		.global	ERU0_3_IRQHandler
- 239              		.thumb
- 240              		.thumb_func
- 242              	ERU0_3_IRQHandler:
- 243              		@ args = 0, pretend = 0, frame = 0
- 244              		@ frame_needed = 0, uses_anonymous_args = 0
- 245              		@ link register save eliminated.
- 246 0000 7047     		bx	lr
- 248              		.section	.text.ERU1_0_IRQHandler,"ax",%progbits
- 249              		.align	1
- 250              		.global	ERU1_0_IRQHandler
- 251              		.thumb
- 252              		.thumb_func
- 254              	ERU1_0_IRQHandler:
- 255              		@ args = 0, pretend = 0, frame = 0
- 256              		@ frame_needed = 0, uses_anonymous_args = 0
- 257              		@ link register save eliminated.
- 258 0000 7047     		bx	lr
- 260              		.section	.text.Software_Timers_Init,"ax",%progbits
- 261              		.align	1
- 262              		.global	Software_Timers_Init
- 263              		.thumb
- 264              		.thumb_func
- 266              	Software_Timers_Init:
- 267              		@ args = 0, pretend = 0, frame = 0
- 268              		@ frame_needed = 0, uses_anonymous_args = 0
- 269 0000 08B5     		push	{r3, lr}
- 270 0002 6420     		movs	r0, #100
- 271 0004 0121     		movs	r1, #1
- 272 0006 054A     		ldr	r2, .L35
- 273 0008 0023     		movs	r3, #0
- 274 000a FFF7FEFF 		bl	SYSTM002_CreateTimer
- 275 000e 18B1     		cbz	r0, .L33
- 276 0010 BDE80840 		pop	{r3, lr}
- 277 0014 FFF7FEBF 		b	SYSTM002_StartTimer
- 278              	.L33:
- 279 0018 08BD     		pop	{r3, pc}
- 280              	.L36:
- 281 001a 00BF     		.align	2
- 282              	.L35:
- 283 001c 00000000 		.word	Tick_Handler
- 285              		.section	.text.delayus,"ax",%progbits
- 286              		.align	1
- 287              		.global	delayus
- 288              		.thumb
- 289              		.thumb_func
- 291              	delayus:
- 292              		@ args = 0, pretend = 0, frame = 0
- 293              		@ frame_needed = 0, uses_anonymous_args = 0
- 294              		@ link register save eliminated.
- 295 0000 6328     		cmp	r0, #99
- 296 0002 03D8     		bhi	.L38
- 297 0004 024B     		ldr	r3, .L41
- 298 0006 0022     		movs	r2, #0
- 299 0008 1A60     		str	r2, [r3, #0]
- 300 000a 7047     		bx	lr
+ 174 00d6 9FED1B4A 		flds	s8, .L26+12
+ 175 00da F0EE446A 		fcpys	s13, s8
+ 176              	.L12:
+ 177 00de 1A48     		ldr	r0, .L26+16
+ 178 00e0 B5EE407A 		fcmpzs	s14
+ 179 00e4 F1EE10FA 		fmstat
+ 180 00e8 4268     		ldr	r2, [r0, #4]
+ 181 00ea 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 182 00ec 01D0     		beq	.L13
+ 183 00ee 0121     		movs	r1, #1
+ 184 00f0 01E0     		b	.L23
+ 185              	.L13:
+ 186 00f2 4FF48031 		mov	r1, #65536
+ 187              	.L23:
+ 188 00f6 01FA03F0 		lsl	r0, r1, r3
+ 189 00fa B5EE404A 		fcmpzs	s8
+ 190 00fe 134B     		ldr	r3, .L26+20
+ 191 0100 5060     		str	r0, [r2, #4]
+ 192 0102 F1EE10FA 		fmstat
+ 193 0106 5A68     		ldr	r2, [r3, #4]
+ 194 0108 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 195 010a 01D0     		beq	.L15
+ 196 010c 0121     		movs	r1, #1
+ 197 010e 01E0     		b	.L24
+ 198              	.L15:
+ 199 0110 4FF48031 		mov	r1, #65536
+ 200              	.L24:
+ 201 0114 01FA00F3 		lsl	r3, r1, r0
+ 202 0118 5360     		str	r3, [r2, #4]
+ 203 011a 16EE901A 		fmrs	r1, s13
+ 204 011e 0C48     		ldr	r0, .L26+24
+ 205 0120 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 206 0124 0B48     		ldr	r0, .L26+28
+ 207 0126 18EE101A 		fmrs	r1, s16
+ 208 012a BDEC028B 		fldmfdd	sp!, {d8}
+ 209 012e BDE80840 		pop	{r3, lr}
+ 210 0132 FFF7FEBF 		b	PWMSP001_SetDutyCycle
+ 211              	.L27:
+ 212 0136 00BF     		.align	2
+ 213              	.L26:
+ 214 0138 00000000 		.word	data_R
+ 215 013c 00007F43 		.word	1132396544
+ 216 0140 0000C842 		.word	1120403456
+ 217 0144 00000000 		.word	0
+ 218 0148 00000000 		.word	IO004_Handle6
+ 219 014c 00000000 		.word	IO004_Handle0
+ 220 0150 00000000 		.word	PWMSP001_Handle0
+ 221 0154 00000000 		.word	PWMSP001_Handle1
+ 223              		.section	.text.Testando_Handler,"ax",%progbits
+ 224              		.align	1
+ 225              		.global	Testando_Handler
+ 226              		.thumb
+ 227              		.thumb_func
+ 229              	Testando_Handler:
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		@ link register save eliminated.
+ 233 0000 7047     		bx	lr
+ 235              		.section	.text.ERU0_3_IRQHandler,"ax",%progbits
+ 236              		.align	1
+ 237              		.global	ERU0_3_IRQHandler
+ 238              		.thumb
+ 239              		.thumb_func
+ 241              	ERU0_3_IRQHandler:
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              		@ link register save eliminated.
+ 245 0000 7047     		bx	lr
+ 247              		.section	.text.ERU1_0_IRQHandler,"ax",%progbits
+ 248              		.align	1
+ 249              		.global	ERU1_0_IRQHandler
+ 250              		.thumb
+ 251              		.thumb_func
+ 253              	ERU1_0_IRQHandler:
+ 254              		@ args = 0, pretend = 0, frame = 0
+ 255              		@ frame_needed = 0, uses_anonymous_args = 0
+ 256              		@ link register save eliminated.
+ 257 0000 7047     		bx	lr
+ 259              		.section	.text.Software_Timers_Init,"ax",%progbits
+ 260              		.align	1
+ 261              		.global	Software_Timers_Init
+ 262              		.thumb
+ 263              		.thumb_func
+ 265              	Software_Timers_Init:
+ 266              		@ args = 0, pretend = 0, frame = 0
+ 267              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268 0000 08B5     		push	{r3, lr}
+ 269 0002 6420     		movs	r0, #100
+ 270 0004 0121     		movs	r1, #1
+ 271 0006 054A     		ldr	r2, .L33
+ 272 0008 0023     		movs	r3, #0
+ 273 000a FFF7FEFF 		bl	SYSTM002_CreateTimer
+ 274 000e 18B1     		cbz	r0, .L31
+ 275 0010 BDE80840 		pop	{r3, lr}
+ 276 0014 FFF7FEBF 		b	SYSTM002_StartTimer
+ 277              	.L31:
+ 278 0018 08BD     		pop	{r3, pc}
+ 279              	.L34:
+ 280 001a 00BF     		.align	2
+ 281              	.L33:
+ 282 001c 00000000 		.word	Tick_Handler
+ 284              		.section	.text.delayus,"ax",%progbits
+ 285              		.align	1
+ 286              		.global	delayus
+ 287              		.thumb
+ 288              		.thumb_func
+ 290              	delayus:
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              		@ link register save eliminated.
+ 294 0000 6328     		cmp	r0, #99
+ 295 0002 03D8     		bhi	.L36
+ 296 0004 024B     		ldr	r3, .L39
+ 297 0006 0022     		movs	r2, #0
+ 298 0008 1A60     		str	r2, [r3, #0]
+ 299 000a 7047     		bx	lr
+ 300              	.L36:
  301              	.L38:
- 302              	.L40:
- 303 000c FEE7     		b	.L40
- 304              	.L42:
- 305 000e 00BF     		.align	2
- 306              	.L41:
- 307 0010 00000000 		.word	.LANCHOR0
- 309              		.section	.text.delayms,"ax",%progbits
- 310              		.align	1
- 311              		.global	delayms
- 312              		.thumb
- 313              		.thumb_func
- 315              	delayms:
- 316              		@ args = 0, pretend = 0, frame = 0
- 317              		@ frame_needed = 0, uses_anonymous_args = 0
- 318              		@ link register save eliminated.
- 319 0000 4FF47A73 		mov	r3, #1000
- 320 0004 5843     		muls	r0, r3, r0
- 321 0006 FFF7FEBF 		b	delayus
- 323              		.section	.text.delay,"ax",%progbits
- 324              		.align	1
- 325              		.global	delay
- 326              		.thumb
- 327              		.thumb_func
- 329              	delay:
- 330              		@ args = 0, pretend = 0, frame = 0
- 331              		@ frame_needed = 0, uses_anonymous_args = 0
- 332              		@ link register save eliminated.
- 333              	.L45:
- 334 0000 10F1FF30 		adds	r0, r0, #-1
- 335 0004 01D3     		bcc	.L47
- 336              	.L46:
- 337              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
- 338 0006 00BF     		nop
- 339              	@ 0 "" 2
- 340              		.thumb
- 341 0008 FAE7     		b	.L45
- 342              	.L47:
- 343 000a 7047     		bx	lr
- 345              		.section	.text.pulse_R,"ax",%progbits
- 346              		.align	1
- 347              		.global	pulse_R
- 348              		.thumb
- 349              		.thumb_func
- 351              	pulse_R:
- 352              		@ args = 0, pretend = 0, frame = 0
- 353              		@ frame_needed = 0, uses_anonymous_args = 0
- 354 0000 38B5     		push	{r3, r4, r5, lr}
- 355 0002 4FF49670 		mov	r0, #300
- 356 0006 FFF7FEFF 		bl	delay
- 357 000a 084B     		ldr	r3, .L49
- 358 000c 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
- 359 000e 5C68     		ldr	r4, [r3, #4]
- 360 0010 0120     		movs	r0, #1
- 361 0012 00FA05F0 		lsl	r0, r0, r5
- 362 0016 6060     		str	r0, [r4, #4]
- 363 0018 4FF49670 		mov	r0, #300
- 364 001c FFF7FEFF 		bl	delay
- 365 0020 4FF48031 		mov	r1, #65536
- 366 0024 01FA05F5 		lsl	r5, r1, r5
- 367 0028 6560     		str	r5, [r4, #4]
- 368 002a 38BD     		pop	{r3, r4, r5, pc}
- 369              	.L50:
- 370              		.align	2
- 371              	.L49:
- 372 002c 00000000 		.word	IO004_Handle11
- 374              		.section	.text.configure_R,"ax",%progbits
- 375              		.align	1
- 376              		.global	configure_R
- 377              		.thumb
- 378              		.thumb_func
- 380              	configure_R:
- 381              		@ args = 0, pretend = 0, frame = 0
- 382              		@ frame_needed = 0, uses_anonymous_args = 0
- 383 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
- 384 0004 2E4B     		ldr	r3, .L58
- 385 0006 C522     		movs	r2, #197
- 386 0008 4F20     		movs	r0, #79
- 387 000a A321     		movs	r1, #163
- 388 000c 1A70     		strb	r2, [r3, #0]
- 389 000e 5870     		strb	r0, [r3, #1]
- 390 0010 9970     		strb	r1, [r3, #2]
- 391 0012 0020     		movs	r0, #0
- 392 0014 EE24     		movs	r4, #238
- 393 0016 DD25     		movs	r5, #221
- 394 0018 CC26     		movs	r6, #204
- 395 001a BB27     		movs	r7, #187
- 396 001c AA22     		movs	r2, #170
- 397 001e 2821     		movs	r1, #40
- 398 0020 DC70     		strb	r4, [r3, #3]
- 399 0022 1D71     		strb	r5, [r3, #4]
- 400 0024 5E71     		strb	r6, [r3, #5]
- 401 0026 9F71     		strb	r7, [r3, #6]
- 402 0028 DA71     		strb	r2, [r3, #7]
- 403 002a 1872     		strb	r0, [r3, #8]
- 404 002c 5872     		strb	r0, [r3, #9]
- 405 002e 9872     		strb	r0, [r3, #10]
- 406 0030 D872     		strb	r0, [r3, #11]
- 407 0032 1873     		strb	r0, [r3, #12]
- 408 0034 9873     		strb	r0, [r3, #14]
- 409 0036 5973     		strb	r1, [r3, #13]
- 410 0038 224D     		ldr	r5, .L58+4
- 411 003a 234B     		ldr	r3, .L58+8
- 412 003c 95F80190 		ldrb	r9, [r5, #1]	@ zero_extendqisi2
- 413 0040 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
- 414 0042 D5F80480 		ldr	r8, [r5, #4]
- 415 0046 5E68     		ldr	r6, [r3, #4]
- 416 0048 4FF48034 		mov	r4, #65536
- 417 004c 0122     		movs	r2, #1
- 418 004e 04FA07F4 		lsl	r4, r4, r7
- 419 0052 02FA09F0 		lsl	r0, r2, r9
- 420 0056 7460     		str	r4, [r6, #4]
- 421 0058 0E25     		movs	r5, #14
- 422 005a C8F80400 		str	r0, [r8, #4]
- 423              	.L52:
- 424 005e 0724     		movs	r4, #7
- 425              	.L55:
- 426 0060 174B     		ldr	r3, .L58
- 427 0062 0121     		movs	r1, #1
- 428 0064 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
- 429 0066 194B     		ldr	r3, .L58+12
- 430 0068 01FA04F2 		lsl	r2, r1, r4
- 431 006c 0242     		tst	r2, r0
- 432 006e 5A68     		ldr	r2, [r3, #4]
- 433 0070 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
- 434 0072 03D0     		beq	.L53
- 435 0074 01FA00F1 		lsl	r1, r1, r0
- 436 0078 5160     		str	r1, [r2, #4]
- 437 007a 04E0     		b	.L54
- 438              	.L53:
- 439 007c 4FF48031 		mov	r1, #65536
- 440 0080 01FA00F3 		lsl	r3, r1, r0
- 441 0084 5360     		str	r3, [r2, #4]
- 442              	.L54:
- 443 0086 FFF7FEFF 		bl	pulse_R
- 444 008a 14F1FF34 		adds	r4, r4, #-1
- 445 008e E7D2     		bcs	.L55
- 446 0090 15F1FF35 		adds	r5, r5, #-1
- 447 0094 E3D2     		bcs	.L52
- 448              	.L56:
- 449 0096 0321     		movs	r1, #3
- 450 0098 0C48     		ldr	r0, .L58+12
- 451 009a FFF7FEFF 		bl	IO004_DisableOutputDriver
- 452 009e 4FF48032 		mov	r2, #65536
- 453 00a2 02FA09F0 		lsl	r0, r2, r9
- 454 00a6 0121     		movs	r1, #1
- 455 00a8 C8F80400 		str	r0, [r8, #4]
- 456 00ac 01FA07F7 		lsl	r7, r1, r7
- 457 00b0 4CF25030 		movw	r0, #50000
- 458 00b4 7760     		str	r7, [r6, #4]
- 459 00b6 BDE8F843 		pop	{r3, r4, r5, r6, r7, r8, r9, lr}
- 460 00ba FFF7FEBF 		b	delay
- 461              	.L59:
- 462 00be 00BF     		.align	2
- 463              	.L58:
- 464 00c0 00000000 		.word	configuration
- 465 00c4 00000000 		.word	IO004_Handle10
- 466 00c8 00000000 		.word	IO004_Handle14
- 467 00cc 00000000 		.word	IO004_Handle12
- 469              		.section	.text.read_R,"ax",%progbits
- 470              		.align	1
- 471              		.global	read_R
- 472              		.thumb
- 473              		.thumb_func
- 475              	read_R:
- 476              		@ args = 0, pretend = 0, frame = 0
- 477              		@ frame_needed = 0, uses_anonymous_args = 0
- 478 0000 194B     		ldr	r3, .L69
- 479 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
- 480 0006 93F80180 		ldrb	r8, [r3, #1]	@ zero_extendqisi2
- 481 000a 5F68     		ldr	r7, [r3, #4]
- 482 000c 4FF48030 		mov	r0, #65536
- 483 0010 00FA08F1 		lsl	r1, r0, r8
- 484 0014 7960     		str	r1, [r7, #4]
- 485 0016 4CF25030 		movw	r0, #50000
- 486 001a FFF7FEFF 		bl	delay
- 487 001e 0025     		movs	r5, #0
- 488              	.L61:
- 489 0020 0026     		movs	r6, #0
- 490 0022 0724     		movs	r4, #7
- 491              	.L63:
- 492 0024 114B     		ldr	r3, .L69+4
- 493 0026 5A68     		ldr	r2, [r3, #4]
- 494 0028 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
- 495 002a 506A     		ldr	r0, [r2, #36]
- 496 002c 20FA01F3 		lsr	r3, r0, r1
- 497 0030 D807     		lsls	r0, r3, #31
- 498 0032 04D5     		bpl	.L62
- 499 0034 0122     		movs	r2, #1
- 500 0036 02FA04F2 		lsl	r2, r2, r4
- 501 003a 1643     		orrs	r6, r6, r2
- 502 003c F6B2     		uxtb	r6, r6
- 503              	.L62:
- 504 003e FFF7FEFF 		bl	pulse_R
- 505 0042 14F1FF34 		adds	r4, r4, #-1
- 506 0046 EDD2     		bcs	.L63
- 507 0048 0948     		ldr	r0, .L69+8
- 508 004a 2E54     		strb	r6, [r5, r0]
- 509 004c 0135     		adds	r5, r5, #1
- 510 004e 052D     		cmp	r5, #5
- 511 0050 E6D1     		bne	.L61
- 512              	.L64:
- 513 0052 0121     		movs	r1, #1
- 514 0054 01FA08F3 		lsl	r3, r1, r8
- 515 0058 4CF25030 		movw	r0, #50000
- 516 005c 7B60     		str	r3, [r7, #4]
- 517 005e BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
- 518 0062 FFF7FEBF 		b	delay
- 519              	.L70:
- 520 0066 00BF     		.align	2
- 521              	.L69:
- 522 0068 00000000 		.word	IO004_Handle14
- 523 006c 00000000 		.word	IO004_Handle12
- 524 0070 00000000 		.word	data_R
- 526              		.section	.text.startup.main,"ax",%progbits
- 527              		.align	1
- 528              		.global	main
- 529              		.thumb
- 530              		.thumb_func
- 532              	main:
- 533              		@ args = 0, pretend = 0, frame = 0
- 534              		@ frame_needed = 0, uses_anonymous_args = 0
- 535 0000 08B5     		push	{r3, lr}
- 536 0002 FFF7FEFF 		bl	DAVE_Init
- 537 0006 FFF7FEFF 		bl	Software_Timers_Init
- 538 000a FFF7FEFF 		bl	configure_R
- 539 000e 0E4B     		ldr	r3, .L79
- 540 0010 0022     		movs	r2, #0
- 541 0012 1A60     		str	r2, [r3, #0]
- 542 0014 5A60     		str	r2, [r3, #4]
- 543              	.L78:
- 544 0016 FFF7FEFF 		bl	start_driver_signals
- 545              	.L77:
- 546 001a 0C48     		ldr	r0, .L79+4
- 547 001c 4168     		ldr	r1, [r0, #4]
- 548 001e 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
- 549 0020 4A6A     		ldr	r2, [r1, #36]
- 550 0022 0949     		ldr	r1, .L79
- 551 0024 22FA03F0 		lsr	r0, r2, r3
- 552 0028 10F0010F 		tst	r0, #1
- 553 002c 06D0     		beq	.L73
- 554 002e 0020     		movs	r0, #0
- 555 0030 4860     		str	r0, [r1, #4]
- 556 0032 FFF7FEFF 		bl	read_R
- 557 0036 FFF7FEFF 		bl	update_driver_signals
- 558 003a EEE7     		b	.L77
- 559              	.L73:
- 560 003c 4A68     		ldr	r2, [r1, #4]
- 561 003e 41F28833 		movw	r3, #5000
- 562 0042 9A42     		cmp	r2, r3
- 563 0044 E9D9     		bls	.L77
- 564 0046 E6E7     		b	.L78
- 565              	.L80:
- 566              		.align	2
- 567              	.L79:
- 568 0048 00000000 		.word	.LANCHOR0
- 569 004c 00000000 		.word	IO004_Handle13
- 571              		.global	value
- 572              		.global	status_ticks
- 573              		.global	ticks
- 574              		.comm	data_R,5,1
- 575              		.comm	configuration,15,1
- 576              		.bss
- 577              		.align	2
- 578              		.set	.LANCHOR0,. + 0
- 581              	ticks:
- 582 0000 00000000 		.space	4
- 585              	status_ticks:
- 586 0004 00000000 		.space	4
- 589              	value:
- 590 0008 00       		.space	1
- 591 0009 000000   		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+ 302 000c FEE7     		b	.L38
+ 303              	.L40:
+ 304 000e 00BF     		.align	2
+ 305              	.L39:
+ 306 0010 00000000 		.word	.LANCHOR0
+ 308              		.section	.text.delayms,"ax",%progbits
+ 309              		.align	1
+ 310              		.global	delayms
+ 311              		.thumb
+ 312              		.thumb_func
+ 314              	delayms:
+ 315              		@ args = 0, pretend = 0, frame = 0
+ 316              		@ frame_needed = 0, uses_anonymous_args = 0
+ 317              		@ link register save eliminated.
+ 318 0000 4FF47A73 		mov	r3, #1000
+ 319 0004 5843     		muls	r0, r3, r0
+ 320 0006 FFF7FEBF 		b	delayus
+ 322              		.section	.text.delay,"ax",%progbits
+ 323              		.align	1
+ 324              		.global	delay
+ 325              		.thumb
+ 326              		.thumb_func
+ 328              	delay:
+ 329              		@ args = 0, pretend = 0, frame = 0
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331              		@ link register save eliminated.
+ 332              	.L43:
+ 333 0000 10F1FF30 		adds	r0, r0, #-1
+ 334 0004 01D3     		bcc	.L45
+ 335              	.L44:
+ 336              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 337 0006 00BF     		nop
+ 338              	@ 0 "" 2
+ 339              		.thumb
+ 340 0008 FAE7     		b	.L43
+ 341              	.L45:
+ 342 000a 7047     		bx	lr
+ 344              		.section	.text.pulse_R,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	pulse_R
+ 347              		.thumb
+ 348              		.thumb_func
+ 350              	pulse_R:
+ 351              		@ args = 0, pretend = 0, frame = 0
+ 352              		@ frame_needed = 0, uses_anonymous_args = 0
+ 353 0000 38B5     		push	{r3, r4, r5, lr}
+ 354 0002 4FF49670 		mov	r0, #300
+ 355 0006 FFF7FEFF 		bl	delay
+ 356 000a 084B     		ldr	r3, .L47
+ 357 000c 5D78     		ldrb	r5, [r3, #1]	@ zero_extendqisi2
+ 358 000e 5C68     		ldr	r4, [r3, #4]
+ 359 0010 0120     		movs	r0, #1
+ 360 0012 00FA05F0 		lsl	r0, r0, r5
+ 361 0016 6060     		str	r0, [r4, #4]
+ 362 0018 4FF49670 		mov	r0, #300
+ 363 001c FFF7FEFF 		bl	delay
+ 364 0020 4FF48031 		mov	r1, #65536
+ 365 0024 01FA05F5 		lsl	r5, r1, r5
+ 366 0028 6560     		str	r5, [r4, #4]
+ 367 002a 38BD     		pop	{r3, r4, r5, pc}
+ 368              	.L48:
+ 369              		.align	2
+ 370              	.L47:
+ 371 002c 00000000 		.word	IO004_Handle11
+ 373              		.section	.text.configure_R,"ax",%progbits
+ 374              		.align	1
+ 375              		.global	configure_R
+ 376              		.thumb
+ 377              		.thumb_func
+ 379              	configure_R:
+ 380              		@ args = 0, pretend = 0, frame = 0
+ 381              		@ frame_needed = 0, uses_anonymous_args = 0
+ 382 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 383 0004 2E4B     		ldr	r3, .L56
+ 384 0006 C522     		movs	r2, #197
+ 385 0008 4F20     		movs	r0, #79
+ 386 000a A321     		movs	r1, #163
+ 387 000c 1A70     		strb	r2, [r3, #0]
+ 388 000e 5870     		strb	r0, [r3, #1]
+ 389 0010 9970     		strb	r1, [r3, #2]
+ 390 0012 0020     		movs	r0, #0
+ 391 0014 EE24     		movs	r4, #238
+ 392 0016 DD25     		movs	r5, #221
+ 393 0018 CC26     		movs	r6, #204
+ 394 001a BB27     		movs	r7, #187
+ 395 001c AA22     		movs	r2, #170
+ 396 001e 2821     		movs	r1, #40
+ 397 0020 DC70     		strb	r4, [r3, #3]
+ 398 0022 1D71     		strb	r5, [r3, #4]
+ 399 0024 5E71     		strb	r6, [r3, #5]
+ 400 0026 9F71     		strb	r7, [r3, #6]
+ 401 0028 DA71     		strb	r2, [r3, #7]
+ 402 002a 1872     		strb	r0, [r3, #8]
+ 403 002c 5872     		strb	r0, [r3, #9]
+ 404 002e 9872     		strb	r0, [r3, #10]
+ 405 0030 D872     		strb	r0, [r3, #11]
+ 406 0032 1873     		strb	r0, [r3, #12]
+ 407 0034 9873     		strb	r0, [r3, #14]
+ 408 0036 5973     		strb	r1, [r3, #13]
+ 409 0038 224D     		ldr	r5, .L56+4
+ 410 003a 234B     		ldr	r3, .L56+8
+ 411 003c 95F80190 		ldrb	r9, [r5, #1]	@ zero_extendqisi2
+ 412 0040 5F78     		ldrb	r7, [r3, #1]	@ zero_extendqisi2
+ 413 0042 D5F80480 		ldr	r8, [r5, #4]
+ 414 0046 5E68     		ldr	r6, [r3, #4]
+ 415 0048 4FF48034 		mov	r4, #65536
+ 416 004c 0122     		movs	r2, #1
+ 417 004e 04FA07F4 		lsl	r4, r4, r7
+ 418 0052 02FA09F0 		lsl	r0, r2, r9
+ 419 0056 7460     		str	r4, [r6, #4]
+ 420 0058 0E25     		movs	r5, #14
+ 421 005a C8F80400 		str	r0, [r8, #4]
+ 422              	.L50:
+ 423 005e 0724     		movs	r4, #7
+ 424              	.L53:
+ 425 0060 174B     		ldr	r3, .L56
+ 426 0062 0121     		movs	r1, #1
+ 427 0064 E85C     		ldrb	r0, [r5, r3]	@ zero_extendqisi2
+ 428 0066 194B     		ldr	r3, .L56+12
+ 429 0068 01FA04F2 		lsl	r2, r1, r4
+ 430 006c 0242     		tst	r2, r0
+ 431 006e 5A68     		ldr	r2, [r3, #4]
+ 432 0070 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ 433 0072 03D0     		beq	.L51
+ 434 0074 01FA00F1 		lsl	r1, r1, r0
+ 435 0078 5160     		str	r1, [r2, #4]
+ 436 007a 04E0     		b	.L52
+ 437              	.L51:
+ 438 007c 4FF48031 		mov	r1, #65536
+ 439 0080 01FA00F3 		lsl	r3, r1, r0
+ 440 0084 5360     		str	r3, [r2, #4]
+ 441              	.L52:
+ 442 0086 FFF7FEFF 		bl	pulse_R
+ 443 008a 14F1FF34 		adds	r4, r4, #-1
+ 444 008e E7D2     		bcs	.L53
+ 445 0090 15F1FF35 		adds	r5, r5, #-1
+ 446 0094 E3D2     		bcs	.L50
+ 447              	.L54:
+ 448 0096 0321     		movs	r1, #3
+ 449 0098 0C48     		ldr	r0, .L56+12
+ 450 009a FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 451 009e 4FF48032 		mov	r2, #65536
+ 452 00a2 02FA09F0 		lsl	r0, r2, r9
+ 453 00a6 0121     		movs	r1, #1
+ 454 00a8 C8F80400 		str	r0, [r8, #4]
+ 455 00ac 01FA07F7 		lsl	r7, r1, r7
+ 456 00b0 4CF25030 		movw	r0, #50000
+ 457 00b4 7760     		str	r7, [r6, #4]
+ 458 00b6 BDE8F843 		pop	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 459 00ba FFF7FEBF 		b	delay
+ 460              	.L57:
+ 461 00be 00BF     		.align	2
+ 462              	.L56:
+ 463 00c0 00000000 		.word	configuration
+ 464 00c4 00000000 		.word	IO004_Handle10
+ 465 00c8 00000000 		.word	IO004_Handle14
+ 466 00cc 00000000 		.word	IO004_Handle12
+ 468              		.section	.text.read_R,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	read_R
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	read_R:
+ 475              		@ args = 0, pretend = 0, frame = 0
+ 476              		@ frame_needed = 0, uses_anonymous_args = 0
+ 477 0000 194B     		ldr	r3, .L67
+ 478 0002 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 479 0006 93F80180 		ldrb	r8, [r3, #1]	@ zero_extendqisi2
+ 480 000a 5F68     		ldr	r7, [r3, #4]
+ 481 000c 4FF48030 		mov	r0, #65536
+ 482 0010 00FA08F1 		lsl	r1, r0, r8
+ 483 0014 7960     		str	r1, [r7, #4]
+ 484 0016 4CF25030 		movw	r0, #50000
+ 485 001a FFF7FEFF 		bl	delay
+ 486 001e 0025     		movs	r5, #0
+ 487              	.L59:
+ 488 0020 0026     		movs	r6, #0
+ 489 0022 0724     		movs	r4, #7
+ 490              	.L61:
+ 491 0024 114B     		ldr	r3, .L67+4
+ 492 0026 5A68     		ldr	r2, [r3, #4]
+ 493 0028 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+ 494 002a 506A     		ldr	r0, [r2, #36]
+ 495 002c 20FA01F3 		lsr	r3, r0, r1
+ 496 0030 D807     		lsls	r0, r3, #31
+ 497 0032 04D5     		bpl	.L60
+ 498 0034 0122     		movs	r2, #1
+ 499 0036 02FA04F2 		lsl	r2, r2, r4
+ 500 003a 1643     		orrs	r6, r6, r2
+ 501 003c F6B2     		uxtb	r6, r6
+ 502              	.L60:
+ 503 003e FFF7FEFF 		bl	pulse_R
+ 504 0042 14F1FF34 		adds	r4, r4, #-1
+ 505 0046 EDD2     		bcs	.L61
+ 506 0048 0948     		ldr	r0, .L67+8
+ 507 004a 2E54     		strb	r6, [r5, r0]
+ 508 004c 0135     		adds	r5, r5, #1
+ 509 004e 052D     		cmp	r5, #5
+ 510 0050 E6D1     		bne	.L59
+ 511              	.L62:
+ 512 0052 0121     		movs	r1, #1
+ 513 0054 01FA08F3 		lsl	r3, r1, r8
+ 514 0058 4CF25030 		movw	r0, #50000
+ 515 005c 7B60     		str	r3, [r7, #4]
+ 516 005e BDE8F041 		pop	{r4, r5, r6, r7, r8, lr}
+ 517 0062 FFF7FEBF 		b	delay
+ 518              	.L68:
+ 519 0066 00BF     		.align	2
+ 520              	.L67:
+ 521 0068 00000000 		.word	IO004_Handle14
+ 522 006c 00000000 		.word	IO004_Handle12
+ 523 0070 00000000 		.word	data_R
+ 525              		.section	.text.startup.main,"ax",%progbits
+ 526              		.align	1
+ 527              		.global	main
+ 528              		.thumb
+ 529              		.thumb_func
+ 531              	main:
+ 532              		@ args = 0, pretend = 0, frame = 0
+ 533              		@ frame_needed = 0, uses_anonymous_args = 0
+ 534 0000 08B5     		push	{r3, lr}
+ 535 0002 FFF7FEFF 		bl	DAVE_Init
+ 536 0006 FFF7FEFF 		bl	Software_Timers_Init
+ 537 000a FFF7FEFF 		bl	configure_R
+ 538 000e 0E4B     		ldr	r3, .L77
+ 539 0010 0022     		movs	r2, #0
+ 540 0012 1A60     		str	r2, [r3, #0]
+ 541 0014 5A60     		str	r2, [r3, #4]
+ 542              	.L76:
+ 543 0016 FFF7FEFF 		bl	start_driver_signals
+ 544              	.L75:
+ 545 001a 0C48     		ldr	r0, .L77+4
+ 546 001c 4168     		ldr	r1, [r0, #4]
+ 547 001e 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+ 548 0020 4A6A     		ldr	r2, [r1, #36]
+ 549 0022 0949     		ldr	r1, .L77
+ 550 0024 22FA03F0 		lsr	r0, r2, r3
+ 551 0028 10F0010F 		tst	r0, #1
+ 552 002c 06D0     		beq	.L71
+ 553 002e 0020     		movs	r0, #0
+ 554 0030 4860     		str	r0, [r1, #4]
+ 555 0032 FFF7FEFF 		bl	read_R
+ 556 0036 FFF7FEFF 		bl	update_driver_signals
+ 557 003a EEE7     		b	.L75
+ 558              	.L71:
+ 559 003c 4A68     		ldr	r2, [r1, #4]
+ 560 003e 41F28833 		movw	r3, #5000
+ 561 0042 9A42     		cmp	r2, r3
+ 562 0044 E9D9     		bls	.L75
+ 563 0046 E6E7     		b	.L76
+ 564              	.L78:
+ 565              		.align	2
+ 566              	.L77:
+ 567 0048 00000000 		.word	.LANCHOR0
+ 568 004c 00000000 		.word	IO004_Handle13
+ 570              		.global	value
+ 571              		.global	status_ticks
+ 572              		.global	ticks
+ 573              		.comm	data_R,5,1
+ 574              		.comm	configuration,15,1
+ 575              		.bss
+ 576              		.align	2
+ 577              		.set	.LANCHOR0,. + 0
+ 580              	ticks:
+ 581 0000 00000000 		.space	4
+ 584              	status_ticks:
+ 585 0004 00000000 		.space	4
+ 588              	value:
+ 589 0008 00       		.space	1
+ 590 0009 000000   		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:17     .text.Tick_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:22     .text.Tick_Handler:00000000 Tick_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:37     .text.Tick_Handler:00000010 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:40     .text.WakeUp:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:45     .text.WakeUp:00000000 WakeUp
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:52     .text.start_driver_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:57     .text.start_driver_signals:00000000 start_driver_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:85     .text.start_driver_signals:0000003c $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:91     .text.update_driver_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:96     .text.update_driver_signals:00000000 update_driver_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:215    .text.update_driver_signals:00000130 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:17     .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:22     .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:37     .text.Tick_Handler:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:40     .text.WakeUp:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:45     .text.WakeUp:00000000 WakeUp
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:52     .text.start_driver_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:57     .text.start_driver_signals:00000000 start_driver_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:85     .text.start_driver_signals:0000003c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:90     .text.update_driver_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:95     .text.update_driver_signals:00000000 update_driver_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:214    .text.update_driver_signals:00000138 $d
                             *COM*:00000005 data_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:225    .text.Testando_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:230    .text.Testando_Handler:00000000 Testando_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:237    .text.ERU0_3_IRQHandler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:242    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:249    .text.ERU1_0_IRQHandler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:254    .text.ERU1_0_IRQHandler:00000000 ERU1_0_IRQHandler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:261    .text.Software_Timers_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:266    .text.Software_Timers_Init:00000000 Software_Timers_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:283    .text.Software_Timers_Init:0000001c $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:286    .text.delayus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:291    .text.delayus:00000000 delayus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:307    .text.delayus:00000010 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:310    .text.delayms:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:315    .text.delayms:00000000 delayms
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:324    .text.delay:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:329    .text.delay:00000000 delay
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:346    .text.pulse_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:351    .text.pulse_R:00000000 pulse_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:372    .text.pulse_R:0000002c $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:375    .text.configure_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:380    .text.configure_R:00000000 configure_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:464    .text.configure_R:000000c0 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:224    .text.Testando_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:229    .text.Testando_Handler:00000000 Testando_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:236    .text.ERU0_3_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:241    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:248    .text.ERU1_0_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:253    .text.ERU1_0_IRQHandler:00000000 ERU1_0_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:260    .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:265    .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:282    .text.Software_Timers_Init:0000001c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:285    .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:290    .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:306    .text.delayus:00000010 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:309    .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:314    .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:323    .text.delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:328    .text.delay:00000000 delay
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:345    .text.pulse_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:350    .text.pulse_R:00000000 pulse_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:371    .text.pulse_R:0000002c $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:374    .text.configure_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:379    .text.configure_R:00000000 configure_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:463    .text.configure_R:000000c0 $d
                             *COM*:0000000f configuration
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:470    .text.read_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:475    .text.read_R:00000000 read_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:522    .text.read_R:00000068 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:527    .text.startup.main:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:532    .text.startup.main:00000000 main
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:568    .text.startup.main:00000048 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:589    .bss:00000008 value
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:585    .bss:00000004 status_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:581    .bss:00000000 ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccw9g0Zb.s:577    .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:469    .text.read_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:474    .text.read_R:00000000 read_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:521    .text.read_R:00000068 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:526    .text.startup.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:531    .text.startup.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:567    .text.startup.main:00000048 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:588    .bss:00000008 value
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:584    .bss:00000004 status_ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:580    .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc1RUvkt.s:576    .bss:00000000 $d
 
 UNDEFINED SYMBOLS
 PWMSP001_Start

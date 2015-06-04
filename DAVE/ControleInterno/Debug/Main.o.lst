@@ -27,32 +27,34 @@
   29              		.comm	block_pwm_update_tick_left,4,4
   30              		.comm	block_pwm_update_tick_right,4,4
   31              		.global	last_direction_right
-  34              	last_direction_right:
-  35 0004 00       		.space	1
-  36              		.global	last_direction_left
-  39              	last_direction_left:
-  40 0005 00       		.space	1
-  41              		.global	block_left
-  44              	block_left:
-  45 0006 00       		.space	1
-  46              		.global	block_right
-  49              	block_right:
-  50 0007 00       		.space	1
-  51              		.global	status_block_left
-  52              		.data
-  55              	status_block_left:
-  56 0000 02       		.byte	2
-  57              		.global	status_block_right
-  60              	status_block_right:
-  61 0001 02       		.byte	2
-  62              		.section	.text.main,"ax",%progbits
-  63              		.align	2
-  64              		.global	main
-  65              		.thumb
-  66              		.thumb_func
-  68              	main:
-  69              	.LFB112:
-  70              		.file 1 "../Main.c"
+  32              		.data
+  35              	last_direction_right:
+  36 0000 02       		.byte	2
+  37              		.global	last_direction_left
+  40              	last_direction_left:
+  41 0001 02       		.byte	2
+  42              		.global	block_left
+  43              		.bss
+  46              	block_left:
+  47 0004 00       		.space	1
+  48              		.global	block_right
+  51              	block_right:
+  52 0005 00       		.space	1
+  53              		.global	status_block_left
+  54 0006 0000     		.data
+  57              	status_block_left:
+  58 0002 02       		.byte	2
+  59              		.global	status_block_right
+  62              	status_block_right:
+  63 0003 02       		.byte	2
+  64              		.section	.text.main,"ax",%progbits
+  65              		.align	2
+  66              		.global	main
+  67              		.thumb
+  68              		.thumb_func
+  70              	main:
+  71              	.LFB112:
+  72              		.file 1 "../Main.c"
    1:../Main.c     **** /*
    2:../Main.c     ****  * Main.c
    3:../Main.c     ****  *
@@ -147,1665 +149,1703 @@
   92:../Main.c     **** #define FAIL 0
   93:../Main.c     **** #define TICK_FAIL_SAFE 5000 //0.5s
   94:../Main.c     **** //defines referentes ao controle de direcao locomocao
-  95:../Main.c     **** #define DIR_FRONT 0
-  96:../Main.c     **** #define DIR_BACK 1
-  97:../Main.c     **** #define TICK_BREAK_PWM 1500 //150ms
-  98:../Main.c     **** #define TICK_ZERO_PWM 5000 //500ms
-  99:../Main.c     **** #define STATUS_BREAK 0
- 100:../Main.c     **** #define STATUS_ZERO 1
- 101:../Main.c     **** #define STATUS_NORMAL 2
- 102:../Main.c     **** //==============================
- 103:../Main.c     **** 
- 104:../Main.c     **** /***************************************************/
- 105:../Main.c     **** /**************DECLARACAO DAS FUNCOES***************/
- 106:../Main.c     **** /***************************************************/
- 107:../Main.c     **** 
- 108:../Main.c     **** void delay(long unsigned int i);
- 109:../Main.c     **** void pulse_R();
- 110:../Main.c     **** void configure_R();
- 111:../Main.c     **** void read_R();
- 112:../Main.c     **** void delay(long unsigned int i);
- 113:../Main.c     **** void updateButtonStates();
- 114:../Main.c     **** void start_PWM_signals(void);
- 115:../Main.c     **** void start_PWM_signals_test(void);
- 116:../Main.c     **** void update_PWM_signals(void);
- 117:../Main.c     **** void update_PWM_signals_test(float per_teste);
- 118:../Main.c     **** void Tick_Handler(void);
- 119:../Main.c     **** void delayms(uint32_t delay_ms);
- 120:../Main.c     **** void delayus(uint32_t delay_us);
- 121:../Main.c     **** void Software_Timers_Init();
- 122:../Main.c     **** 
- 123:../Main.c     **** /***************************************************/
- 124:../Main.c     **** /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
- 125:../Main.c     **** /***************************************************/
- 126:../Main.c     **** 
- 127:../Main.c     **** char configuration[15];
- 128:../Main.c     **** unsigned char data_R[BYTES_TO_RECEIVE];
- 129:../Main.c     **** int status_ticks;
- 130:../Main.c     **** uint32_t ticks = 0UL;
- 131:../Main.c     **** int block_pwm_update_tick_left;
- 132:../Main.c     **** int block_pwm_update_tick_right;
- 133:../Main.c     **** unsigned char last_direction_right = DIR_FRONT;
- 134:../Main.c     **** unsigned char last_direction_left = DIR_FRONT;
- 135:../Main.c     **** unsigned char block_left = 0;
- 136:../Main.c     **** unsigned char block_right = 0;
- 137:../Main.c     **** unsigned char status_block_left = STATUS_NORMAL;
- 138:../Main.c     **** unsigned char status_block_right = STATUS_NORMAL;
- 139:../Main.c     **** 
- 140:../Main.c     **** /***************************************************/
- 141:../Main.c     **** /***********************MAIN************************/
- 142:../Main.c     **** /***************************************************/
- 143:../Main.c     **** 
- 144:../Main.c     **** int main(void) {
-  71              		.loc 1 144 0
-  72              		.cfi_startproc
-  73              		@ args = 0, pretend = 0, frame = 8
-  74              		@ frame_needed = 1, uses_anonymous_args = 0
-  75 0000 80B5     		push	{r7, lr}
-  76              	.LCFI0:
-  77              		.cfi_def_cfa_offset 8
-  78              		.cfi_offset 7, -8
-  79              		.cfi_offset 14, -4
-  80 0002 82B0     		sub	sp, sp, #8
-  81              	.LCFI1:
-  82              		.cfi_def_cfa_offset 16
-  83 0004 00AF     		add	r7, sp, #0
-  84              	.LCFI2:
-  85              		.cfi_def_cfa_register 7
- 145:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
- 146:../Main.c     **** 	DAVE_Init(); // Initialization of DAVE Apps
-  86              		.loc 1 146 0
-  87 0006 FFF7FEFF 		bl	DAVE_Init
- 147:../Main.c     **** 	/*Etapa de inicializacao*/
- 148:../Main.c     **** 	configure_R(); //Configura transceptor como receptor
-  88              		.loc 1 148 0
-  89 000a FFF7FEFF 		bl	configure_R
- 149:../Main.c     **** 	//IO004_SetPin(LED1); //Leds para debug
- 150:../Main.c     **** 	//IO004_SetPin(LED2);
- 151:../Main.c     **** 
- 152:../Main.c     **** 	start_PWM_signals();
-  90              		.loc 1 152 0
-  91 000e FFF7FEFF 		bl	start_PWM_signals
- 153:../Main.c     **** //	start_PWM_signals_test();
- 154:../Main.c     **** 
- 155:../Main.c     **** 	float per_teste = MIN_PER_MOTOR_LOCOMOTION;
-  92              		.loc 1 155 0
-  93 0012 41F26F23 		movw	r3, #4719
-  94 0016 C3F68323 		movt	r3, 14979
-  95 001a 7B60     		str	r3, [r7, #4]	@ float
- 156:../Main.c     **** 	char status = RUNNING;
-  96              		.loc 1 156 0
-  97 001c 4FF00103 		mov	r3, #1
-  98 0020 FB70     		strb	r3, [r7, #3]
- 157:../Main.c     **** 	status_ticks = 0;
-  99              		.loc 1 157 0
- 100 0022 40F20003 		movw	r3, #:lower16:status_ticks
- 101 0026 C0F20003 		movt	r3, #:upper16:status_ticks
- 102 002a 4FF00002 		mov	r2, #0
- 103 002e 1A60     		str	r2, [r3, #0]
- 158:../Main.c     **** 	ticks = 0;
- 104              		.loc 1 158 0
- 105 0030 40F20003 		movw	r3, #:lower16:ticks
- 106 0034 C0F20003 		movt	r3, #:upper16:ticks
- 107 0038 4FF00002 		mov	r2, #0
- 108 003c 1A60     		str	r2, [r3, #0]
- 159:../Main.c     **** 	block_pwm_update_tick_left = 0;
- 109              		.loc 1 159 0
- 110 003e 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 111 0042 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 112 0046 4FF00002 		mov	r2, #0
- 113 004a 1A60     		str	r2, [r3, #0]
- 160:../Main.c     **** 	block_pwm_update_tick_right = 0;
- 114              		.loc 1 160 0
- 115 004c 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 116 0050 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 117 0054 4FF00002 		mov	r2, #0
- 118 0058 1A60     		str	r2, [r3, #0]
- 161:../Main.c     **** 	Software_Timers_Init();
- 119              		.loc 1 161 0
- 120 005a FFF7FEFF 		bl	Software_Timers_Init
- 121 005e 00E0     		b	.L4
- 122              	.L5:
- 162:../Main.c     **** 
- 163:../Main.c     **** 	/*Loop do codigo*/
- 164:../Main.c     **** 	while (1) {
- 165:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
- 166:../Main.c     **** 			status_ticks = 0;
- 167:../Main.c     **** 			read_R();
- 168:../Main.c     **** 			update_PWM_signals();
- 169:../Main.c     **** 		} else {
- 170:../Main.c     **** 			if (status_ticks > TICK_FAIL_SAFE) { //0.5s
- 171:../Main.c     **** 				status = FAIL;
- 172:../Main.c     **** 				start_PWM_signals();
- 173:../Main.c     **** 			}
- 174:../Main.c     **** 		}
- 175:../Main.c     **** 
- 176:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 177:../Main.c     **** //				100.0f * 0.0016f / PER_MOTOR_LOCOMOTION);
- 178:../Main.c     **** //
- 179:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 180:../Main.c     **** //				100.0f * 0.0016f / PER_MOTOR_LOCOMOTION);
- 181:../Main.c     **** //
- 182:../Main.c     **** //		int teste = 30000;
- 183:../Main.c     **** //		while (teste--)
- 184:../Main.c     **** //			delay(1000000);
- 185:../Main.c     **** //
- 186:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 187:../Main.c     **** //				100.0f * 0.0014f / PER_MOTOR_LOCOMOTION);
- 188:../Main.c     **** //
- 189:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 190:../Main.c     **** //				100.0f * 0.0014f / PER_MOTOR_LOCOMOTION);
- 191:../Main.c     **** //
- 192:../Main.c     **** //		teste = 30000;
- 193:../Main.c     **** //		while (teste--)
- 194:../Main.c     **** //			delay(1000000);
- 195:../Main.c     **** 
- 196:../Main.c     **** //		if (IO004_ReadPin(IO004_Handle7) == 0) {
- 197:../Main.c     **** //					while (IO004_ReadPin(IO004_Handle7) == 0)
- 198:../Main.c     **** //						;
- 199:../Main.c     **** //
- 200:../Main.c     **** //					if(per_teste >= MAX_PER_MOTOR_LOCOMOTION)
- 201:../Main.c     **** //						status = 1;
- 202:../Main.c     **** //
- 203:../Main.c     **** //					if(per_teste <= MIN_PER_MOTOR_LOCOMOTION)
- 204:../Main.c     **** //						status = 0;
- 205:../Main.c     **** //
- 206:../Main.c     **** //					if(status)
- 207:../Main.c     **** //						per_teste -= 0.00005;
- 208:../Main.c     **** //					else
- 209:../Main.c     **** //						per_teste += 0.00005;
- 210:../Main.c     **** //
- 211:../Main.c     **** //					update_PWM_signals_test( per_teste);
- 212:../Main.c     **** //		}
- 213:../Main.c     **** 	}
- 123              		.loc 1 213 0
- 124 0060 00BF     		nop
- 125              	.L4:
- 165:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
- 126              		.loc 1 165 0
- 127 0062 40F20003 		movw	r3, #:lower16:IO004_Handle5
- 128 0066 C0F20003 		movt	r3, #:upper16:IO004_Handle5
- 129 006a 5B68     		ldr	r3, [r3, #4]
- 130 006c 5A6A     		ldr	r2, [r3, #36]
- 131 006e 40F20003 		movw	r3, #:lower16:IO004_Handle5
- 132 0072 C0F20003 		movt	r3, #:upper16:IO004_Handle5
- 133 0076 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 134 0078 22FA03F3 		lsr	r3, r2, r3
- 135 007c 03F00103 		and	r3, r3, #1
- 136 0080 002B     		cmp	r3, #0
- 137 0082 0BD0     		beq	.L2
- 166:../Main.c     **** 			status_ticks = 0;
- 138              		.loc 1 166 0
- 139 0084 40F20003 		movw	r3, #:lower16:status_ticks
- 140 0088 C0F20003 		movt	r3, #:upper16:status_ticks
- 141 008c 4FF00002 		mov	r2, #0
- 142 0090 1A60     		str	r2, [r3, #0]
- 167:../Main.c     **** 			read_R();
- 143              		.loc 1 167 0
- 144 0092 FFF7FEFF 		bl	read_R
- 168:../Main.c     **** 			update_PWM_signals();
+  95:../Main.c     **** #define DIR_NULL 2
+  96:../Main.c     **** #define DIR_FRONT 1
+  97:../Main.c     **** #define DIR_BACK 0
+  98:../Main.c     **** #define TICK_BREAK_PWM 50000 //150ms
+  99:../Main.c     **** #define TICK_ZERO_PWM 50000 //500ms
+ 100:../Main.c     **** #define STATUS_BREAK 0
+ 101:../Main.c     **** #define STATUS_ZERO 1
+ 102:../Main.c     **** #define STATUS_NORMAL 2
+ 103:../Main.c     **** //==============================
+ 104:../Main.c     **** 
+ 105:../Main.c     **** /***************************************************/
+ 106:../Main.c     **** /**************DECLARACAO DAS FUNCOES***************/
+ 107:../Main.c     **** /***************************************************/
+ 108:../Main.c     **** 
+ 109:../Main.c     **** void delay(long unsigned int i);
+ 110:../Main.c     **** void pulse_R();
+ 111:../Main.c     **** void configure_R();
+ 112:../Main.c     **** void read_R();
+ 113:../Main.c     **** void delay(long unsigned int i);
+ 114:../Main.c     **** void updateButtonStates();
+ 115:../Main.c     **** void start_PWM_signals(void);
+ 116:../Main.c     **** void start_PWM_signals_test(void);
+ 117:../Main.c     **** void update_PWM_signals(void);
+ 118:../Main.c     **** void update_PWM_signals_test(float per_teste);
+ 119:../Main.c     **** void Tick_Handler(void);
+ 120:../Main.c     **** void delayms(uint32_t delay_ms);
+ 121:../Main.c     **** void delayus(uint32_t delay_us);
+ 122:../Main.c     **** void Software_Timers_Init();
+ 123:../Main.c     **** 
+ 124:../Main.c     **** /***************************************************/
+ 125:../Main.c     **** /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
+ 126:../Main.c     **** /***************************************************/
+ 127:../Main.c     **** 
+ 128:../Main.c     **** char configuration[15];
+ 129:../Main.c     **** unsigned char data_R[BYTES_TO_RECEIVE];
+ 130:../Main.c     **** int status_ticks;
+ 131:../Main.c     **** uint32_t ticks = 0UL;
+ 132:../Main.c     **** int block_pwm_update_tick_left;
+ 133:../Main.c     **** int block_pwm_update_tick_right;
+ 134:../Main.c     **** unsigned char last_direction_right = DIR_NULL;
+ 135:../Main.c     **** unsigned char last_direction_left = DIR_NULL;
+ 136:../Main.c     **** unsigned char block_left = 0;
+ 137:../Main.c     **** unsigned char block_right = 0;
+ 138:../Main.c     **** unsigned char status_block_left = STATUS_NORMAL;
+ 139:../Main.c     **** unsigned char status_block_right = STATUS_NORMAL;
+ 140:../Main.c     **** 
+ 141:../Main.c     **** /***************************************************/
+ 142:../Main.c     **** /***********************MAIN************************/
+ 143:../Main.c     **** /***************************************************/
+ 144:../Main.c     **** 
+ 145:../Main.c     **** int main(void) {
+  73              		.loc 1 145 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 8
+  76              		@ frame_needed = 1, uses_anonymous_args = 0
+  77 0000 80B5     		push	{r7, lr}
+  78              	.LCFI0:
+  79              		.cfi_def_cfa_offset 8
+  80              		.cfi_offset 7, -8
+  81              		.cfi_offset 14, -4
+  82 0002 82B0     		sub	sp, sp, #8
+  83              	.LCFI1:
+  84              		.cfi_def_cfa_offset 16
+  85 0004 00AF     		add	r7, sp, #0
+  86              	.LCFI2:
+  87              		.cfi_def_cfa_register 7
+ 146:../Main.c     **** //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
+ 147:../Main.c     **** 	DAVE_Init(); // Initialization of DAVE Apps
+  88              		.loc 1 147 0
+  89 0006 FFF7FEFF 		bl	DAVE_Init
+ 148:../Main.c     **** 	/*Etapa de inicializacao*/
+ 149:../Main.c     **** 	configure_R(); //Configura transceptor como receptor
+  90              		.loc 1 149 0
+  91 000a FFF7FEFF 		bl	configure_R
+ 150:../Main.c     **** 	//IO004_SetPin(LED1); //Leds para debug
+ 151:../Main.c     **** 	//IO004_SetPin(LED2);
+ 152:../Main.c     **** 
+ 153:../Main.c     **** 	start_PWM_signals();
+  92              		.loc 1 153 0
+  93 000e FFF7FEFF 		bl	start_PWM_signals
+ 154:../Main.c     **** //	start_PWM_signals_test();
+ 155:../Main.c     **** 
+ 156:../Main.c     **** 	float per_teste = MIN_PER_MOTOR_LOCOMOTION;
+  94              		.loc 1 156 0
+  95 0012 41F26F23 		movw	r3, #4719
+  96 0016 C3F68323 		movt	r3, 14979
+  97 001a 7B60     		str	r3, [r7, #4]	@ float
+ 157:../Main.c     **** 	char status = RUNNING;
+  98              		.loc 1 157 0
+  99 001c 4FF00103 		mov	r3, #1
+ 100 0020 FB70     		strb	r3, [r7, #3]
+ 158:../Main.c     **** 	status_ticks = 0;
+ 101              		.loc 1 158 0
+ 102 0022 40F20003 		movw	r3, #:lower16:status_ticks
+ 103 0026 C0F20003 		movt	r3, #:upper16:status_ticks
+ 104 002a 4FF00002 		mov	r2, #0
+ 105 002e 1A60     		str	r2, [r3, #0]
+ 159:../Main.c     **** 	ticks = 0;
+ 106              		.loc 1 159 0
+ 107 0030 40F20003 		movw	r3, #:lower16:ticks
+ 108 0034 C0F20003 		movt	r3, #:upper16:ticks
+ 109 0038 4FF00002 		mov	r2, #0
+ 110 003c 1A60     		str	r2, [r3, #0]
+ 160:../Main.c     **** 	block_pwm_update_tick_left = 0;
+ 111              		.loc 1 160 0
+ 112 003e 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 113 0042 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 114 0046 4FF00002 		mov	r2, #0
+ 115 004a 1A60     		str	r2, [r3, #0]
+ 161:../Main.c     **** 	block_pwm_update_tick_right = 0;
+ 116              		.loc 1 161 0
+ 117 004c 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 118 0050 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 119 0054 4FF00002 		mov	r2, #0
+ 120 0058 1A60     		str	r2, [r3, #0]
+ 162:../Main.c     **** 	Software_Timers_Init();
+ 121              		.loc 1 162 0
+ 122 005a FFF7FEFF 		bl	Software_Timers_Init
+ 123 005e 00E0     		b	.L4
+ 124              	.L5:
+ 163:../Main.c     **** 
+ 164:../Main.c     **** 	/*Loop do codigo*/
+ 165:../Main.c     **** 	while (1) {
+ 166:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
+ 167:../Main.c     **** 			status_ticks = 0;
+ 168:../Main.c     **** 			read_R();
+ 169:../Main.c     **** 			update_PWM_signals();
+ 170:../Main.c     **** 		} else {
+ 171:../Main.c     **** 			if (status_ticks > TICK_FAIL_SAFE) { //0.5s
+ 172:../Main.c     **** 				status = FAIL;
+ 173:../Main.c     **** 				start_PWM_signals();
+ 174:../Main.c     **** 			}
+ 175:../Main.c     **** 		}
+ 176:../Main.c     **** 
+ 177:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 178:../Main.c     **** //				100.0f * 0.0016f / PER_MOTOR_LOCOMOTION);
+ 179:../Main.c     **** //
+ 180:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 181:../Main.c     **** //				100.0f * 0.0016f / PER_MOTOR_LOCOMOTION);
+ 182:../Main.c     **** //
+ 183:../Main.c     **** //		int teste = 30000;
+ 184:../Main.c     **** //		while (teste--)
+ 185:../Main.c     **** //			delay(1000000);
+ 186:../Main.c     **** //
+ 187:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 188:../Main.c     **** //				100.0f * 0.0014f / PER_MOTOR_LOCOMOTION);
+ 189:../Main.c     **** //
+ 190:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 191:../Main.c     **** //				100.0f * 0.0014f / PER_MOTOR_LOCOMOTION);
+ 192:../Main.c     **** //
+ 193:../Main.c     **** //		teste = 30000;
+ 194:../Main.c     **** //		while (teste--)
+ 195:../Main.c     **** //			delay(1000000);
+ 196:../Main.c     **** 
+ 197:../Main.c     **** //		if (IO004_ReadPin(IO004_Handle7) == 0) {
+ 198:../Main.c     **** //					while (IO004_ReadPin(IO004_Handle7) == 0)
+ 199:../Main.c     **** //						;
+ 200:../Main.c     **** //
+ 201:../Main.c     **** //					if(per_teste >= MAX_PER_MOTOR_LOCOMOTION)
+ 202:../Main.c     **** //						status = 1;
+ 203:../Main.c     **** //
+ 204:../Main.c     **** //					if(per_teste <= MIN_PER_MOTOR_LOCOMOTION)
+ 205:../Main.c     **** //						status = 0;
+ 206:../Main.c     **** //
+ 207:../Main.c     **** //					if(status)
+ 208:../Main.c     **** //						per_teste -= 0.00005;
+ 209:../Main.c     **** //					else
+ 210:../Main.c     **** //						per_teste += 0.00005;
+ 211:../Main.c     **** //
+ 212:../Main.c     **** //					update_PWM_signals_test( per_teste);
+ 213:../Main.c     **** //		}
+ 214:../Main.c     **** 	}
+ 125              		.loc 1 214 0
+ 126 0060 00BF     		nop
+ 127              	.L4:
+ 166:../Main.c     **** 		if (IO004_ReadPin(DR1)) {
+ 128              		.loc 1 166 0
+ 129 0062 40F20003 		movw	r3, #:lower16:IO004_Handle5
+ 130 0066 C0F20003 		movt	r3, #:upper16:IO004_Handle5
+ 131 006a 5B68     		ldr	r3, [r3, #4]
+ 132 006c 5A6A     		ldr	r2, [r3, #36]
+ 133 006e 40F20003 		movw	r3, #:lower16:IO004_Handle5
+ 134 0072 C0F20003 		movt	r3, #:upper16:IO004_Handle5
+ 135 0076 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 136 0078 22FA03F3 		lsr	r3, r2, r3
+ 137 007c 03F00103 		and	r3, r3, #1
+ 138 0080 002B     		cmp	r3, #0
+ 139 0082 0BD0     		beq	.L2
+ 167:../Main.c     **** 			status_ticks = 0;
+ 140              		.loc 1 167 0
+ 141 0084 40F20003 		movw	r3, #:lower16:status_ticks
+ 142 0088 C0F20003 		movt	r3, #:upper16:status_ticks
+ 143 008c 4FF00002 		mov	r2, #0
+ 144 0090 1A60     		str	r2, [r3, #0]
+ 168:../Main.c     **** 			read_R();
  145              		.loc 1 168 0
- 146 0096 FFF7FEFF 		bl	update_PWM_signals
- 147              		.loc 1 213 0
- 148 009a E1E7     		b	.L5
- 149              	.L2:
- 170:../Main.c     **** 			if (status_ticks > TICK_FAIL_SAFE) { //0.5s
- 150              		.loc 1 170 0
- 151 009c 40F20003 		movw	r3, #:lower16:status_ticks
- 152 00a0 C0F20003 		movt	r3, #:upper16:status_ticks
- 153 00a4 1A68     		ldr	r2, [r3, #0]
- 154 00a6 41F28833 		movw	r3, #5000
- 155 00aa 9A42     		cmp	r2, r3
- 156 00ac D8DD     		ble	.L5
- 171:../Main.c     **** 				status = FAIL;
- 157              		.loc 1 171 0
- 158 00ae 4FF00003 		mov	r3, #0
- 159 00b2 FB70     		strb	r3, [r7, #3]
- 172:../Main.c     **** 				start_PWM_signals();
- 160              		.loc 1 172 0
- 161 00b4 FFF7FEFF 		bl	start_PWM_signals
- 162              		.loc 1 213 0
- 163 00b8 D2E7     		b	.L5
- 164              		.cfi_endproc
- 165              	.LFE112:
- 167 00ba 00BF     		.section	.text.start_PWM_signals,"ax",%progbits
- 168              		.align	2
- 169              		.global	start_PWM_signals
- 170              		.thumb
- 171              		.thumb_func
- 173              	start_PWM_signals:
- 174              	.LFB113:
- 214:../Main.c     **** 	return 0;
- 215:../Main.c     **** }
- 216:../Main.c     **** 
- 217:../Main.c     **** //void start_PWM_signals_test(void) {
- 218:../Main.c     **** //
- 219:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_RIGHT);
- 220:../Main.c     **** //	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
- 221:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 222:../Main.c     **** //			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
- 223:../Main.c     **** //
- 224:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_LEFT);
- 225:../Main.c     **** //	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
- 226:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 227:../Main.c     **** //			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
- 228:../Main.c     **** //
- 229:../Main.c     **** //}
- 230:../Main.c     **** //void update_PWM_signals_test(float per_teste) {
- 231:../Main.c     **** //
- 232:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 233:../Main.c     **** //			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
- 234:../Main.c     **** //
- 235:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 236:../Main.c     **** //			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
- 237:../Main.c     **** //}
- 238:../Main.c     **** 
- 239:../Main.c     **** /***************************************************/
- 240:../Main.c     **** /**********INICIALIZA OS SINAIS DE PWM COM *********/
- 241:../Main.c     **** /****PERIODOS CORRETOS E CICLOS PARA MOTOR PARADO***/
- 242:../Main.c     **** /***************************************************/
- 243:../Main.c     **** 
- 244:../Main.c     **** void start_PWM_signals(void) {
- 175              		.loc 1 244 0
- 176              		.cfi_startproc
- 177              		@ args = 0, pretend = 0, frame = 0
- 178              		@ frame_needed = 1, uses_anonymous_args = 0
- 179 0000 80B5     		push	{r7, lr}
- 180              	.LCFI3:
- 181              		.cfi_def_cfa_offset 8
- 182              		.cfi_offset 7, -8
- 183              		.cfi_offset 14, -4
- 184 0002 00AF     		add	r7, sp, #0
- 185              	.LCFI4:
- 186              		.cfi_def_cfa_register 7
- 245:../Main.c     **** 
- 246:../Main.c     **** //	TODO: Pinos dos motores
- 247:../Main.c     **** 
- 248:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_RIGHT);
- 187              		.loc 1 248 0
- 188 0004 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
- 189 0008 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
- 190 000c FFF7FEFF 		bl	PWMSP001_Start
- 249:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
- 191              		.loc 1 249 0
- 192 0010 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
- 193 0014 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
- 194 0018 4FF00001 		mov	r1, #0
- 195 001c C4F27021 		movt	r1, 17008
- 196 0020 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
- 250:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 197              		.loc 1 250 0
- 198 0024 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
- 199 0028 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
- 200 002c 4FF00001 		mov	r1, #0
- 201 0030 C4F21011 		movt	r1, 16656
- 202 0034 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 251:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
- 252:../Main.c     **** 
- 253:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_LEFT);
- 203              		.loc 1 253 0
- 204 0038 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
- 205 003c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
- 206 0040 FFF7FEFF 		bl	PWMSP001_Start
- 254:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
- 207              		.loc 1 254 0
- 208 0044 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
- 209 0048 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
- 210 004c 4FF00001 		mov	r1, #0
- 211 0050 C4F27021 		movt	r1, 17008
- 212 0054 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
- 255:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 213              		.loc 1 255 0
- 214 0058 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
- 215 005c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
- 216 0060 4FF00001 		mov	r1, #0
- 217 0064 C4F21011 		movt	r1, 16656
- 218 0068 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 256:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
- 257:../Main.c     **** 
- 258:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_WEAPON);
- 219              		.loc 1 258 0
- 220 006c 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
- 221 0070 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
- 222 0074 FFF7FEFF 		bl	PWMSP001_Start
- 259:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_WEAPON, FREQ_MOTOR_WEAPON);
- 223              		.loc 1 259 0
- 224 0078 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
- 225 007c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
- 226 0080 4FF00001 		mov	r1, #0
- 227 0084 C4F27021 		movt	r1, 17008
- 228 0088 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
- 260:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
- 229              		.loc 1 260 0
- 230 008c 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
- 231 0090 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
- 232 0094 4FF00001 		mov	r1, #0
- 233 0098 C4F2C001 		movt	r1, 16576
- 234 009c FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 261:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_WEAPON / PER_MOTOR_WEAPON);
- 262:../Main.c     **** 
- 263:../Main.c     **** }
- 235              		.loc 1 263 0
- 236 00a0 80BD     		pop	{r7, pc}
- 237              		.cfi_endproc
- 238              	.LFE113:
- 240 00a2 00BF     		.section	.text.update_PWM_signals,"ax",%progbits
- 241              		.align	2
- 242              		.global	update_PWM_signals
- 243              		.thumb
- 244              		.thumb_func
- 246              	update_PWM_signals:
- 247              	.LFB114:
- 264:../Main.c     **** 
- 265:../Main.c     **** void update_PWM_signals(void) {
- 248              		.loc 1 265 0
- 249              		.cfi_startproc
- 250              		@ args = 0, pretend = 0, frame = 16
- 251              		@ frame_needed = 1, uses_anonymous_args = 0
- 252 0000 80B5     		push	{r7, lr}
- 253              	.LCFI5:
- 254              		.cfi_def_cfa_offset 8
- 255              		.cfi_offset 7, -8
- 256              		.cfi_offset 14, -4
- 257 0002 84B0     		sub	sp, sp, #16
- 258              	.LCFI6:
- 259              		.cfi_def_cfa_offset 24
- 260 0004 00AF     		add	r7, sp, #0
- 261              	.LCFI7:
- 262              		.cfi_def_cfa_register 7
- 266:../Main.c     **** 
- 267:../Main.c     **** //	TODO: Verificar valor de data_R co direita e esquerda
- 268:../Main.c     **** 
- 269:../Main.c     **** 	//Esquerda data[1]
- 270:../Main.c     **** 	//Direita data[2]
- 271:../Main.c     **** 
- 272:../Main.c     **** 	float per_motor_right = ZERO_PER_MOTOR_LOCOMOTION;
- 263              		.loc 1 272 0
- 264 0006 49F6A633 		movw	r3, #39846
- 265 000a C3F6C423 		movt	r3, 15044
- 266 000e FB60     		str	r3, [r7, #12]	@ float
- 273:../Main.c     **** 	float per_motor_left = ZERO_PER_MOTOR_LOCOMOTION;
- 267              		.loc 1 273 0
- 268 0010 49F6A633 		movw	r3, #39846
- 269 0014 C3F6C423 		movt	r3, 15044
- 270 0018 BB60     		str	r3, [r7, #8]	@ float
- 274:../Main.c     **** 	unsigned char direction = data_R[3];
- 271              		.loc 1 274 0
- 272 001a 40F20003 		movw	r3, #:lower16:data_R
- 273 001e C0F20003 		movt	r3, #:upper16:data_R
- 274 0022 DB78     		ldrb	r3, [r3, #3]
- 275 0024 FB71     		strb	r3, [r7, #7]
- 275:../Main.c     **** 	float per_weapon = (data_R[4])
- 276              		.loc 1 275 0
- 277 0026 40F20003 		movw	r3, #:lower16:data_R
- 278 002a C0F20003 		movt	r3, #:upper16:data_R
- 279 002e 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
- 276:../Main.c     **** 			* (MAX_PER_MOTOR_WEAPON - MIN_PER_MOTOR_WEAPON)
- 280              		.loc 1 276 0
- 281 0030 07EE903A 		fmsr	s15, r3	@ int
- 282 0034 B8EEE77A 		fsitos	s14, s15
- 283 0038 DFEDD17A 		flds	s15, .L28
- 284 003c 27EE277A 		fmuls	s14, s14, s15
- 277:../Main.c     **** 			/ 255+ MIN_PER_MOTOR_WEAPON;
- 285              		.loc 1 277 0
- 286 0040 DFEDD07A 		flds	s15, .L28+4
- 287 0044 87EE277A 		fdivs	s14, s14, s15
- 275:../Main.c     **** 	float per_weapon = (data_R[4])
- 288              		.loc 1 275 0
- 289 0048 DFEDCD7A 		flds	s15, .L28
- 290 004c 77EE277A 		fadds	s15, s14, s15
- 291 0050 C7ED007A 		fsts	s15, [r7, #0]
- 278:../Main.c     **** 
- 279:../Main.c     **** 	if (((direction & (1 << LEFT_FRONT)) && last_direction_left == DIR_BACK)
- 292              		.loc 1 279 0
- 293 0054 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 294 0056 03F00803 		and	r3, r3, #8
- 295 005a 002B     		cmp	r3, #0
- 296 005c 06D0     		beq	.L8
- 297              		.loc 1 279 0 is_stmt 0 discriminator 1
- 298 005e 40F20003 		movw	r3, #:lower16:last_direction_left
- 299 0062 C0F20003 		movt	r3, #:upper16:last_direction_left
- 300 0066 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 301 0068 012B     		cmp	r3, #1
- 302 006a 0BD0     		beq	.L9
- 303              	.L8:
- 280:../Main.c     **** 			|| ((direction & (1 << LEFT_BACK))
- 304              		.loc 1 280 0 is_stmt 1
- 305 006c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 306 006e 03F00103 		and	r3, r3, #1
- 307 0072 002B     		cmp	r3, #0
- 308 0074 31D0     		beq	.L10
- 281:../Main.c     **** 					&& last_direction_left == DIR_FRONT)) {
- 309              		.loc 1 281 0
- 310 0076 40F20003 		movw	r3, #:lower16:last_direction_left
- 311 007a C0F20003 		movt	r3, #:upper16:last_direction_left
- 312 007e 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 313 0080 002B     		cmp	r3, #0
- 314 0082 2AD1     		bne	.L10
- 315              	.L9:
- 282:../Main.c     **** 		if (!block_left) {
- 316              		.loc 1 282 0
- 317 0084 40F20003 		movw	r3, #:lower16:block_left
- 318 0088 C0F20003 		movt	r3, #:upper16:block_left
- 319 008c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 320 008e 002B     		cmp	r3, #0
- 321 0090 15D1     		bne	.L11
- 283:../Main.c     **** 			block_left = _TRUE;
- 322              		.loc 1 283 0
- 323 0092 40F20003 		movw	r3, #:lower16:block_left
- 324 0096 C0F20003 		movt	r3, #:upper16:block_left
- 325 009a 4FF00102 		mov	r2, #1
- 326 009e 1A70     		strb	r2, [r3, #0]
- 284:../Main.c     **** 			block_pwm_update_tick_left = TICK_BREAK_PWM;
- 327              		.loc 1 284 0
- 328 00a0 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 329 00a4 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 330 00a8 40F2DC52 		movw	r2, #1500
- 331 00ac 1A60     		str	r2, [r3, #0]
- 285:../Main.c     **** 			status_block_left = STATUS_BREAK;
- 332              		.loc 1 285 0
- 333 00ae 40F20003 		movw	r3, #:lower16:status_block_left
- 334 00b2 C0F20003 		movt	r3, #:upper16:status_block_left
- 335 00b6 4FF00002 		mov	r2, #0
- 336 00ba 1A70     		strb	r2, [r3, #0]
- 337 00bc 0DE0     		b	.L10
- 338              	.L11:
- 286:../Main.c     **** 		} else {
- 287:../Main.c     **** 			block_left = _FALSE;
- 339              		.loc 1 287 0
- 340 00be 40F20003 		movw	r3, #:lower16:block_left
- 341 00c2 C0F20003 		movt	r3, #:upper16:block_left
- 342 00c6 4FF00002 		mov	r2, #0
- 343 00ca 1A70     		strb	r2, [r3, #0]
- 288:../Main.c     **** 			status_block_left = STATUS_NORMAL;
- 344              		.loc 1 288 0
- 345 00cc 40F20003 		movw	r3, #:lower16:status_block_left
- 346 00d0 C0F20003 		movt	r3, #:upper16:status_block_left
- 347 00d4 4FF00202 		mov	r2, #2
- 348 00d8 1A70     		strb	r2, [r3, #0]
- 349              	.L10:
- 289:../Main.c     **** 		}
- 290:../Main.c     **** 
- 291:../Main.c     **** 	}
+ 146 0092 FFF7FEFF 		bl	read_R
+ 169:../Main.c     **** 			update_PWM_signals();
+ 147              		.loc 1 169 0
+ 148 0096 FFF7FEFF 		bl	update_PWM_signals
+ 149              		.loc 1 214 0
+ 150 009a E1E7     		b	.L5
+ 151              	.L2:
+ 171:../Main.c     **** 			if (status_ticks > TICK_FAIL_SAFE) { //0.5s
+ 152              		.loc 1 171 0
+ 153 009c 40F20003 		movw	r3, #:lower16:status_ticks
+ 154 00a0 C0F20003 		movt	r3, #:upper16:status_ticks
+ 155 00a4 1A68     		ldr	r2, [r3, #0]
+ 156 00a6 41F28833 		movw	r3, #5000
+ 157 00aa 9A42     		cmp	r2, r3
+ 158 00ac D8DD     		ble	.L5
+ 172:../Main.c     **** 				status = FAIL;
+ 159              		.loc 1 172 0
+ 160 00ae 4FF00003 		mov	r3, #0
+ 161 00b2 FB70     		strb	r3, [r7, #3]
+ 173:../Main.c     **** 				start_PWM_signals();
+ 162              		.loc 1 173 0
+ 163 00b4 FFF7FEFF 		bl	start_PWM_signals
+ 164              		.loc 1 214 0
+ 165 00b8 D2E7     		b	.L5
+ 166              		.cfi_endproc
+ 167              	.LFE112:
+ 169 00ba 00BF     		.section	.text.start_PWM_signals,"ax",%progbits
+ 170              		.align	2
+ 171              		.global	start_PWM_signals
+ 172              		.thumb
+ 173              		.thumb_func
+ 175              	start_PWM_signals:
+ 176              	.LFB113:
+ 215:../Main.c     **** 	return 0;
+ 216:../Main.c     **** }
+ 217:../Main.c     **** 
+ 218:../Main.c     **** //void start_PWM_signals_test(void) {
+ 219:../Main.c     **** //
+ 220:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_RIGHT);
+ 221:../Main.c     **** //	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+ 222:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 223:../Main.c     **** //			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+ 224:../Main.c     **** //
+ 225:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_LEFT);
+ 226:../Main.c     **** //	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+ 227:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 228:../Main.c     **** //			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+ 229:../Main.c     **** //
+ 230:../Main.c     **** //}
+ 231:../Main.c     **** //void update_PWM_signals_test(float per_teste) {
+ 232:../Main.c     **** //
+ 233:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 234:../Main.c     **** //			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+ 235:../Main.c     **** //
+ 236:../Main.c     **** //	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 237:../Main.c     **** //			100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+ 238:../Main.c     **** //}
+ 239:../Main.c     **** 
+ 240:../Main.c     **** /***************************************************/
+ 241:../Main.c     **** /**********INICIALIZA OS SINAIS DE PWM COM *********/
+ 242:../Main.c     **** /****PERIODOS CORRETOS E CICLOS PARA MOTOR PARADO***/
+ 243:../Main.c     **** /***************************************************/
+ 244:../Main.c     **** 
+ 245:../Main.c     **** void start_PWM_signals(void) {
+ 177              		.loc 1 245 0
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 1, uses_anonymous_args = 0
+ 181 0000 80B5     		push	{r7, lr}
+ 182              	.LCFI3:
+ 183              		.cfi_def_cfa_offset 8
+ 184              		.cfi_offset 7, -8
+ 185              		.cfi_offset 14, -4
+ 186 0002 00AF     		add	r7, sp, #0
+ 187              	.LCFI4:
+ 188              		.cfi_def_cfa_register 7
+ 246:../Main.c     **** 
+ 247:../Main.c     **** //	TODO: Pinos dos motores
+ 248:../Main.c     **** 
+ 249:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_RIGHT);
+ 189              		.loc 1 249 0
+ 190 0004 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+ 191 0008 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+ 192 000c FFF7FEFF 		bl	PWMSP001_Start
+ 250:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+ 193              		.loc 1 250 0
+ 194 0010 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+ 195 0014 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+ 196 0018 4FF00001 		mov	r1, #0
+ 197 001c C4F27021 		movt	r1, 17008
+ 198 0020 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+ 251:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 199              		.loc 1 251 0
+ 200 0024 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+ 201 0028 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+ 202 002c 4FF00001 		mov	r1, #0
+ 203 0030 C4F21011 		movt	r1, 16656
+ 204 0034 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 252:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+ 253:../Main.c     **** 
+ 254:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_LEFT);
+ 205              		.loc 1 254 0
+ 206 0038 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+ 207 003c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+ 208 0040 FFF7FEFF 		bl	PWMSP001_Start
+ 255:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+ 209              		.loc 1 255 0
+ 210 0044 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+ 211 0048 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+ 212 004c 4FF00001 		mov	r1, #0
+ 213 0050 C4F27021 		movt	r1, 17008
+ 214 0054 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+ 256:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 215              		.loc 1 256 0
+ 216 0058 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+ 217 005c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+ 218 0060 4FF00001 		mov	r1, #0
+ 219 0064 C4F21011 		movt	r1, 16656
+ 220 0068 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 257:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_LOCOMOTION / PER_MOTOR_LOCOMOTION);
+ 258:../Main.c     **** 
+ 259:../Main.c     **** 	PWMSP001_Start(PWM_MOTOR_WEAPON);
+ 221              		.loc 1 259 0
+ 222 006c 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
+ 223 0070 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
+ 224 0074 FFF7FEFF 		bl	PWMSP001_Start
+ 260:../Main.c     **** 	PWMSP001_SetPwmFreq(PWM_MOTOR_WEAPON, FREQ_MOTOR_WEAPON);
+ 225              		.loc 1 260 0
+ 226 0078 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
+ 227 007c C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
+ 228 0080 4FF00001 		mov	r1, #0
+ 229 0084 C4F27021 		movt	r1, 17008
+ 230 0088 FFF7FEFF 		bl	PWMSP001_SetPwmFreq
+ 261:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
+ 231              		.loc 1 261 0
+ 232 008c 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
+ 233 0090 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
+ 234 0094 4FF00001 		mov	r1, #0
+ 235 0098 C4F2C001 		movt	r1, 16576
+ 236 009c FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 262:../Main.c     **** 			100.0f * ZERO_PER_MOTOR_WEAPON / PER_MOTOR_WEAPON);
+ 263:../Main.c     **** 
+ 264:../Main.c     **** }
+ 237              		.loc 1 264 0
+ 238 00a0 80BD     		pop	{r7, pc}
+ 239              		.cfi_endproc
+ 240              	.LFE113:
+ 242 00a2 00BF     		.section	.text.update_PWM_signals,"ax",%progbits
+ 243              		.align	2
+ 244              		.global	update_PWM_signals
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	update_PWM_signals:
+ 249              	.LFB114:
+ 265:../Main.c     **** 
+ 266:../Main.c     **** void update_PWM_signals(void) {
+ 250              		.loc 1 266 0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 16
+ 253              		@ frame_needed = 1, uses_anonymous_args = 0
+ 254 0000 80B5     		push	{r7, lr}
+ 255              	.LCFI5:
+ 256              		.cfi_def_cfa_offset 8
+ 257              		.cfi_offset 7, -8
+ 258              		.cfi_offset 14, -4
+ 259 0002 84B0     		sub	sp, sp, #16
+ 260              	.LCFI6:
+ 261              		.cfi_def_cfa_offset 24
+ 262 0004 00AF     		add	r7, sp, #0
+ 263              	.LCFI7:
+ 264              		.cfi_def_cfa_register 7
+ 267:../Main.c     **** 
+ 268:../Main.c     **** //	TODO: Verificar valor de data_R co direita e esquerda
+ 269:../Main.c     **** 
+ 270:../Main.c     **** 	//Esquerda data[1]
+ 271:../Main.c     **** 	//Direita data[2]
+ 272:../Main.c     **** 
+ 273:../Main.c     **** 	float per_motor_right = ZERO_PER_MOTOR_LOCOMOTION;
+ 265              		.loc 1 273 0
+ 266 0006 49F6A633 		movw	r3, #39846
+ 267 000a C3F6C423 		movt	r3, 15044
+ 268 000e FB60     		str	r3, [r7, #12]	@ float
+ 274:../Main.c     **** 	float per_motor_left = ZERO_PER_MOTOR_LOCOMOTION;
+ 269              		.loc 1 274 0
+ 270 0010 49F6A633 		movw	r3, #39846
+ 271 0014 C3F6C423 		movt	r3, 15044
+ 272 0018 BB60     		str	r3, [r7, #8]	@ float
+ 275:../Main.c     **** 	unsigned char direction = data_R[3];
+ 273              		.loc 1 275 0
+ 274 001a 40F20003 		movw	r3, #:lower16:data_R
+ 275 001e C0F20003 		movt	r3, #:upper16:data_R
+ 276 0022 DB78     		ldrb	r3, [r3, #3]
+ 277 0024 FB71     		strb	r3, [r7, #7]
+ 276:../Main.c     **** 	float per_weapon = (data_R[4])
+ 278              		.loc 1 276 0
+ 279 0026 40F20003 		movw	r3, #:lower16:data_R
+ 280 002a C0F20003 		movt	r3, #:upper16:data_R
+ 281 002e 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+ 277:../Main.c     **** 			* (MAX_PER_MOTOR_WEAPON - MIN_PER_MOTOR_WEAPON)
+ 282              		.loc 1 277 0
+ 283 0030 07EE903A 		fmsr	s15, r3	@ int
+ 284 0034 B8EEE77A 		fsitos	s14, s15
+ 285 0038 DFEDD27A 		flds	s15, .L30
+ 286 003c 27EE277A 		fmuls	s14, s14, s15
+ 278:../Main.c     **** 			/ 255+ MIN_PER_MOTOR_WEAPON;
+ 287              		.loc 1 278 0
+ 288 0040 DFEDD17A 		flds	s15, .L30+4
+ 289 0044 87EE277A 		fdivs	s14, s14, s15
+ 276:../Main.c     **** 	float per_weapon = (data_R[4])
+ 290              		.loc 1 276 0
+ 291 0048 DFEDCE7A 		flds	s15, .L30
+ 292 004c 77EE277A 		fadds	s15, s14, s15
+ 293 0050 C7ED007A 		fsts	s15, [r7, #0]
+ 279:../Main.c     **** 
+ 280:../Main.c     **** 	if (((direction & (1 << LEFT_FRONT)) && last_direction_left == DIR_BACK)
+ 294              		.loc 1 280 0
+ 295 0054 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 296 0056 03F00803 		and	r3, r3, #8
+ 297 005a 002B     		cmp	r3, #0
+ 298 005c 06D0     		beq	.L8
+ 299              		.loc 1 280 0 is_stmt 0 discriminator 1
+ 300 005e 40F20003 		movw	r3, #:lower16:last_direction_left
+ 301 0062 C0F20003 		movt	r3, #:upper16:last_direction_left
+ 302 0066 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 303 0068 002B     		cmp	r3, #0
+ 304 006a 0BD0     		beq	.L9
+ 305              	.L8:
+ 281:../Main.c     **** 			|| ((direction & (1 << LEFT_BACK))
+ 306              		.loc 1 281 0 is_stmt 1
+ 307 006c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 308 006e 03F00103 		and	r3, r3, #1
+ 309 0072 002B     		cmp	r3, #0
+ 310 0074 36D0     		beq	.L10
+ 282:../Main.c     **** 					&& last_direction_left == DIR_FRONT)) {
+ 311              		.loc 1 282 0
+ 312 0076 40F20003 		movw	r3, #:lower16:last_direction_left
+ 313 007a C0F20003 		movt	r3, #:upper16:last_direction_left
+ 314 007e 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 315 0080 012B     		cmp	r3, #1
+ 316 0082 2FD1     		bne	.L10
+ 317              	.L9:
+ 283:../Main.c     **** 		if (!block_left) {
+ 318              		.loc 1 283 0
+ 319 0084 40F20003 		movw	r3, #:lower16:block_left
+ 320 0088 C0F20003 		movt	r3, #:upper16:block_left
+ 321 008c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 322 008e 002B     		cmp	r3, #0
+ 323 0090 1AD1     		bne	.L11
+ 284:../Main.c     **** 			block_left = _TRUE;
+ 324              		.loc 1 284 0
+ 325 0092 40F20003 		movw	r3, #:lower16:block_left
+ 326 0096 C0F20003 		movt	r3, #:upper16:block_left
+ 327 009a 4FF00102 		mov	r2, #1
+ 328 009e 1A70     		strb	r2, [r3, #0]
+ 285:../Main.c     **** 			block_pwm_update_tick_left = TICK_BREAK_PWM;
+ 329              		.loc 1 285 0
+ 330 00a0 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 331 00a4 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 332 00a8 4CF25032 		movw	r2, #50000
+ 333 00ac 1A60     		str	r2, [r3, #0]
+ 286:../Main.c     **** 			per_motor_left = MIN_PER_MOTOR_LOCOMOTION;
+ 334              		.loc 1 286 0
+ 335 00ae 41F26F23 		movw	r3, #4719
+ 336 00b2 C3F68323 		movt	r3, 14979
+ 337 00b6 BB60     		str	r3, [r7, #8]	@ float
+ 287:../Main.c     **** 			status_block_left = STATUS_BREAK;
+ 338              		.loc 1 287 0
+ 339 00b8 40F20003 		movw	r3, #:lower16:status_block_left
+ 340 00bc C0F20003 		movt	r3, #:upper16:status_block_left
+ 341 00c0 4FF00002 		mov	r2, #0
+ 342 00c4 1A70     		strb	r2, [r3, #0]
+ 343 00c6 0DE0     		b	.L10
+ 344              	.L11:
+ 288:../Main.c     **** 		} else {
+ 289:../Main.c     **** 			block_left = _FALSE;
+ 345              		.loc 1 289 0
+ 346 00c8 40F20003 		movw	r3, #:lower16:block_left
+ 347 00cc C0F20003 		movt	r3, #:upper16:block_left
+ 348 00d0 4FF00002 		mov	r2, #0
+ 349 00d4 1A70     		strb	r2, [r3, #0]
+ 290:../Main.c     **** 			status_block_left = STATUS_NORMAL;
+ 350              		.loc 1 290 0
+ 351 00d6 40F20003 		movw	r3, #:lower16:status_block_left
+ 352 00da C0F20003 		movt	r3, #:upper16:status_block_left
+ 353 00de 4FF00202 		mov	r2, #2
+ 354 00e2 1A70     		strb	r2, [r3, #0]
+ 355              	.L10:
+ 291:../Main.c     **** 		}
  292:../Main.c     **** 
- 293:../Main.c     **** 	if (((direction & (1 << RIGHT_FRONT)) && last_direction_right == DIR_FRONT)
- 350              		.loc 1 293 0
- 351 00da FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 352 00dc 03F02003 		and	r3, r3, #32
- 353 00e0 002B     		cmp	r3, #0
- 354 00e2 06D0     		beq	.L12
- 355              		.loc 1 293 0 is_stmt 0 discriminator 1
- 356 00e4 40F20003 		movw	r3, #:lower16:last_direction_right
- 357 00e8 C0F20003 		movt	r3, #:upper16:last_direction_right
- 358 00ec 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 359 00ee 002B     		cmp	r3, #0
- 360 00f0 0BD0     		beq	.L13
- 361              	.L12:
- 294:../Main.c     **** 			|| ((direction & (1 << RIGHT_BACK))
- 362              		.loc 1 294 0 is_stmt 1
- 363 00f2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 364 00f4 03F01003 		and	r3, r3, #16
+ 293:../Main.c     **** 	}
+ 294:../Main.c     **** 
+ 295:../Main.c     **** 	if (((direction & (1 << RIGHT_FRONT)) && last_direction_right == DIR_BACK)
+ 356              		.loc 1 295 0
+ 357 00e4 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 358 00e6 03F02003 		and	r3, r3, #32
+ 359 00ea 002B     		cmp	r3, #0
+ 360 00ec 06D0     		beq	.L12
+ 361              		.loc 1 295 0 is_stmt 0 discriminator 1
+ 362 00ee 40F20003 		movw	r3, #:lower16:last_direction_right
+ 363 00f2 C0F20003 		movt	r3, #:upper16:last_direction_right
+ 364 00f6 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
  365 00f8 002B     		cmp	r3, #0
- 366 00fa 31D0     		beq	.L14
- 295:../Main.c     **** 					&& last_direction_right == DIR_BACK)) {
- 367              		.loc 1 295 0
- 368 00fc 40F20003 		movw	r3, #:lower16:last_direction_right
- 369 0100 C0F20003 		movt	r3, #:upper16:last_direction_right
- 370 0104 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 371 0106 012B     		cmp	r3, #1
- 372 0108 2AD1     		bne	.L14
- 373              	.L13:
- 296:../Main.c     **** 		if (!block_right) {
- 374              		.loc 1 296 0
- 375 010a 40F20003 		movw	r3, #:lower16:block_right
- 376 010e C0F20003 		movt	r3, #:upper16:block_right
- 377 0112 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 378 0114 002B     		cmp	r3, #0
- 379 0116 15D1     		bne	.L15
- 297:../Main.c     **** 			block_right = _TRUE;
- 380              		.loc 1 297 0
- 381 0118 40F20003 		movw	r3, #:lower16:block_right
- 382 011c C0F20003 		movt	r3, #:upper16:block_right
- 383 0120 4FF00102 		mov	r2, #1
- 384 0124 1A70     		strb	r2, [r3, #0]
- 298:../Main.c     **** 			block_pwm_update_tick_right = TICK_BREAK_PWM;
- 385              		.loc 1 298 0
- 386 0126 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 387 012a C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 388 012e 40F2DC52 		movw	r2, #1500
- 389 0132 1A60     		str	r2, [r3, #0]
- 299:../Main.c     **** 			status_block_right = STATUS_BREAK;
- 390              		.loc 1 299 0
- 391 0134 40F20003 		movw	r3, #:lower16:status_block_right
- 392 0138 C0F20003 		movt	r3, #:upper16:status_block_right
- 393 013c 4FF00002 		mov	r2, #0
- 394 0140 1A70     		strb	r2, [r3, #0]
- 395 0142 0DE0     		b	.L14
- 396              	.L15:
- 300:../Main.c     **** 		} else {
- 301:../Main.c     **** 			block_right = _FALSE;
- 397              		.loc 1 301 0
- 398 0144 40F20003 		movw	r3, #:lower16:block_right
- 399 0148 C0F20003 		movt	r3, #:upper16:block_right
- 400 014c 4FF00002 		mov	r2, #0
- 401 0150 1A70     		strb	r2, [r3, #0]
- 302:../Main.c     **** 			status_block_right = STATUS_NORMAL;
- 402              		.loc 1 302 0
- 403 0152 40F20003 		movw	r3, #:lower16:status_block_right
- 404 0156 C0F20003 		movt	r3, #:upper16:status_block_right
- 405 015a 4FF00202 		mov	r2, #2
- 406 015e 1A70     		strb	r2, [r3, #0]
- 407              	.L14:
- 303:../Main.c     **** 		}
- 304:../Main.c     **** 	}
- 305:../Main.c     **** 
- 306:../Main.c     **** 	if (!block_left) {
- 408              		.loc 1 306 0
- 409 0160 40F20003 		movw	r3, #:lower16:block_left
- 410 0164 C0F20003 		movt	r3, #:upper16:block_left
- 411 0168 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 412 016a 002B     		cmp	r3, #0
- 413 016c 55D1     		bne	.L16
- 307:../Main.c     **** 		//caso normal
- 308:../Main.c     **** 		if (direction & (1 << LEFT_FRONT)) {
- 414              		.loc 1 308 0
- 415 016e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 416 0170 03F00803 		and	r3, r3, #8
- 417 0174 002B     		cmp	r3, #0
- 418 0176 25D0     		beq	.L17
- 309:../Main.c     **** 
- 310:../Main.c     **** 			if (data_R[1] > PWM_MOTOR_CUT_OFF)
- 419              		.loc 1 310 0
- 420 0178 40F20003 		movw	r3, #:lower16:data_R
- 421 017c C0F20003 		movt	r3, #:upper16:data_R
- 422 0180 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 423 0182 142B     		cmp	r3, #20
- 424 0184 16D9     		bls	.L18
- 311:../Main.c     **** 				per_motor_left =
- 312:../Main.c     **** 						(((float) data_R[1]) / 255)
- 425              		.loc 1 312 0
- 426 0186 40F20003 		movw	r3, #:lower16:data_R
- 427 018a C0F20003 		movt	r3, #:upper16:data_R
- 428 018e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 429 0190 07EE903A 		fmsr	s15, r3	@ int
- 430 0194 B8EE677A 		fuitos	s14, s15
- 431 0198 DFED7A7A 		flds	s15, .L28+4
- 432 019c 87EE277A 		fdivs	s14, s14, s15
- 313:../Main.c     **** 								* (MAX_PER_MOTOR_LOCOMOTION
- 433              		.loc 1 313 0
- 434 01a0 DFED797A 		flds	s15, .L28+8
- 435 01a4 27EE277A 		fmuls	s14, s14, s15
- 311:../Main.c     **** 				per_motor_left =
- 436              		.loc 1 311 0
- 437 01a8 DFED787A 		flds	s15, .L28+12
- 438 01ac 77EE277A 		fadds	s15, s14, s15
- 439 01b0 C7ED027A 		fsts	s15, [r7, #8]
- 440              	.L18:
- 314:../Main.c     **** 										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
- 315:../Main.c     **** 
- 316:../Main.c     **** 			last_direction_left = DIR_FRONT;
- 441              		.loc 1 316 0
- 442 01b4 40F20003 		movw	r3, #:lower16:last_direction_left
- 443 01b8 C0F20003 		movt	r3, #:upper16:last_direction_left
- 444 01bc 4FF00002 		mov	r2, #0
- 445 01c0 1A70     		strb	r2, [r3, #0]
- 446 01c2 63E0     		b	.L19
- 447              	.L17:
- 317:../Main.c     **** 		} else if (direction & (1 << LEFT_BACK)) {
- 448              		.loc 1 317 0
- 449 01c4 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 450 01c6 03F00103 		and	r3, r3, #1
- 451 01ca 002B     		cmp	r3, #0
- 452 01cc 5ED0     		beq	.L19
- 318:../Main.c     **** 			if (data_R[1] > PWM_MOTOR_CUT_OFF)
- 453              		.loc 1 318 0
- 454 01ce 40F20003 		movw	r3, #:lower16:data_R
- 455 01d2 C0F20003 		movt	r3, #:upper16:data_R
- 456 01d6 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 457 01d8 142B     		cmp	r3, #20
- 458 01da 16D9     		bls	.L20
- 319:../Main.c     **** 				per_motor_left =
- 320:../Main.c     **** 						(((float) data_R[1]) / 255)
- 459              		.loc 1 320 0
- 460 01dc 40F20003 		movw	r3, #:lower16:data_R
- 461 01e0 C0F20003 		movt	r3, #:upper16:data_R
- 462 01e4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 463 01e6 07EE903A 		fmsr	s15, r3	@ int
- 464 01ea B8EE677A 		fuitos	s14, s15
- 465 01ee DFED657A 		flds	s15, .L28+4
- 466 01f2 87EE277A 		fdivs	s14, s14, s15
- 321:../Main.c     **** 								* (ZERO_PER_MOTOR_LOCOMOTION
- 467              		.loc 1 321 0
- 468 01f6 DFED667A 		flds	s15, .L28+16
- 469 01fa 27EE277A 		fmuls	s14, s14, s15
- 319:../Main.c     **** 				per_motor_left =
- 470              		.loc 1 319 0
- 471 01fe DFED607A 		flds	s15, .L28
- 472 0202 77EE277A 		fadds	s15, s14, s15
- 473 0206 C7ED027A 		fsts	s15, [r7, #8]
- 474              	.L20:
- 322:../Main.c     **** 										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
- 323:../Main.c     **** 			last_direction_left = DIR_BACK;
- 475              		.loc 1 323 0
- 476 020a 40F20003 		movw	r3, #:lower16:last_direction_left
- 477 020e C0F20003 		movt	r3, #:upper16:last_direction_left
- 478 0212 4FF00102 		mov	r2, #1
- 479 0216 1A70     		strb	r2, [r3, #0]
- 480 0218 38E0     		b	.L19
- 481              	.L16:
- 324:../Main.c     **** 		}
- 325:../Main.c     **** 	} else {
- 326:../Main.c     **** 
- 327:../Main.c     **** 		if (block_pwm_update_tick_left <= 0 && status_block_left == STATUS_BREAK) {
- 482              		.loc 1 327 0
- 483 021a 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 484 021e C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 485 0222 1B68     		ldr	r3, [r3, #0]
- 486 0224 002B     		cmp	r3, #0
- 487 0226 15DC     		bgt	.L21
- 488              		.loc 1 327 0 is_stmt 0 discriminator 1
- 489 0228 40F20003 		movw	r3, #:lower16:status_block_left
- 490 022c C0F20003 		movt	r3, #:upper16:status_block_left
- 491 0230 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 492 0232 002B     		cmp	r3, #0
- 493 0234 0ED1     		bne	.L21
- 328:../Main.c     **** 			block_pwm_update_tick_left = TICK_BREAK_PWM;
- 494              		.loc 1 328 0 is_stmt 1
- 495 0236 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 496 023a C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 497 023e 40F2DC52 		movw	r2, #1500
- 498 0242 1A60     		str	r2, [r3, #0]
- 329:../Main.c     **** 			status_block_left = STATUS_ZERO;
- 499              		.loc 1 329 0
- 500 0244 40F20003 		movw	r3, #:lower16:status_block_left
- 501 0248 C0F20003 		movt	r3, #:upper16:status_block_left
- 502 024c 4FF00102 		mov	r2, #1
- 503 0250 1A70     		strb	r2, [r3, #0]
- 504 0252 1BE0     		b	.L19
- 505              	.L21:
- 330:../Main.c     **** 		} else if (block_pwm_update_tick_left
- 331:../Main.c     **** 				<= 0&& status_block_left == STATUS_ZERO) {
- 506              		.loc 1 331 0
- 507 0254 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 508 0258 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 509 025c 1B68     		ldr	r3, [r3, #0]
- 330:../Main.c     **** 		} else if (block_pwm_update_tick_left
- 510              		.loc 1 330 0
- 511 025e 002B     		cmp	r3, #0
- 512 0260 14DC     		bgt	.L19
- 513              		.loc 1 331 0
- 514 0262 40F20003 		movw	r3, #:lower16:status_block_left
- 515 0266 C0F20003 		movt	r3, #:upper16:status_block_left
- 516 026a 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 517 026c 012B     		cmp	r3, #1
- 518 026e 0DD1     		bne	.L19
- 332:../Main.c     **** 			status_block_left = STATUS_NORMAL;
- 519              		.loc 1 332 0
- 520 0270 40F20003 		movw	r3, #:lower16:status_block_left
- 521 0274 C0F20003 		movt	r3, #:upper16:status_block_left
- 522 0278 4FF00202 		mov	r2, #2
- 523 027c 1A70     		strb	r2, [r3, #0]
- 333:../Main.c     **** 			block_left = _FALSE;
- 524              		.loc 1 333 0
- 525 027e 40F20003 		movw	r3, #:lower16:block_left
- 526 0282 C0F20003 		movt	r3, #:upper16:block_left
- 527 0286 4FF00002 		mov	r2, #0
- 528 028a 1A70     		strb	r2, [r3, #0]
- 529              	.L19:
+ 366 00fa 0BD0     		beq	.L13
+ 367              	.L12:
+ 296:../Main.c     **** 			|| ((direction & (1 << RIGHT_BACK))
+ 368              		.loc 1 296 0 is_stmt 1
+ 369 00fc FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 370 00fe 03F01003 		and	r3, r3, #16
+ 371 0102 002B     		cmp	r3, #0
+ 372 0104 36D0     		beq	.L14
+ 297:../Main.c     **** 					&& last_direction_right == DIR_FRONT)) {
+ 373              		.loc 1 297 0
+ 374 0106 40F20003 		movw	r3, #:lower16:last_direction_right
+ 375 010a C0F20003 		movt	r3, #:upper16:last_direction_right
+ 376 010e 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 377 0110 012B     		cmp	r3, #1
+ 378 0112 2FD1     		bne	.L14
+ 379              	.L13:
+ 298:../Main.c     **** 		if (!block_right) {
+ 380              		.loc 1 298 0
+ 381 0114 40F20003 		movw	r3, #:lower16:block_right
+ 382 0118 C0F20003 		movt	r3, #:upper16:block_right
+ 383 011c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 384 011e 002B     		cmp	r3, #0
+ 385 0120 1AD1     		bne	.L15
+ 299:../Main.c     **** 			block_right = _TRUE;
+ 386              		.loc 1 299 0
+ 387 0122 40F20003 		movw	r3, #:lower16:block_right
+ 388 0126 C0F20003 		movt	r3, #:upper16:block_right
+ 389 012a 4FF00102 		mov	r2, #1
+ 390 012e 1A70     		strb	r2, [r3, #0]
+ 300:../Main.c     **** 			block_pwm_update_tick_right = TICK_BREAK_PWM;
+ 391              		.loc 1 300 0
+ 392 0130 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 393 0134 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 394 0138 4CF25032 		movw	r2, #50000
+ 395 013c 1A60     		str	r2, [r3, #0]
+ 301:../Main.c     **** 			status_block_right = STATUS_BREAK;
+ 396              		.loc 1 301 0
+ 397 013e 40F20003 		movw	r3, #:lower16:status_block_right
+ 398 0142 C0F20003 		movt	r3, #:upper16:status_block_right
+ 399 0146 4FF00002 		mov	r2, #0
+ 400 014a 1A70     		strb	r2, [r3, #0]
+ 302:../Main.c     **** 			per_motor_right = MIN_PER_MOTOR_LOCOMOTION;
+ 401              		.loc 1 302 0
+ 402 014c 41F26F23 		movw	r3, #4719
+ 403 0150 C3F68323 		movt	r3, 14979
+ 404 0154 FB60     		str	r3, [r7, #12]	@ float
+ 405 0156 0DE0     		b	.L14
+ 406              	.L15:
+ 303:../Main.c     **** 		} else {
+ 304:../Main.c     **** 			block_right = _FALSE;
+ 407              		.loc 1 304 0
+ 408 0158 40F20003 		movw	r3, #:lower16:block_right
+ 409 015c C0F20003 		movt	r3, #:upper16:block_right
+ 410 0160 4FF00002 		mov	r2, #0
+ 411 0164 1A70     		strb	r2, [r3, #0]
+ 305:../Main.c     **** 			status_block_right = STATUS_NORMAL;
+ 412              		.loc 1 305 0
+ 413 0166 40F20003 		movw	r3, #:lower16:status_block_right
+ 414 016a C0F20003 		movt	r3, #:upper16:status_block_right
+ 415 016e 4FF00202 		mov	r2, #2
+ 416 0172 1A70     		strb	r2, [r3, #0]
+ 417              	.L14:
+ 306:../Main.c     **** 		}
+ 307:../Main.c     **** 	}
+ 308:../Main.c     **** 
+ 309:../Main.c     **** 	if (!block_left) {
+ 418              		.loc 1 309 0
+ 419 0174 40F20003 		movw	r3, #:lower16:block_left
+ 420 0178 C0F20003 		movt	r3, #:upper16:block_left
+ 421 017c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 422 017e 002B     		cmp	r3, #0
+ 423 0180 55D1     		bne	.L16
+ 310:../Main.c     **** 		//caso normal
+ 311:../Main.c     **** 		if (direction & (1 << LEFT_FRONT)) {
+ 424              		.loc 1 311 0
+ 425 0182 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 426 0184 03F00803 		and	r3, r3, #8
+ 427 0188 002B     		cmp	r3, #0
+ 428 018a 25D0     		beq	.L17
+ 312:../Main.c     **** 
+ 313:../Main.c     **** 			if (data_R[1] > PWM_MOTOR_CUT_OFF)
+ 429              		.loc 1 313 0
+ 430 018c 40F20003 		movw	r3, #:lower16:data_R
+ 431 0190 C0F20003 		movt	r3, #:upper16:data_R
+ 432 0194 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 433 0196 142B     		cmp	r3, #20
+ 434 0198 16D9     		bls	.L18
+ 314:../Main.c     **** 				per_motor_left =
+ 315:../Main.c     **** 						(((float) data_R[1]) / 255)
+ 435              		.loc 1 315 0
+ 436 019a 40F20003 		movw	r3, #:lower16:data_R
+ 437 019e C0F20003 		movt	r3, #:upper16:data_R
+ 438 01a2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 439 01a4 07EE903A 		fmsr	s15, r3	@ int
+ 440 01a8 B8EE677A 		fuitos	s14, s15
+ 441 01ac DFED767A 		flds	s15, .L30+4
+ 442 01b0 87EE277A 		fdivs	s14, s14, s15
+ 316:../Main.c     **** 								* (MAX_PER_MOTOR_LOCOMOTION
+ 443              		.loc 1 316 0
+ 444 01b4 DFED757A 		flds	s15, .L30+8
+ 445 01b8 27EE277A 		fmuls	s14, s14, s15
+ 314:../Main.c     **** 				per_motor_left =
+ 446              		.loc 1 314 0
+ 447 01bc DFED747A 		flds	s15, .L30+12
+ 448 01c0 77EE277A 		fadds	s15, s14, s15
+ 449 01c4 C7ED027A 		fsts	s15, [r7, #8]
+ 450              	.L18:
+ 317:../Main.c     **** 										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
+ 318:../Main.c     **** 
+ 319:../Main.c     **** 			last_direction_left = DIR_FRONT;
+ 451              		.loc 1 319 0
+ 452 01c8 40F20003 		movw	r3, #:lower16:last_direction_left
+ 453 01cc C0F20003 		movt	r3, #:upper16:last_direction_left
+ 454 01d0 4FF00102 		mov	r2, #1
+ 455 01d4 1A70     		strb	r2, [r3, #0]
+ 456 01d6 77E0     		b	.L19
+ 457              	.L17:
+ 320:../Main.c     **** 		} else if (direction & (1 << LEFT_BACK)) {
+ 458              		.loc 1 320 0
+ 459 01d8 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 460 01da 03F00103 		and	r3, r3, #1
+ 461 01de 002B     		cmp	r3, #0
+ 462 01e0 72D0     		beq	.L19
+ 321:../Main.c     **** 			if (data_R[1] > PWM_MOTOR_CUT_OFF)
+ 463              		.loc 1 321 0
+ 464 01e2 40F20003 		movw	r3, #:lower16:data_R
+ 465 01e6 C0F20003 		movt	r3, #:upper16:data_R
+ 466 01ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 467 01ec 142B     		cmp	r3, #20
+ 468 01ee 16D9     		bls	.L20
+ 322:../Main.c     **** 				per_motor_left =
+ 323:../Main.c     **** 						(((float) data_R[1]) / 255)
+ 469              		.loc 1 323 0
+ 470 01f0 40F20003 		movw	r3, #:lower16:data_R
+ 471 01f4 C0F20003 		movt	r3, #:upper16:data_R
+ 472 01f8 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 473 01fa 07EE903A 		fmsr	s15, r3	@ int
+ 474 01fe B8EE677A 		fuitos	s14, s15
+ 475 0202 DFED617A 		flds	s15, .L30+4
+ 476 0206 87EE277A 		fdivs	s14, s14, s15
+ 324:../Main.c     **** 								* (ZERO_PER_MOTOR_LOCOMOTION
+ 477              		.loc 1 324 0
+ 478 020a DFED627A 		flds	s15, .L30+16
+ 479 020e 27EE277A 		fmuls	s14, s14, s15
+ 322:../Main.c     **** 				per_motor_left =
+ 480              		.loc 1 322 0
+ 481 0212 DFED5C7A 		flds	s15, .L30
+ 482 0216 77EE277A 		fadds	s15, s14, s15
+ 483 021a C7ED027A 		fsts	s15, [r7, #8]
+ 484              	.L20:
+ 325:../Main.c     **** 										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
+ 326:../Main.c     **** 			last_direction_left = DIR_BACK;
+ 485              		.loc 1 326 0
+ 486 021e 40F20003 		movw	r3, #:lower16:last_direction_left
+ 487 0222 C0F20003 		movt	r3, #:upper16:last_direction_left
+ 488 0226 4FF00002 		mov	r2, #0
+ 489 022a 1A70     		strb	r2, [r3, #0]
+ 490 022c 4CE0     		b	.L19
+ 491              	.L16:
+ 327:../Main.c     **** 		}
+ 328:../Main.c     **** 	} else {
+ 329:../Main.c     **** 
+ 330:../Main.c     **** 		if (direction & (1 << LEFT_FRONT)) {
+ 492              		.loc 1 330 0
+ 493 022e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 494 0230 03F00803 		and	r3, r3, #8
+ 495 0234 002B     		cmp	r3, #0
+ 496 0236 07D0     		beq	.L21
+ 331:../Main.c     **** 			last_direction_left = DIR_FRONT;
+ 497              		.loc 1 331 0
+ 498 0238 40F20003 		movw	r3, #:lower16:last_direction_left
+ 499 023c C0F20003 		movt	r3, #:upper16:last_direction_left
+ 500 0240 4FF00102 		mov	r2, #1
+ 501 0244 1A70     		strb	r2, [r3, #0]
+ 502 0246 06E0     		b	.L22
+ 503              	.L21:
+ 332:../Main.c     **** 		}else{
+ 333:../Main.c     **** 			last_direction_left = DIR_BACK;
+ 504              		.loc 1 333 0
+ 505 0248 40F20003 		movw	r3, #:lower16:last_direction_left
+ 506 024c C0F20003 		movt	r3, #:upper16:last_direction_left
+ 507 0250 4FF00002 		mov	r2, #0
+ 508 0254 1A70     		strb	r2, [r3, #0]
+ 509              	.L22:
  334:../Main.c     **** 		}
- 335:../Main.c     **** 	}
- 336:../Main.c     **** 
- 337:../Main.c     **** 	if (!block_right) {
- 530              		.loc 1 337 0
- 531 028c 40F20003 		movw	r3, #:lower16:block_right
- 532 0290 C0F20003 		movt	r3, #:upper16:block_right
- 533 0294 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 534 0296 002B     		cmp	r3, #0
- 535 0298 55D1     		bne	.L22
- 338:../Main.c     **** 		//caso normal
- 339:../Main.c     **** 		if (direction & (1 << RIGHT_FRONT)) {
- 536              		.loc 1 339 0
- 537 029a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 538 029c 03F02003 		and	r3, r3, #32
- 539 02a0 002B     		cmp	r3, #0
- 540 02a2 25D0     		beq	.L23
- 340:../Main.c     **** 
- 341:../Main.c     **** 			if (data_R[2] > PWM_MOTOR_CUT_OFF)
- 541              		.loc 1 341 0
- 542 02a4 40F20003 		movw	r3, #:lower16:data_R
- 543 02a8 C0F20003 		movt	r3, #:upper16:data_R
- 544 02ac 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 545 02ae 142B     		cmp	r3, #20
- 546 02b0 16D9     		bls	.L24
- 342:../Main.c     **** 				per_motor_right =
- 343:../Main.c     **** 						(((float) data_R[2]) / 255)
- 547              		.loc 1 343 0
- 548 02b2 40F20003 		movw	r3, #:lower16:data_R
- 549 02b6 C0F20003 		movt	r3, #:upper16:data_R
- 550 02ba 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 551 02bc 07EE903A 		fmsr	s15, r3	@ int
- 552 02c0 B8EE677A 		fuitos	s14, s15
- 553 02c4 DFED2F7A 		flds	s15, .L28+4
- 554 02c8 87EE277A 		fdivs	s14, s14, s15
- 344:../Main.c     **** 								* (MAX_PER_MOTOR_LOCOMOTION
- 555              		.loc 1 344 0
- 556 02cc DFED2E7A 		flds	s15, .L28+8
- 557 02d0 27EE277A 		fmuls	s14, s14, s15
- 342:../Main.c     **** 				per_motor_right =
- 558              		.loc 1 342 0
- 559 02d4 DFED2D7A 		flds	s15, .L28+12
- 560 02d8 77EE277A 		fadds	s15, s14, s15
- 561 02dc C7ED037A 		fsts	s15, [r7, #12]
- 562              	.L24:
- 345:../Main.c     **** 										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
- 346:../Main.c     **** 
- 347:../Main.c     **** 			last_direction_right = DIR_FRONT;
- 563              		.loc 1 347 0
- 564 02e0 40F20003 		movw	r3, #:lower16:last_direction_right
- 565 02e4 C0F20003 		movt	r3, #:upper16:last_direction_right
- 566 02e8 4FF00002 		mov	r2, #0
- 567 02ec 1A70     		strb	r2, [r3, #0]
- 568 02ee 71E0     		b	.L25
- 569              	.L23:
- 348:../Main.c     **** 		} else if (direction & (1 << RIGHT_BACK)) {
- 570              		.loc 1 348 0
- 571 02f0 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 572 02f2 03F01003 		and	r3, r3, #16
- 573 02f6 002B     		cmp	r3, #0
- 574 02f8 6CD0     		beq	.L25
- 349:../Main.c     **** 			if (data_R[2] > PWM_MOTOR_CUT_OFF)
- 575              		.loc 1 349 0
- 576 02fa 40F20003 		movw	r3, #:lower16:data_R
- 577 02fe C0F20003 		movt	r3, #:upper16:data_R
- 578 0302 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 579 0304 142B     		cmp	r3, #20
- 580 0306 16D9     		bls	.L26
- 350:../Main.c     **** 				per_motor_right =
- 351:../Main.c     **** 						(((float) data_R[2]) / 255)
- 581              		.loc 1 351 0
- 582 0308 40F20003 		movw	r3, #:lower16:data_R
- 583 030c C0F20003 		movt	r3, #:upper16:data_R
- 584 0310 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 585 0312 07EE903A 		fmsr	s15, r3	@ int
- 586 0316 B8EE677A 		fuitos	s14, s15
- 587 031a DFED1A7A 		flds	s15, .L28+4
- 588 031e 87EE277A 		fdivs	s14, s14, s15
- 352:../Main.c     **** 								* (ZERO_PER_MOTOR_LOCOMOTION
- 589              		.loc 1 352 0
- 590 0322 DFED1B7A 		flds	s15, .L28+16
- 591 0326 27EE277A 		fmuls	s14, s14, s15
- 350:../Main.c     **** 				per_motor_right =
- 592              		.loc 1 350 0
- 593 032a DFED157A 		flds	s15, .L28
- 594 032e 77EE277A 		fadds	s15, s14, s15
- 595 0332 C7ED037A 		fsts	s15, [r7, #12]
- 596              	.L26:
- 353:../Main.c     **** 										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
- 354:../Main.c     **** 			last_direction_right = DIR_BACK;
- 597              		.loc 1 354 0
- 598 0336 40F20003 		movw	r3, #:lower16:last_direction_right
- 599 033a C0F20003 		movt	r3, #:upper16:last_direction_right
- 600 033e 4FF00102 		mov	r2, #1
- 601 0342 1A70     		strb	r2, [r3, #0]
- 602 0344 46E0     		b	.L25
- 603              	.L22:
- 355:../Main.c     **** 		}
- 356:../Main.c     **** 	} else {
- 357:../Main.c     **** 
- 358:../Main.c     **** 		if (block_pwm_update_tick_right
- 359:../Main.c     **** 				<= 0&& status_block_right == STATUS_BREAK) {
- 604              		.loc 1 359 0
- 605 0346 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 606 034a C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 607 034e 1B68     		ldr	r3, [r3, #0]
- 358:../Main.c     **** 		if (block_pwm_update_tick_right
- 608              		.loc 1 358 0
- 609 0350 002B     		cmp	r3, #0
- 610 0352 23DC     		bgt	.L27
- 611              		.loc 1 359 0
- 612 0354 40F20003 		movw	r3, #:lower16:status_block_right
- 613 0358 C0F20003 		movt	r3, #:upper16:status_block_right
- 614 035c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 615 035e 002B     		cmp	r3, #0
- 616 0360 1CD1     		bne	.L27
- 360:../Main.c     **** 			block_pwm_update_tick_right = TICK_BREAK_PWM;
- 617              		.loc 1 360 0
- 618 0362 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 619 0366 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 620 036a 40F2DC52 		movw	r2, #1500
- 621 036e 1A60     		str	r2, [r3, #0]
- 361:../Main.c     **** 			status_block_right = STATUS_ZERO;
- 622              		.loc 1 361 0
- 623 0370 40F20003 		movw	r3, #:lower16:status_block_right
- 624 0374 C0F20003 		movt	r3, #:upper16:status_block_right
- 625 0378 4FF00102 		mov	r2, #1
- 626 037c 1A70     		strb	r2, [r3, #0]
- 627 037e 29E0     		b	.L25
- 628              	.L29:
- 629              		.align	2
- 630              	.L28:
- 631 0380 6F12833A 		.word	981668463
- 632 0384 00007F43 		.word	1132396544
- 633 0388 7012033A 		.word	973279856
- 634 038c A69BC43A 		.word	985963430
- 635 0390 6E12033A 		.word	973279854
- 636 0394 0000C842 		.word	1120403456
- 637 0398 8988883C 		.word	1015580809
- 638              	.L27:
- 362:../Main.c     **** 		} else if (block_pwm_update_tick_right
- 363:../Main.c     **** 				<= 0&& status_block_right == STATUS_ZERO) {
- 639              		.loc 1 363 0
- 640 039c 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 641 03a0 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 642 03a4 1B68     		ldr	r3, [r3, #0]
- 362:../Main.c     **** 		} else if (block_pwm_update_tick_right
- 643              		.loc 1 362 0
- 644 03a6 002B     		cmp	r3, #0
- 645 03a8 14DC     		bgt	.L25
- 646              		.loc 1 363 0
- 647 03aa 40F20003 		movw	r3, #:lower16:status_block_right
- 648 03ae C0F20003 		movt	r3, #:upper16:status_block_right
- 649 03b2 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 650 03b4 012B     		cmp	r3, #1
- 651 03b6 0DD1     		bne	.L25
- 364:../Main.c     **** 			status_block_right = STATUS_NORMAL;
- 652              		.loc 1 364 0
- 653 03b8 40F20003 		movw	r3, #:lower16:status_block_right
- 654 03bc C0F20003 		movt	r3, #:upper16:status_block_right
- 655 03c0 4FF00202 		mov	r2, #2
- 656 03c4 1A70     		strb	r2, [r3, #0]
- 365:../Main.c     **** 			block_right = _FALSE;
- 657              		.loc 1 365 0
- 658 03c6 40F20003 		movw	r3, #:lower16:block_right
- 659 03ca C0F20003 		movt	r3, #:upper16:block_right
- 660 03ce 4FF00002 		mov	r2, #0
- 661 03d2 1A70     		strb	r2, [r3, #0]
- 662              	.L25:
- 366:../Main.c     **** 		}
- 367:../Main.c     **** 	}
- 368:../Main.c     **** 
- 369:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 370:../Main.c     **** 			100.0f * per_motor_right / PER_MOTOR_LOCOMOTION);
- 663              		.loc 1 370 0
- 664 03d4 97ED037A 		flds	s14, [r7, #12]
- 665 03d8 5FED127A 		flds	s15, .L28+20
- 666 03dc 27EE277A 		fmuls	s14, s14, s15
- 369:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 667              		.loc 1 369 0
- 668 03e0 5FED137A 		flds	s15, .L28+24
- 669 03e4 C7EE277A 		fdivs	s15, s14, s15
- 670 03e8 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
- 671 03ec C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
- 672 03f0 17EE901A 		fmrs	r1, s15
- 673 03f4 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 371:../Main.c     **** 
- 372:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 373:../Main.c     **** 			100.0f * per_motor_left / PER_MOTOR_LOCOMOTION);
- 674              		.loc 1 373 0
- 675 03f8 97ED027A 		flds	s14, [r7, #8]
- 676 03fc 5FED1B7A 		flds	s15, .L28+20
- 677 0400 27EE277A 		fmuls	s14, s14, s15
- 372:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 678              		.loc 1 372 0
- 679 0404 5FED1C7A 		flds	s15, .L28+24
- 680 0408 C7EE277A 		fdivs	s15, s14, s15
- 681 040c 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
- 682 0410 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
- 683 0414 17EE901A 		fmrs	r1, s15
- 684 0418 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
- 374:../Main.c     **** 
- 375:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
- 376:../Main.c     **** 			100.0f * per_weapon / PER_MOTOR_WEAPON);
- 685              		.loc 1 376 0
- 686 041c 97ED007A 		flds	s14, [r7, #0]
- 687 0420 5FED247A 		flds	s15, .L28+20
- 688 0424 27EE277A 		fmuls	s14, s14, s15
- 375:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
- 689              		.loc 1 375 0
- 690 0428 5FED257A 		flds	s15, .L28+24
- 691 042c C7EE277A 		fdivs	s15, s14, s15
- 692 0430 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
- 693 0434 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
- 694 0438 17EE901A 		fmrs	r1, s15
- 695 043c FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 335:../Main.c     **** 
+ 336:../Main.c     **** 		if (block_pwm_update_tick_left <= 0 && status_block_left == STATUS_BREAK) {
+ 510              		.loc 1 336 0
+ 511 0256 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 512 025a C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 513 025e 1B68     		ldr	r3, [r3, #0]
+ 514 0260 002B     		cmp	r3, #0
+ 515 0262 15DC     		bgt	.L23
+ 516              		.loc 1 336 0 is_stmt 0 discriminator 1
+ 517 0264 40F20003 		movw	r3, #:lower16:status_block_left
+ 518 0268 C0F20003 		movt	r3, #:upper16:status_block_left
+ 519 026c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 520 026e 002B     		cmp	r3, #0
+ 521 0270 0ED1     		bne	.L23
+ 337:../Main.c     **** 			block_pwm_update_tick_left = TICK_ZERO_PWM;
+ 522              		.loc 1 337 0 is_stmt 1
+ 523 0272 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 524 0276 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 525 027a 4CF25032 		movw	r2, #50000
+ 526 027e 1A60     		str	r2, [r3, #0]
+ 338:../Main.c     **** 			status_block_left = STATUS_ZERO;
+ 527              		.loc 1 338 0
+ 528 0280 40F20003 		movw	r3, #:lower16:status_block_left
+ 529 0284 C0F20003 		movt	r3, #:upper16:status_block_left
+ 530 0288 4FF00102 		mov	r2, #1
+ 531 028c 1A70     		strb	r2, [r3, #0]
+ 532 028e 1BE0     		b	.L19
+ 533              	.L23:
+ 339:../Main.c     **** 		} else if (block_pwm_update_tick_left
+ 340:../Main.c     **** 				<= 0&& status_block_left == STATUS_ZERO) {
+ 534              		.loc 1 340 0
+ 535 0290 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 536 0294 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 537 0298 1B68     		ldr	r3, [r3, #0]
+ 339:../Main.c     **** 		} else if (block_pwm_update_tick_left
+ 538              		.loc 1 339 0
+ 539 029a 002B     		cmp	r3, #0
+ 540 029c 14DC     		bgt	.L19
+ 541              		.loc 1 340 0
+ 542 029e 40F20003 		movw	r3, #:lower16:status_block_left
+ 543 02a2 C0F20003 		movt	r3, #:upper16:status_block_left
+ 544 02a6 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 545 02a8 012B     		cmp	r3, #1
+ 546 02aa 0DD1     		bne	.L19
+ 341:../Main.c     **** 			status_block_left = STATUS_NORMAL;
+ 547              		.loc 1 341 0
+ 548 02ac 40F20003 		movw	r3, #:lower16:status_block_left
+ 549 02b0 C0F20003 		movt	r3, #:upper16:status_block_left
+ 550 02b4 4FF00202 		mov	r2, #2
+ 551 02b8 1A70     		strb	r2, [r3, #0]
+ 342:../Main.c     **** 			block_left = _FALSE;
+ 552              		.loc 1 342 0
+ 553 02ba 40F20003 		movw	r3, #:lower16:block_left
+ 554 02be C0F20003 		movt	r3, #:upper16:block_left
+ 555 02c2 4FF00002 		mov	r2, #0
+ 556 02c6 1A70     		strb	r2, [r3, #0]
+ 557              	.L19:
+ 343:../Main.c     **** 		}
+ 344:../Main.c     **** 	}
+ 345:../Main.c     **** 
+ 346:../Main.c     **** 	if (!block_right) {
+ 558              		.loc 1 346 0
+ 559 02c8 40F20003 		movw	r3, #:lower16:block_right
+ 560 02cc C0F20003 		movt	r3, #:upper16:block_right
+ 561 02d0 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 562 02d2 002B     		cmp	r3, #0
+ 563 02d4 66D1     		bne	.L24
+ 347:../Main.c     **** 		//caso normal
+ 348:../Main.c     **** 		if (direction & (1 << RIGHT_FRONT)) {
+ 564              		.loc 1 348 0
+ 565 02d6 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 566 02d8 03F02003 		and	r3, r3, #32
+ 567 02dc 002B     		cmp	r3, #0
+ 568 02de 25D0     		beq	.L25
+ 349:../Main.c     **** 
+ 350:../Main.c     **** 			if (data_R[2] > PWM_MOTOR_CUT_OFF)
+ 569              		.loc 1 350 0
+ 570 02e0 40F20003 		movw	r3, #:lower16:data_R
+ 571 02e4 C0F20003 		movt	r3, #:upper16:data_R
+ 572 02e8 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 573 02ea 142B     		cmp	r3, #20
+ 574 02ec 16D9     		bls	.L26
+ 351:../Main.c     **** 				per_motor_right =
+ 352:../Main.c     **** 						(((float) data_R[2]) / 255)
+ 575              		.loc 1 352 0
+ 576 02ee 40F20003 		movw	r3, #:lower16:data_R
+ 577 02f2 C0F20003 		movt	r3, #:upper16:data_R
+ 578 02f6 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 579 02f8 07EE903A 		fmsr	s15, r3	@ int
+ 580 02fc B8EE677A 		fuitos	s14, s15
+ 581 0300 DFED217A 		flds	s15, .L30+4
+ 582 0304 87EE277A 		fdivs	s14, s14, s15
+ 353:../Main.c     **** 								* (MAX_PER_MOTOR_LOCOMOTION
+ 583              		.loc 1 353 0
+ 584 0308 DFED207A 		flds	s15, .L30+8
+ 585 030c 27EE277A 		fmuls	s14, s14, s15
+ 351:../Main.c     **** 				per_motor_right =
+ 586              		.loc 1 351 0
+ 587 0310 DFED1F7A 		flds	s15, .L30+12
+ 588 0314 77EE277A 		fadds	s15, s14, s15
+ 589 0318 C7ED037A 		fsts	s15, [r7, #12]
+ 590              	.L26:
+ 354:../Main.c     **** 										- ZERO_PER_MOTOR_LOCOMOTION)+ ZERO_PER_MOTOR_LOCOMOTION;
+ 355:../Main.c     **** 
+ 356:../Main.c     **** 			last_direction_right = DIR_FRONT;
+ 591              		.loc 1 356 0
+ 592 031c 40F20003 		movw	r3, #:lower16:last_direction_right
+ 593 0320 C0F20003 		movt	r3, #:upper16:last_direction_right
+ 594 0324 4FF00102 		mov	r2, #1
+ 595 0328 1A70     		strb	r2, [r3, #0]
+ 596 032a 74E0     		b	.L27
+ 597              	.L25:
+ 357:../Main.c     **** 		} else if (direction & (1 << RIGHT_BACK)) {
+ 598              		.loc 1 357 0
+ 599 032c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 600 032e 03F01003 		and	r3, r3, #16
+ 601 0332 002B     		cmp	r3, #0
+ 602 0334 6FD0     		beq	.L27
+ 358:../Main.c     **** 			if (data_R[2] > PWM_MOTOR_CUT_OFF)
+ 603              		.loc 1 358 0
+ 604 0336 40F20003 		movw	r3, #:lower16:data_R
+ 605 033a C0F20003 		movt	r3, #:upper16:data_R
+ 606 033e 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 607 0340 142B     		cmp	r3, #20
+ 608 0342 16D9     		bls	.L28
+ 359:../Main.c     **** 				per_motor_right =
+ 360:../Main.c     **** 						(((float) data_R[2]) / 255)
+ 609              		.loc 1 360 0
+ 610 0344 40F20003 		movw	r3, #:lower16:data_R
+ 611 0348 C0F20003 		movt	r3, #:upper16:data_R
+ 612 034c 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 613 034e 07EE903A 		fmsr	s15, r3	@ int
+ 614 0352 B8EE677A 		fuitos	s14, s15
+ 615 0356 DFED0C7A 		flds	s15, .L30+4
+ 616 035a 87EE277A 		fdivs	s14, s14, s15
+ 361:../Main.c     **** 								* (ZERO_PER_MOTOR_LOCOMOTION
+ 617              		.loc 1 361 0
+ 618 035e DFED0D7A 		flds	s15, .L30+16
+ 619 0362 27EE277A 		fmuls	s14, s14, s15
+ 359:../Main.c     **** 				per_motor_right =
+ 620              		.loc 1 359 0
+ 621 0366 DFED077A 		flds	s15, .L30
+ 622 036a 77EE277A 		fadds	s15, s14, s15
+ 623 036e C7ED037A 		fsts	s15, [r7, #12]
+ 624              	.L28:
+ 362:../Main.c     **** 										- MIN_PER_MOTOR_LOCOMOTION)+ MIN_PER_MOTOR_LOCOMOTION;
+ 363:../Main.c     **** 			last_direction_right = DIR_BACK;
+ 625              		.loc 1 363 0
+ 626 0372 40F20003 		movw	r3, #:lower16:last_direction_right
+ 627 0376 C0F20003 		movt	r3, #:upper16:last_direction_right
+ 628 037a 4FF00002 		mov	r2, #0
+ 629 037e 1A70     		strb	r2, [r3, #0]
+ 630 0380 49E0     		b	.L27
+ 631              	.L31:
+ 632 0382 00BF     		.align	2
+ 633              	.L30:
+ 634 0384 6F12833A 		.word	981668463
+ 635 0388 00007F43 		.word	1132396544
+ 636 038c 7012033A 		.word	973279856
+ 637 0390 A69BC43A 		.word	985963430
+ 638 0394 6E12033A 		.word	973279854
+ 639 0398 A69B443B 		.word	994352038
+ 640 039c 0000C842 		.word	1120403456
+ 641 03a0 8988883C 		.word	1015580809
+ 642              	.L24:
+ 364:../Main.c     **** 		}
+ 365:../Main.c     **** 	} else {
+ 366:../Main.c     **** 
+ 367:../Main.c     **** 		if (block_pwm_update_tick_right
+ 368:../Main.c     **** 				<= 0&& status_block_right == STATUS_BREAK) {
+ 643              		.loc 1 368 0
+ 644 03a4 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 645 03a8 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 646 03ac 1B68     		ldr	r3, [r3, #0]
+ 367:../Main.c     **** 		if (block_pwm_update_tick_right
+ 647              		.loc 1 367 0
+ 648 03ae 002B     		cmp	r3, #0
+ 649 03b0 15DC     		bgt	.L29
+ 650              		.loc 1 368 0
+ 651 03b2 40F20003 		movw	r3, #:lower16:status_block_right
+ 652 03b6 C0F20003 		movt	r3, #:upper16:status_block_right
+ 653 03ba 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 654 03bc 002B     		cmp	r3, #0
+ 655 03be 0ED1     		bne	.L29
+ 369:../Main.c     **** 			block_pwm_update_tick_right = TICK_ZERO_PWM;
+ 656              		.loc 1 369 0
+ 657 03c0 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 658 03c4 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 659 03c8 4CF25032 		movw	r2, #50000
+ 660 03cc 1A60     		str	r2, [r3, #0]
+ 370:../Main.c     **** 			status_block_right = STATUS_ZERO;
+ 661              		.loc 1 370 0
+ 662 03ce 40F20003 		movw	r3, #:lower16:status_block_right
+ 663 03d2 C0F20003 		movt	r3, #:upper16:status_block_right
+ 664 03d6 4FF00102 		mov	r2, #1
+ 665 03da 1A70     		strb	r2, [r3, #0]
+ 666 03dc 1BE0     		b	.L27
+ 667              	.L29:
+ 371:../Main.c     **** 		} else if (block_pwm_update_tick_right
+ 372:../Main.c     **** 				<= 0&& status_block_right == STATUS_ZERO) {
+ 668              		.loc 1 372 0
+ 669 03de 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 670 03e2 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 671 03e6 1B68     		ldr	r3, [r3, #0]
+ 371:../Main.c     **** 		} else if (block_pwm_update_tick_right
+ 672              		.loc 1 371 0
+ 673 03e8 002B     		cmp	r3, #0
+ 674 03ea 14DC     		bgt	.L27
+ 675              		.loc 1 372 0
+ 676 03ec 40F20003 		movw	r3, #:lower16:status_block_right
+ 677 03f0 C0F20003 		movt	r3, #:upper16:status_block_right
+ 678 03f4 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 679 03f6 012B     		cmp	r3, #1
+ 680 03f8 0DD1     		bne	.L27
+ 373:../Main.c     **** 			status_block_right = STATUS_NORMAL;
+ 681              		.loc 1 373 0
+ 682 03fa 40F20003 		movw	r3, #:lower16:status_block_right
+ 683 03fe C0F20003 		movt	r3, #:upper16:status_block_right
+ 684 0402 4FF00202 		mov	r2, #2
+ 685 0406 1A70     		strb	r2, [r3, #0]
+ 374:../Main.c     **** 			block_right = _FALSE;
+ 686              		.loc 1 374 0
+ 687 0408 40F20003 		movw	r3, #:lower16:block_right
+ 688 040c C0F20003 		movt	r3, #:upper16:block_right
+ 689 0410 4FF00002 		mov	r2, #0
+ 690 0414 1A70     		strb	r2, [r3, #0]
+ 691              	.L27:
+ 375:../Main.c     **** 		}
+ 376:../Main.c     **** 	}
  377:../Main.c     **** 
- 378:../Main.c     **** //	float per_teste = (data_R[4])
- 379:../Main.c     **** //				* (MAX_PER_MOTOR_LOCOMOTION - MIN_PER_MOTOR_LOCOMOTION)
- 380:../Main.c     **** //				/ 255+ MIN_PER_MOTOR_LOCOMOTION;
- 381:../Main.c     **** //
- 382:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_RIGHT);
- 383:../Main.c     **** //		PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
- 384:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
- 385:../Main.c     **** //				100.0f * per_teste / PER_MOTOR_LOCOMOTION);
- 386:../Main.c     **** //
- 387:../Main.c     **** //		PWMSP001_Start(PWM_MOTOR_LEFT);
- 388:../Main.c     **** //			PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
- 389:../Main.c     **** //			PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
- 390:../Main.c     **** //					100.0f * per_teste / PER_MOTOR_LOCOMOTION);
- 391:../Main.c     **** 
- 392:../Main.c     **** }
- 696              		.loc 1 392 0
- 697 0440 07F11007 		add	r7, r7, #16
- 698 0444 BD46     		mov	sp, r7
- 699 0446 80BD     		pop	{r7, pc}
- 700              		.cfi_endproc
- 701              	.LFE114:
- 703              		.section	.text.read_R,"ax",%progbits
- 704              		.align	2
- 705              		.global	read_R
- 706              		.thumb
- 707              		.thumb_func
- 709              	read_R:
- 710              	.LFB115:
- 393:../Main.c     **** 
- 394:../Main.c     **** /***************************************************/
- 395:../Main.c     **** /***************FUNCOES DO TRANSCEPTOR**************/
- 396:../Main.c     **** /***************************************************/
- 397:../Main.c     **** 
- 398:../Main.c     **** void read_R() {
- 711              		.loc 1 398 0
- 712              		.cfi_startproc
- 713              		@ args = 0, pretend = 0, frame = 16
- 714              		@ frame_needed = 1, uses_anonymous_args = 0
- 715 0000 80B5     		push	{r7, lr}
- 716              	.LCFI8:
- 717              		.cfi_def_cfa_offset 8
- 718              		.cfi_offset 7, -8
- 719              		.cfi_offset 14, -4
- 720 0002 84B0     		sub	sp, sp, #16
- 721              	.LCFI9:
- 722              		.cfi_def_cfa_offset 24
- 723 0004 00AF     		add	r7, sp, #0
- 724              	.LCFI10:
- 725              		.cfi_def_cfa_register 7
- 399:../Main.c     **** 	int i, j;
- 400:../Main.c     **** 	IO004_ResetPin(CE);
- 726              		.loc 1 400 0
- 727 0006 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 728 000a C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 729 000e 5A68     		ldr	r2, [r3, #4]
- 730 0010 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 731 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 732 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 733 001a 4FF48031 		mov	r1, #65536
- 734 001e 01FA03F3 		lsl	r3, r1, r3
- 735 0022 5360     		str	r3, [r2, #4]
- 401:../Main.c     **** 	delay(50000);
- 736              		.loc 1 401 0
- 737 0024 4CF25030 		movw	r0, #50000
- 738 0028 FFF7FEFF 		bl	delay
- 402:../Main.c     **** 	uint8_t temp = 0;
- 739              		.loc 1 402 0
- 740 002c 4FF00003 		mov	r3, #0
- 741 0030 FB71     		strb	r3, [r7, #7]
- 403:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
- 742              		.loc 1 403 0
- 743 0032 4FF00003 		mov	r3, #0
- 744 0036 BB60     		str	r3, [r7, #8]
- 745 0038 36E0     		b	.L31
- 746              	.L35:
- 404:../Main.c     **** 		for (i = 7; i > -1; i--) {
- 747              		.loc 1 404 0
- 748 003a 4FF00703 		mov	r3, #7
- 749 003e FB60     		str	r3, [r7, #12]
- 750 0040 20E0     		b	.L32
- 751              	.L34:
- 405:../Main.c     **** 			if (IO004_ReadPin(DATA))
- 752              		.loc 1 405 0
- 753 0042 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 754 0046 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 755 004a 5B68     		ldr	r3, [r3, #4]
- 756 004c 5A6A     		ldr	r2, [r3, #36]
- 757 004e 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 758 0052 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 759 0056 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 760 0058 22FA03F3 		lsr	r3, r2, r3
- 761 005c 03F00103 		and	r3, r3, #1
- 762 0060 002B     		cmp	r3, #0
- 763 0062 09D0     		beq	.L33
- 406:../Main.c     **** 				temp |= (1 << i);
- 764              		.loc 1 406 0
- 765 0064 4FF00102 		mov	r2, #1
- 766 0068 FB68     		ldr	r3, [r7, #12]
- 767 006a 02FA03F3 		lsl	r3, r2, r3
- 768 006e DAB2     		uxtb	r2, r3
- 769 0070 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
- 770 0072 1343     		orrs	r3, r3, r2
- 771 0074 DBB2     		uxtb	r3, r3
- 772 0076 FB71     		strb	r3, [r7, #7]
- 773              	.L33:
- 407:../Main.c     **** 			pulse_R();
- 774              		.loc 1 407 0
- 775 0078 FFF7FEFF 		bl	pulse_R
- 404:../Main.c     **** 		for (i = 7; i > -1; i--) {
- 776              		.loc 1 404 0
- 777 007c FB68     		ldr	r3, [r7, #12]
- 778 007e 03F1FF33 		add	r3, r3, #-1
- 779 0082 FB60     		str	r3, [r7, #12]
- 780              	.L32:
- 404:../Main.c     **** 		for (i = 7; i > -1; i--) {
- 781              		.loc 1 404 0 is_stmt 0 discriminator 1
- 782 0084 FB68     		ldr	r3, [r7, #12]
- 783 0086 002B     		cmp	r3, #0
- 784 0088 DBDA     		bge	.L34
- 408:../Main.c     **** 		}
- 409:../Main.c     **** 		data_R[j] = temp;
- 785              		.loc 1 409 0 is_stmt 1
- 786 008a 40F20003 		movw	r3, #:lower16:data_R
- 787 008e C0F20003 		movt	r3, #:upper16:data_R
- 788 0092 BA68     		ldr	r2, [r7, #8]
- 789 0094 9B18     		adds	r3, r3, r2
- 790 0096 FA79     		ldrb	r2, [r7, #7]
- 791 0098 1A70     		strb	r2, [r3, #0]
- 410:../Main.c     **** 		temp = 0;
- 792              		.loc 1 410 0
- 793 009a 4FF00003 		mov	r3, #0
- 794 009e FB71     		strb	r3, [r7, #7]
- 403:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
- 795              		.loc 1 403 0
- 796 00a0 BB68     		ldr	r3, [r7, #8]
- 797 00a2 03F10103 		add	r3, r3, #1
- 798 00a6 BB60     		str	r3, [r7, #8]
- 799              	.L31:
- 403:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
- 800              		.loc 1 403 0 is_stmt 0 discriminator 1
- 801 00a8 BB68     		ldr	r3, [r7, #8]
- 802 00aa 042B     		cmp	r3, #4
- 803 00ac C5DD     		ble	.L35
- 411:../Main.c     **** 	}
- 412:../Main.c     **** 	IO004_SetPin(CE);
- 804              		.loc 1 412 0 is_stmt 1
- 805 00ae 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 806 00b2 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 807 00b6 5A68     		ldr	r2, [r3, #4]
- 808 00b8 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 809 00bc C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 810 00c0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 811 00c2 4FF00101 		mov	r1, #1
- 812 00c6 01FA03F3 		lsl	r3, r1, r3
- 813 00ca 5360     		str	r3, [r2, #4]
- 413:../Main.c     **** 	delay(50000);
- 814              		.loc 1 413 0
- 815 00cc 4CF25030 		movw	r0, #50000
- 816 00d0 FFF7FEFF 		bl	delay
- 414:../Main.c     **** }
- 817              		.loc 1 414 0
- 818 00d4 07F11007 		add	r7, r7, #16
- 819 00d8 BD46     		mov	sp, r7
- 820 00da 80BD     		pop	{r7, pc}
- 821              		.cfi_endproc
- 822              	.LFE115:
- 824              		.section	.text.pulse_R,"ax",%progbits
- 825              		.align	2
- 826              		.global	pulse_R
- 827              		.thumb
- 828              		.thumb_func
- 830              	pulse_R:
- 831              	.LFB116:
- 415:../Main.c     **** 
- 416:../Main.c     **** void pulse_R() {
- 832              		.loc 1 416 0
- 833              		.cfi_startproc
- 834              		@ args = 0, pretend = 0, frame = 0
- 835              		@ frame_needed = 1, uses_anonymous_args = 0
- 836 0000 80B5     		push	{r7, lr}
- 837              	.LCFI11:
- 838              		.cfi_def_cfa_offset 8
- 839              		.cfi_offset 7, -8
- 840              		.cfi_offset 14, -4
- 841 0002 00AF     		add	r7, sp, #0
- 842              	.LCFI12:
- 843              		.cfi_def_cfa_register 7
- 417:../Main.c     **** 	delay(300);
- 844              		.loc 1 417 0
- 845 0004 4FF49670 		mov	r0, #300
- 846 0008 FFF7FEFF 		bl	delay
- 418:../Main.c     **** 	IO004_SetPin(CLK1);
- 847              		.loc 1 418 0
- 848 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 849 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 850 0014 5A68     		ldr	r2, [r3, #4]
- 851 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 852 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 853 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 854 0020 4FF00101 		mov	r1, #1
- 855 0024 01FA03F3 		lsl	r3, r1, r3
- 856 0028 5360     		str	r3, [r2, #4]
- 419:../Main.c     **** 	delay(300);
- 857              		.loc 1 419 0
- 858 002a 4FF49670 		mov	r0, #300
- 859 002e FFF7FEFF 		bl	delay
- 420:../Main.c     **** 	IO004_ResetPin(CLK1);
- 860              		.loc 1 420 0
- 861 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 862 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 863 003a 5A68     		ldr	r2, [r3, #4]
- 864 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
- 865 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
- 866 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 867 0046 4FF48031 		mov	r1, #65536
- 868 004a 01FA03F3 		lsl	r3, r1, r3
- 869 004e 5360     		str	r3, [r2, #4]
- 421:../Main.c     **** }
- 870              		.loc 1 421 0
- 871 0050 80BD     		pop	{r7, pc}
- 872              		.cfi_endproc
- 873              	.LFE116:
- 875 0052 00BF     		.section	.text.configure_R,"ax",%progbits
- 876              		.align	2
- 877              		.global	configure_R
- 878              		.thumb
- 879              		.thumb_func
- 881              	configure_R:
- 882              	.LFB117:
- 422:../Main.c     **** 
- 423:../Main.c     **** void configure_R() {
- 883              		.loc 1 423 0
- 884              		.cfi_startproc
- 885              		@ args = 0, pretend = 0, frame = 8
- 886              		@ frame_needed = 1, uses_anonymous_args = 0
- 887 0000 80B5     		push	{r7, lr}
- 888              	.LCFI13:
- 889              		.cfi_def_cfa_offset 8
- 890              		.cfi_offset 7, -8
- 891              		.cfi_offset 14, -4
- 892 0002 82B0     		sub	sp, sp, #8
- 893              	.LCFI14:
- 894              		.cfi_def_cfa_offset 16
- 895 0004 00AF     		add	r7, sp, #0
- 896              	.LCFI15:
- 897              		.cfi_def_cfa_register 7
- 424:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
- 425:../Main.c     **** 	configuration[0] = 0xC5; //RF_CH# e OP_MODE 0b11000101
- 898              		.loc 1 425 0
- 899 0006 40F20003 		movw	r3, #:lower16:configuration
- 900 000a C0F20003 		movt	r3, #:upper16:configuration
- 901 000e 4FF0C502 		mov	r2, #197
- 902 0012 1A70     		strb	r2, [r3, #0]
- 426:../Main.c     **** 	configuration[1] = 0x4F; //RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
- 903              		.loc 1 426 0
- 904 0014 40F20003 		movw	r3, #:lower16:configuration
- 905 0018 C0F20003 		movt	r3, #:upper16:configuration
- 906 001c 4FF04F02 		mov	r2, #79
- 907 0020 5A70     		strb	r2, [r3, #1]
- 427:../Main.c     **** 	configuration[2] = 0xA3; //addr_w
- 908              		.loc 1 427 0
- 909 0022 40F20003 		movw	r3, #:lower16:configuration
- 910 0026 C0F20003 		movt	r3, #:upper16:configuration
- 911 002a 4FF0A302 		mov	r2, #163
- 912 002e 9A70     		strb	r2, [r3, #2]
- 428:../Main.c     **** 	configuration[3] = 0xEE; //Comeco enderco CH1 00000001
- 913              		.loc 1 428 0
- 914 0030 40F20003 		movw	r3, #:lower16:configuration
- 915 0034 C0F20003 		movt	r3, #:upper16:configuration
- 916 0038 4FF0EE02 		mov	r2, #238
- 917 003c DA70     		strb	r2, [r3, #3]
- 429:../Main.c     **** 	configuration[4] = 0xDD; //0b00000000
- 918              		.loc 1 429 0
- 919 003e 40F20003 		movw	r3, #:lower16:configuration
- 920 0042 C0F20003 		movt	r3, #:upper16:configuration
- 921 0046 4FF0DD02 		mov	r2, #221
- 922 004a 1A71     		strb	r2, [r3, #4]
- 430:../Main.c     **** 	configuration[5] = 0xCC; //0b11010100
- 923              		.loc 1 430 0
- 924 004c 40F20003 		movw	r3, #:lower16:configuration
- 925 0050 C0F20003 		movt	r3, #:upper16:configuration
- 926 0054 4FF0CC02 		mov	r2, #204
- 927 0058 5A71     		strb	r2, [r3, #5]
- 431:../Main.c     **** 	configuration[6] = 0xBB; //0b11011111
- 928              		.loc 1 431 0
- 929 005a 40F20003 		movw	r3, #:lower16:configuration
- 930 005e C0F20003 		movt	r3, #:upper16:configuration
- 931 0062 4FF0BB02 		mov	r2, #187
- 932 0066 9A71     		strb	r2, [r3, #6]
- 432:../Main.c     **** 	configuration[7] = 0xAA; //Fim enderco CH1 0b11101010
- 933              		.loc 1 432 0
- 934 0068 40F20003 		movw	r3, #:lower16:configuration
- 935 006c C0F20003 		movt	r3, #:upper16:configuration
- 936 0070 4FF0AA02 		mov	r2, #170
- 937 0074 DA71     		strb	r2, [r3, #7]
- 433:../Main.c     **** 	configuration[8] = 0b00000000; //Comeco enderco CH2
- 938              		.loc 1 433 0
- 939 0076 40F20003 		movw	r3, #:lower16:configuration
- 940 007a C0F20003 		movt	r3, #:upper16:configuration
- 941 007e 4FF00002 		mov	r2, #0
- 942 0082 1A72     		strb	r2, [r3, #8]
- 434:../Main.c     **** 	configuration[9] = 0b00000000;
- 943              		.loc 1 434 0
- 944 0084 40F20003 		movw	r3, #:lower16:configuration
- 945 0088 C0F20003 		movt	r3, #:upper16:configuration
- 946 008c 4FF00002 		mov	r2, #0
- 947 0090 5A72     		strb	r2, [r3, #9]
- 435:../Main.c     **** 	configuration[10] = 0b00000000;
- 948              		.loc 1 435 0
- 949 0092 40F20003 		movw	r3, #:lower16:configuration
- 950 0096 C0F20003 		movt	r3, #:upper16:configuration
- 951 009a 4FF00002 		mov	r2, #0
- 952 009e 9A72     		strb	r2, [r3, #10]
- 436:../Main.c     **** 	configuration[11] = 0b00000000;
- 953              		.loc 1 436 0
- 954 00a0 40F20003 		movw	r3, #:lower16:configuration
- 955 00a4 C0F20003 		movt	r3, #:upper16:configuration
- 956 00a8 4FF00002 		mov	r2, #0
- 957 00ac DA72     		strb	r2, [r3, #11]
- 437:../Main.c     **** 	configuration[12] = 0b00000000; //Fim enderco CH2
- 958              		.loc 1 437 0
- 959 00ae 40F20003 		movw	r3, #:lower16:configuration
- 960 00b2 C0F20003 		movt	r3, #:upper16:configuration
- 961 00b6 4FF00002 		mov	r2, #0
- 962 00ba 1A73     		strb	r2, [r3, #12]
- 438:../Main.c     **** 	configuration[13] = 0x28; //num bits enviados (1 byte nesse ex) TODO arrumar
- 963              		.loc 1 438 0
- 964 00bc 40F20003 		movw	r3, #:lower16:configuration
- 965 00c0 C0F20003 		movt	r3, #:upper16:configuration
- 966 00c4 4FF02802 		mov	r2, #40
- 967 00c8 5A73     		strb	r2, [r3, #13]
- 439:../Main.c     **** 	configuration[14] = 0b00000000;
- 968              		.loc 1 439 0
- 969 00ca 40F20003 		movw	r3, #:lower16:configuration
- 970 00ce C0F20003 		movt	r3, #:upper16:configuration
- 971 00d2 4FF00002 		mov	r2, #0
- 972 00d6 9A73     		strb	r2, [r3, #14]
- 440:../Main.c     **** 
- 441:../Main.c     **** 	IO004_ResetPin(CE);
- 973              		.loc 1 441 0
- 974 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 975 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 976 00e0 5A68     		ldr	r2, [r3, #4]
- 977 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 978 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 979 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 980 00ec 4FF48031 		mov	r1, #65536
- 981 00f0 01FA03F3 		lsl	r3, r1, r3
- 982 00f4 5360     		str	r3, [r2, #4]
- 442:../Main.c     **** 	IO004_SetPin(CS);
- 983              		.loc 1 442 0
- 984 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 985 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 986 00fe 5A68     		ldr	r2, [r3, #4]
- 987 0100 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 988 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 989 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 990 010a 4FF00101 		mov	r1, #1
- 991 010e 01FA03F3 		lsl	r3, r1, r3
- 992 0112 5360     		str	r3, [r2, #4]
- 443:../Main.c     **** 	int i, j;
- 444:../Main.c     **** 	for (i = 14; i > -1; i--) {
- 993              		.loc 1 444 0
- 994 0114 4FF00E03 		mov	r3, #14
- 995 0118 7B60     		str	r3, [r7, #4]
- 996 011a 3FE0     		b	.L38
- 997              	.L43:
- 445:../Main.c     **** 		for (j = 7; j > -1; j--) {
- 998              		.loc 1 445 0
- 999 011c 4FF00703 		mov	r3, #7
- 1000 0120 3B60     		str	r3, [r7, #0]
- 1001 0122 34E0     		b	.L39
- 1002              	.L42:
- 446:../Main.c     **** 			if ((configuration[i] & (1 << j)) > 0)
- 1003              		.loc 1 446 0
- 1004 0124 40F20003 		movw	r3, #:lower16:configuration
- 1005 0128 C0F20003 		movt	r3, #:upper16:configuration
- 1006 012c 7A68     		ldr	r2, [r7, #4]
- 1007 012e 9B18     		adds	r3, r3, r2
- 1008 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 1009 0132 1A46     		mov	r2, r3
- 1010 0134 4FF00101 		mov	r1, #1
- 1011 0138 3B68     		ldr	r3, [r7, #0]
- 1012 013a 01FA03F3 		lsl	r3, r1, r3
- 1013 013e 1340     		ands	r3, r3, r2
- 1014 0140 002B     		cmp	r3, #0
- 1015 0142 0FDD     		ble	.L40
- 447:../Main.c     **** 				IO004_SetPin(DATA);
- 1016              		.loc 1 447 0
- 1017 0144 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 1018 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 1019 014c 5A68     		ldr	r2, [r3, #4]
- 1020 014e 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 1021 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 1022 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1023 0158 4FF00101 		mov	r1, #1
- 1024 015c 01FA03F3 		lsl	r3, r1, r3
- 1025 0160 5360     		str	r3, [r2, #4]
- 1026 0162 0EE0     		b	.L41
- 1027              	.L40:
- 448:../Main.c     **** 			else
- 449:../Main.c     **** 				IO004_ResetPin(DATA);
- 1028              		.loc 1 449 0
- 1029 0164 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 1030 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 1031 016c 5A68     		ldr	r2, [r3, #4]
- 1032 016e 40F20003 		movw	r3, #:lower16:IO004_Handle4
- 1033 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle4
- 1034 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1035 0178 4FF48031 		mov	r1, #65536
- 1036 017c 01FA03F3 		lsl	r3, r1, r3
- 1037 0180 5360     		str	r3, [r2, #4]
- 1038              	.L41:
- 450:../Main.c     **** 			;
- 451:../Main.c     **** 			pulse_R();
- 1039              		.loc 1 451 0
- 1040 0182 FFF7FEFF 		bl	pulse_R
- 445:../Main.c     **** 		for (j = 7; j > -1; j--) {
- 1041              		.loc 1 445 0
- 1042 0186 3B68     		ldr	r3, [r7, #0]
- 1043 0188 03F1FF33 		add	r3, r3, #-1
- 1044 018c 3B60     		str	r3, [r7, #0]
- 1045              	.L39:
- 445:../Main.c     **** 		for (j = 7; j > -1; j--) {
- 1046              		.loc 1 445 0 is_stmt 0 discriminator 1
- 1047 018e 3B68     		ldr	r3, [r7, #0]
- 1048 0190 002B     		cmp	r3, #0
- 1049 0192 C7DA     		bge	.L42
- 444:../Main.c     **** 	for (i = 14; i > -1; i--) {
- 1050              		.loc 1 444 0 is_stmt 1
- 1051 0194 7B68     		ldr	r3, [r7, #4]
- 1052 0196 03F1FF33 		add	r3, r3, #-1
- 1053 019a 7B60     		str	r3, [r7, #4]
- 1054              	.L38:
- 444:../Main.c     **** 	for (i = 14; i > -1; i--) {
- 1055              		.loc 1 444 0 is_stmt 0 discriminator 1
- 1056 019c 7B68     		ldr	r3, [r7, #4]
- 1057 019e 002B     		cmp	r3, #0
- 1058 01a0 BCDA     		bge	.L43
- 452:../Main.c     **** 		}
- 453:../Main.c     **** 	}
- 454:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
- 1059              		.loc 1 454 0 is_stmt 1
- 1060 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle4
- 1061 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle4
- 1062 01aa 4FF00301 		mov	r1, #3
- 1063 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
- 455:../Main.c     **** 	IO004_ResetPin(CS);
- 1064              		.loc 1 455 0
- 1065 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1066 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1067 01ba 5A68     		ldr	r2, [r3, #4]
- 1068 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1069 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1070 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1071 01c6 4FF48031 		mov	r1, #65536
- 1072 01ca 01FA03F3 		lsl	r3, r1, r3
- 1073 01ce 5360     		str	r3, [r2, #4]
- 456:../Main.c     **** 	IO004_SetPin(CE);
- 1074              		.loc 1 456 0
- 1075 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 1076 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 1077 01d8 5A68     		ldr	r2, [r3, #4]
- 1078 01da 40F20003 		movw	r3, #:lower16:IO004_Handle6
- 1079 01de C0F20003 		movt	r3, #:upper16:IO004_Handle6
- 1080 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1081 01e4 4FF00101 		mov	r1, #1
- 1082 01e8 01FA03F3 		lsl	r3, r1, r3
- 1083 01ec 5360     		str	r3, [r2, #4]
- 457:../Main.c     **** 	delay(50000);
- 1084              		.loc 1 457 0
- 1085 01ee 4CF25030 		movw	r0, #50000
- 1086 01f2 FFF7FEFF 		bl	delay
- 458:../Main.c     **** }
- 1087              		.loc 1 458 0
- 1088 01f6 07F10807 		add	r7, r7, #8
- 1089 01fa BD46     		mov	sp, r7
- 1090 01fc 80BD     		pop	{r7, pc}
- 1091              		.cfi_endproc
- 1092              	.LFE117:
- 1094 01fe 00BF     		.section	.text.Software_Timers_Init,"ax",%progbits
- 1095              		.align	2
- 1096              		.global	Software_Timers_Init
- 1097              		.thumb
- 1098              		.thumb_func
- 1100              	Software_Timers_Init:
- 1101              	.LFB118:
- 459:../Main.c     **** 
- 460:../Main.c     **** /***************************************************/
- 461:../Main.c     **** /****************FUNCOES TEMPORAIS******************/
- 462:../Main.c     **** /***************************************************/
- 463:../Main.c     **** 
- 464:../Main.c     **** void Software_Timers_Init() {
- 1102              		.loc 1 464 0
- 1103              		.cfi_startproc
- 1104              		@ args = 0, pretend = 0, frame = 8
- 1105              		@ frame_needed = 1, uses_anonymous_args = 0
- 1106 0000 80B5     		push	{r7, lr}
- 1107              	.LCFI16:
- 1108              		.cfi_def_cfa_offset 8
- 1109              		.cfi_offset 7, -8
- 1110              		.cfi_offset 14, -4
- 1111 0002 82B0     		sub	sp, sp, #8
- 1112              	.LCFI17:
- 1113              		.cfi_def_cfa_offset 16
- 1114 0004 00AF     		add	r7, sp, #0
- 1115              	.LCFI18:
- 1116              		.cfi_def_cfa_register 7
- 465:../Main.c     **** 	handle_t TaskTimerId;
- 466:../Main.c     **** 
- 467:../Main.c     **** 	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
- 1117              		.loc 1 467 0
- 1118 0006 4FF06400 		mov	r0, #100
- 1119 000a 4FF00101 		mov	r1, #1
- 1120 000e 40F20002 		movw	r2, #:lower16:Tick_Handler
- 1121 0012 C0F20002 		movt	r2, #:upper16:Tick_Handler
- 1122 0016 4FF00003 		mov	r3, #0
- 1123 001a FFF7FEFF 		bl	SYSTM002_CreateTimer
- 1124 001e 7860     		str	r0, [r7, #4]
- 468:../Main.c     **** 			SYSTM002_PERIODIC, &Tick_Handler, NULL);
- 469:../Main.c     **** 	if (TaskTimerId != 0) {
- 1125              		.loc 1 469 0
- 1126 0020 7B68     		ldr	r3, [r7, #4]
- 1127 0022 002B     		cmp	r3, #0
- 1128 0024 02D0     		beq	.L44
- 470:../Main.c     **** //Timer created successfully so start it
- 471:../Main.c     **** 		SYSTM002_StartTimer(TaskTimerId);
- 1129              		.loc 1 471 0
- 1130 0026 7868     		ldr	r0, [r7, #4]
- 1131 0028 FFF7FEFF 		bl	SYSTM002_StartTimer
- 1132              	.L44:
- 472:../Main.c     **** 	}
- 473:../Main.c     **** }
+ 378:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 379:../Main.c     **** 			100.0f *(0.003f - per_motor_right) / PER_MOTOR_LOCOMOTION);
+ 692              		.loc 1 379 0
+ 693 0416 1FED207A 		flds	s14, .L30+20
+ 694 041a D7ED037A 		flds	s15, [r7, #12]
+ 695 041e 37EE677A 		fsubs	s14, s14, s15
+ 696 0422 5FED227A 		flds	s15, .L30+24
+ 697 0426 27EE277A 		fmuls	s14, s14, s15
+ 378:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 698              		.loc 1 378 0
+ 699 042a 5FED237A 		flds	s15, .L30+28
+ 700 042e C7EE277A 		fdivs	s15, s14, s15
+ 701 0432 40F20000 		movw	r0, #:lower16:PWMSP001_Handle0
+ 702 0436 C0F20000 		movt	r0, #:upper16:PWMSP001_Handle0
+ 703 043a 17EE901A 		fmrs	r1, s15
+ 704 043e FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 380:../Main.c     **** 
+ 381:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 382:../Main.c     **** 			100.0f * per_motor_left / PER_MOTOR_LOCOMOTION);
+ 705              		.loc 1 382 0
+ 706 0442 97ED027A 		flds	s14, [r7, #8]
+ 707 0446 5FED2B7A 		flds	s15, .L30+24
+ 708 044a 27EE277A 		fmuls	s14, s14, s15
+ 381:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 709              		.loc 1 381 0
+ 710 044e 5FED2C7A 		flds	s15, .L30+28
+ 711 0452 C7EE277A 		fdivs	s15, s14, s15
+ 712 0456 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
+ 713 045a C0F20000 		movt	r0, #:upper16:PWMSP001_Handle1
+ 714 045e 17EE901A 		fmrs	r1, s15
+ 715 0462 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 383:../Main.c     **** 
+ 384:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
+ 385:../Main.c     **** 			100.0f * per_weapon / PER_MOTOR_WEAPON);
+ 716              		.loc 1 385 0
+ 717 0466 97ED007A 		flds	s14, [r7, #0]
+ 718 046a 5FED347A 		flds	s15, .L30+24
+ 719 046e 27EE277A 		fmuls	s14, s14, s15
+ 384:../Main.c     **** 	PWMSP001_SetDutyCycle(PWM_MOTOR_WEAPON,
+ 720              		.loc 1 384 0
+ 721 0472 5FED357A 		flds	s15, .L30+28
+ 722 0476 C7EE277A 		fdivs	s15, s14, s15
+ 723 047a 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
+ 724 047e C0F20000 		movt	r0, #:upper16:PWMSP001_Handle2
+ 725 0482 17EE901A 		fmrs	r1, s15
+ 726 0486 FFF7FEFF 		bl	PWMSP001_SetDutyCycle
+ 386:../Main.c     **** 
+ 387:../Main.c     **** //	float per_teste = (data_R[4])
+ 388:../Main.c     **** //				* (MAX_PER_MOTOR_LOCOMOTION - MIN_PER_MOTOR_LOCOMOTION)
+ 389:../Main.c     **** //				/ 255+ MIN_PER_MOTOR_LOCOMOTION;
+ 390:../Main.c     **** //
+ 391:../Main.c     **** //	PWMSP001_Start(PWM_MOTOR_RIGHT);
+ 392:../Main.c     **** //		PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
+ 393:../Main.c     **** //		PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
+ 394:../Main.c     **** //				100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+ 395:../Main.c     **** //
+ 396:../Main.c     **** //		PWMSP001_Start(PWM_MOTOR_LEFT);
+ 397:../Main.c     **** //			PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
+ 398:../Main.c     **** //			PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
+ 399:../Main.c     **** //					100.0f * per_teste / PER_MOTOR_LOCOMOTION);
+ 400:../Main.c     **** 
+ 401:../Main.c     **** }
+ 727              		.loc 1 401 0
+ 728 048a 07F11007 		add	r7, r7, #16
+ 729 048e BD46     		mov	sp, r7
+ 730 0490 80BD     		pop	{r7, pc}
+ 731              		.cfi_endproc
+ 732              	.LFE114:
+ 734 0492 00BF     		.section	.text.read_R,"ax",%progbits
+ 735              		.align	2
+ 736              		.global	read_R
+ 737              		.thumb
+ 738              		.thumb_func
+ 740              	read_R:
+ 741              	.LFB115:
+ 402:../Main.c     **** 
+ 403:../Main.c     **** /***************************************************/
+ 404:../Main.c     **** /***************FUNCOES DO TRANSCEPTOR**************/
+ 405:../Main.c     **** /***************************************************/
+ 406:../Main.c     **** 
+ 407:../Main.c     **** void read_R() {
+ 742              		.loc 1 407 0
+ 743              		.cfi_startproc
+ 744              		@ args = 0, pretend = 0, frame = 16
+ 745              		@ frame_needed = 1, uses_anonymous_args = 0
+ 746 0000 80B5     		push	{r7, lr}
+ 747              	.LCFI8:
+ 748              		.cfi_def_cfa_offset 8
+ 749              		.cfi_offset 7, -8
+ 750              		.cfi_offset 14, -4
+ 751 0002 84B0     		sub	sp, sp, #16
+ 752              	.LCFI9:
+ 753              		.cfi_def_cfa_offset 24
+ 754 0004 00AF     		add	r7, sp, #0
+ 755              	.LCFI10:
+ 756              		.cfi_def_cfa_register 7
+ 408:../Main.c     **** 	int i, j;
+ 409:../Main.c     **** 	IO004_ResetPin(CE);
+ 757              		.loc 1 409 0
+ 758 0006 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 759 000a C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 760 000e 5A68     		ldr	r2, [r3, #4]
+ 761 0010 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 762 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 763 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 764 001a 4FF48031 		mov	r1, #65536
+ 765 001e 01FA03F3 		lsl	r3, r1, r3
+ 766 0022 5360     		str	r3, [r2, #4]
+ 410:../Main.c     **** 	delay(50000);
+ 767              		.loc 1 410 0
+ 768 0024 4CF25030 		movw	r0, #50000
+ 769 0028 FFF7FEFF 		bl	delay
+ 411:../Main.c     **** 	uint8_t temp = 0;
+ 770              		.loc 1 411 0
+ 771 002c 4FF00003 		mov	r3, #0
+ 772 0030 FB71     		strb	r3, [r7, #7]
+ 412:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 773              		.loc 1 412 0
+ 774 0032 4FF00003 		mov	r3, #0
+ 775 0036 BB60     		str	r3, [r7, #8]
+ 776 0038 36E0     		b	.L33
+ 777              	.L37:
+ 413:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 778              		.loc 1 413 0
+ 779 003a 4FF00703 		mov	r3, #7
+ 780 003e FB60     		str	r3, [r7, #12]
+ 781 0040 20E0     		b	.L34
+ 782              	.L36:
+ 414:../Main.c     **** 			if (IO004_ReadPin(DATA))
+ 783              		.loc 1 414 0
+ 784 0042 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 785 0046 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 786 004a 5B68     		ldr	r3, [r3, #4]
+ 787 004c 5A6A     		ldr	r2, [r3, #36]
+ 788 004e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 789 0052 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 790 0056 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 791 0058 22FA03F3 		lsr	r3, r2, r3
+ 792 005c 03F00103 		and	r3, r3, #1
+ 793 0060 002B     		cmp	r3, #0
+ 794 0062 09D0     		beq	.L35
+ 415:../Main.c     **** 				temp |= (1 << i);
+ 795              		.loc 1 415 0
+ 796 0064 4FF00102 		mov	r2, #1
+ 797 0068 FB68     		ldr	r3, [r7, #12]
+ 798 006a 02FA03F3 		lsl	r3, r2, r3
+ 799 006e DAB2     		uxtb	r2, r3
+ 800 0070 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 801 0072 1343     		orrs	r3, r3, r2
+ 802 0074 DBB2     		uxtb	r3, r3
+ 803 0076 FB71     		strb	r3, [r7, #7]
+ 804              	.L35:
+ 416:../Main.c     **** 			pulse_R();
+ 805              		.loc 1 416 0
+ 806 0078 FFF7FEFF 		bl	pulse_R
+ 413:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 807              		.loc 1 413 0
+ 808 007c FB68     		ldr	r3, [r7, #12]
+ 809 007e 03F1FF33 		add	r3, r3, #-1
+ 810 0082 FB60     		str	r3, [r7, #12]
+ 811              	.L34:
+ 413:../Main.c     **** 		for (i = 7; i > -1; i--) {
+ 812              		.loc 1 413 0 is_stmt 0 discriminator 1
+ 813 0084 FB68     		ldr	r3, [r7, #12]
+ 814 0086 002B     		cmp	r3, #0
+ 815 0088 DBDA     		bge	.L36
+ 417:../Main.c     **** 		}
+ 418:../Main.c     **** 		data_R[j] = temp;
+ 816              		.loc 1 418 0 is_stmt 1
+ 817 008a 40F20003 		movw	r3, #:lower16:data_R
+ 818 008e C0F20003 		movt	r3, #:upper16:data_R
+ 819 0092 BA68     		ldr	r2, [r7, #8]
+ 820 0094 9B18     		adds	r3, r3, r2
+ 821 0096 FA79     		ldrb	r2, [r7, #7]
+ 822 0098 1A70     		strb	r2, [r3, #0]
+ 419:../Main.c     **** 		temp = 0;
+ 823              		.loc 1 419 0
+ 824 009a 4FF00003 		mov	r3, #0
+ 825 009e FB71     		strb	r3, [r7, #7]
+ 412:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 826              		.loc 1 412 0
+ 827 00a0 BB68     		ldr	r3, [r7, #8]
+ 828 00a2 03F10103 		add	r3, r3, #1
+ 829 00a6 BB60     		str	r3, [r7, #8]
+ 830              	.L33:
+ 412:../Main.c     **** 	for (j = 0; j < BYTES_TO_RECEIVE; j++) {
+ 831              		.loc 1 412 0 is_stmt 0 discriminator 1
+ 832 00a8 BB68     		ldr	r3, [r7, #8]
+ 833 00aa 042B     		cmp	r3, #4
+ 834 00ac C5DD     		ble	.L37
+ 420:../Main.c     **** 	}
+ 421:../Main.c     **** 	IO004_SetPin(CE);
+ 835              		.loc 1 421 0 is_stmt 1
+ 836 00ae 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 837 00b2 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 838 00b6 5A68     		ldr	r2, [r3, #4]
+ 839 00b8 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 840 00bc C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 841 00c0 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 842 00c2 4FF00101 		mov	r1, #1
+ 843 00c6 01FA03F3 		lsl	r3, r1, r3
+ 844 00ca 5360     		str	r3, [r2, #4]
+ 422:../Main.c     **** 	delay(50000);
+ 845              		.loc 1 422 0
+ 846 00cc 4CF25030 		movw	r0, #50000
+ 847 00d0 FFF7FEFF 		bl	delay
+ 423:../Main.c     **** }
+ 848              		.loc 1 423 0
+ 849 00d4 07F11007 		add	r7, r7, #16
+ 850 00d8 BD46     		mov	sp, r7
+ 851 00da 80BD     		pop	{r7, pc}
+ 852              		.cfi_endproc
+ 853              	.LFE115:
+ 855              		.section	.text.pulse_R,"ax",%progbits
+ 856              		.align	2
+ 857              		.global	pulse_R
+ 858              		.thumb
+ 859              		.thumb_func
+ 861              	pulse_R:
+ 862              	.LFB116:
+ 424:../Main.c     **** 
+ 425:../Main.c     **** void pulse_R() {
+ 863              		.loc 1 425 0
+ 864              		.cfi_startproc
+ 865              		@ args = 0, pretend = 0, frame = 0
+ 866              		@ frame_needed = 1, uses_anonymous_args = 0
+ 867 0000 80B5     		push	{r7, lr}
+ 868              	.LCFI11:
+ 869              		.cfi_def_cfa_offset 8
+ 870              		.cfi_offset 7, -8
+ 871              		.cfi_offset 14, -4
+ 872 0002 00AF     		add	r7, sp, #0
+ 873              	.LCFI12:
+ 874              		.cfi_def_cfa_register 7
+ 426:../Main.c     **** 	delay(300);
+ 875              		.loc 1 426 0
+ 876 0004 4FF49670 		mov	r0, #300
+ 877 0008 FFF7FEFF 		bl	delay
+ 427:../Main.c     **** 	IO004_SetPin(CLK1);
+ 878              		.loc 1 427 0
+ 879 000c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 880 0010 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 881 0014 5A68     		ldr	r2, [r3, #4]
+ 882 0016 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 883 001a C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 884 001e 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 885 0020 4FF00101 		mov	r1, #1
+ 886 0024 01FA03F3 		lsl	r3, r1, r3
+ 887 0028 5360     		str	r3, [r2, #4]
+ 428:../Main.c     **** 	delay(300);
+ 888              		.loc 1 428 0
+ 889 002a 4FF49670 		mov	r0, #300
+ 890 002e FFF7FEFF 		bl	delay
+ 429:../Main.c     **** 	IO004_ResetPin(CLK1);
+ 891              		.loc 1 429 0
+ 892 0032 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 893 0036 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 894 003a 5A68     		ldr	r2, [r3, #4]
+ 895 003c 40F20003 		movw	r3, #:lower16:IO004_Handle2
+ 896 0040 C0F20003 		movt	r3, #:upper16:IO004_Handle2
+ 897 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 898 0046 4FF48031 		mov	r1, #65536
+ 899 004a 01FA03F3 		lsl	r3, r1, r3
+ 900 004e 5360     		str	r3, [r2, #4]
+ 430:../Main.c     **** }
+ 901              		.loc 1 430 0
+ 902 0050 80BD     		pop	{r7, pc}
+ 903              		.cfi_endproc
+ 904              	.LFE116:
+ 906 0052 00BF     		.section	.text.configure_R,"ax",%progbits
+ 907              		.align	2
+ 908              		.global	configure_R
+ 909              		.thumb
+ 910              		.thumb_func
+ 912              	configure_R:
+ 913              	.LFB117:
+ 431:../Main.c     **** 
+ 432:../Main.c     **** void configure_R() {
+ 914              		.loc 1 432 0
+ 915              		.cfi_startproc
+ 916              		@ args = 0, pretend = 0, frame = 8
+ 917              		@ frame_needed = 1, uses_anonymous_args = 0
+ 918 0000 80B5     		push	{r7, lr}
+ 919              	.LCFI13:
+ 920              		.cfi_def_cfa_offset 8
+ 921              		.cfi_offset 7, -8
+ 922              		.cfi_offset 14, -4
+ 923 0002 82B0     		sub	sp, sp, #8
+ 924              	.LCFI14:
+ 925              		.cfi_def_cfa_offset 16
+ 926 0004 00AF     		add	r7, sp, #0
+ 927              	.LCFI15:
+ 928              		.cfi_def_cfa_register 7
+ 433:../Main.c     **** 	/*Atribuicao de valores ao vetor de configuracao do transceptor*/
+ 434:../Main.c     **** 	configuration[0] = 0xC5; //RF_CH# e OP_MODE 0b11000101
+ 929              		.loc 1 434 0
+ 930 0006 40F20003 		movw	r3, #:lower16:configuration
+ 931 000a C0F20003 		movt	r3, #:upper16:configuration
+ 932 000e 4FF0C502 		mov	r2, #197
+ 933 0012 1A70     		strb	r2, [r3, #0]
+ 435:../Main.c     **** 	configuration[1] = 0x4F; //RX2_EN, CM, RFDR_SB13, X0_F, RF_PWR 0b01101111
+ 934              		.loc 1 435 0
+ 935 0014 40F20003 		movw	r3, #:lower16:configuration
+ 936 0018 C0F20003 		movt	r3, #:upper16:configuration
+ 937 001c 4FF04F02 		mov	r2, #79
+ 938 0020 5A70     		strb	r2, [r3, #1]
+ 436:../Main.c     **** 	configuration[2] = 0xA3; //addr_w
+ 939              		.loc 1 436 0
+ 940 0022 40F20003 		movw	r3, #:lower16:configuration
+ 941 0026 C0F20003 		movt	r3, #:upper16:configuration
+ 942 002a 4FF0A302 		mov	r2, #163
+ 943 002e 9A70     		strb	r2, [r3, #2]
+ 437:../Main.c     **** 	configuration[3] = 0xEE; //Comeco enderco CH1 00000001
+ 944              		.loc 1 437 0
+ 945 0030 40F20003 		movw	r3, #:lower16:configuration
+ 946 0034 C0F20003 		movt	r3, #:upper16:configuration
+ 947 0038 4FF0EE02 		mov	r2, #238
+ 948 003c DA70     		strb	r2, [r3, #3]
+ 438:../Main.c     **** 	configuration[4] = 0xDD; //0b00000000
+ 949              		.loc 1 438 0
+ 950 003e 40F20003 		movw	r3, #:lower16:configuration
+ 951 0042 C0F20003 		movt	r3, #:upper16:configuration
+ 952 0046 4FF0DD02 		mov	r2, #221
+ 953 004a 1A71     		strb	r2, [r3, #4]
+ 439:../Main.c     **** 	configuration[5] = 0xCC; //0b11010100
+ 954              		.loc 1 439 0
+ 955 004c 40F20003 		movw	r3, #:lower16:configuration
+ 956 0050 C0F20003 		movt	r3, #:upper16:configuration
+ 957 0054 4FF0CC02 		mov	r2, #204
+ 958 0058 5A71     		strb	r2, [r3, #5]
+ 440:../Main.c     **** 	configuration[6] = 0xBB; //0b11011111
+ 959              		.loc 1 440 0
+ 960 005a 40F20003 		movw	r3, #:lower16:configuration
+ 961 005e C0F20003 		movt	r3, #:upper16:configuration
+ 962 0062 4FF0BB02 		mov	r2, #187
+ 963 0066 9A71     		strb	r2, [r3, #6]
+ 441:../Main.c     **** 	configuration[7] = 0xAA; //Fim enderco CH1 0b11101010
+ 964              		.loc 1 441 0
+ 965 0068 40F20003 		movw	r3, #:lower16:configuration
+ 966 006c C0F20003 		movt	r3, #:upper16:configuration
+ 967 0070 4FF0AA02 		mov	r2, #170
+ 968 0074 DA71     		strb	r2, [r3, #7]
+ 442:../Main.c     **** 	configuration[8] = 0b00000000; //Comeco enderco CH2
+ 969              		.loc 1 442 0
+ 970 0076 40F20003 		movw	r3, #:lower16:configuration
+ 971 007a C0F20003 		movt	r3, #:upper16:configuration
+ 972 007e 4FF00002 		mov	r2, #0
+ 973 0082 1A72     		strb	r2, [r3, #8]
+ 443:../Main.c     **** 	configuration[9] = 0b00000000;
+ 974              		.loc 1 443 0
+ 975 0084 40F20003 		movw	r3, #:lower16:configuration
+ 976 0088 C0F20003 		movt	r3, #:upper16:configuration
+ 977 008c 4FF00002 		mov	r2, #0
+ 978 0090 5A72     		strb	r2, [r3, #9]
+ 444:../Main.c     **** 	configuration[10] = 0b00000000;
+ 979              		.loc 1 444 0
+ 980 0092 40F20003 		movw	r3, #:lower16:configuration
+ 981 0096 C0F20003 		movt	r3, #:upper16:configuration
+ 982 009a 4FF00002 		mov	r2, #0
+ 983 009e 9A72     		strb	r2, [r3, #10]
+ 445:../Main.c     **** 	configuration[11] = 0b00000000;
+ 984              		.loc 1 445 0
+ 985 00a0 40F20003 		movw	r3, #:lower16:configuration
+ 986 00a4 C0F20003 		movt	r3, #:upper16:configuration
+ 987 00a8 4FF00002 		mov	r2, #0
+ 988 00ac DA72     		strb	r2, [r3, #11]
+ 446:../Main.c     **** 	configuration[12] = 0b00000000; //Fim enderco CH2
+ 989              		.loc 1 446 0
+ 990 00ae 40F20003 		movw	r3, #:lower16:configuration
+ 991 00b2 C0F20003 		movt	r3, #:upper16:configuration
+ 992 00b6 4FF00002 		mov	r2, #0
+ 993 00ba 1A73     		strb	r2, [r3, #12]
+ 447:../Main.c     **** 	configuration[13] = 0x28; //num bits enviados (1 byte nesse ex) TODO arrumar
+ 994              		.loc 1 447 0
+ 995 00bc 40F20003 		movw	r3, #:lower16:configuration
+ 996 00c0 C0F20003 		movt	r3, #:upper16:configuration
+ 997 00c4 4FF02802 		mov	r2, #40
+ 998 00c8 5A73     		strb	r2, [r3, #13]
+ 448:../Main.c     **** 	configuration[14] = 0b00000000;
+ 999              		.loc 1 448 0
+ 1000 00ca 40F20003 		movw	r3, #:lower16:configuration
+ 1001 00ce C0F20003 		movt	r3, #:upper16:configuration
+ 1002 00d2 4FF00002 		mov	r2, #0
+ 1003 00d6 9A73     		strb	r2, [r3, #14]
+ 449:../Main.c     **** 
+ 450:../Main.c     **** 	IO004_ResetPin(CE);
+ 1004              		.loc 1 450 0
+ 1005 00d8 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1006 00dc C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1007 00e0 5A68     		ldr	r2, [r3, #4]
+ 1008 00e2 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1009 00e6 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1010 00ea 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1011 00ec 4FF48031 		mov	r1, #65536
+ 1012 00f0 01FA03F3 		lsl	r3, r1, r3
+ 1013 00f4 5360     		str	r3, [r2, #4]
+ 451:../Main.c     **** 	IO004_SetPin(CS);
+ 1014              		.loc 1 451 0
+ 1015 00f6 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1016 00fa C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1017 00fe 5A68     		ldr	r2, [r3, #4]
+ 1018 0100 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1019 0104 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1020 0108 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1021 010a 4FF00101 		mov	r1, #1
+ 1022 010e 01FA03F3 		lsl	r3, r1, r3
+ 1023 0112 5360     		str	r3, [r2, #4]
+ 452:../Main.c     **** 	int i, j;
+ 453:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 1024              		.loc 1 453 0
+ 1025 0114 4FF00E03 		mov	r3, #14
+ 1026 0118 7B60     		str	r3, [r7, #4]
+ 1027 011a 3FE0     		b	.L40
+ 1028              	.L45:
+ 454:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 1029              		.loc 1 454 0
+ 1030 011c 4FF00703 		mov	r3, #7
+ 1031 0120 3B60     		str	r3, [r7, #0]
+ 1032 0122 34E0     		b	.L41
+ 1033              	.L44:
+ 455:../Main.c     **** 			if ((configuration[i] & (1 << j)) > 0)
+ 1034              		.loc 1 455 0
+ 1035 0124 40F20003 		movw	r3, #:lower16:configuration
+ 1036 0128 C0F20003 		movt	r3, #:upper16:configuration
+ 1037 012c 7A68     		ldr	r2, [r7, #4]
+ 1038 012e 9B18     		adds	r3, r3, r2
+ 1039 0130 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1040 0132 1A46     		mov	r2, r3
+ 1041 0134 4FF00101 		mov	r1, #1
+ 1042 0138 3B68     		ldr	r3, [r7, #0]
+ 1043 013a 01FA03F3 		lsl	r3, r1, r3
+ 1044 013e 1340     		ands	r3, r3, r2
+ 1045 0140 002B     		cmp	r3, #0
+ 1046 0142 0FDD     		ble	.L42
+ 456:../Main.c     **** 				IO004_SetPin(DATA);
+ 1047              		.loc 1 456 0
+ 1048 0144 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1049 0148 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1050 014c 5A68     		ldr	r2, [r3, #4]
+ 1051 014e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1052 0152 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1053 0156 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1054 0158 4FF00101 		mov	r1, #1
+ 1055 015c 01FA03F3 		lsl	r3, r1, r3
+ 1056 0160 5360     		str	r3, [r2, #4]
+ 1057 0162 0EE0     		b	.L43
+ 1058              	.L42:
+ 457:../Main.c     **** 			else
+ 458:../Main.c     **** 				IO004_ResetPin(DATA);
+ 1059              		.loc 1 458 0
+ 1060 0164 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1061 0168 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1062 016c 5A68     		ldr	r2, [r3, #4]
+ 1063 016e 40F20003 		movw	r3, #:lower16:IO004_Handle4
+ 1064 0172 C0F20003 		movt	r3, #:upper16:IO004_Handle4
+ 1065 0176 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1066 0178 4FF48031 		mov	r1, #65536
+ 1067 017c 01FA03F3 		lsl	r3, r1, r3
+ 1068 0180 5360     		str	r3, [r2, #4]
+ 1069              	.L43:
+ 459:../Main.c     **** 			;
+ 460:../Main.c     **** 			pulse_R();
+ 1070              		.loc 1 460 0
+ 1071 0182 FFF7FEFF 		bl	pulse_R
+ 454:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 1072              		.loc 1 454 0
+ 1073 0186 3B68     		ldr	r3, [r7, #0]
+ 1074 0188 03F1FF33 		add	r3, r3, #-1
+ 1075 018c 3B60     		str	r3, [r7, #0]
+ 1076              	.L41:
+ 454:../Main.c     **** 		for (j = 7; j > -1; j--) {
+ 1077              		.loc 1 454 0 is_stmt 0 discriminator 1
+ 1078 018e 3B68     		ldr	r3, [r7, #0]
+ 1079 0190 002B     		cmp	r3, #0
+ 1080 0192 C7DA     		bge	.L44
+ 453:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 1081              		.loc 1 453 0 is_stmt 1
+ 1082 0194 7B68     		ldr	r3, [r7, #4]
+ 1083 0196 03F1FF33 		add	r3, r3, #-1
+ 1084 019a 7B60     		str	r3, [r7, #4]
+ 1085              	.L40:
+ 453:../Main.c     **** 	for (i = 14; i > -1; i--) {
+ 1086              		.loc 1 453 0 is_stmt 0 discriminator 1
+ 1087 019c 7B68     		ldr	r3, [r7, #4]
+ 1088 019e 002B     		cmp	r3, #0
+ 1089 01a0 BCDA     		bge	.L45
+ 461:../Main.c     **** 		}
+ 462:../Main.c     **** 	}
+ 463:../Main.c     **** 	IO004_DisableOutputDriver(&DATA, IO004_CONT_POLLING);
+ 1090              		.loc 1 463 0 is_stmt 1
+ 1091 01a2 40F20000 		movw	r0, #:lower16:IO004_Handle4
+ 1092 01a6 C0F20000 		movt	r0, #:upper16:IO004_Handle4
+ 1093 01aa 4FF00301 		mov	r1, #3
+ 1094 01ae FFF7FEFF 		bl	IO004_DisableOutputDriver
+ 464:../Main.c     **** 	IO004_ResetPin(CS);
+ 1095              		.loc 1 464 0
+ 1096 01b2 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1097 01b6 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1098 01ba 5A68     		ldr	r2, [r3, #4]
+ 1099 01bc 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1100 01c0 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1101 01c4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1102 01c6 4FF48031 		mov	r1, #65536
+ 1103 01ca 01FA03F3 		lsl	r3, r1, r3
+ 1104 01ce 5360     		str	r3, [r2, #4]
+ 465:../Main.c     **** 	IO004_SetPin(CE);
+ 1105              		.loc 1 465 0
+ 1106 01d0 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1107 01d4 C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1108 01d8 5A68     		ldr	r2, [r3, #4]
+ 1109 01da 40F20003 		movw	r3, #:lower16:IO004_Handle6
+ 1110 01de C0F20003 		movt	r3, #:upper16:IO004_Handle6
+ 1111 01e2 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1112 01e4 4FF00101 		mov	r1, #1
+ 1113 01e8 01FA03F3 		lsl	r3, r1, r3
+ 1114 01ec 5360     		str	r3, [r2, #4]
+ 466:../Main.c     **** 	delay(50000);
+ 1115              		.loc 1 466 0
+ 1116 01ee 4CF25030 		movw	r0, #50000
+ 1117 01f2 FFF7FEFF 		bl	delay
+ 467:../Main.c     **** }
+ 1118              		.loc 1 467 0
+ 1119 01f6 07F10807 		add	r7, r7, #8
+ 1120 01fa BD46     		mov	sp, r7
+ 1121 01fc 80BD     		pop	{r7, pc}
+ 1122              		.cfi_endproc
+ 1123              	.LFE117:
+ 1125 01fe 00BF     		.section	.text.Software_Timers_Init,"ax",%progbits
+ 1126              		.align	2
+ 1127              		.global	Software_Timers_Init
+ 1128              		.thumb
+ 1129              		.thumb_func
+ 1131              	Software_Timers_Init:
+ 1132              	.LFB118:
+ 468:../Main.c     **** 
+ 469:../Main.c     **** /***************************************************/
+ 470:../Main.c     **** /****************FUNCOES TEMPORAIS******************/
+ 471:../Main.c     **** /***************************************************/
+ 472:../Main.c     **** 
+ 473:../Main.c     **** void Software_Timers_Init() {
  1133              		.loc 1 473 0
- 1134 002c 07F10807 		add	r7, r7, #8
- 1135 0030 BD46     		mov	sp, r7
- 1136 0032 80BD     		pop	{r7, pc}
- 1137              		.cfi_endproc
- 1138              	.LFE118:
- 1140              		.section	.text.delayus,"ax",%progbits
- 1141              		.align	2
- 1142              		.global	delayus
- 1143              		.thumb
- 1144              		.thumb_func
- 1146              	delayus:
- 1147              	.LFB119:
- 474:../Main.c     **** 
- 475:../Main.c     **** void delayus(uint32_t delay_us) {
- 1148              		.loc 1 475 0
- 1149              		.cfi_startproc
- 1150              		@ args = 0, pretend = 0, frame = 16
- 1151              		@ frame_needed = 1, uses_anonymous_args = 0
- 1152              		@ link register save eliminated.
- 1153 0000 80B4     		push	{r7}
- 1154              	.LCFI19:
- 1155              		.cfi_def_cfa_offset 4
- 1156              		.cfi_offset 7, -4
- 1157 0002 85B0     		sub	sp, sp, #20
- 1158              	.LCFI20:
- 1159              		.cfi_def_cfa_offset 24
- 1160 0004 00AF     		add	r7, sp, #0
- 1161              	.LCFI21:
- 1162              		.cfi_def_cfa_register 7
- 1163 0006 7860     		str	r0, [r7, #4]
- 476:../Main.c     **** 	uint32_t currenttick = ticks;
- 1164              		.loc 1 476 0
- 1165 0008 40F20003 		movw	r3, #:lower16:ticks
- 1166 000c C0F20003 		movt	r3, #:upper16:ticks
- 1167 0010 1B68     		ldr	r3, [r3, #0]
- 1168 0012 FB60     		str	r3, [r7, #12]
- 477:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
- 1169              		.loc 1 477 0
- 1170 0014 00BF     		nop
- 1171              	.L47:
- 1172              		.loc 1 477 0 is_stmt 0 discriminator 1
- 1173 0016 40F20003 		movw	r3, #:lower16:ticks
- 1174 001a C0F20003 		movt	r3, #:upper16:ticks
- 1175 001e 1A68     		ldr	r2, [r3, #0]
- 1176 0020 FB68     		ldr	r3, [r7, #12]
- 1177 0022 D21A     		subs	r2, r2, r3
- 1178 0024 7968     		ldr	r1, [r7, #4]
- 1179 0026 48F21F53 		movw	r3, #34079
- 1180 002a C5F2EB13 		movt	r3, 20971
- 1181 002e A3FB0103 		umull	r0, r3, r3, r1
- 1182 0032 4FEA5313 		lsr	r3, r3, #5
- 1183 0036 9A42     		cmp	r2, r3
- 1184 0038 EDD3     		bcc	.L47
- 478:../Main.c     **** 		;
- 479:../Main.c     **** 	ticks = 0;
- 1185              		.loc 1 479 0 is_stmt 1
- 1186 003a 40F20003 		movw	r3, #:lower16:ticks
- 1187 003e C0F20003 		movt	r3, #:upper16:ticks
- 1188 0042 4FF00002 		mov	r2, #0
- 1189 0046 1A60     		str	r2, [r3, #0]
- 480:../Main.c     **** }
- 1190              		.loc 1 480 0
- 1191 0048 07F11407 		add	r7, r7, #20
- 1192 004c BD46     		mov	sp, r7
- 1193 004e 80BC     		pop	{r7}
- 1194 0050 7047     		bx	lr
- 1195              		.cfi_endproc
- 1196              	.LFE119:
- 1198 0052 00BF     		.section	.text.delayms,"ax",%progbits
- 1199              		.align	2
- 1200              		.global	delayms
- 1201              		.thumb
- 1202              		.thumb_func
- 1204              	delayms:
- 1205              	.LFB120:
- 481:../Main.c     **** 
- 482:../Main.c     **** void delayms(uint32_t delay_ms) {
- 1206              		.loc 1 482 0
- 1207              		.cfi_startproc
- 1208              		@ args = 0, pretend = 0, frame = 8
- 1209              		@ frame_needed = 1, uses_anonymous_args = 0
- 1210 0000 80B5     		push	{r7, lr}
- 1211              	.LCFI22:
- 1212              		.cfi_def_cfa_offset 8
- 1213              		.cfi_offset 7, -8
- 1214              		.cfi_offset 14, -4
- 1215 0002 82B0     		sub	sp, sp, #8
- 1216              	.LCFI23:
- 1217              		.cfi_def_cfa_offset 16
- 1218 0004 00AF     		add	r7, sp, #0
- 1219              	.LCFI24:
- 1220              		.cfi_def_cfa_register 7
- 1221 0006 7860     		str	r0, [r7, #4]
- 483:../Main.c     **** 	delayus(1000 * delay_ms);
- 1222              		.loc 1 483 0
- 1223 0008 7B68     		ldr	r3, [r7, #4]
- 1224 000a 4FF47A72 		mov	r2, #1000
- 1225 000e 02FB03F3 		mul	r3, r2, r3
- 1226 0012 1846     		mov	r0, r3
- 1227 0014 FFF7FEFF 		bl	delayus
- 484:../Main.c     **** }
- 1228              		.loc 1 484 0
- 1229 0018 07F10807 		add	r7, r7, #8
- 1230 001c BD46     		mov	sp, r7
- 1231 001e 80BD     		pop	{r7, pc}
- 1232              		.cfi_endproc
- 1233              	.LFE120:
- 1235              		.section	.text.Tick_Handler,"ax",%progbits
- 1236              		.align	2
- 1237              		.global	Tick_Handler
- 1238              		.thumb
- 1239              		.thumb_func
- 1241              	Tick_Handler:
- 1242              	.LFB121:
- 485:../Main.c     **** 
- 486:../Main.c     **** void Tick_Handler(void) {
- 1243              		.loc 1 486 0
- 1244              		.cfi_startproc
- 1245              		@ args = 0, pretend = 0, frame = 0
- 1246              		@ frame_needed = 1, uses_anonymous_args = 0
- 1247              		@ link register save eliminated.
- 1248 0000 80B4     		push	{r7}
- 1249              	.LCFI25:
- 1250              		.cfi_def_cfa_offset 4
- 1251              		.cfi_offset 7, -4
- 1252 0002 00AF     		add	r7, sp, #0
- 1253              	.LCFI26:
- 1254              		.cfi_def_cfa_register 7
- 487:../Main.c     **** 	ticks++;
- 1255              		.loc 1 487 0
- 1256 0004 40F20003 		movw	r3, #:lower16:ticks
- 1257 0008 C0F20003 		movt	r3, #:upper16:ticks
- 1258 000c 1B68     		ldr	r3, [r3, #0]
- 1259 000e 03F10102 		add	r2, r3, #1
- 1260 0012 40F20003 		movw	r3, #:lower16:ticks
- 1261 0016 C0F20003 		movt	r3, #:upper16:ticks
- 1262 001a 1A60     		str	r2, [r3, #0]
- 488:../Main.c     **** 	status_ticks++;
- 1263              		.loc 1 488 0
- 1264 001c 40F20003 		movw	r3, #:lower16:status_ticks
- 1265 0020 C0F20003 		movt	r3, #:upper16:status_ticks
- 1266 0024 1B68     		ldr	r3, [r3, #0]
- 1267 0026 03F10102 		add	r2, r3, #1
- 1268 002a 40F20003 		movw	r3, #:lower16:status_ticks
- 1269 002e C0F20003 		movt	r3, #:upper16:status_ticks
- 1270 0032 1A60     		str	r2, [r3, #0]
- 489:../Main.c     **** 	block_pwm_update_tick_left--;
- 1271              		.loc 1 489 0
- 1272 0034 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 1273 0038 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 1274 003c 1B68     		ldr	r3, [r3, #0]
- 1275 003e 03F1FF32 		add	r2, r3, #-1
- 1276 0042 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
- 1277 0046 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
- 1278 004a 1A60     		str	r2, [r3, #0]
- 490:../Main.c     **** 	block_pwm_update_tick_right--;
- 1279              		.loc 1 490 0
- 1280 004c 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 1281 0050 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 1282 0054 1B68     		ldr	r3, [r3, #0]
- 1283 0056 03F1FF32 		add	r2, r3, #-1
- 1284 005a 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
- 1285 005e C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
- 1286 0062 1A60     		str	r2, [r3, #0]
- 491:../Main.c     **** }
- 1287              		.loc 1 491 0
- 1288 0064 BD46     		mov	sp, r7
- 1289 0066 80BC     		pop	{r7}
- 1290 0068 7047     		bx	lr
- 1291              		.cfi_endproc
- 1292              	.LFE121:
- 1294 006a 00BF     		.section	.text.delay,"ax",%progbits
- 1295              		.align	2
- 1296              		.global	delay
- 1297              		.thumb
- 1298              		.thumb_func
- 1300              	delay:
- 1301              	.LFB122:
- 492:../Main.c     **** 
- 493:../Main.c     **** void delay(long unsigned int i) {
- 1302              		.loc 1 493 0
- 1303              		.cfi_startproc
- 1304              		@ args = 0, pretend = 0, frame = 8
- 1305              		@ frame_needed = 1, uses_anonymous_args = 0
- 1306              		@ link register save eliminated.
- 1307 0000 80B4     		push	{r7}
- 1308              	.LCFI27:
- 1309              		.cfi_def_cfa_offset 4
- 1310              		.cfi_offset 7, -4
- 1311 0002 83B0     		sub	sp, sp, #12
- 1312              	.LCFI28:
- 1313              		.cfi_def_cfa_offset 16
- 1314 0004 00AF     		add	r7, sp, #0
- 1315              	.LCFI29:
- 1316              		.cfi_def_cfa_register 7
- 1317 0006 7860     		str	r0, [r7, #4]
- 494:../Main.c     **** 	while (i--) {
- 1318              		.loc 1 494 0
- 1319 0008 00E0     		b	.L51
- 1320              	.L52:
- 1321              	.LBB4:
- 1322              	.LBB5:
- 1323              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+ 1134              		.cfi_startproc
+ 1135              		@ args = 0, pretend = 0, frame = 8
+ 1136              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1137 0000 80B5     		push	{r7, lr}
+ 1138              	.LCFI16:
+ 1139              		.cfi_def_cfa_offset 8
+ 1140              		.cfi_offset 7, -8
+ 1141              		.cfi_offset 14, -4
+ 1142 0002 82B0     		sub	sp, sp, #8
+ 1143              	.LCFI17:
+ 1144              		.cfi_def_cfa_offset 16
+ 1145 0004 00AF     		add	r7, sp, #0
+ 1146              	.LCFI18:
+ 1147              		.cfi_def_cfa_register 7
+ 474:../Main.c     **** 	handle_t TaskTimerId;
+ 475:../Main.c     **** 
+ 476:../Main.c     **** 	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+ 1148              		.loc 1 476 0
+ 1149 0006 4FF06400 		mov	r0, #100
+ 1150 000a 4FF00101 		mov	r1, #1
+ 1151 000e 40F20002 		movw	r2, #:lower16:Tick_Handler
+ 1152 0012 C0F20002 		movt	r2, #:upper16:Tick_Handler
+ 1153 0016 4FF00003 		mov	r3, #0
+ 1154 001a FFF7FEFF 		bl	SYSTM002_CreateTimer
+ 1155 001e 7860     		str	r0, [r7, #4]
+ 477:../Main.c     **** 			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+ 478:../Main.c     **** 	if (TaskTimerId != 0) {
+ 1156              		.loc 1 478 0
+ 1157 0020 7B68     		ldr	r3, [r7, #4]
+ 1158 0022 002B     		cmp	r3, #0
+ 1159 0024 02D0     		beq	.L46
+ 479:../Main.c     **** //Timer created successfully so start it
+ 480:../Main.c     **** 		SYSTM002_StartTimer(TaskTimerId);
+ 1160              		.loc 1 480 0
+ 1161 0026 7868     		ldr	r0, [r7, #4]
+ 1162 0028 FFF7FEFF 		bl	SYSTM002_StartTimer
+ 1163              	.L46:
+ 481:../Main.c     **** 	}
+ 482:../Main.c     **** }
+ 1164              		.loc 1 482 0
+ 1165 002c 07F10807 		add	r7, r7, #8
+ 1166 0030 BD46     		mov	sp, r7
+ 1167 0032 80BD     		pop	{r7, pc}
+ 1168              		.cfi_endproc
+ 1169              	.LFE118:
+ 1171              		.section	.text.delayus,"ax",%progbits
+ 1172              		.align	2
+ 1173              		.global	delayus
+ 1174              		.thumb
+ 1175              		.thumb_func
+ 1177              	delayus:
+ 1178              	.LFB119:
+ 483:../Main.c     **** 
+ 484:../Main.c     **** void delayus(uint32_t delay_us) {
+ 1179              		.loc 1 484 0
+ 1180              		.cfi_startproc
+ 1181              		@ args = 0, pretend = 0, frame = 16
+ 1182              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1183              		@ link register save eliminated.
+ 1184 0000 80B4     		push	{r7}
+ 1185              	.LCFI19:
+ 1186              		.cfi_def_cfa_offset 4
+ 1187              		.cfi_offset 7, -4
+ 1188 0002 85B0     		sub	sp, sp, #20
+ 1189              	.LCFI20:
+ 1190              		.cfi_def_cfa_offset 24
+ 1191 0004 00AF     		add	r7, sp, #0
+ 1192              	.LCFI21:
+ 1193              		.cfi_def_cfa_register 7
+ 1194 0006 7860     		str	r0, [r7, #4]
+ 485:../Main.c     **** 	uint32_t currenttick = ticks;
+ 1195              		.loc 1 485 0
+ 1196 0008 40F20003 		movw	r3, #:lower16:ticks
+ 1197 000c C0F20003 		movt	r3, #:upper16:ticks
+ 1198 0010 1B68     		ldr	r3, [r3, #0]
+ 1199 0012 FB60     		str	r3, [r7, #12]
+ 486:../Main.c     **** 	while (ticks - currenttick < (delay_us / SYSTM002_SYSTICK_INTERVAL))
+ 1200              		.loc 1 486 0
+ 1201 0014 00BF     		nop
+ 1202              	.L49:
+ 1203              		.loc 1 486 0 is_stmt 0 discriminator 1
+ 1204 0016 40F20003 		movw	r3, #:lower16:ticks
+ 1205 001a C0F20003 		movt	r3, #:upper16:ticks
+ 1206 001e 1A68     		ldr	r2, [r3, #0]
+ 1207 0020 FB68     		ldr	r3, [r7, #12]
+ 1208 0022 D21A     		subs	r2, r2, r3
+ 1209 0024 7968     		ldr	r1, [r7, #4]
+ 1210 0026 48F21F53 		movw	r3, #34079
+ 1211 002a C5F2EB13 		movt	r3, 20971
+ 1212 002e A3FB0103 		umull	r0, r3, r3, r1
+ 1213 0032 4FEA5313 		lsr	r3, r3, #5
+ 1214 0036 9A42     		cmp	r2, r3
+ 1215 0038 EDD3     		bcc	.L49
+ 487:../Main.c     **** 		;
+ 488:../Main.c     **** 	ticks = 0;
+ 1216              		.loc 1 488 0 is_stmt 1
+ 1217 003a 40F20003 		movw	r3, #:lower16:ticks
+ 1218 003e C0F20003 		movt	r3, #:upper16:ticks
+ 1219 0042 4FF00002 		mov	r2, #0
+ 1220 0046 1A60     		str	r2, [r3, #0]
+ 489:../Main.c     **** }
+ 1221              		.loc 1 489 0
+ 1222 0048 07F11407 		add	r7, r7, #20
+ 1223 004c BD46     		mov	sp, r7
+ 1224 004e 80BC     		pop	{r7}
+ 1225 0050 7047     		bx	lr
+ 1226              		.cfi_endproc
+ 1227              	.LFE119:
+ 1229 0052 00BF     		.section	.text.delayms,"ax",%progbits
+ 1230              		.align	2
+ 1231              		.global	delayms
+ 1232              		.thumb
+ 1233              		.thumb_func
+ 1235              	delayms:
+ 1236              	.LFB120:
+ 490:../Main.c     **** 
+ 491:../Main.c     **** void delayms(uint32_t delay_ms) {
+ 1237              		.loc 1 491 0
+ 1238              		.cfi_startproc
+ 1239              		@ args = 0, pretend = 0, frame = 8
+ 1240              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1241 0000 80B5     		push	{r7, lr}
+ 1242              	.LCFI22:
+ 1243              		.cfi_def_cfa_offset 8
+ 1244              		.cfi_offset 7, -8
+ 1245              		.cfi_offset 14, -4
+ 1246 0002 82B0     		sub	sp, sp, #8
+ 1247              	.LCFI23:
+ 1248              		.cfi_def_cfa_offset 16
+ 1249 0004 00AF     		add	r7, sp, #0
+ 1250              	.LCFI24:
+ 1251              		.cfi_def_cfa_register 7
+ 1252 0006 7860     		str	r0, [r7, #4]
+ 492:../Main.c     **** 	delayus(1000 * delay_ms);
+ 1253              		.loc 1 492 0
+ 1254 0008 7B68     		ldr	r3, [r7, #4]
+ 1255 000a 4FF47A72 		mov	r2, #1000
+ 1256 000e 02FB03F3 		mul	r3, r2, r3
+ 1257 0012 1846     		mov	r0, r3
+ 1258 0014 FFF7FEFF 		bl	delayus
+ 493:../Main.c     **** }
+ 1259              		.loc 1 493 0
+ 1260 0018 07F10807 		add	r7, r7, #8
+ 1261 001c BD46     		mov	sp, r7
+ 1262 001e 80BD     		pop	{r7, pc}
+ 1263              		.cfi_endproc
+ 1264              	.LFE120:
+ 1266              		.section	.text.Tick_Handler,"ax",%progbits
+ 1267              		.align	2
+ 1268              		.global	Tick_Handler
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1272              	Tick_Handler:
+ 1273              	.LFB121:
+ 494:../Main.c     **** 
+ 495:../Main.c     **** void Tick_Handler(void) {
+ 1274              		.loc 1 495 0
+ 1275              		.cfi_startproc
+ 1276              		@ args = 0, pretend = 0, frame = 0
+ 1277              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1278              		@ link register save eliminated.
+ 1279 0000 80B4     		push	{r7}
+ 1280              	.LCFI25:
+ 1281              		.cfi_def_cfa_offset 4
+ 1282              		.cfi_offset 7, -4
+ 1283 0002 00AF     		add	r7, sp, #0
+ 1284              	.LCFI26:
+ 1285              		.cfi_def_cfa_register 7
+ 496:../Main.c     **** 	ticks++;
+ 1286              		.loc 1 496 0
+ 1287 0004 40F20003 		movw	r3, #:lower16:ticks
+ 1288 0008 C0F20003 		movt	r3, #:upper16:ticks
+ 1289 000c 1B68     		ldr	r3, [r3, #0]
+ 1290 000e 03F10102 		add	r2, r3, #1
+ 1291 0012 40F20003 		movw	r3, #:lower16:ticks
+ 1292 0016 C0F20003 		movt	r3, #:upper16:ticks
+ 1293 001a 1A60     		str	r2, [r3, #0]
+ 497:../Main.c     **** 	status_ticks++;
+ 1294              		.loc 1 497 0
+ 1295 001c 40F20003 		movw	r3, #:lower16:status_ticks
+ 1296 0020 C0F20003 		movt	r3, #:upper16:status_ticks
+ 1297 0024 1B68     		ldr	r3, [r3, #0]
+ 1298 0026 03F10102 		add	r2, r3, #1
+ 1299 002a 40F20003 		movw	r3, #:lower16:status_ticks
+ 1300 002e C0F20003 		movt	r3, #:upper16:status_ticks
+ 1301 0032 1A60     		str	r2, [r3, #0]
+ 498:../Main.c     **** 	block_pwm_update_tick_left--;
+ 1302              		.loc 1 498 0
+ 1303 0034 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 1304 0038 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 1305 003c 1B68     		ldr	r3, [r3, #0]
+ 1306 003e 03F1FF32 		add	r2, r3, #-1
+ 1307 0042 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_left
+ 1308 0046 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_left
+ 1309 004a 1A60     		str	r2, [r3, #0]
+ 499:../Main.c     **** 	block_pwm_update_tick_right--;
+ 1310              		.loc 1 499 0
+ 1311 004c 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 1312 0050 C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 1313 0054 1B68     		ldr	r3, [r3, #0]
+ 1314 0056 03F1FF32 		add	r2, r3, #-1
+ 1315 005a 40F20003 		movw	r3, #:lower16:block_pwm_update_tick_right
+ 1316 005e C0F20003 		movt	r3, #:upper16:block_pwm_update_tick_right
+ 1317 0062 1A60     		str	r2, [r3, #0]
+ 500:../Main.c     **** }
+ 1318              		.loc 1 500 0
+ 1319 0064 BD46     		mov	sp, r7
+ 1320 0066 80BC     		pop	{r7}
+ 1321 0068 7047     		bx	lr
+ 1322              		.cfi_endproc
+ 1323              	.LFE121:
+ 1325 006a 00BF     		.section	.text.delay,"ax",%progbits
+ 1326              		.align	2
+ 1327              		.global	delay
+ 1328              		.thumb
+ 1329              		.thumb_func
+ 1331              	delay:
+ 1332              	.LFB122:
+ 501:../Main.c     **** 
+ 502:../Main.c     **** void delay(long unsigned int i) {
+ 1333              		.loc 1 502 0
+ 1334              		.cfi_startproc
+ 1335              		@ args = 0, pretend = 0, frame = 8
+ 1336              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1337              		@ link register save eliminated.
+ 1338 0000 80B4     		push	{r7}
+ 1339              	.LCFI27:
+ 1340              		.cfi_def_cfa_offset 4
+ 1341              		.cfi_offset 7, -4
+ 1342 0002 83B0     		sub	sp, sp, #12
+ 1343              	.LCFI28:
+ 1344              		.cfi_def_cfa_offset 16
+ 1345 0004 00AF     		add	r7, sp, #0
+ 1346              	.LCFI29:
+ 1347              		.cfi_def_cfa_register 7
+ 1348 0006 7860     		str	r0, [r7, #4]
+ 503:../Main.c     **** 	while (i--) {
+ 1349              		.loc 1 503 0
+ 1350 0008 00E0     		b	.L53
+ 1351              	.L54:
+ 1352              	.LBB4:
+ 1353              	.LBB5:
+ 1354              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
    1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
    2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
    3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
@@ -2133,87 +2173,87 @@
  325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
  326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
  327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
- 1324              		.loc 2 327 0
- 1325              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
- 1326 000a 00BF     		nop
- 1327              	@ 0 "" 2
- 1328              		.thumb
- 1329              	.L51:
- 1330              	.LBE5:
- 1331              	.LBE4:
- 1332              		.loc 1 494 0 discriminator 1
- 1333 000c 7B68     		ldr	r3, [r7, #4]
- 1334 000e 002B     		cmp	r3, #0
- 1335 0010 0CBF     		ite	eq
- 1336 0012 0023     		moveq	r3, #0
- 1337 0014 0123     		movne	r3, #1
- 1338 0016 DBB2     		uxtb	r3, r3
- 1339 0018 7A68     		ldr	r2, [r7, #4]
- 1340 001a 02F1FF32 		add	r2, r2, #-1
- 1341 001e 7A60     		str	r2, [r7, #4]
- 1342 0020 002B     		cmp	r3, #0
- 1343 0022 F2D1     		bne	.L52
- 495:../Main.c     **** 
- 496:../Main.c     **** 		__NOP();
- 497:../Main.c     **** 	}
- 498:../Main.c     **** }
- 1344              		.loc 1 498 0
- 1345 0024 07F10C07 		add	r7, r7, #12
- 1346 0028 BD46     		mov	sp, r7
- 1347 002a 80BC     		pop	{r7}
- 1348 002c 7047     		bx	lr
- 1349              		.cfi_endproc
- 1350              	.LFE122:
- 1352 002e 00BF     		.text
- 1353              	.Letext0:
- 1354              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
- 1355              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 1356              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1357              		.file 6 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1358              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1359              		.file 8 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1360              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
- 1361              		.file 10 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
- 1362              		.file 11 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
+ 1355              		.loc 2 327 0
+ 1356              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 1357 000a 00BF     		nop
+ 1358              	@ 0 "" 2
+ 1359              		.thumb
+ 1360              	.L53:
+ 1361              	.LBE5:
+ 1362              	.LBE4:
+ 1363              		.loc 1 503 0 discriminator 1
+ 1364 000c 7B68     		ldr	r3, [r7, #4]
+ 1365 000e 002B     		cmp	r3, #0
+ 1366 0010 0CBF     		ite	eq
+ 1367 0012 0023     		moveq	r3, #0
+ 1368 0014 0123     		movne	r3, #1
+ 1369 0016 DBB2     		uxtb	r3, r3
+ 1370 0018 7A68     		ldr	r2, [r7, #4]
+ 1371 001a 02F1FF32 		add	r2, r2, #-1
+ 1372 001e 7A60     		str	r2, [r7, #4]
+ 1373 0020 002B     		cmp	r3, #0
+ 1374 0022 F2D1     		bne	.L54
+ 504:../Main.c     **** 
+ 505:../Main.c     **** 		__NOP();
+ 506:../Main.c     **** 	}
+ 507:../Main.c     **** }
+ 1375              		.loc 1 507 0
+ 1376 0024 07F10C07 		add	r7, r7, #12
+ 1377 0028 BD46     		mov	sp, r7
+ 1378 002a 80BC     		pop	{r7}
+ 1379 002c 7047     		bx	lr
+ 1380              		.cfi_endproc
+ 1381              	.LFE122:
+ 1383 002e 00BF     		.text
+ 1384              	.Letext0:
+ 1385              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 1386              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 1387              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1388              		.file 6 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1389              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1390              		.file 8 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1391              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 1392              		.file 10 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
+ 1393              		.file 11 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
                             *COM*:0000000f configuration
                             *COM*:00000005 data_R
                             *COM*:00000004 status_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:27     .bss:00000000 ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:24     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:27     .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:24     .bss:00000000 $d
                             *COM*:00000004 block_pwm_update_tick_left
                             *COM*:00000004 block_pwm_update_tick_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:34     .bss:00000004 last_direction_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:39     .bss:00000005 last_direction_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:44     .bss:00000006 block_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:49     .bss:00000007 block_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:55     .data:00000000 status_block_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:60     .data:00000001 status_block_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:63     .text.main:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:68     .text.main:00000000 main
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:881    .text.configure_R:00000000 configure_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:173    .text.start_PWM_signals:00000000 start_PWM_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1100   .text.Software_Timers_Init:00000000 Software_Timers_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:709    .text.read_R:00000000 read_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:246    .text.update_PWM_signals:00000000 update_PWM_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:168    .text.start_PWM_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:241    .text.update_PWM_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:631    .text.update_PWM_signals:00000380 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:640    .text.update_PWM_signals:0000039c $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:704    .text.read_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1300   .text.delay:00000000 delay
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:830    .text.pulse_R:00000000 pulse_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:825    .text.pulse_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:876    .text.configure_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1095   .text.Software_Timers_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1241   .text.Tick_Handler:00000000 Tick_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1141   .text.delayus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1146   .text.delayus:00000000 delayus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1199   .text.delayms:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1204   .text.delayms:00000000 delayms
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1236   .text.Tick_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccZKQ5mz.s:1295   .text.delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:35     .data:00000000 last_direction_right
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:40     .data:00000001 last_direction_left
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:46     .bss:00000004 block_left
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:51     .bss:00000005 block_right
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:57     .data:00000002 status_block_left
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:62     .data:00000003 status_block_right
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:65     .text.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:70     .text.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:912    .text.configure_R:00000000 configure_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:175    .text.start_PWM_signals:00000000 start_PWM_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1131   .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:740    .text.read_R:00000000 read_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:248    .text.update_PWM_signals:00000000 update_PWM_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:170    .text.start_PWM_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:243    .text.update_PWM_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:634    .text.update_PWM_signals:00000384 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:644    .text.update_PWM_signals:000003a4 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:735    .text.read_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1331   .text.delay:00000000 delay
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:861    .text.pulse_R:00000000 pulse_R
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:856    .text.pulse_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:907    .text.configure_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1126   .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1272   .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1172   .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1177   .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1230   .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1235   .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1267   .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1326   .text.delay:00000000 $t
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

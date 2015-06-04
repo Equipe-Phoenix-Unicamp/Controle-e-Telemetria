@@ -353,17 +353,17 @@
  286:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     }
  287:../Dave/Generated/src/PWMSP001/PWMSP001.c ****   }
  288:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     
- 289:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.2 based on User configuration */
- 290:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD2_Msk));
+ 289:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.1 based on User configuration */
+ 290:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD1_Msk));
   69              		.loc 1 290 0
   70 0040 4FF40143 		mov	r3, #33024
   71 0044 C4F60203 		movt	r3, 18434
   72 0048 4FF40142 		mov	r2, #33024
   73 004c C4F60202 		movt	r2, 18434
   74 0050 126C     		ldr	r2, [r2, #64]
-  75 0052 22F4E062 		bic	r2, r2, #1792
+  75 0052 22F07002 		bic	r2, r2, #112
   76 0056 1A64     		str	r2, [r3, #64]
- 291:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD2_Pos) & \
+ 291:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD1_Pos) & \
   77              		.loc 1 291 0
   78 0058 4FF40143 		mov	r3, #33024
   79 005c C4F60203 		movt	r3, 18434
@@ -371,17 +371,17 @@
   81 0064 C4F60202 		movt	r2, 18434
   82 0068 126C     		ldr	r2, [r2, #64]
   83 006a 1A64     		str	r2, [r3, #64]
- 292:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD2_Msk);
- 293:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC2_PO_Msk));
+ 292:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD1_Msk);
+ 293:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC1_PO_Msk));
   84              		.loc 1 293 0
   85 006c 4FF40143 		mov	r3, #33024
   86 0070 C4F60203 		movt	r3, 18434
   87 0074 4FF40142 		mov	r2, #33024
   88 0078 C4F60202 		movt	r2, 18434
   89 007c 1269     		ldr	r2, [r2, #16]
-  90 007e 22F48002 		bic	r2, r2, #4194304
+  90 007e 22F48042 		bic	r2, r2, #16384
   91 0082 1A61     		str	r2, [r3, #16]
- 294:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC2_PO_Pos) & \
+ 294:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC1_PO_Pos) & \
   92              		.loc 1 294 0
   93 0084 4FF40143 		mov	r3, #33024
   94 0088 C4F60203 		movt	r3, 18434
@@ -389,7 +389,7 @@
   96 0090 C4F60202 		movt	r2, 18434
   97 0094 1269     		ldr	r2, [r2, #16]
   98 0096 1A61     		str	r2, [r3, #16]
- 295:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC2_PO_Msk);
+ 295:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC1_PO_Msk);
  296:../Dave/Generated/src/PWMSP001/PWMSP001.c ****   Error = PWMSP001_lInit((PWMSP001_HandleType*) &PWMSP001_Handle1);
   99              		.loc 1 296 0
  100 0098 40F20000 		movw	r0, #:lower16:PWMSP001_Handle1
@@ -422,17 +422,17 @@
  304:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     }
  305:../Dave/Generated/src/PWMSP001/PWMSP001.c ****   }
  306:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     
- 307:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.1 based on User configuration */
- 308:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD1_Msk));
+ 307:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.0 based on User configuration */
+ 308:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD0_Msk));
  120              		.loc 1 308 0
  121 00c8 4FF40143 		mov	r3, #33024
  122 00cc C4F60203 		movt	r3, 18434
  123 00d0 4FF40142 		mov	r2, #33024
  124 00d4 C4F60202 		movt	r2, 18434
  125 00d8 126C     		ldr	r2, [r2, #64]
- 126 00da 22F07002 		bic	r2, r2, #112
+ 126 00da 22F00702 		bic	r2, r2, #7
  127 00de 1A64     		str	r2, [r3, #64]
- 309:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD1_Pos) & \
+ 309:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD0_Pos) & \
  128              		.loc 1 309 0
  129 00e0 4FF40143 		mov	r3, #33024
  130 00e4 C4F60203 		movt	r3, 18434
@@ -440,17 +440,17 @@
  132 00ec C4F60202 		movt	r2, 18434
  133 00f0 126C     		ldr	r2, [r2, #64]
  134 00f2 1A64     		str	r2, [r3, #64]
- 310:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD1_Msk);
- 311:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC1_PO_Msk));
+ 310:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD0_Msk);
+ 311:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC0_PO_Msk));
  135              		.loc 1 311 0
  136 00f4 4FF40143 		mov	r3, #33024
  137 00f8 C4F60203 		movt	r3, 18434
  138 00fc 4FF40142 		mov	r2, #33024
  139 0100 C4F60202 		movt	r2, 18434
  140 0104 1269     		ldr	r2, [r2, #16]
- 141 0106 22F48042 		bic	r2, r2, #16384
+ 141 0106 22F04002 		bic	r2, r2, #64
  142 010a 1A61     		str	r2, [r3, #16]
- 312:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC1_PO_Pos) & \
+ 312:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC0_PO_Pos) & \
  143              		.loc 1 312 0
  144 010c 4FF40143 		mov	r3, #33024
  145 0110 C4F60203 		movt	r3, 18434
@@ -458,7 +458,7 @@
  147 0118 C4F60202 		movt	r2, 18434
  148 011c 1269     		ldr	r2, [r2, #16]
  149 011e 1A61     		str	r2, [r3, #16]
- 313:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC1_PO_Msk);
+ 313:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC0_PO_Msk);
  314:../Dave/Generated/src/PWMSP001/PWMSP001.c ****   Error = PWMSP001_lInit((PWMSP001_HandleType*) &PWMSP001_Handle2);
  150              		.loc 1 314 0
  151 0120 40F20000 		movw	r0, #:lower16:PWMSP001_Handle2
@@ -491,17 +491,17 @@
  322:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     }
  323:../Dave/Generated/src/PWMSP001/PWMSP001.c ****   }
  324:../Dave/Generated/src/PWMSP001/PWMSP001.c ****     
- 325:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.0 based on User configuration */
- 326:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD0_Msk));
+ 325:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       /* Configuration of Direct Output Pin 1.2 based on User configuration */
+ 326:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  &= (uint32_t)(~(PORT1_PDR0_PD2_Msk));
  171              		.loc 1 326 0
  172 0150 4FF40143 		mov	r3, #33024
  173 0154 C4F60203 		movt	r3, 18434
  174 0158 4FF40142 		mov	r2, #33024
  175 015c C4F60202 		movt	r2, 18434
  176 0160 126C     		ldr	r2, [r2, #64]
- 177 0162 22F00702 		bic	r2, r2, #7
+ 177 0162 22F4E062 		bic	r2, r2, #1792
  178 0166 1A64     		str	r2, [r3, #64]
- 327:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD0_Pos) & \
+ 327:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->PDR0  |= (((uint32_t)0 << (uint32_t)PORT1_PDR0_PD2_Pos) & \
  179              		.loc 1 327 0
  180 0168 4FF40143 		mov	r3, #33024
  181 016c C4F60203 		movt	r3, 18434
@@ -509,17 +509,17 @@
  183 0174 C4F60202 		movt	r2, 18434
  184 0178 126C     		ldr	r2, [r2, #64]
  185 017a 1A64     		str	r2, [r3, #64]
- 328:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD0_Msk);
- 329:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC0_PO_Msk));
+ 328:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                (uint32_t)PORT1_PDR0_PD2_Msk);
+ 329:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  &= (uint32_t)(~(PORT_IOCR_PC2_PO_Msk));
  186              		.loc 1 329 0
  187 017c 4FF40143 		mov	r3, #33024
  188 0180 C4F60203 		movt	r3, 18434
  189 0184 4FF40142 		mov	r2, #33024
  190 0188 C4F60202 		movt	r2, 18434
  191 018c 1269     		ldr	r2, [r2, #16]
- 192 018e 22F04002 		bic	r2, r2, #64
+ 192 018e 22F48002 		bic	r2, r2, #4194304
  193 0192 1A61     		str	r2, [r3, #16]
- 330:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC0_PO_Pos) & \
+ 330:../Dave/Generated/src/PWMSP001/PWMSP001.c ****       PORT1->IOCR0  |= (((uint32_t)0 << (uint32_t)PORT_IOCR_PC2_PO_Pos) & \
  194              		.loc 1 330 0
  195 0194 4FF40143 		mov	r3, #33024
  196 0198 C4F60203 		movt	r3, 18434
@@ -527,7 +527,7 @@
  198 01a0 C4F60202 		movt	r2, 18434
  199 01a4 1269     		ldr	r2, [r2, #16]
  200 01a6 1A61     		str	r2, [r3, #16]
- 331:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC0_PO_Msk);
+ 331:../Dave/Generated/src/PWMSP001/PWMSP001.c ****                                    (uint32_t)PORT_IOCR_PC2_PO_Msk);
  332:../Dave/Generated/src/PWMSP001/PWMSP001.c **** }
  201              		.loc 1 332 0
  202 01a8 07F10807 		add	r7, r7, #8
@@ -5599,72 +5599,72 @@
  3948              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:20     .text.PWMSP001_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:25     .text.PWMSP001_Init:00000000 PWMSP001_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:214    .text.PWMSP001_lInit:00000000 PWMSP001_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:824    .text.PWMSP001_Start:00000000 PWMSP001_Start
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:209    .text.PWMSP001_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3186   .text.PWMSP001_lConfigureSecondSlice:00000000 PWMSP001_lConfigureSecondSlice
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:607    .text.PWMSP001_Deinit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:612    .text.PWMSP001_Deinit:00000000 PWMSP001_Deinit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:819    .text.PWMSP001_Start:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1051   .text.PWMSP001_Stop:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1056   .text.PWMSP001_Stop:00000000 PWMSP001_Stop
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1165   .text.PWMSP001_SetCompare:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1170   .text.PWMSP001_SetCompare:00000000 PWMSP001_SetCompare
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1269   .text.PWMSP001_lSetCompareEdgeAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1274   .text.PWMSP001_lSetCompareEdgeAlign:00000000 PWMSP001_lSetCompareEdgeAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1331   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1336   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 PWMSP001_lSetCompareEdgeAlignTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1434   .text.PWMSP001_lSetCompareCenterAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1439   .text.PWMSP001_lSetCompareCenterAlign:00000000 PWMSP001_lSetCompareCenterAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1493   .text.PWMSP001_SetDutyCycle:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1498   .text.PWMSP001_SetDutyCycle:00000000 PWMSP001_SetDutyCycle
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1563   .text.PWMSP001_SetDutyCycle:00000060 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1568   .text.PWMSP001_lSetDutyEdgeAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1573   .text.PWMSP001_lSetDutyEdgeAlign:00000000 PWMSP001_lSetDutyEdgeAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1653   .text.PWMSP001_lSetDutyEdgeAlign:00000098 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1658   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1663   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 PWMSP001_lSetDutyEdgeAlignTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1804   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000124 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1809   .text.PWMSP001_lSetDutyCenterAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1814   .text.PWMSP001_lSetDutyCenterAlign:00000000 PWMSP001_lSetDutyCenterAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1892   .text.PWMSP001_lSetDutyCenterAlign:00000094 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1897   .text.PWMSP001_SetPeriodAndCompare:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:1902   .text.PWMSP001_SetPeriodAndCompare:00000000 PWMSP001_SetPeriodAndCompare
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2016   .text.PWMSP001_SetPeriod:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2021   .text.PWMSP001_SetPeriod:00000000 PWMSP001_SetPeriod
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2154   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2159   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 PWMSP001_SetPwmFreqAndDutyCycle
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2492   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 PWMSP001_lSetPwmFreqTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2310   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000110 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2316   .text.PWMSP001_SetPwmFreq:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2321   .text.PWMSP001_SetPwmFreq:00000000 PWMSP001_SetPwmFreq
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2482   .text.PWMSP001_SetPwmFreq:00000128 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2487   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2610   .text.PWMSP001_SetTimerVal:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2615   .text.PWMSP001_SetTimerVal:00000000 PWMSP001_SetTimerVal
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2686   .text.PWMSP001_GetTimerStatus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2691   .text.PWMSP001_GetTimerStatus:00000000 PWMSP001_GetTimerStatus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2768   .text.PWMSP001_GetTimerRegsVal:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2773   .text.PWMSP001_GetTimerRegsVal:00000000 PWMSP001_GetTimerRegsVal
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2914   .text.PWMSP001_GetPeriodReg:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:2919   .text.PWMSP001_GetPeriodReg:00000000 PWMSP001_GetPeriodReg
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3002   .text.PWMSP001_SWRequestShadowTransfer:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3007   .text.PWMSP001_SWRequestShadowTransfer:00000000 PWMSP001_SWRequestShadowTransfer
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3100   .text.PWMSP001_ResetTrapFlag:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3105   .text.PWMSP001_ResetTrapFlag:00000000 PWMSP001_ResetTrapFlag
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3181   .text.PWMSP001_lConfigureSecondSlice:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3492   .text.PWMSP001_EnableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3497   .text.PWMSP001_EnableEvent:00000000 PWMSP001_EnableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3577   .text.PWMSP001_DisableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3582   .text.PWMSP001_DisableEvent:00000000 PWMSP001_DisableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3664   .text.PWMSP001_ClearPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3669   .text.PWMSP001_ClearPendingEvent:00000000 PWMSP001_ClearPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3749   .text.PWMSP001_SetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3754   .text.PWMSP001_SetPendingEvent:00000000 PWMSP001_SetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3834   .text.PWMSP001_GetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccLBq00l.s:3839   .text.PWMSP001_GetPendingEvent:00000000 PWMSP001_GetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:20     .text.PWMSP001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:25     .text.PWMSP001_Init:00000000 PWMSP001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:214    .text.PWMSP001_lInit:00000000 PWMSP001_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:824    .text.PWMSP001_Start:00000000 PWMSP001_Start
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:209    .text.PWMSP001_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3186   .text.PWMSP001_lConfigureSecondSlice:00000000 PWMSP001_lConfigureSecondSlice
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:607    .text.PWMSP001_Deinit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:612    .text.PWMSP001_Deinit:00000000 PWMSP001_Deinit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:819    .text.PWMSP001_Start:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1051   .text.PWMSP001_Stop:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1056   .text.PWMSP001_Stop:00000000 PWMSP001_Stop
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1165   .text.PWMSP001_SetCompare:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1170   .text.PWMSP001_SetCompare:00000000 PWMSP001_SetCompare
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1269   .text.PWMSP001_lSetCompareEdgeAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1274   .text.PWMSP001_lSetCompareEdgeAlign:00000000 PWMSP001_lSetCompareEdgeAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1331   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1336   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 PWMSP001_lSetCompareEdgeAlignTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1434   .text.PWMSP001_lSetCompareCenterAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1439   .text.PWMSP001_lSetCompareCenterAlign:00000000 PWMSP001_lSetCompareCenterAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1493   .text.PWMSP001_SetDutyCycle:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1498   .text.PWMSP001_SetDutyCycle:00000000 PWMSP001_SetDutyCycle
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1563   .text.PWMSP001_SetDutyCycle:00000060 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1568   .text.PWMSP001_lSetDutyEdgeAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1573   .text.PWMSP001_lSetDutyEdgeAlign:00000000 PWMSP001_lSetDutyEdgeAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1653   .text.PWMSP001_lSetDutyEdgeAlign:00000098 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1658   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1663   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 PWMSP001_lSetDutyEdgeAlignTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1804   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000124 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1809   .text.PWMSP001_lSetDutyCenterAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1814   .text.PWMSP001_lSetDutyCenterAlign:00000000 PWMSP001_lSetDutyCenterAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1892   .text.PWMSP001_lSetDutyCenterAlign:00000094 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1897   .text.PWMSP001_SetPeriodAndCompare:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:1902   .text.PWMSP001_SetPeriodAndCompare:00000000 PWMSP001_SetPeriodAndCompare
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2016   .text.PWMSP001_SetPeriod:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2021   .text.PWMSP001_SetPeriod:00000000 PWMSP001_SetPeriod
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2154   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2159   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 PWMSP001_SetPwmFreqAndDutyCycle
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2492   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 PWMSP001_lSetPwmFreqTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2310   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000110 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2316   .text.PWMSP001_SetPwmFreq:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2321   .text.PWMSP001_SetPwmFreq:00000000 PWMSP001_SetPwmFreq
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2482   .text.PWMSP001_SetPwmFreq:00000128 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2487   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2610   .text.PWMSP001_SetTimerVal:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2615   .text.PWMSP001_SetTimerVal:00000000 PWMSP001_SetTimerVal
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2686   .text.PWMSP001_GetTimerStatus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2691   .text.PWMSP001_GetTimerStatus:00000000 PWMSP001_GetTimerStatus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2768   .text.PWMSP001_GetTimerRegsVal:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2773   .text.PWMSP001_GetTimerRegsVal:00000000 PWMSP001_GetTimerRegsVal
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2914   .text.PWMSP001_GetPeriodReg:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:2919   .text.PWMSP001_GetPeriodReg:00000000 PWMSP001_GetPeriodReg
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3002   .text.PWMSP001_SWRequestShadowTransfer:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3007   .text.PWMSP001_SWRequestShadowTransfer:00000000 PWMSP001_SWRequestShadowTransfer
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3100   .text.PWMSP001_ResetTrapFlag:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3105   .text.PWMSP001_ResetTrapFlag:00000000 PWMSP001_ResetTrapFlag
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3181   .text.PWMSP001_lConfigureSecondSlice:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3492   .text.PWMSP001_EnableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3497   .text.PWMSP001_EnableEvent:00000000 PWMSP001_EnableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3577   .text.PWMSP001_DisableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3582   .text.PWMSP001_DisableEvent:00000000 PWMSP001_DisableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3664   .text.PWMSP001_ClearPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3669   .text.PWMSP001_ClearPendingEvent:00000000 PWMSP001_ClearPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3749   .text.PWMSP001_SetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3754   .text.PWMSP001_SetPendingEvent:00000000 PWMSP001_SetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3834   .text.PWMSP001_GetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccEmJDGm.s:3839   .text.PWMSP001_GetPendingEvent:00000000 PWMSP001_GetPendingEvent
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

@@ -39,8 +39,8 @@
   43 0012 01       		.byte	1
   44 0013 00       		.byte	0
   45 0014 00C00040 		.word	1073790976
-  46 0018 00C20040 		.word	1073791488
-  47 001c 00C20040 		.word	1073791488
+  46 0018 00C30040 		.word	1073791744
+  47 001c 00C30040 		.word	1073791744
   48 0020 00       		.byte	0
   49 0021 00       		.byte	0
   50 0022 05       		.byte	5
@@ -53,8 +53,8 @@
   57 0034 00       		.byte	0
   58 0035 00       		.byte	0
   59 0036 00       		.byte	0
-  60 0037 01       		.byte	1
-  61 0038 01       		.byte	1
+  60 0037 02       		.byte	2
+  61 0038 02       		.byte	2
   62 0039 000000   		.space	3
   63 003c 00000000 		.word	PWMSP001_DynamicData0
   64 0040 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
@@ -82,8 +82,8 @@
   90 005a 01       		.byte	1
   91 005b 00       		.byte	0
   92 005c 00C00040 		.word	1073790976
-  93 0060 00C30040 		.word	1073791744
-  94 0064 00C30040 		.word	1073791744
+  93 0060 00C40040 		.word	1073792000
+  94 0064 00C40040 		.word	1073792000
   95 0068 00       		.byte	0
   96 0069 00       		.byte	0
   97 006a 05       		.byte	5
@@ -96,8 +96,8 @@
  104 007c 00       		.byte	0
  105 007d 00       		.byte	0
  106 007e 00       		.byte	0
- 107 007f 02       		.byte	2
- 108 0080 02       		.byte	2
+ 107 007f 03       		.byte	3
+ 108 0080 03       		.byte	3
  109 0081 000000   		.space	3
  110 0084 00000000 		.word	PWMSP001_DynamicData1
  111 0088 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
@@ -125,8 +125,8 @@
  137 00a2 01       		.byte	1
  138 00a3 00       		.byte	0
  139 00a4 00C00040 		.word	1073790976
- 140 00a8 00C40040 		.word	1073792000
- 141 00ac 00C40040 		.word	1073792000
+ 140 00a8 00C20040 		.word	1073791488
+ 141 00ac 00C20040 		.word	1073791488
  142 00b0 00       		.byte	0
  143 00b1 00       		.byte	0
  144 00b2 05       		.byte	5
@@ -139,8 +139,8 @@
  151 00c4 00       		.byte	0
  152 00c5 00       		.byte	0
  153 00c6 00       		.byte	0
- 154 00c7 03       		.byte	3
- 155 00c8 03       		.byte	3
+ 154 00c7 01       		.byte	1
+ 155 00c8 01       		.byte	1
  156 00c9 000000   		.space	3
  157 00cc 00000000 		.word	PWMSP001_DynamicData2
  158 00d0 00000000 		.word	PWMSP001_lSetCompareEdgeAlign
@@ -154,14 +154,14 @@
  166              		.file 5 "../Dave/Generated/src/PWMSP001/PWMSP001_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:24     .bss:00000000 PWMSP001_DynamicData0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:21     .bss:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:31     .rodata:00000000 PWMSP001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:28     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:71     .bss:00000004 PWMSP001_DynamicData1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:78     .rodata:00000048 PWMSP001_Handle1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:118    .bss:00000008 PWMSP001_DynamicData2
-C:\Users\JMASS_~1\AppData\Local\Temp\ccUq19Zj.s:125    .rodata:00000090 PWMSP001_Handle2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:24     .bss:00000000 PWMSP001_DynamicData0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:21     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:31     .rodata:00000000 PWMSP001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:28     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:71     .bss:00000004 PWMSP001_DynamicData1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:78     .rodata:00000048 PWMSP001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:118    .bss:00000008 PWMSP001_DynamicData2
+C:\Users\JMASS_~1\AppData\Local\Temp\ccpvHVvh.s:125    .rodata:00000090 PWMSP001_Handle2
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024

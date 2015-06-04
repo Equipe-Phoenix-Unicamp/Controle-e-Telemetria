@@ -753,7 +753,7 @@ not enabled then Port Pin is not consumed</toolTipHelpDescription>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" evalFunction="function resourceCondition() &#xD;&#xA;        {&#xD;&#xA;          var Res0 = Solver.getResource(&quot;pwmsp001_erwdirectoutputpadenable&quot;);&#xD;&#xA;          var OutputEnable = Solver.getIntValue(Res0);&#xD;&#xA;          if (OutputEnable == 1)&#xD;&#xA;          {&#xD;&#xA;            return true; &#xD;&#xA;          } &#xD;&#xA;          return false;&#xD;&#xA;        }" URI="http://www.infineon.com/1.0.34/app/pwmsp001/0/pin_directoutput">
     <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../P1/P1_1.dd#//@provided.8"/>
-    <requiredResource uriString="port/p/1/pad/2" uriType="LOCALTYPE"/>
+    <requiredResource uriString="port/p/1/pad/1" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.34/app/pwmsp001/0/slice/gidls_ssi" isSystemDefined="true">
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>

@@ -43,7 +43,7 @@
 
 #define NULL 0
 //Defines referentes aos limites
-#define PWM_LIM 60
+#define PWM_LIM 70
 
 //Defines referentes ao protocolo
 #define BYTES_TO_SEND 5
@@ -90,6 +90,13 @@
 #define START (psxDado[0] & (1<<3))
 #define SELECT (psxDado[0] & (1<<0))
 
+
+
+//Defines referentes a testes de locomocao
+#define LINEAR 	2
+#define DEGRAU 	0
+#define EXP	1
+
 /***************************************************/
 /*********************INCLUDES**********************/
 /***************************************************/
@@ -116,21 +123,24 @@ void psxExitConfigMode();
 void psxSetAnalogMode();
 void psxHandShake();
 void updateButtonStates();
+void flip(void);
+void turbo(void);
+void changeMode(char a_mode);
 
 /***************************************************/
 /*********CALLBACK PARA BOTOES DO CONTROLE**********/
 /***************************************************/
 
-void (*l_um)(void) = NULL;
+void (*l_um)(void) = turbo;
 void (*l_dois)(void) = NULL;
 void (*l_tres)(void) = NULL;
-void (*r_um)(void) = NULL;
+void (*r_um)(void) = turbo;
 void (*r_dois)(void) = NULL;
 void (*r_tres)(void) = NULL;
-void (*cross)(void) = NULL;
-void (*sqr)(void) = NULL;
-void (*triangle)(void) = NULL;
-void (*circle)(void) = NULL;
+void (*cross)(void) = flip;
+void (*sqr)(char m) = changeMode;
+void (*triangle)(char m) = changeMode;
+void (*circle)(char m) = changeMode;
 void (*left)(void) = NULL;
 void (*right)(void) = NULL;
 void (*up)(void) = NULL;
@@ -186,6 +196,7 @@ uint8_t psx_status;
 BOOLType flipped = 0;
 ADC001_ResultHandleType result;
 uint8_t pwm_max;
+char mode = LINEAR;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -263,15 +274,18 @@ int main(void) {
 		}
 		if (SQR && sqr) {
 			sqr_state = 1;
-			sqr();
+			sqr(DEGRAU);
+//			changeMode(DEGRAU);
 		}
 		if (TRIANGLE && triangle) {
 			triangle_state = 1;
-			triangle();
+			triangle(LINEAR);
+//			changeMode(LINEAR);
 		}
 		if (CIRCLE && circle) {
 			circle_state = 1;
-			circle();
+			circle(EXP);
+//			changeMode(EXP);
 		}
 		if (CROSS && cross) {
 			cross_state = 1;
@@ -296,7 +310,7 @@ int main(void) {
 
 		//
 
-		data_E[0] = 0;
+		data_E[0] = pwm_max;
 		//if (psxDado[5] == 0 && psxDado[3] == 0) continue; //Enquanto for zero nao faz nada -> tirar quando ligar o analogico
 		pow1 = (psxDado[5] - 127); //<<1; //Analog esq //Subtrai 127 para saber o sentido
 		pow2 = (psxDado[3] - 127); //<<1;
@@ -308,32 +322,63 @@ int main(void) {
 				albh2 = 0; //ok
 			else if (pow1 > 30)
 				blah2 = 0; //ok
+			else {
+				albh2 = 1;
+				blah2 = 0;
+			}
 			if (pow2 < -30)
 				albh1 = 0;
 			else if (pow2 > 30)
 				blah1 = 0;
+			else {
+				albh1 = 1;
+				blah1 = 0;
+			}
 			temp = pow1 > 0 ? pow1 * 2 : (-pow1) * 2;
+			if (temp > 255)
+				temp = 255;
 			data_E[1] = temp * pwm_max / 100;
 			temp = pow2 > 0 ? pow2 * 2 : (-pow2) * 2;
+			if (temp > 255)
+				temp = 255;
 			data_E[2] = temp * pwm_max / 100;
 		} else {
 			if (pow2 > 30)
 				albh2 = 0; //ok
 			else if (pow2 < -30)
 				blah2 = 0; //ok
+			else {
+				albh2 = 1;
+				blah2 = 0;
+			}
 			if (pow1 > 30)
 				albh1 = 0;
 			else if (pow1 < -30)
 				blah1 = 0;
+			else {
+				albh1 = 1;
+				blah1 = 0;
+			}
 			temp = pow1 > 0 ? pow1 * 2 : (-pow1) * 2;
+			if (temp > 255)
+				temp = 255;
 			data_E[2] = temp * pwm_max / 100;
 			temp = pow2 > 0 ? pow2 * 2 : (-pow2) * 2;
+			if (temp > 255)
+				temp = 255;
 			data_E[1] = temp * pwm_max / 100;
 		}
 		//if (data_E[1] > 20 || data_E[2] > 20) enable = 1;
+
+		char data_0 = (mode & 1);
+		char data_1 = ((mode >> 1) & 1);
+
+//		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+//				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
+//				| (buzina << BUZINA);
 		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
-				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
-				| (buzina << BUZINA);
+						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (data_0 << BUZINA);
 		data_E[4] = result.Result >> 4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
 
 		write_E();
@@ -731,7 +776,7 @@ void updateButtonStates() {
 }
 
 void turbo(void) {
-	pwm_max = 95;
+	pwm_max = 100;
 }
 
 void shunt(void) {
@@ -740,4 +785,9 @@ void shunt(void) {
 
 void flip(void) {
 	flipped = !flipped;
+}
+
+void changeMode(char a_mode){
+
+	mode = a_mode;
 }

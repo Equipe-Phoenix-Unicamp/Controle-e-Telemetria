@@ -92,10 +92,11 @@
 #define FAIL 0
 #define TICK_FAIL_SAFE 5000 //0.5s
 //defines referentes ao controle de direcao locomocao
-#define DIR_FRONT 0
-#define DIR_BACK 1
-#define TICK_BREAK_PWM 1500 //150ms
-#define TICK_ZERO_PWM 5000 //500ms
+#define DIR_NULL 2
+#define DIR_FRONT 1
+#define DIR_BACK 0
+#define TICK_BREAK_PWM 50000 //150ms
+#define TICK_ZERO_PWM 50000 //500ms
 #define STATUS_BREAK 0
 #define STATUS_ZERO 1
 #define STATUS_NORMAL 2
@@ -130,8 +131,8 @@ int status_ticks;
 uint32_t ticks = 0UL;
 int block_pwm_update_tick_left;
 int block_pwm_update_tick_right;
-unsigned char last_direction_right = DIR_FRONT;
-unsigned char last_direction_left = DIR_FRONT;
+unsigned char last_direction_right = DIR_NULL;
+unsigned char last_direction_left = DIR_NULL;
 unsigned char block_left = 0;
 unsigned char block_right = 0;
 unsigned char status_block_left = STATUS_NORMAL;
@@ -282,6 +283,7 @@ void update_PWM_signals(void) {
 		if (!block_left) {
 			block_left = _TRUE;
 			block_pwm_update_tick_left = TICK_BREAK_PWM;
+			per_motor_left = MIN_PER_MOTOR_LOCOMOTION;
 			status_block_left = STATUS_BREAK;
 		} else {
 			block_left = _FALSE;
@@ -290,13 +292,14 @@ void update_PWM_signals(void) {
 
 	}
 
-	if (((direction & (1 << RIGHT_FRONT)) && last_direction_right == DIR_FRONT)
+	if (((direction & (1 << RIGHT_FRONT)) && last_direction_right == DIR_BACK)
 			|| ((direction & (1 << RIGHT_BACK))
-					&& last_direction_right == DIR_BACK)) {
+					&& last_direction_right == DIR_FRONT)) {
 		if (!block_right) {
 			block_right = _TRUE;
 			block_pwm_update_tick_right = TICK_BREAK_PWM;
 			status_block_right = STATUS_BREAK;
+			per_motor_right = MIN_PER_MOTOR_LOCOMOTION;
 		} else {
 			block_right = _FALSE;
 			status_block_right = STATUS_NORMAL;
@@ -324,8 +327,14 @@ void update_PWM_signals(void) {
 		}
 	} else {
 
+		if (direction & (1 << LEFT_FRONT)) {
+			last_direction_left = DIR_FRONT;
+		}else{
+			last_direction_left = DIR_BACK;
+		}
+
 		if (block_pwm_update_tick_left <= 0 && status_block_left == STATUS_BREAK) {
-			block_pwm_update_tick_left = TICK_BREAK_PWM;
+			block_pwm_update_tick_left = TICK_ZERO_PWM;
 			status_block_left = STATUS_ZERO;
 		} else if (block_pwm_update_tick_left
 				<= 0&& status_block_left == STATUS_ZERO) {
@@ -357,7 +366,7 @@ void update_PWM_signals(void) {
 
 		if (block_pwm_update_tick_right
 				<= 0&& status_block_right == STATUS_BREAK) {
-			block_pwm_update_tick_right = TICK_BREAK_PWM;
+			block_pwm_update_tick_right = TICK_ZERO_PWM;
 			status_block_right = STATUS_ZERO;
 		} else if (block_pwm_update_tick_right
 				<= 0&& status_block_right == STATUS_ZERO) {
@@ -367,7 +376,7 @@ void update_PWM_signals(void) {
 	}
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT,
-			100.0f * per_motor_right / PER_MOTOR_LOCOMOTION);
+			100.0f *(0.003f - per_motor_right) / PER_MOTOR_LOCOMOTION);
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT,
 			100.0f * per_motor_left / PER_MOTOR_LOCOMOTION);

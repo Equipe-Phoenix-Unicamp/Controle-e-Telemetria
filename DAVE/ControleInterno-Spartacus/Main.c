@@ -6,6 +6,7 @@
  */
 
 #include <DAVE3.h> //Declarations from DAVE3 Code Generation (includes SFR declaration)
+
 /* DADO3:
  BIT 0: BLAH2
  BIT 1: BUZINA
@@ -44,6 +45,8 @@
 #define	LEFT_FRONT	ALBH2
 #define	RIGHT_BACK	BLAH1
 #define	RIGHT_FRONT	ALBH1
+#define DATA_TEST0 BUZINA
+#define DATA_TEST1 ENABLE
 
 //Defines referentes ao transceptor
 #define CS	 	IO004_Handle10
@@ -71,22 +74,26 @@
 #define GND					IO004_Handle4
 
 //Define referentes a ponte H
-
+#define PWM_LIMITATION 70
 #define PWM_DUTY_LIM_MAX 100
-#define PWM_DUTY_LIM_MIN 10
-#define DIR_FRONT_LEFT 1
-#define DIR_REV_LEFT 0
-#define DIR_FRONT_RIGHT 1
-#define DIR_REV_RIGHT 0
-#define PWM_MOTOR_CUT_OFF 20
+#define PWM_DUTY_LIM_MIN 8
+#define PWM_DUTY_LIM_ZERO 0
+#define DIR_FRONT_LEFT 0
+#define DIR_REV_LEFT 1
+#define DIR_FRONT_RIGHT 0
+#define DIR_REV_RIGHT 1
+#define PWM_MOTOR_CUT_OFF 50
 #define PWM_MOTOR_RIGHT &PWMSP001_Handle0
 #define PWM_MOTOR_LEFT &PWMSP001_Handle1
 #define FREQ_MOTOR_LOCOMOTION 20000 //Hz
-
-
 //Defines referentes ao fail safe
 #define RUNNING 1
 #define FAIL 0
+
+//Defines referentes a testes de locomocao
+#define LINEAR 	2
+#define DEGRAU 	0
+#define EXP	1
 
 //==============================
 
@@ -108,6 +115,8 @@ void read_R(void);
 void update_driver_signals(void);
 void delay(long unsigned int i);
 void start_driver_signals(void);
+float calculateDutyCicle(char mode, unsigned char data);
+int floor(float value);
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -118,7 +127,6 @@ unsigned char data_R[BYTES_TO_RECEIVE];
 uint32_t ticks = 0UL;
 uint32_t status_ticks = 0UL;
 bool value = 0UL;
-
 
 /***************************************************/
 /***********************MAIN************************/
@@ -137,6 +145,8 @@ int main(void) {
 	status_ticks = 0;
 	char status = RUNNING;
 	start_driver_signals();
+
+	IO004_SetPin(Enable_LEFT);
 
 	while (1) {
 		if (IO004_ReadPin(DR1)) {
@@ -171,61 +181,125 @@ void start_driver_signals(void) {
 
 	PWMSP001_Start(PWM_MOTOR_RIGHT);
 	PWMSP001_SetPwmFreq(PWM_MOTOR_RIGHT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, PWM_DUTY_LIM_MIN);
+	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, PWM_DUTY_LIM_ZERO);
 
 	PWMSP001_Start(PWM_MOTOR_LEFT);
 	PWMSP001_SetPwmFreq(PWM_MOTOR_LEFT, FREQ_MOTOR_LOCOMOTION);
-	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, PWM_DUTY_LIM_MIN);
+	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, PWM_DUTY_LIM_ZERO);
 
 }
 
 void update_driver_signals(void) {
 
 	unsigned char direction = data_R[3];
-	float duty_motor_left = PWM_DUTY_LIM_MIN;
-	float duty_motor_right = PWM_DUTY_LIM_MIN;
+	float duty_motor_left = PWM_DUTY_LIM_ZERO;
+	float duty_motor_right = PWM_DUTY_LIM_ZERO;
 	float direction_motor_left = 0;
 	float direction_motor_right = 0;
+
+	char mode = LINEAR;
+
+	if (!(direction & (1 << DATA_TEST1))) {
+
+		if (direction & (1 << DATA_TEST0))
+			mode = EXP;
+		else
+			mode = DEGRAU;
+
+	}
 
 	if (direction & (1 << LEFT_FRONT)) {
 
 		if (data_R[1] > PWM_MOTOR_CUT_OFF)
-			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
+			duty_motor_left = calculateDutyCicle(mode, data_R[1]);
+//			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
 		direction_motor_left = DIR_FRONT_LEFT;
 
 	} else if (direction & (1 << LEFT_BACK)) {
 		if (data_R[1] > PWM_MOTOR_CUT_OFF)
-			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
+			duty_motor_left = calculateDutyCicle(mode, data_R[1]);
+//			duty_motor_left = (((float) data_R[1]) / 255) * 100.0f;
 		direction_motor_left = DIR_REV_LEFT;
 	}
 
 	if (direction & (1 << RIGHT_FRONT)) {
 
 		if (data_R[2] > PWM_MOTOR_CUT_OFF)
-			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
+			duty_motor_right = calculateDutyCicle(mode, data_R[2]);
+//			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
 		direction_motor_right = DIR_FRONT_RIGHT;
 
 	} else if (direction & (1 << RIGHT_BACK)) {
 		if (data_R[2] > PWM_MOTOR_CUT_OFF)
-			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
+			duty_motor_right = calculateDutyCicle(mode, data_R[2]);
+//			duty_motor_right = (((float) data_R[2]) / 255) * 100.0f;
 		direction_motor_right = DIR_REV_RIGHT;
 	}
 
 	if (direction_motor_left) {
-		IO004_SetPin(DIR_LEFT);
-	} else {
 		IO004_ResetPin(DIR_LEFT);
+	} else {
+		IO004_SetPin(DIR_LEFT);
 	}
 
 	if (direction_motor_right) {
-		IO004_SetPin(DIR_RIGHT);
-	} else {
 		IO004_ResetPin(DIR_RIGHT);
+	} else {
+		IO004_SetPin(DIR_RIGHT);
 	}
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_RIGHT, duty_motor_right);
 
 	PWMSP001_SetDutyCycle(PWM_MOTOR_LEFT, duty_motor_left);
+
+}
+
+float calculateDutyCicle(char mode, unsigned char data) {
+
+	unsigned char range = 255 - PWM_MOTOR_CUT_OFF;
+
+	unsigned char pwm_duty_limit = data_R[0];
+
+	if (mode == LINEAR) {
+		return PWM_DUTY_LIM_MIN
+				+ ((100 - PWM_DUTY_LIM_MIN)
+						* (((float) data) - PWM_MOTOR_CUT_OFF)) / range;
+
+	} else if (mode == EXP) {
+
+		//MODO GAMBS ON
+
+//		int correctedData = ((255*pwm_duty_limit - PWM_MOTOR_CUT_OFF)*data)/(255*pwm_duty_limit) + PWM_MOTOR_CUT_OFF;
+		int duty_cicle;
+
+		float value = 100.0f*data/((pwm_duty_limit/100.0f)*255.0f);
+
+		if(value < 10){
+			duty_cicle = 0;
+		}else if(value < 75){
+			duty_cicle = (value -10)*(33 - PWM_DUTY_LIM_MIN)*(pwm_duty_limit/100.0f)/(65.0f);
+			if(duty_cicle < PWM_DUTY_LIM_MIN)
+				duty_cicle = 0;
+		}else if(value < 90){
+			duty_cicle = (value - 75)*33*(pwm_duty_limit/100.0f)/(25.0f) + 33*(pwm_duty_limit/100.0f);
+		}else{
+			duty_cicle = (value - 90)*33*(pwm_duty_limit/100.0f)/(10.0f) + 66*(pwm_duty_limit/100.0f);
+		}
+
+		return duty_cicle;
+		//MODO GAMBS OFF
+
+	} else { // DEGRAU
+
+		int nDegrau = 4;
+		float larguraDegrau = range / nDegrau;
+		float alturaDegrau = PWM_DUTY_LIM_MAX*pwm_duty_limit / (100.0f*(nDegrau - 1));
+
+		int sinalDegrau = floor((data / larguraDegrau)) * alturaDegrau;
+
+		return sinalDegrau;
+
+	}
 
 }
 
@@ -352,4 +426,9 @@ void delay(long unsigned int i) {
 
 		__NOP();
 	}
+}
+
+int floor(float value){
+	int a = value;
+	return a;
 }

@@ -1181,30 +1181,30 @@
  825              		.file 5 "../Dave/Generated/src/IO002/../../inc/IO002/IO002_Extern.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 IO002.c
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:20     .text.IO002_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:24     .text.IO002_lInit:00000000 IO002_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:114    .text.IO002_XMC4_lInit:00000000 IO002_XMC4_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:226    .text.IO002_IOCR_OE_Enabled_lInit:00000000 IO002_IOCR_OE_Enabled_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:361    .text.IO002_IOCR_OE_Disabled_lInit:00000000 IO002_IOCR_OE_Disabled_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:110    .text.IO002_XMC4_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:222    .text.IO002_IOCR_OE_Enabled_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:357    .text.IO002_IOCR_OE_Disabled_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:492    .text.IO002_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:497    .text.IO002_Init:00000000 IO002_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:544    .text.IO002_ReadPin:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:549    .text.IO002_ReadPin:00000000 IO002_ReadPin
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:584    .text.IO002_SetPin:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:589    .text.IO002_SetPin:00000000 IO002_SetPin
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:623    .text.IO002_ResetPin:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:628    .text.IO002_ResetPin:00000000 IO002_ResetPin
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:662    .text.IO002_SetOutputValue:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:667    .text.IO002_SetOutputValue:00000000 IO002_SetOutputValue
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:714    .text.IO002_TogglePin:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:719    .text.IO002_TogglePin:00000000 IO002_TogglePin
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:753    .text.IO002_DisableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:758    .text.IO002_DisableOutputDriver:00000000 IO002_DisableOutputDriver
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:787    .text.IO002_EnableOutputDriver:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc2BNal9.s:792    .text.IO002_EnableOutputDriver:00000000 IO002_EnableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:20     .text.IO002_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:24     .text.IO002_lInit:00000000 IO002_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:114    .text.IO002_XMC4_lInit:00000000 IO002_XMC4_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:226    .text.IO002_IOCR_OE_Enabled_lInit:00000000 IO002_IOCR_OE_Enabled_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:361    .text.IO002_IOCR_OE_Disabled_lInit:00000000 IO002_IOCR_OE_Disabled_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:110    .text.IO002_XMC4_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:222    .text.IO002_IOCR_OE_Enabled_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:357    .text.IO002_IOCR_OE_Disabled_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:492    .text.IO002_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:497    .text.IO002_Init:00000000 IO002_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:544    .text.IO002_ReadPin:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:549    .text.IO002_ReadPin:00000000 IO002_ReadPin
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:584    .text.IO002_SetPin:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:589    .text.IO002_SetPin:00000000 IO002_SetPin
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:623    .text.IO002_ResetPin:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:628    .text.IO002_ResetPin:00000000 IO002_ResetPin
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:662    .text.IO002_SetOutputValue:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:667    .text.IO002_SetOutputValue:00000000 IO002_SetOutputValue
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:714    .text.IO002_TogglePin:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:719    .text.IO002_TogglePin:00000000 IO002_TogglePin
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:753    .text.IO002_DisableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:758    .text.IO002_DisableOutputDriver:00000000 IO002_DisableOutputDriver
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:787    .text.IO002_EnableOutputDriver:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccjld8et.s:792    .text.IO002_EnableOutputDriver:00000000 IO002_EnableOutputDriver
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.uc_id.h.35.6a563b5a45d32cec26f5b514b510065d

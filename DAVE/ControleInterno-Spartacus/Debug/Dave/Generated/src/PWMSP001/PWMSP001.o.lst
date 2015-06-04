@@ -5524,78 +5524,78 @@
  3891              	.Letext0:
  3892              		.file 2 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
  3893              		.file 3 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 3894              		.file 4 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
- 3895              		.file 5 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 3894              		.file 4 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 3895              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
  3896              		.file 6 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
- 3897              		.file 7 "C:\\DAVE3_workspace\\ws3.1.10\\ControleInterno-Spartacus\\Dave\\Generated\\inc\\DAVESuppo
+ 3897              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001.c
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:20     .text.PWMSP001_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:25     .text.PWMSP001_Init:00000000 PWMSP001_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:163    .text.PWMSP001_lInit:00000000 PWMSP001_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:773    .text.PWMSP001_Start:00000000 PWMSP001_Start
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:158    .text.PWMSP001_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3135   .text.PWMSP001_lConfigureSecondSlice:00000000 PWMSP001_lConfigureSecondSlice
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:556    .text.PWMSP001_Deinit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:561    .text.PWMSP001_Deinit:00000000 PWMSP001_Deinit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:768    .text.PWMSP001_Start:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1000   .text.PWMSP001_Stop:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1005   .text.PWMSP001_Stop:00000000 PWMSP001_Stop
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1114   .text.PWMSP001_SetCompare:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1119   .text.PWMSP001_SetCompare:00000000 PWMSP001_SetCompare
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1218   .text.PWMSP001_lSetCompareEdgeAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1223   .text.PWMSP001_lSetCompareEdgeAlign:00000000 PWMSP001_lSetCompareEdgeAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1280   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1285   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 PWMSP001_lSetCompareEdgeAlignTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1383   .text.PWMSP001_lSetCompareCenterAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1388   .text.PWMSP001_lSetCompareCenterAlign:00000000 PWMSP001_lSetCompareCenterAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1442   .text.PWMSP001_SetDutyCycle:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1447   .text.PWMSP001_SetDutyCycle:00000000 PWMSP001_SetDutyCycle
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1512   .text.PWMSP001_SetDutyCycle:00000060 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1517   .text.PWMSP001_lSetDutyEdgeAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1522   .text.PWMSP001_lSetDutyEdgeAlign:00000000 PWMSP001_lSetDutyEdgeAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1602   .text.PWMSP001_lSetDutyEdgeAlign:00000098 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1607   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1612   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 PWMSP001_lSetDutyEdgeAlignTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1753   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000124 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1758   .text.PWMSP001_lSetDutyCenterAlign:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1763   .text.PWMSP001_lSetDutyCenterAlign:00000000 PWMSP001_lSetDutyCenterAlign
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1841   .text.PWMSP001_lSetDutyCenterAlign:00000094 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1846   .text.PWMSP001_SetPeriodAndCompare:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1851   .text.PWMSP001_SetPeriodAndCompare:00000000 PWMSP001_SetPeriodAndCompare
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1965   .text.PWMSP001_SetPeriod:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:1970   .text.PWMSP001_SetPeriod:00000000 PWMSP001_SetPeriod
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2103   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2108   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 PWMSP001_SetPwmFreqAndDutyCycle
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2441   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 PWMSP001_lSetPwmFreqTimerConcat
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2259   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000110 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2265   .text.PWMSP001_SetPwmFreq:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2270   .text.PWMSP001_SetPwmFreq:00000000 PWMSP001_SetPwmFreq
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2431   .text.PWMSP001_SetPwmFreq:00000128 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2436   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2559   .text.PWMSP001_SetTimerVal:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2564   .text.PWMSP001_SetTimerVal:00000000 PWMSP001_SetTimerVal
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2635   .text.PWMSP001_GetTimerStatus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2640   .text.PWMSP001_GetTimerStatus:00000000 PWMSP001_GetTimerStatus
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2717   .text.PWMSP001_GetTimerRegsVal:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2722   .text.PWMSP001_GetTimerRegsVal:00000000 PWMSP001_GetTimerRegsVal
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2863   .text.PWMSP001_GetPeriodReg:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2868   .text.PWMSP001_GetPeriodReg:00000000 PWMSP001_GetPeriodReg
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2951   .text.PWMSP001_SWRequestShadowTransfer:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:2956   .text.PWMSP001_SWRequestShadowTransfer:00000000 PWMSP001_SWRequestShadowTransfer
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3049   .text.PWMSP001_ResetTrapFlag:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3054   .text.PWMSP001_ResetTrapFlag:00000000 PWMSP001_ResetTrapFlag
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3130   .text.PWMSP001_lConfigureSecondSlice:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3441   .text.PWMSP001_EnableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3446   .text.PWMSP001_EnableEvent:00000000 PWMSP001_EnableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3526   .text.PWMSP001_DisableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3531   .text.PWMSP001_DisableEvent:00000000 PWMSP001_DisableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3613   .text.PWMSP001_ClearPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3618   .text.PWMSP001_ClearPendingEvent:00000000 PWMSP001_ClearPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3698   .text.PWMSP001_SetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3703   .text.PWMSP001_SetPendingEvent:00000000 PWMSP001_SetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3783   .text.PWMSP001_GetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc7gwYHk.s:3788   .text.PWMSP001_GetPendingEvent:00000000 PWMSP001_GetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:20     .text.PWMSP001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:25     .text.PWMSP001_Init:00000000 PWMSP001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:163    .text.PWMSP001_lInit:00000000 PWMSP001_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:773    .text.PWMSP001_Start:00000000 PWMSP001_Start
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:158    .text.PWMSP001_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3135   .text.PWMSP001_lConfigureSecondSlice:00000000 PWMSP001_lConfigureSecondSlice
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:556    .text.PWMSP001_Deinit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:561    .text.PWMSP001_Deinit:00000000 PWMSP001_Deinit
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:768    .text.PWMSP001_Start:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1000   .text.PWMSP001_Stop:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1005   .text.PWMSP001_Stop:00000000 PWMSP001_Stop
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1114   .text.PWMSP001_SetCompare:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1119   .text.PWMSP001_SetCompare:00000000 PWMSP001_SetCompare
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1218   .text.PWMSP001_lSetCompareEdgeAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1223   .text.PWMSP001_lSetCompareEdgeAlign:00000000 PWMSP001_lSetCompareEdgeAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1280   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1285   .text.PWMSP001_lSetCompareEdgeAlignTimerConcat:00000000 PWMSP001_lSetCompareEdgeAlignTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1383   .text.PWMSP001_lSetCompareCenterAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1388   .text.PWMSP001_lSetCompareCenterAlign:00000000 PWMSP001_lSetCompareCenterAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1442   .text.PWMSP001_SetDutyCycle:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1447   .text.PWMSP001_SetDutyCycle:00000000 PWMSP001_SetDutyCycle
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1512   .text.PWMSP001_SetDutyCycle:00000060 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1517   .text.PWMSP001_lSetDutyEdgeAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1522   .text.PWMSP001_lSetDutyEdgeAlign:00000000 PWMSP001_lSetDutyEdgeAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1602   .text.PWMSP001_lSetDutyEdgeAlign:00000098 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1607   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1612   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000000 PWMSP001_lSetDutyEdgeAlignTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1753   .text.PWMSP001_lSetDutyEdgeAlignTimerConcat:00000124 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1758   .text.PWMSP001_lSetDutyCenterAlign:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1763   .text.PWMSP001_lSetDutyCenterAlign:00000000 PWMSP001_lSetDutyCenterAlign
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1841   .text.PWMSP001_lSetDutyCenterAlign:00000094 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1846   .text.PWMSP001_SetPeriodAndCompare:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1851   .text.PWMSP001_SetPeriodAndCompare:00000000 PWMSP001_SetPeriodAndCompare
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1965   .text.PWMSP001_SetPeriod:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:1970   .text.PWMSP001_SetPeriod:00000000 PWMSP001_SetPeriod
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2103   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2108   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000000 PWMSP001_SetPwmFreqAndDutyCycle
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2441   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 PWMSP001_lSetPwmFreqTimerConcat
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2259   .text.PWMSP001_SetPwmFreqAndDutyCycle:00000110 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2265   .text.PWMSP001_SetPwmFreq:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2270   .text.PWMSP001_SetPwmFreq:00000000 PWMSP001_SetPwmFreq
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2431   .text.PWMSP001_SetPwmFreq:00000128 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2436   .text.PWMSP001_lSetPwmFreqTimerConcat:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2559   .text.PWMSP001_SetTimerVal:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2564   .text.PWMSP001_SetTimerVal:00000000 PWMSP001_SetTimerVal
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2635   .text.PWMSP001_GetTimerStatus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2640   .text.PWMSP001_GetTimerStatus:00000000 PWMSP001_GetTimerStatus
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2717   .text.PWMSP001_GetTimerRegsVal:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2722   .text.PWMSP001_GetTimerRegsVal:00000000 PWMSP001_GetTimerRegsVal
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2863   .text.PWMSP001_GetPeriodReg:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2868   .text.PWMSP001_GetPeriodReg:00000000 PWMSP001_GetPeriodReg
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2951   .text.PWMSP001_SWRequestShadowTransfer:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:2956   .text.PWMSP001_SWRequestShadowTransfer:00000000 PWMSP001_SWRequestShadowTransfer
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3049   .text.PWMSP001_ResetTrapFlag:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3054   .text.PWMSP001_ResetTrapFlag:00000000 PWMSP001_ResetTrapFlag
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3130   .text.PWMSP001_lConfigureSecondSlice:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3441   .text.PWMSP001_EnableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3446   .text.PWMSP001_EnableEvent:00000000 PWMSP001_EnableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3526   .text.PWMSP001_DisableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3531   .text.PWMSP001_DisableEvent:00000000 PWMSP001_DisableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3613   .text.PWMSP001_ClearPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3618   .text.PWMSP001_ClearPendingEvent:00000000 PWMSP001_ClearPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3698   .text.PWMSP001_SetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3703   .text.PWMSP001_SetPendingEvent:00000000 PWMSP001_SetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3783   .text.PWMSP001_GetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cch6ik5c.s:3788   .text.PWMSP001_GetPendingEvent:00000000 PWMSP001_GetPendingEvent
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
