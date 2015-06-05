@@ -430,12 +430,12 @@ void Tick_Handler(void) {
 	//ticks++;
 	status_ticks++;
 	error_ticks++;
-	if(error_ticks == 1)
-		trata_erro();
-	if (error_ticks >= 100) {
-		error_ticks = 0;
-		error();
-	}
+//	if(error_ticks == 1)
+//		trata_erro();
+//	if (error_ticks >= 100) {
+//		error_ticks = 0;
+//		error();
+//	}
 }
 
 void trata_erro(void){

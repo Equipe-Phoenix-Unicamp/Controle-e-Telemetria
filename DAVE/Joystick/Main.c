@@ -831,7 +831,7 @@ void turbo2(void) {
 
 	}else{
 
-		pwm_max = acceleration_ticks*(100 - 50)/1000.0f + 50;
+		pwm_max = acceleration_ticks*(100 - PWM_LIM)/1000.0f + PWM_LIM;
 		if(pwm_max > 100)
 			pwm_max = 100;
 	}

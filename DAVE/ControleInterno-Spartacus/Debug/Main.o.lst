@@ -1777,11 +1777,11 @@
  1375              		.cfi_startproc
  1376              		@ args = 0, pretend = 0, frame = 0
  1377              		@ frame_needed = 1, uses_anonymous_args = 0
- 1378 0000 80B5     		push	{r7, lr}
- 1379              	.LCFI36:
- 1380              		.cfi_def_cfa_offset 8
- 1381              		.cfi_offset 7, -8
- 1382              		.cfi_offset 14, -4
+ 1378              		@ link register save eliminated.
+ 1379 0000 80B4     		push	{r7}
+ 1380              	.LCFI36:
+ 1381              		.cfi_def_cfa_offset 4
+ 1382              		.cfi_offset 7, -4
  1383 0002 00AF     		add	r7, sp, #0
  1384              	.LCFI37:
  1385              		.cfi_def_cfa_register 7
@@ -1804,149 +1804,126 @@
  1399 002a 40F20003 		movw	r3, #:lower16:error_ticks
  1400 002e C0F20003 		movt	r3, #:upper16:error_ticks
  1401 0032 1A60     		str	r2, [r3, #0]
- 433:../Main.c     **** 	if(error_ticks == 1)
- 1402              		.loc 1 433 0
- 1403 0034 40F20003 		movw	r3, #:lower16:error_ticks
- 1404 0038 C0F20003 		movt	r3, #:upper16:error_ticks
- 1405 003c 1B68     		ldr	r3, [r3, #0]
- 1406 003e 012B     		cmp	r3, #1
- 1407 0040 01D1     		bne	.L65
- 1408              	.LBB6:
- 434:../Main.c     **** 		trata_erro();
- 1409              		.loc 1 434 0
- 1410 0042 FFF7FEFF 		bl	trata_erro
- 1411              	.L65:
- 1412              	.LBE6:
- 435:../Main.c     **** 	if (error_ticks >= 100) {
- 1413              		.loc 1 435 0
- 1414 0046 40F20003 		movw	r3, #:lower16:error_ticks
- 1415 004a C0F20003 		movt	r3, #:upper16:error_ticks
- 1416 004e 1B68     		ldr	r3, [r3, #0]
- 1417 0050 632B     		cmp	r3, #99
- 1418 0052 08D9     		bls	.L64
- 436:../Main.c     **** 		error_ticks = 0;
- 1419              		.loc 1 436 0
- 1420 0054 40F20003 		movw	r3, #:lower16:error_ticks
- 1421 0058 C0F20003 		movt	r3, #:upper16:error_ticks
- 1422 005c 4FF00002 		mov	r2, #0
- 1423 0060 1A60     		str	r2, [r3, #0]
- 437:../Main.c     **** 		error();
- 1424              		.loc 1 437 0
- 1425 0062 FFF7FEFF 		bl	error
- 1426              	.L64:
- 438:../Main.c     **** 	}
+ 433:../Main.c     **** //	if(error_ticks == 1)
+ 434:../Main.c     **** //		trata_erro();
+ 435:../Main.c     **** //	if (error_ticks >= 100) {
+ 436:../Main.c     **** //		error_ticks = 0;
+ 437:../Main.c     **** //		error();
+ 438:../Main.c     **** //	}
  439:../Main.c     **** }
- 1427              		.loc 1 439 0
- 1428 0066 80BD     		pop	{r7, pc}
- 1429              		.cfi_endproc
- 1430              	.LFE131:
- 1432              		.section	.text.trata_erro,"ax",%progbits
- 1433              		.align	2
- 1434              		.global	trata_erro
- 1435              		.thumb
- 1436              		.thumb_func
- 1438              	trata_erro:
- 1439              	.LFB132:
+ 1402              		.loc 1 439 0
+ 1403 0034 BD46     		mov	sp, r7
+ 1404 0036 80BC     		pop	{r7}
+ 1405 0038 7047     		bx	lr
+ 1406              		.cfi_endproc
+ 1407              	.LFE131:
+ 1409 003a 00BF     		.section	.text.trata_erro,"ax",%progbits
+ 1410              		.align	2
+ 1411              		.global	trata_erro
+ 1412              		.thumb
+ 1413              		.thumb_func
+ 1415              	trata_erro:
+ 1416              	.LFB132:
  440:../Main.c     **** 
  441:../Main.c     **** void trata_erro(void){
- 1440              		.loc 1 441 0
- 1441              		.cfi_startproc
- 1442              		@ args = 0, pretend = 0, frame = 0
- 1443              		@ frame_needed = 1, uses_anonymous_args = 0
- 1444              		@ link register save eliminated.
- 1445 0000 80B4     		push	{r7}
- 1446              	.LCFI38:
- 1447              		.cfi_def_cfa_offset 4
- 1448              		.cfi_offset 7, -4
- 1449 0002 00AF     		add	r7, sp, #0
- 1450              	.LCFI39:
- 1451              		.cfi_def_cfa_register 7
+ 1417              		.loc 1 441 0
+ 1418              		.cfi_startproc
+ 1419              		@ args = 0, pretend = 0, frame = 0
+ 1420              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1421              		@ link register save eliminated.
+ 1422 0000 80B4     		push	{r7}
+ 1423              	.LCFI38:
+ 1424              		.cfi_def_cfa_offset 4
+ 1425              		.cfi_offset 7, -4
+ 1426 0002 00AF     		add	r7, sp, #0
+ 1427              	.LCFI39:
+ 1428              		.cfi_def_cfa_register 7
  442:../Main.c     **** 
  443:../Main.c     **** 	if(error_left){
- 1452              		.loc 1 443 0
- 1453 0004 40F20003 		movw	r3, #:lower16:error_left
- 1454 0008 C0F20003 		movt	r3, #:upper16:error_left
- 1455 000c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
- 1456 000e 002B     		cmp	r3, #0
- 1457 0010 16D0     		beq	.L68
+ 1429              		.loc 1 443 0
+ 1430 0004 40F20003 		movw	r3, #:lower16:error_left
+ 1431 0008 C0F20003 		movt	r3, #:upper16:error_left
+ 1432 000c 1B78     		ldrb	r3, [r3, #0]	@ zero_extendqisi2
+ 1433 000e 002B     		cmp	r3, #0
+ 1434 0010 16D0     		beq	.L66
  444:../Main.c     **** 		error_left = 0;
- 1458              		.loc 1 444 0
- 1459 0012 40F20003 		movw	r3, #:lower16:error_left
- 1460 0016 C0F20003 		movt	r3, #:upper16:error_left
- 1461 001a 4FF00002 		mov	r2, #0
- 1462 001e 1A70     		strb	r2, [r3, #0]
+ 1435              		.loc 1 444 0
+ 1436 0012 40F20003 		movw	r3, #:lower16:error_left
+ 1437 0016 C0F20003 		movt	r3, #:upper16:error_left
+ 1438 001a 4FF00002 		mov	r2, #0
+ 1439 001e 1A70     		strb	r2, [r3, #0]
  445:../Main.c     **** 		IO004_SetPin(Enable_LEFT);
- 1463              		.loc 1 445 0
- 1464 0020 40F20003 		movw	r3, #:lower16:IO004_Handle7
- 1465 0024 C0F20003 		movt	r3, #:upper16:IO004_Handle7
- 1466 0028 5A68     		ldr	r2, [r3, #4]
- 1467 002a 40F20003 		movw	r3, #:lower16:IO004_Handle7
- 1468 002e C0F20003 		movt	r3, #:upper16:IO004_Handle7
- 1469 0032 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1470 0034 4FF00101 		mov	r1, #1
- 1471 0038 01FA03F3 		lsl	r3, r1, r3
- 1472 003c 5360     		str	r3, [r2, #4]
- 1473 003e 15E0     		b	.L67
- 1474              	.L68:
+ 1440              		.loc 1 445 0
+ 1441 0020 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 1442 0024 C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 1443 0028 5A68     		ldr	r2, [r3, #4]
+ 1444 002a 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 1445 002e C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 1446 0032 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1447 0034 4FF00101 		mov	r1, #1
+ 1448 0038 01FA03F3 		lsl	r3, r1, r3
+ 1449 003c 5360     		str	r3, [r2, #4]
+ 1450 003e 15E0     		b	.L65
+ 1451              	.L66:
  446:../Main.c     **** 	}else{
  447:../Main.c     **** 		error_right = 0;
- 1475              		.loc 1 447 0
- 1476 0040 40F20003 		movw	r3, #:lower16:error_right
- 1477 0044 C0F20003 		movt	r3, #:upper16:error_right
- 1478 0048 4FF00002 		mov	r2, #0
- 1479 004c 1A70     		strb	r2, [r3, #0]
+ 1452              		.loc 1 447 0
+ 1453 0040 40F20003 		movw	r3, #:lower16:error_right
+ 1454 0044 C0F20003 		movt	r3, #:upper16:error_right
+ 1455 0048 4FF00002 		mov	r2, #0
+ 1456 004c 1A70     		strb	r2, [r3, #0]
  448:../Main.c     **** 		IO004_SetPin(Enable_RIGHT);
- 1480              		.loc 1 448 0
- 1481 004e 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1482 0052 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1483 0056 5A68     		ldr	r2, [r3, #4]
- 1484 0058 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1485 005c C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1486 0060 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1487 0062 4FF00101 		mov	r1, #1
- 1488 0066 01FA03F3 		lsl	r3, r1, r3
- 1489 006a 5360     		str	r3, [r2, #4]
- 1490              	.L67:
+ 1457              		.loc 1 448 0
+ 1458 004e 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1459 0052 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1460 0056 5A68     		ldr	r2, [r3, #4]
+ 1461 0058 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1462 005c C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1463 0060 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1464 0062 4FF00101 		mov	r1, #1
+ 1465 0066 01FA03F3 		lsl	r3, r1, r3
+ 1466 006a 5360     		str	r3, [r2, #4]
+ 1467              	.L65:
  449:../Main.c     **** 	}
  450:../Main.c     **** }
- 1491              		.loc 1 450 0
- 1492 006c BD46     		mov	sp, r7
- 1493 006e 80BC     		pop	{r7}
- 1494 0070 7047     		bx	lr
- 1495              		.cfi_endproc
- 1496              	.LFE132:
- 1498 0072 00BF     		.section	.text.delay,"ax",%progbits
- 1499              		.align	2
- 1500              		.global	delay
- 1501              		.thumb
- 1502              		.thumb_func
- 1504              	delay:
- 1505              	.LFB133:
+ 1468              		.loc 1 450 0
+ 1469 006c BD46     		mov	sp, r7
+ 1470 006e 80BC     		pop	{r7}
+ 1471 0070 7047     		bx	lr
+ 1472              		.cfi_endproc
+ 1473              	.LFE132:
+ 1475 0072 00BF     		.section	.text.delay,"ax",%progbits
+ 1476              		.align	2
+ 1477              		.global	delay
+ 1478              		.thumb
+ 1479              		.thumb_func
+ 1481              	delay:
+ 1482              	.LFB133:
  451:../Main.c     **** 
  452:../Main.c     **** void delay(long unsigned int i) {
- 1506              		.loc 1 452 0
- 1507              		.cfi_startproc
- 1508              		@ args = 0, pretend = 0, frame = 8
- 1509              		@ frame_needed = 1, uses_anonymous_args = 0
- 1510              		@ link register save eliminated.
- 1511 0000 80B4     		push	{r7}
- 1512              	.LCFI40:
- 1513              		.cfi_def_cfa_offset 4
- 1514              		.cfi_offset 7, -4
- 1515 0002 83B0     		sub	sp, sp, #12
- 1516              	.LCFI41:
- 1517              		.cfi_def_cfa_offset 16
- 1518 0004 00AF     		add	r7, sp, #0
- 1519              	.LCFI42:
- 1520              		.cfi_def_cfa_register 7
- 1521 0006 7860     		str	r0, [r7, #4]
+ 1483              		.loc 1 452 0
+ 1484              		.cfi_startproc
+ 1485              		@ args = 0, pretend = 0, frame = 8
+ 1486              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1487              		@ link register save eliminated.
+ 1488 0000 80B4     		push	{r7}
+ 1489              	.LCFI40:
+ 1490              		.cfi_def_cfa_offset 4
+ 1491              		.cfi_offset 7, -4
+ 1492 0002 83B0     		sub	sp, sp, #12
+ 1493              	.LCFI41:
+ 1494              		.cfi_def_cfa_offset 16
+ 1495 0004 00AF     		add	r7, sp, #0
+ 1496              	.LCFI42:
+ 1497              		.cfi_def_cfa_register 7
+ 1498 0006 7860     		str	r0, [r7, #4]
  453:../Main.c     **** 	while (i--) {
- 1522              		.loc 1 453 0
- 1523 0008 00E0     		b	.L71
- 1524              	.L72:
- 1525              	.LBB7:
- 1526              	.LBB8:
- 1527              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
+ 1499              		.loc 1 453 0
+ 1500 0008 00E0     		b	.L69
+ 1501              	.L70:
+ 1502              	.LBB6:
+ 1503              	.LBB7:
+ 1504              		.file 2 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cmInstr.h"
    1:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** /**************************************************************************//**
    2:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @file     core_cmInstr.h
    3:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
@@ -2274,238 +2251,238 @@
  325:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** __attribute__( ( always_inline ) ) __STATIC_INLINE void __NOP(void)
  326:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h **** {
  327:C:\DAVE-3.1.10\eclipse\/../CMSIS/Include\core_cmInstr.h ****   __ASM volatile ("nop");
- 1528              		.loc 2 327 0
- 1529              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
- 1530 000a 00BF     		nop
- 1531              	@ 0 "" 2
- 1532              		.thumb
- 1533              	.L71:
- 1534              	.LBE8:
- 1535              	.LBE7:
- 1536              		.loc 1 453 0 discriminator 1
- 1537 000c 7B68     		ldr	r3, [r7, #4]
- 1538 000e 002B     		cmp	r3, #0
- 1539 0010 0CBF     		ite	eq
- 1540 0012 0023     		moveq	r3, #0
- 1541 0014 0123     		movne	r3, #1
- 1542 0016 DBB2     		uxtb	r3, r3
- 1543 0018 7A68     		ldr	r2, [r7, #4]
- 1544 001a 02F1FF32 		add	r2, r2, #-1
- 1545 001e 7A60     		str	r2, [r7, #4]
- 1546 0020 002B     		cmp	r3, #0
- 1547 0022 F2D1     		bne	.L72
+ 1505              		.loc 2 327 0
+ 1506              	@ 327 "C:\DAVE-3.1.10\eclipse\/../CMSIS/Include/core_cmInstr.h" 1
+ 1507 000a 00BF     		nop
+ 1508              	@ 0 "" 2
+ 1509              		.thumb
+ 1510              	.L69:
+ 1511              	.LBE7:
+ 1512              	.LBE6:
+ 1513              		.loc 1 453 0 discriminator 1
+ 1514 000c 7B68     		ldr	r3, [r7, #4]
+ 1515 000e 002B     		cmp	r3, #0
+ 1516 0010 0CBF     		ite	eq
+ 1517 0012 0023     		moveq	r3, #0
+ 1518 0014 0123     		movne	r3, #1
+ 1519 0016 DBB2     		uxtb	r3, r3
+ 1520 0018 7A68     		ldr	r2, [r7, #4]
+ 1521 001a 02F1FF32 		add	r2, r2, #-1
+ 1522 001e 7A60     		str	r2, [r7, #4]
+ 1523 0020 002B     		cmp	r3, #0
+ 1524 0022 F2D1     		bne	.L70
  454:../Main.c     **** 
  455:../Main.c     **** 		__NOP();
  456:../Main.c     **** 	}
  457:../Main.c     **** }
- 1548              		.loc 1 457 0
- 1549 0024 07F10C07 		add	r7, r7, #12
- 1550 0028 BD46     		mov	sp, r7
- 1551 002a 80BC     		pop	{r7}
- 1552 002c 7047     		bx	lr
- 1553              		.cfi_endproc
- 1554              	.LFE133:
- 1556 002e 00BF     		.section	.text.floor,"ax",%progbits
- 1557              		.align	2
- 1558              		.global	floor
- 1559              		.thumb
- 1560              		.thumb_func
- 1562              	floor:
- 1563              	.LFB134:
+ 1525              		.loc 1 457 0
+ 1526 0024 07F10C07 		add	r7, r7, #12
+ 1527 0028 BD46     		mov	sp, r7
+ 1528 002a 80BC     		pop	{r7}
+ 1529 002c 7047     		bx	lr
+ 1530              		.cfi_endproc
+ 1531              	.LFE133:
+ 1533 002e 00BF     		.section	.text.floor,"ax",%progbits
+ 1534              		.align	2
+ 1535              		.global	floor
+ 1536              		.thumb
+ 1537              		.thumb_func
+ 1539              	floor:
+ 1540              	.LFB134:
  458:../Main.c     **** 
  459:../Main.c     **** int floor(float value) {
- 1564              		.loc 1 459 0
- 1565              		.cfi_startproc
- 1566              		@ args = 0, pretend = 0, frame = 16
- 1567              		@ frame_needed = 1, uses_anonymous_args = 0
- 1568              		@ link register save eliminated.
- 1569 0000 80B4     		push	{r7}
- 1570              	.LCFI43:
- 1571              		.cfi_def_cfa_offset 4
- 1572              		.cfi_offset 7, -4
- 1573 0002 85B0     		sub	sp, sp, #20
- 1574              	.LCFI44:
- 1575              		.cfi_def_cfa_offset 24
- 1576 0004 00AF     		add	r7, sp, #0
- 1577              	.LCFI45:
- 1578              		.cfi_def_cfa_register 7
- 1579 0006 7860     		str	r0, [r7, #4]	@ float
+ 1541              		.loc 1 459 0
+ 1542              		.cfi_startproc
+ 1543              		@ args = 0, pretend = 0, frame = 16
+ 1544              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1545              		@ link register save eliminated.
+ 1546 0000 80B4     		push	{r7}
+ 1547              	.LCFI43:
+ 1548              		.cfi_def_cfa_offset 4
+ 1549              		.cfi_offset 7, -4
+ 1550 0002 85B0     		sub	sp, sp, #20
+ 1551              	.LCFI44:
+ 1552              		.cfi_def_cfa_offset 24
+ 1553 0004 00AF     		add	r7, sp, #0
+ 1554              	.LCFI45:
+ 1555              		.cfi_def_cfa_register 7
+ 1556 0006 7860     		str	r0, [r7, #4]	@ float
  460:../Main.c     **** 	int a = value;
- 1580              		.loc 1 460 0
- 1581 0008 D7ED017A 		flds	s15, [r7, #4]
- 1582 000c FDEEE77A 		ftosizs	s15, s15
- 1583 0010 C7ED037A 		fsts	s15, [r7, #12]	@ int
+ 1557              		.loc 1 460 0
+ 1558 0008 D7ED017A 		flds	s15, [r7, #4]
+ 1559 000c FDEEE77A 		ftosizs	s15, s15
+ 1560 0010 C7ED037A 		fsts	s15, [r7, #12]	@ int
  461:../Main.c     **** 	return a;
- 1584              		.loc 1 461 0
- 1585 0014 FB68     		ldr	r3, [r7, #12]
+ 1561              		.loc 1 461 0
+ 1562 0014 FB68     		ldr	r3, [r7, #12]
  462:../Main.c     **** }
- 1586              		.loc 1 462 0
- 1587 0016 1846     		mov	r0, r3
- 1588 0018 07F11407 		add	r7, r7, #20
- 1589 001c BD46     		mov	sp, r7
- 1590 001e 80BC     		pop	{r7}
- 1591 0020 7047     		bx	lr
- 1592              		.cfi_endproc
- 1593              	.LFE134:
- 1595 0022 00BF     		.section	.text.error,"ax",%progbits
- 1596              		.align	2
- 1597              		.global	error
- 1598              		.thumb
- 1599              		.thumb_func
- 1601              	error:
- 1602              	.LFB135:
+ 1563              		.loc 1 462 0
+ 1564 0016 1846     		mov	r0, r3
+ 1565 0018 07F11407 		add	r7, r7, #20
+ 1566 001c BD46     		mov	sp, r7
+ 1567 001e 80BC     		pop	{r7}
+ 1568 0020 7047     		bx	lr
+ 1569              		.cfi_endproc
+ 1570              	.LFE134:
+ 1572 0022 00BF     		.section	.text.error,"ax",%progbits
+ 1573              		.align	2
+ 1574              		.global	error
+ 1575              		.thumb
+ 1576              		.thumb_func
+ 1578              	error:
+ 1579              	.LFB135:
  463:../Main.c     **** 
  464:../Main.c     **** void error(void) {
- 1603              		.loc 1 464 0
- 1604              		.cfi_startproc
- 1605              		@ args = 0, pretend = 0, frame = 0
- 1606              		@ frame_needed = 1, uses_anonymous_args = 0
- 1607              		@ link register save eliminated.
- 1608 0000 80B4     		push	{r7}
- 1609              	.LCFI46:
- 1610              		.cfi_def_cfa_offset 4
- 1611              		.cfi_offset 7, -4
- 1612 0002 00AF     		add	r7, sp, #0
- 1613              	.LCFI47:
- 1614              		.cfi_def_cfa_register 7
+ 1580              		.loc 1 464 0
+ 1581              		.cfi_startproc
+ 1582              		@ args = 0, pretend = 0, frame = 0
+ 1583              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1584              		@ link register save eliminated.
+ 1585 0000 80B4     		push	{r7}
+ 1586              	.LCFI46:
+ 1587              		.cfi_def_cfa_offset 4
+ 1588              		.cfi_offset 7, -4
+ 1589 0002 00AF     		add	r7, sp, #0
+ 1590              	.LCFI47:
+ 1591              		.cfi_def_cfa_register 7
  465:../Main.c     **** 
  466:../Main.c     **** 	if (!IO004_ReadPin(ERR_Input_LEFT)) {
- 1615              		.loc 1 466 0
- 1616 0004 40F20003 		movw	r3, #:lower16:IO004_Handle15
- 1617 0008 C0F20003 		movt	r3, #:upper16:IO004_Handle15
- 1618 000c 5B68     		ldr	r3, [r3, #4]
- 1619 000e 5A6A     		ldr	r2, [r3, #36]
- 1620 0010 40F20003 		movw	r3, #:lower16:IO004_Handle15
- 1621 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle15
- 1622 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1623 001a 22FA03F3 		lsr	r3, r2, r3
- 1624 001e 03F00103 		and	r3, r3, #1
- 1625 0022 002B     		cmp	r3, #0
- 1626 0024 15D1     		bne	.L76
+ 1592              		.loc 1 466 0
+ 1593 0004 40F20003 		movw	r3, #:lower16:IO004_Handle15
+ 1594 0008 C0F20003 		movt	r3, #:upper16:IO004_Handle15
+ 1595 000c 5B68     		ldr	r3, [r3, #4]
+ 1596 000e 5A6A     		ldr	r2, [r3, #36]
+ 1597 0010 40F20003 		movw	r3, #:lower16:IO004_Handle15
+ 1598 0014 C0F20003 		movt	r3, #:upper16:IO004_Handle15
+ 1599 0018 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1600 001a 22FA03F3 		lsr	r3, r2, r3
+ 1601 001e 03F00103 		and	r3, r3, #1
+ 1602 0022 002B     		cmp	r3, #0
+ 1603 0024 15D1     		bne	.L74
  467:../Main.c     **** 		IO004_ResetPin(Enable_LEFT);
- 1627              		.loc 1 467 0
- 1628 0026 40F20003 		movw	r3, #:lower16:IO004_Handle7
- 1629 002a C0F20003 		movt	r3, #:upper16:IO004_Handle7
- 1630 002e 5A68     		ldr	r2, [r3, #4]
- 1631 0030 40F20003 		movw	r3, #:lower16:IO004_Handle7
- 1632 0034 C0F20003 		movt	r3, #:upper16:IO004_Handle7
- 1633 0038 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1634 003a 4FF48031 		mov	r1, #65536
- 1635 003e 01FA03F3 		lsl	r3, r1, r3
- 1636 0042 5360     		str	r3, [r2, #4]
+ 1604              		.loc 1 467 0
+ 1605 0026 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 1606 002a C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 1607 002e 5A68     		ldr	r2, [r3, #4]
+ 1608 0030 40F20003 		movw	r3, #:lower16:IO004_Handle7
+ 1609 0034 C0F20003 		movt	r3, #:upper16:IO004_Handle7
+ 1610 0038 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1611 003a 4FF48031 		mov	r1, #65536
+ 1612 003e 01FA03F3 		lsl	r3, r1, r3
+ 1613 0042 5360     		str	r3, [r2, #4]
  468:../Main.c     **** 		error_left = 1;
- 1637              		.loc 1 468 0
- 1638 0044 40F20003 		movw	r3, #:lower16:error_left
- 1639 0048 C0F20003 		movt	r3, #:upper16:error_left
- 1640 004c 4FF00102 		mov	r2, #1
- 1641 0050 1A70     		strb	r2, [r3, #0]
- 1642              	.L76:
+ 1614              		.loc 1 468 0
+ 1615 0044 40F20003 		movw	r3, #:lower16:error_left
+ 1616 0048 C0F20003 		movt	r3, #:upper16:error_left
+ 1617 004c 4FF00102 		mov	r2, #1
+ 1618 0050 1A70     		strb	r2, [r3, #0]
+ 1619              	.L74:
  469:../Main.c     **** 	}
  470:../Main.c     **** 
  471:../Main.c     **** 	if (!IO004_ReadPin(ERR_Input_RIGHT)) {
- 1643              		.loc 1 471 0
- 1644 0052 40F20003 		movw	r3, #:lower16:IO004_Handle3
- 1645 0056 C0F20003 		movt	r3, #:upper16:IO004_Handle3
- 1646 005a 5B68     		ldr	r3, [r3, #4]
- 1647 005c 5A6A     		ldr	r2, [r3, #36]
- 1648 005e 40F20003 		movw	r3, #:lower16:IO004_Handle3
- 1649 0062 C0F20003 		movt	r3, #:upper16:IO004_Handle3
- 1650 0066 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1651 0068 22FA03F3 		lsr	r3, r2, r3
- 1652 006c 03F00103 		and	r3, r3, #1
- 1653 0070 002B     		cmp	r3, #0
- 1654 0072 15D1     		bne	.L75
+ 1620              		.loc 1 471 0
+ 1621 0052 40F20003 		movw	r3, #:lower16:IO004_Handle3
+ 1622 0056 C0F20003 		movt	r3, #:upper16:IO004_Handle3
+ 1623 005a 5B68     		ldr	r3, [r3, #4]
+ 1624 005c 5A6A     		ldr	r2, [r3, #36]
+ 1625 005e 40F20003 		movw	r3, #:lower16:IO004_Handle3
+ 1626 0062 C0F20003 		movt	r3, #:upper16:IO004_Handle3
+ 1627 0066 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1628 0068 22FA03F3 		lsr	r3, r2, r3
+ 1629 006c 03F00103 		and	r3, r3, #1
+ 1630 0070 002B     		cmp	r3, #0
+ 1631 0072 15D1     		bne	.L73
  472:../Main.c     **** 		IO004_ResetPin(Enable_RIGHT);
- 1655              		.loc 1 472 0
- 1656 0074 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1657 0078 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1658 007c 5A68     		ldr	r2, [r3, #4]
- 1659 007e 40F20003 		movw	r3, #:lower16:IO004_Handle1
- 1660 0082 C0F20003 		movt	r3, #:upper16:IO004_Handle1
- 1661 0086 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1662 0088 4FF48031 		mov	r1, #65536
- 1663 008c 01FA03F3 		lsl	r3, r1, r3
- 1664 0090 5360     		str	r3, [r2, #4]
+ 1632              		.loc 1 472 0
+ 1633 0074 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1634 0078 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1635 007c 5A68     		ldr	r2, [r3, #4]
+ 1636 007e 40F20003 		movw	r3, #:lower16:IO004_Handle1
+ 1637 0082 C0F20003 		movt	r3, #:upper16:IO004_Handle1
+ 1638 0086 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1639 0088 4FF48031 		mov	r1, #65536
+ 1640 008c 01FA03F3 		lsl	r3, r1, r3
+ 1641 0090 5360     		str	r3, [r2, #4]
  473:../Main.c     **** 		error_right = 1;
- 1665              		.loc 1 473 0
- 1666 0092 40F20003 		movw	r3, #:lower16:error_right
- 1667 0096 C0F20003 		movt	r3, #:upper16:error_right
- 1668 009a 4FF00102 		mov	r2, #1
- 1669 009e 1A70     		strb	r2, [r3, #0]
- 1670              	.L75:
+ 1642              		.loc 1 473 0
+ 1643 0092 40F20003 		movw	r3, #:lower16:error_right
+ 1644 0096 C0F20003 		movt	r3, #:upper16:error_right
+ 1645 009a 4FF00102 		mov	r2, #1
+ 1646 009e 1A70     		strb	r2, [r3, #0]
+ 1647              	.L73:
  474:../Main.c     **** 	}
  475:../Main.c     **** 
  476:../Main.c     **** }
- 1671              		.loc 1 476 0
- 1672 00a0 BD46     		mov	sp, r7
- 1673 00a2 80BC     		pop	{r7}
- 1674 00a4 7047     		bx	lr
- 1675              		.cfi_endproc
- 1676              	.LFE135:
- 1678 00a6 00BF     		.text
- 1679              	.Letext0:
- 1680              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
- 1681              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
- 1682              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1683              		.file 6 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1684              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1685              		.file 8 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
- 1686              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
- 1687              		.file 10 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
- 1688              		.file 11 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
+ 1648              		.loc 1 476 0
+ 1649 00a0 BD46     		mov	sp, r7
+ 1650 00a2 80BC     		pop	{r7}
+ 1651 00a4 7047     		bx	lr
+ 1652              		.cfi_endproc
+ 1653              	.LFE135:
+ 1655 00a6 00BF     		.text
+ 1656              	.Letext0:
+ 1657              		.file 3 "c:\\dave-3.1.10\\arm-gcc\\bin\\../lib/gcc/arm-none-eabi/4.7.4/../../../../arm-none-eabi/i
+ 1658              		.file 4 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 1659              		.file 5 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1660              		.file 6 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1661              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1662              		.file 8 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
+ 1663              		.file 9 "C:\\DAVE-3.1.10\\eclipse\\/../CMSIS/Include/core_cm4.h"
+ 1664              		.file 10 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
+ 1665              		.file 11 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\Controle
 DEFINED SYMBOLS
                             *ABS*:00000000 Main.c
                             *COM*:0000000f configuration
                             *COM*:00000005 data_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:26     .bss:00000000 ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:23     .bss:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:32     .bss:00000004 status_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:38     .bss:00000008 sudden_run_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:44     .bss:0000000c error_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:49     .bss:00000010 value
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:55     .bss:00000014 last_duty_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:61     .bss:00000018 last_duty_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:66     .bss:0000001c error_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:71     .bss:0000001d error_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:74     .text.main:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:79     .text.main:00000000 main
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1231   .text.Software_Timers_Init:00000000 Software_Timers_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:182    .text.WakeUp:00000000 WakeUp
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1012   .text.configure_R:00000000 configure_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:209    .text.start_driver_signals:00000000 start_driver_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:840    .text.read_R:00000000 read_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:264    .text.update_driver_signals:00000000 update_driver_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:177    .text.WakeUp:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:204    .text.start_driver_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:259    .text.update_driver_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:501    .text.calculateDutyCicle:00000000 calculateDutyCicle
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:496    .text.calculateDutyCicle:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1562   .text.floor:00000000 floor
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:741    .text.calculateDutyCicle:00000280 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:754    .text.Testando_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:759    .text.Testando_Handler:00000000 Testando_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:781    .text.ERU0_3_IRQHandler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:786    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:808    .text.ERU1_0_IRQHandler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:813    .text.ERU1_0_IRQHandler:00000000 ERU1_0_IRQHandler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:835    .text.read_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1504   .text.delay:00000000 delay
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:961    .text.pulse_R:00000000 pulse_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:956    .text.pulse_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1007   .text.configure_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1226   .text.Software_Timers_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1372   .text.Tick_Handler:00000000 Tick_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1272   .text.delayus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1277   .text.delayus:00000000 delayus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1330   .text.delayms:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1335   .text.delayms:00000000 delayms
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1367   .text.Tick_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1438   .text.trata_erro:00000000 trata_erro
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1601   .text.error:00000000 error
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1433   .text.trata_erro:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1499   .text.delay:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1557   .text.floor:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccofJsID.s:1596   .text.error:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:26     .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:23     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:32     .bss:00000004 status_ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:38     .bss:00000008 sudden_run_ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:44     .bss:0000000c error_ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:49     .bss:00000010 value
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:55     .bss:00000014 last_duty_right
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:61     .bss:00000018 last_duty_left
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:66     .bss:0000001c error_left
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:71     .bss:0000001d error_right
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:74     .text.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:79     .text.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1231   .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:182    .text.WakeUp:00000000 WakeUp
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1012   .text.configure_R:00000000 configure_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:209    .text.start_driver_signals:00000000 start_driver_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:840    .text.read_R:00000000 read_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:264    .text.update_driver_signals:00000000 update_driver_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:177    .text.WakeUp:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:204    .text.start_driver_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:259    .text.update_driver_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:501    .text.calculateDutyCicle:00000000 calculateDutyCicle
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:496    .text.calculateDutyCicle:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1539   .text.floor:00000000 floor
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:741    .text.calculateDutyCicle:00000280 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:754    .text.Testando_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:759    .text.Testando_Handler:00000000 Testando_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:781    .text.ERU0_3_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:786    .text.ERU0_3_IRQHandler:00000000 ERU0_3_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:808    .text.ERU1_0_IRQHandler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:813    .text.ERU1_0_IRQHandler:00000000 ERU1_0_IRQHandler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:835    .text.read_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1481   .text.delay:00000000 delay
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:961    .text.pulse_R:00000000 pulse_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:956    .text.pulse_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1007   .text.configure_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1226   .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1372   .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1272   .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1277   .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1330   .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1335   .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1367   .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1410   .text.trata_erro:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1415   .text.trata_erro:00000000 trata_erro
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1476   .text.delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1534   .text.floor:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1573   .text.error:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc2mVcbR.s:1578   .text.error:00000000 error
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
