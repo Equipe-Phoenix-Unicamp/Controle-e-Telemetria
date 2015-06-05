@@ -125,13 +125,16 @@ void psxHandShake();
 void updateButtonStates();
 void flip(void);
 void turbo(void);
+void turbo2(void);
 void changeMode(char a_mode);
+void Software_Timers_Init();
+void Tick_Handler(void);
 
 /***************************************************/
 /*********CALLBACK PARA BOTOES DO CONTROLE**********/
 /***************************************************/
 
-void (*l_um)(void) = turbo;
+void (*l_um)(void) = turbo2;
 void (*l_dois)(void) = NULL;
 void (*l_tres)(void) = NULL;
 void (*r_um)(void) = turbo;
@@ -196,7 +199,13 @@ uint8_t psx_status;
 BOOLType flipped = 0;
 ADC001_ResultHandleType result;
 uint8_t pwm_max;
-char mode = LINEAR;
+char mode = EXP;
+uint32_t acceleration_ticks = 0UL;
+char started_acceleration = 0;
+int last_value_left = 0;
+int last_value_right = 0;
+int offset_ramp = 0;
+
 
 /***************************************************/
 /***********************MAIN************************/
@@ -219,6 +228,7 @@ int main(void) {
 	psxConfiguraControle();
 	ADC001_GenerateLoadEvent(&ADC001_Handle0);
 	ADC001_GetResult(&ADC001_Handle0, &result);
+	Software_Timers_Init();
 	/*Loop do controle*/
 	while (1) {
 		ADC001_GetResult(&ADC001_Handle0, &result);
@@ -255,6 +265,8 @@ int main(void) {
 		if (L_UM && l_um) {
 			l_um_state = 1;
 			l_um();
+		}else if(!R_UM){
+			acceleration_ticks=0;
 		}
 		if (L_TRES && l_tres) {
 			l_tres_state = 1;
@@ -263,6 +275,8 @@ int main(void) {
 		if (R_UM && r_um) {
 			r_um_state = 1;
 			r_um();
+		}else if(!L_UM){
+			acceleration_ticks = 0;
 		}
 		if (R_DOIS && r_dois) {
 			r_dois_state = 1;
@@ -380,6 +394,9 @@ int main(void) {
 						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
 						| (data_0 << BUZINA);
 		data_E[4] = result.Result >> 4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
+
+		last_value_left = data_E[1];
+		last_value_right = data_E[2];
 
 		write_E();
 		updateButtonStates();
@@ -776,7 +793,51 @@ void updateButtonStates() {
 }
 
 void turbo(void) {
+//	if(!started_acceleration){
+//
+//		started_acceleration = 1;
+//		acceleration_ticks=0;
+//		int pwm_temp = last_value_left;
+//		if(pwm_temp < last_value_right)
+//			pwm_temp = last_value_right;
+//
+//		pwm_max = pwm_temp/255.0f;
+//		offset_ramp = pwm_temp/255.0f;
+//
+//
+//	}else{
+//
+//		pwm_max = acceleration_ticks*(100 - offset_ramp)/1000.0f + offset_ramp;
+//		if(pwm_max > 100)
+//			pwm_max = 100;
+//	}
+
 	pwm_max = 100;
+
+}
+
+void turbo2(void) {
+	if(!started_acceleration){
+
+		started_acceleration = 1;
+		acceleration_ticks=0;
+		int pwm_temp = last_value_left;
+		if(pwm_temp < last_value_right)
+			pwm_temp = last_value_right;
+
+		pwm_max = pwm_temp/255.0f;
+		offset_ramp = pwm_temp/255.0f;
+
+
+	}else{
+
+		pwm_max = acceleration_ticks*(100 - 50)/1000.0f + 50;
+		if(pwm_max > 100)
+			pwm_max = 100;
+	}
+
+//	pwm_max = 100;
+
 }
 
 void shunt(void) {
@@ -790,4 +851,19 @@ void flip(void) {
 void changeMode(char a_mode){
 
 	mode = a_mode;
+}
+
+void Software_Timers_Init() {
+	handle_t TaskTimerId;
+
+	TaskTimerId = SYSTM002_CreateTimer(SYSTM002_SYSTICK_INTERVAL,
+			SYSTM002_PERIODIC, &Tick_Handler, NULL);
+	if (TaskTimerId != 0) {
+//Timer created successfully so start it
+		SYSTM002_StartTimer(TaskTimerId);
+	}
+}
+
+void Tick_Handler(void) {
+	acceleration_ticks++;
 }

@@ -51,5 +51,7 @@ DEFINED SYMBOLS
                            .group:00000000 wm4.IO001.h.49.4efcabb368feaef60c65bd7504b48505
                            .group:00000000 wm4.ADC001.h.72.a0f6b9479a18584b91fa95e6f862978d
                            .group:00000000 wm4.NVIC002_Conf.h.63.2037966d607e03e4d09b45a6c3213a0d
+                           .group:00000000 wm4.SYSTM002_Conf.h.70.e893767dc4d518b087b4a20e349ac4d8
+                           .group:00000000 wm4.SYSTM002.h.98.0f398400b32186dea0837ac3b6c1ddcb
 
 NO UNDEFINED SYMBOLS

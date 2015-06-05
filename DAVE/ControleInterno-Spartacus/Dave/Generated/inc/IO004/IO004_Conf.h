@@ -70,13 +70,13 @@ extern const IO004_HandleType IO004_Handle13;
 
 extern const IO004_HandleType IO004_Handle14;
 
+extern const IO004_HandleType IO004_Handle15;
+
 extern const IO004_HandleType IO004_Handle2;
 
 extern const IO004_HandleType IO004_Handle3;
 
 extern const IO004_HandleType IO004_Handle4;
-
-extern const IO004_HandleType IO004_Handle5;
 
 extern const IO004_HandleType IO004_Handle6;
 

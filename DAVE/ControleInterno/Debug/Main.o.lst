@@ -2220,40 +2220,40 @@ DEFINED SYMBOLS
                             *COM*:0000000f configuration
                             *COM*:00000005 data_R
                             *COM*:00000004 status_ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:27     .bss:00000000 ticks
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:24     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:27     .bss:00000000 ticks
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:24     .bss:00000000 $d
                             *COM*:00000004 block_pwm_update_tick_left
                             *COM*:00000004 block_pwm_update_tick_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:35     .data:00000000 last_direction_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:40     .data:00000001 last_direction_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:46     .bss:00000004 block_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:51     .bss:00000005 block_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:57     .data:00000002 status_block_left
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:62     .data:00000003 status_block_right
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:65     .text.main:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:70     .text.main:00000000 main
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:912    .text.configure_R:00000000 configure_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:175    .text.start_PWM_signals:00000000 start_PWM_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1131   .text.Software_Timers_Init:00000000 Software_Timers_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:740    .text.read_R:00000000 read_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:248    .text.update_PWM_signals:00000000 update_PWM_signals
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:170    .text.start_PWM_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:243    .text.update_PWM_signals:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:634    .text.update_PWM_signals:00000384 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:644    .text.update_PWM_signals:000003a4 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:735    .text.read_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1331   .text.delay:00000000 delay
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:861    .text.pulse_R:00000000 pulse_R
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:856    .text.pulse_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:907    .text.configure_R:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1126   .text.Software_Timers_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1272   .text.Tick_Handler:00000000 Tick_Handler
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1172   .text.delayus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1177   .text.delayus:00000000 delayus
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1230   .text.delayms:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1235   .text.delayms:00000000 delayms
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1267   .text.Tick_Handler:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccwSaQXL.s:1326   .text.delay:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:35     .data:00000000 last_direction_right
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:40     .data:00000001 last_direction_left
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:46     .bss:00000004 block_left
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:51     .bss:00000005 block_right
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:57     .data:00000002 status_block_left
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:62     .data:00000003 status_block_right
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:65     .text.main:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:70     .text.main:00000000 main
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:912    .text.configure_R:00000000 configure_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:175    .text.start_PWM_signals:00000000 start_PWM_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1131   .text.Software_Timers_Init:00000000 Software_Timers_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:740    .text.read_R:00000000 read_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:248    .text.update_PWM_signals:00000000 update_PWM_signals
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:170    .text.start_PWM_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:243    .text.update_PWM_signals:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:634    .text.update_PWM_signals:00000384 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:644    .text.update_PWM_signals:000003a4 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:735    .text.read_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1331   .text.delay:00000000 delay
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:861    .text.pulse_R:00000000 pulse_R
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:856    .text.pulse_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:907    .text.configure_R:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1126   .text.Software_Timers_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1272   .text.Tick_Handler:00000000 Tick_Handler
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1172   .text.delayus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1177   .text.delayus:00000000 delayus
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1230   .text.delayms:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1235   .text.delayms:00000000 delayms
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1267   .text.Tick_Handler:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\cc8odPjO.s:1326   .text.delay:00000000 $t
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

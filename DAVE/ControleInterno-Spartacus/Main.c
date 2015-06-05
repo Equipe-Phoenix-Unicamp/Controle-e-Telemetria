@@ -6,7 +6,6 @@
  */
 
 #include <DAVE3.h> //Declarations from DAVE3 Code Generation (includes SFR declaration)
-
 /* DADO3:
  BIT 0: BLAH2
  BIT 1: BUZINA
@@ -60,7 +59,7 @@
 #define DIR_LEFT			IO004_Handle6
 #define Enable_LEFT			IO004_Handle7
 #define DvrDis_LEFT			IO004_Handle8
-#define ERR_Input_LEFT		IO004_Handle5
+#define ERR_Input_LEFT		IO004_Handle15
 #define PWM_LEFT			&PWMSP001_Handle1
 #define ERR_INTRPT_RIGHT	IO002_Handle0
 #define DIR_RIGHT			IO004_Handle0
@@ -85,7 +84,7 @@
 #define PWM_MOTOR_CUT_OFF 50
 #define PWM_MOTOR_RIGHT &PWMSP001_Handle0
 #define PWM_MOTOR_LEFT &PWMSP001_Handle1
-#define FREQ_MOTOR_LOCOMOTION 20000 //Hz
+#define FREQ_MOTOR_LOCOMOTION 30000 //Hz
 //Defines referentes ao fail safe
 #define RUNNING 1
 #define FAIL 0
@@ -117,6 +116,7 @@ void delay(long unsigned int i);
 void start_driver_signals(void);
 float calculateDutyCicle(char mode, unsigned char data);
 int floor(float value);
+void error(void);
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -126,7 +126,13 @@ char configuration[15];
 unsigned char data_R[BYTES_TO_RECEIVE];
 uint32_t ticks = 0UL;
 uint32_t status_ticks = 0UL;
+uint32_t sudden_run_ticks = 0UL;
+uint32_t error_ticks = 0UL;
 bool value = 0UL;
+float last_duty_right = 0;
+float last_duty_left = 0;
+char error_left = 0;
+char error_right = 0;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -272,18 +278,21 @@ float calculateDutyCicle(char mode, unsigned char data) {
 //		int correctedData = ((255*pwm_duty_limit - PWM_MOTOR_CUT_OFF)*data)/(255*pwm_duty_limit) + PWM_MOTOR_CUT_OFF;
 		int duty_cicle;
 
-		float value = 100.0f*data/((pwm_duty_limit/100.0f)*255.0f);
+		float value = 100.0f * data / ((pwm_duty_limit / 100.0f) * 255.0f);
 
-		if(value < 10){
+		if (value < 10) {
 			duty_cicle = 0;
-		}else if(value < 75){
-			duty_cicle = (value -10)*(33 - PWM_DUTY_LIM_MIN)*(pwm_duty_limit/100.0f)/(65.0f);
-			if(duty_cicle < PWM_DUTY_LIM_MIN)
+		} else if (value < 75) {
+			duty_cicle = (value - 10) * (33 - PWM_DUTY_LIM_MIN)
+					* (pwm_duty_limit / 100.0f) / (65.0f);
+			if (duty_cicle < PWM_DUTY_LIM_MIN)
 				duty_cicle = 0;
-		}else if(value < 90){
-			duty_cicle = (value - 75)*33*(pwm_duty_limit/100.0f)/(25.0f) + 33*(pwm_duty_limit/100.0f);
-		}else{
-			duty_cicle = (value - 90)*33*(pwm_duty_limit/100.0f)/(10.0f) + 66*(pwm_duty_limit/100.0f);
+		} else if (value < 90) {
+			duty_cicle = (value - 75) * 33 * (pwm_duty_limit / 100.0f) / (25.0f)
+					+ 33 * (pwm_duty_limit / 100.0f);
+		} else {
+			duty_cicle = (value - 90) * 33 * (pwm_duty_limit / 100.0f) / (10.0f)
+					+ 66 * (pwm_duty_limit / 100.0f);
 		}
 
 		return duty_cicle;
@@ -293,7 +302,8 @@ float calculateDutyCicle(char mode, unsigned char data) {
 
 		int nDegrau = 4;
 		float larguraDegrau = range / nDegrau;
-		float alturaDegrau = PWM_DUTY_LIM_MAX*pwm_duty_limit / (100.0f*(nDegrau - 1));
+		float alturaDegrau = PWM_DUTY_LIM_MAX * pwm_duty_limit
+				/ (100.0f * (nDegrau - 1));
 
 		int sinalDegrau = floor((data / larguraDegrau)) * alturaDegrau;
 
@@ -417,8 +427,26 @@ void delayms(uint32_t delay_ms) {
 }
 
 void Tick_Handler(void) {
-	ticks++;
+	//ticks++;
 	status_ticks++;
+	error_ticks++;
+	if(error_ticks == 1)
+		trata_erro();
+	if (error_ticks >= 100) {
+		error_ticks = 0;
+		error();
+	}
+}
+
+void trata_erro(void){
+
+	if(error_left){
+		error_left = 0;
+		IO004_SetPin(Enable_LEFT);
+	}else{
+		error_right = 0;
+		IO004_SetPin(Enable_RIGHT);
+	}
 }
 
 void delay(long unsigned int i) {
@@ -428,7 +456,21 @@ void delay(long unsigned int i) {
 	}
 }
 
-int floor(float value){
+int floor(float value) {
 	int a = value;
 	return a;
+}
+
+void error(void) {
+
+	if (!IO004_ReadPin(ERR_Input_LEFT)) {
+		IO004_ResetPin(Enable_LEFT);
+		error_left = 1;
+	}
+
+	if (!IO004_ReadPin(ERR_Input_RIGHT)) {
+		IO004_ResetPin(Enable_RIGHT);
+		error_right = 1;
+	}
+
 }

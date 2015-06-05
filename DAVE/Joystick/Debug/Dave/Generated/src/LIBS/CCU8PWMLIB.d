@@ -38,6 +38,9 @@ Dave/Generated/src/LIBS/CCU8PWMLIB.d Dave/Generated/src/LIBS/CCU8PWMLIB.o: \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/SYSTM002.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h \
  ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/DAVE3.h:
@@ -115,5 +118,11 @@ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/SYSTM002.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick\Dave\Generated\inc\DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h:
 
 ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h:

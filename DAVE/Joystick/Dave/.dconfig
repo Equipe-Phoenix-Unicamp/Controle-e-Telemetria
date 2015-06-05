@@ -34,6 +34,7 @@
             <BindMap MUri="peripheral/scu/0/rstctrl/0/vadcreset" Proxy="app/reset001/0/vadcreset"/>
             <BindMap MUri="port/p/2/pad/8" Proxy="app/io004/1/pin"/>
             <BindMap MUri="port/p/2/pad/5" Proxy="app/io004/2/pin"/>
+            <BindMap MUri="peripheral/cpu/0/systick" Proxy="app/systm002/0/syst"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/eru1reset" Proxy="app/reset001/0/eru1reset"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ebu" Proxy="app/clk001/0/ebu"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dsdreset" Proxy="app/reset001/0/dsdreset"/>

@@ -721,20 +721,20 @@
  434              		.file 7 "../Dave/Generated/src/ERU002/../../inc/ERU002/../../inc/RESET001/RESET001.h"
 DEFINED SYMBOLS
                             *ABS*:00000000 ERU002.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:20     .text.ERU002_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:25     .text.ERU002_Init:00000000 ERU002_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:77     .text.ERU002_lInit:00000000 ERU002_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:72     .text.ERU002_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:148    .text.ERU002_SetPeripheralTrigInputSrc:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:153    .text.ERU002_SetPeripheralTrigInputSrc:00000000 ERU002_SetPeripheralTrigInputSrc
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:223    .text.ERU002_GetPatternResult:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:228    .text.ERU002_GetPatternResult:00000000 ERU002_GetPatternResult
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:268    .text.ERU002_EnablePatternDetection:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:273    .text.ERU002_EnablePatternDetection:00000000 ERU002_EnablePatternDetection
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:319    .text.ERU002_DisablePatternDetection:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:324    .text.ERU002_DisablePatternDetection:00000000 ERU002_DisablePatternDetection
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:370    .text.ERU002_SelectServiceRequestMode:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\ccVxGMPR.s:375    .text.ERU002_SelectServiceRequestMode:00000000 ERU002_SelectServiceRequestMode
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:20     .text.ERU002_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:25     .text.ERU002_Init:00000000 ERU002_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:77     .text.ERU002_lInit:00000000 ERU002_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:72     .text.ERU002_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:148    .text.ERU002_SetPeripheralTrigInputSrc:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:153    .text.ERU002_SetPeripheralTrigInputSrc:00000000 ERU002_SetPeripheralTrigInputSrc
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:223    .text.ERU002_GetPatternResult:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:228    .text.ERU002_GetPatternResult:00000000 ERU002_GetPatternResult
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:268    .text.ERU002_EnablePatternDetection:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:273    .text.ERU002_EnablePatternDetection:00000000 ERU002_EnablePatternDetection
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:319    .text.ERU002_DisablePatternDetection:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:324    .text.ERU002_DisablePatternDetection:00000000 ERU002_DisablePatternDetection
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:370    .text.ERU002_SelectServiceRequestMode:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxg5tfa.s:375    .text.ERU002_SelectServiceRequestMode:00000000 ERU002_SelectServiceRequestMode
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.uc_id.h.35.6a563b5a45d32cec26f5b514b510065d

@@ -109,8 +109,8 @@ const PWMSP001_HandleType PWMSP001_Handle0 =
   .kTimerConcatenation = 0U,
    /*During timer concatenation, 32-bit period and compare values from UI are 
    taken. From this value lower 16-bit is loaded into the lower timer and higer 16-bit to higher timer.*/
-  .kCompareValue = 1500U,
-  .kPeriodVal = 2999U,
+  .kCompareValue = 1000U,
+  .kPeriodVal = 1999U,
   .kMaxPeriodVal= 65535U,
   .kDitherSetting= 0U,
   .kDitherCompare = 0U,  

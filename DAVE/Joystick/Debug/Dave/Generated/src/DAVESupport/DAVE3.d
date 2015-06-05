@@ -38,7 +38,10 @@ Dave/Generated/src/DAVESupport/DAVE3.d Dave/Generated/src/DAVESupport/DAVE3.o: \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ADC001/ADC001_Conf.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
- ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/DAVE3.h:
 
@@ -117,3 +120,9 @@ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Joystick
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/SYSTM002_Conf.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/SYSTM002/../../inc/LIBS/types.h:

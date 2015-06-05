@@ -32,5 +32,6 @@
         <File genName="IO001.c" genPath="Dave\Generated\src\IO001\IO001.c" jetPath="IO001/1.0.16/Templates/IO001c.jet" location="bin\CodeGenerator\io001c_template.class"/>
         <File genName="IO004_Conf.h" genPath="Dave\Generated\inc\IO004\IO004_Conf.h" jetPath="IO004/1.0.22/Templates/IO004_Confh.jet" location="bin\CodeGenerator\io004_confh_template.class"/>
         <File genName="DAVE3.c" genPath="Dave\Generated\src\DAVESupport\DAVE3.c" jetPath="DAVESUPPORT/1.0.44/Templates/DAVE3_C.jet" location="bin\CodeGenerator\dave3_c_template.class"/>
+    <File genName="SYSTM002_Conf.h" genPath="Dave\Generated\inc\SYSTM002\SYSTM002_Conf.h" jetPath="SYSTM002/1.0.12/Templates/SYSTM002_Confh.jet" location="bin\CodeGenerator\systm002_confh_template.class"/>
     </TemplateCaches>
 </Cache>

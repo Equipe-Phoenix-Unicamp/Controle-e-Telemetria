@@ -1945,36 +1945,36 @@
  1256              		.file 7 "C:\\Users\\jmass_000\\Documents\\Unicamp\\Phoenix\\Controle-e-Telemetria\\DAVE\\ControleI
 DEFINED SYMBOLS
                             *ABS*:00000000 CNT001.c
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:20     .text.CNT001_Init:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:25     .text.CNT001_Init:00000000 CNT001_Init
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:82     .text.CNT001_lInit:00000000 CNT001_lInit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:427    .text.CNT001_Start:00000000 CNT001_Start
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:77     .text.CNT001_lInit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:304    .text.CNT001_Deinit:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:309    .text.CNT001_Deinit:00000000 CNT001_Deinit
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:422    .text.CNT001_Start:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:499    .text.CNT001_Stop:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:504    .text.CNT001_Stop:00000000 CNT001_Stop
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:592    .text.CNT001_GetEvtCountValue:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:597    .text.CNT001_GetEvtCountValue:00000000 CNT001_GetEvtCountValue
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:652    .text.CNT001_GetCountMatch:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:657    .text.CNT001_GetCountMatch:00000000 CNT001_GetCountMatch
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:707    .text.CNT001_SetCountMatch:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:712    .text.CNT001_SetCountMatch:00000000 CNT001_SetCountMatch
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:803    .text.CNT001_GetTimerStatus:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:808    .text.CNT001_GetTimerStatus:00000000 CNT001_GetTimerStatus
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:862    .text.CNT001_EnableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:867    .text.CNT001_EnableEvent:00000000 CNT001_EnableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:925    .text.CNT001_DisableEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:930    .text.CNT001_DisableEvent:00000000 CNT001_DisableEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:989    .text.CNT001_ClearPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:994    .text.CNT001_ClearPendingEvent:00000000 CNT001_ClearPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1052   .text.CNT001_SetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1057   .text.CNT001_SetPendingEvent:00000000 CNT001_SetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1115   .text.CNT001_GetPendingEvent:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1120   .text.CNT001_GetPendingEvent:00000000 CNT001_GetPendingEvent
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1192   .text.CNT001_ResetCounter:00000000 $t
-C:\Users\JMASS_~1\AppData\Local\Temp\cc0I7p8s.s:1197   .text.CNT001_ResetCounter:00000000 CNT001_ResetCounter
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:20     .text.CNT001_Init:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:25     .text.CNT001_Init:00000000 CNT001_Init
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:82     .text.CNT001_lInit:00000000 CNT001_lInit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:427    .text.CNT001_Start:00000000 CNT001_Start
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:77     .text.CNT001_lInit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:304    .text.CNT001_Deinit:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:309    .text.CNT001_Deinit:00000000 CNT001_Deinit
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:422    .text.CNT001_Start:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:499    .text.CNT001_Stop:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:504    .text.CNT001_Stop:00000000 CNT001_Stop
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:592    .text.CNT001_GetEvtCountValue:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:597    .text.CNT001_GetEvtCountValue:00000000 CNT001_GetEvtCountValue
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:652    .text.CNT001_GetCountMatch:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:657    .text.CNT001_GetCountMatch:00000000 CNT001_GetCountMatch
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:707    .text.CNT001_SetCountMatch:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:712    .text.CNT001_SetCountMatch:00000000 CNT001_SetCountMatch
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:803    .text.CNT001_GetTimerStatus:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:808    .text.CNT001_GetTimerStatus:00000000 CNT001_GetTimerStatus
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:862    .text.CNT001_EnableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:867    .text.CNT001_EnableEvent:00000000 CNT001_EnableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:925    .text.CNT001_DisableEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:930    .text.CNT001_DisableEvent:00000000 CNT001_DisableEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:989    .text.CNT001_ClearPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:994    .text.CNT001_ClearPendingEvent:00000000 CNT001_ClearPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1052   .text.CNT001_SetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1057   .text.CNT001_SetPendingEvent:00000000 CNT001_SetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1115   .text.CNT001_GetPendingEvent:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1120   .text.CNT001_GetPendingEvent:00000000 CNT001_GetPendingEvent
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1192   .text.CNT001_ResetCounter:00000000 $t
+C:\Users\JMASS_~1\AppData\Local\Temp\ccxQjkjk.s:1197   .text.CNT001_ResetCounter:00000000 CNT001_ResetCounter
                      .debug_frame:00000010 $d
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0

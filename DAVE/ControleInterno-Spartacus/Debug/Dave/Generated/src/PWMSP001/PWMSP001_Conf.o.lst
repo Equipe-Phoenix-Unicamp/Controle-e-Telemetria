@@ -29,7 +29,7 @@
   33 0001 00       		.byte	0
   34 0002 0000     		.space	2
   35 0004 04568541 		.word	1099257348
-  36 0008 DC050000 		.word	1500
+  36 0008 E8030000 		.word	1000
   37 000c 00       		.byte	0
   38 000d 00       		.byte	0
   39 000e 00       		.byte	0
@@ -47,7 +47,7 @@
   51 0023 00       		.byte	0
   52 0024 00       		.byte	0
   53 0025 000000   		.space	3
-  54 0028 B70B0000 		.word	2999
+  54 0028 CF070000 		.word	1999
   55 002c FFFF0000 		.word	65535
   56 0030 00000000 		.word	0
   57 0034 00       		.byte	0
@@ -111,12 +111,12 @@
  119              		.file 5 "../Dave/Generated/src/PWMSP001/PWMSP001_Conf.c"
 DEFINED SYMBOLS
                             *ABS*:00000000 PWMSP001_Conf.c
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:24     .bss:00000000 PWMSP001_DynamicData0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:21     .bss:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:31     .rodata:00000000 PWMSP001_Handle0
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:28     .rodata:00000000 $d
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:71     .bss:00000004 PWMSP001_DynamicData1
-C:\Users\JMASS_~1\AppData\Local\Temp\ccvJFFBE.s:78     .rodata:00000048 PWMSP001_Handle1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:24     .bss:00000000 PWMSP001_DynamicData0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:21     .bss:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:31     .rodata:00000000 PWMSP001_Handle0
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:28     .rodata:00000000 $d
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:71     .bss:00000004 PWMSP001_DynamicData1
+C:\Users\JMASS_~1\AppData\Local\Temp\ccIzazFB.s:78     .rodata:00000048 PWMSP001_Handle1
                            .group:00000000 wm4.1.e3bdd798bb23f70d94471cb7157fa38f
                            .group:00000000 wm4.XMC4500.h.45.215f4b8c79f46c7645c15373868d08c0
                            .group:00000000 wm4.core_cm4.h.47.41af406cb4cda82c972f112a9cd0a024

@@ -90,6 +90,9 @@
   <nodes xsi:type="DaveExpert:PeripheralNode">
     <resource xsi:type="ResourceModel:Peripheral" href="P14/P14_14.dd#/"/>
   </nodes>
+  <nodes xsi:type="DaveExpert:AppNode">
+    <resource xsi:type="ResourceModel:App" href="SYSTM002/1.0.12/systm002_0.app#/"/>
+  </nodes>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.10" target="//@nodes.11"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.10" target="//@nodes.12"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.17" target="//@nodes.18"/>
@@ -117,4 +120,6 @@
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.20" target="//@nodes.28"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.18" target="//@nodes.28"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.19" target="//@nodes.29"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.30" target="//@nodes.11"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.30" target="//@nodes.24"/>
 </DaveExpert:ApplicationModelData>
