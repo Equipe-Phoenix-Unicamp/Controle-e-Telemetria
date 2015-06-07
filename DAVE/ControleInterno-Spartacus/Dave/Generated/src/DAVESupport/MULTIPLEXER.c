@@ -104,6 +104,9 @@ void DAVE_MUX_Init(void)
 /*        ERU1 Macro definitions:         */  
 
   WR_REG(ERU1->EXICON[0], ERU_EXICON_PE_Msk, ERU_EXICON_PE_Pos, SIGNAL_TR1);                            /*    ERU1_EXICON[0]_PE */    
+   	 
+            	         
+                                              
         //********* Capture/Compare Unit 4 (CAPCOM4) CONFIGURATIONS ************************* 
                        
     // Configuring CCU40 CC41INS - Input Selector Configuration
@@ -167,7 +170,7 @@ void DAVE_MUX_Init(void)
 *******************************************************************************/
  
 void DAVE_MUX_PreInit(void)
-{                
+{                    
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */               
            

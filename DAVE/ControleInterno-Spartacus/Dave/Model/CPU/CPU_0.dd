@@ -194,5 +194,25 @@
       <toolTipHelpDescription> </toolTipHelpDescription>
     </bitFields>
   </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="SCU_0_IRQ" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../NVIC_SCU001/1.0.18/nvic_scu001_0.app#//@consumed.0"/>
+    <resourcesList name="iser_setena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iser0/setena0" isResolved="true"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icer0/clrena0" isResolved="true"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ispr0/setpend0" isResolved="true"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icpr0/clrpend0" isResolved="true"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iabr0/active0" isResolved="true"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ipr0/pri_0" isResolved="true"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/scu_0_irqhandler" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="SCU_0_IRQ" description="SCU_0_IRQ" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/0/signal_in" signalType="INTERRUPT" interruptVectorAddress="15" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../NVIC_SCU001/1.0.18/nvic_scu001_0.app#//@consumed.1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="pri_0" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/0/ipr_pri" maxValue="255" minValue="0" startPos="0" stopPos="7" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../NVIC_SCU001/1.0.18/nvic_scu001_0.app#//@consumed.2"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <toolTipHelpDescription>Priority of interrupt 0</toolTipHelpDescription>
+  </provided>
   <categoryDescription description="v0.7 - 04_10_2011 - Sheshadri - default values" name="CPU"/>
 </ResourceModel:Peripheral>

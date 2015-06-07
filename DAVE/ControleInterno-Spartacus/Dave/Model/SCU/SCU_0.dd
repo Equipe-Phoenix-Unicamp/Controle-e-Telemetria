@@ -326,8 +326,8 @@
   <provided xsi:type="ResourceModel:BitField" name="WDTCEN" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/clkctrl/0/wdt/clkset_wdtcen" maxValue="1" minValue="0" startPos="5" stopPos="5" accessPermission="w">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CLK001/1.0.44/clk001_0.app#//@consumed.46"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
     <toolTipHelpDescription>WDT Clock Enable</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="no effect"/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="enable clock"/>
@@ -515,6 +515,26 @@
     <resourcesList name="prstat_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prstat2/eth0rs" isResolved="true"/>
     <resourcesList name="prset_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prset2/eth0rs" isResolved="true"/>
     <resourcesList name="prclr_rs" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prclr2/eth0rs" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="PREWARN" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/gcu/interrupt/prewarn">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.6"/>
+    <resourcesList name="srstat_int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/srstat/prwarn" isResolved="true"/>
+    <resourcesList name="rawsr_int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/rawsr/prwarn" isResolved="true"/>
+    <resourcesList name="srclr_int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/srclr/prwarn" isResolved="true"/>
+    <resourcesList name="srset_int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/srset/prwarn" isResolved="true"/>
+    <resourcesList name="srmsk_int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/srmsk/prwarn" isResolved="true"/>
+    <resourcesList name="nmireqen_prwarn" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/nmireqen/prwarn" isResolved="true"/>
+    <resourcesList name="wdt_pre_warn" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/wdt_pre_warn" isResolved="true"/>
+    <resourcesList name="int" requiredResourceUri="http://www.infineon.com/0.1.33/peripheral/scu/0/prwarn_int" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="prwarn_int" description="" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/gcu/interrupt/prewarn/int" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.33"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="PRWARN" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/gcu/interrupt/prewarn/nmireqen_prwarn" maxValue="1" minValue="0" startPos="0" stopPos="0" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Promote Pre-Warning Interrupt Request to NMI Request</toolTipHelpDescription>
   </provided>
   <categoryDescription description="SCU Device Description" name="SCU"/>
 </ResourceModel:Peripheral>

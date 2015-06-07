@@ -8,6 +8,7 @@
         <SolverBndMap>
             <BindMap MUri="port/p/1/pad/8" Proxy="app/io004/7/pin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/perbridge" Proxy="app/clk001/0/perbridge"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/0" Proxy="app/nvic_scu001/0/scunode"/>
             <BindMap MUri="peripheral/eru/0/ogu/3" Proxy="app/eru002/1/ogu"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ccu" Proxy="app/clk001/0/ccu"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/clk001/0/pll"/>
@@ -26,6 +27,7 @@
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sdmmc" Proxy="app/clk001/0/mmc"/>
             <BindMap MUri="port/p/2/pad/8" Proxy="app/io004/10/pin"/>
             <BindMap MUri="peripheral/scu/0/pwrctrl/0/hibernate" Proxy="app/clk001/0/hibernate"/>
+            <BindMap MUri="peripheral/wdt/0/wdt" Proxy="app/wdt001/0/wdt"/>
             <BindMap MUri="port/p/2/pad/4" Proxy="app/io004/12/pin"/>
             <BindMap MUri="port/p/1/pad/9" Proxy="app/io004/3/pin"/>
             <BindMap MUri="port/p/0/pad/7" Proxy="app/io004/8/pin"/>
@@ -41,6 +43,7 @@
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ebu" Proxy="app/clk001/0/ebu"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dsdreset" Proxy="app/reset001/0/dsdreset"/>
             <BindMap MUri="peripheral/scu/0/rtcclksel" Proxy="app/clk001/0/rtcclksel"/>
+            <BindMap MUri="peripheral/scu/0/gcu/interrupt/prewarn" Proxy="app/wdt001/0/gcu_intprewarn"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sys" Proxy="app/clk001/0/sys"/>
             <BindMap MUri="peripheral/eru/1/ogu/0" Proxy="app/eru002/0/ogu"/>
             <BindMap MUri="peripheral/ccu4/0/global" Proxy="app/ccu4global/0/global"/>

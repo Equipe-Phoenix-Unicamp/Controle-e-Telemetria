@@ -2519,44 +2519,44 @@ int main(void) {
 //		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
 //				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
 //				| (buzina << BUZINA);
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+		data_E[3] = data_E[3] | (blah1 << BLAH2) | (blah2 << BLAH1)
  80011f8:	f240 03d0 	movw	r3, #208	; 0xd0
  80011fc:	f2c2 0300 	movt	r3, #8192	; 0x2000
- 8001200:	78db      	ldrb	r3, [r3, #3]
- 8001202:	b2da      	uxtb	r2, r3
- 8001204:	7b7b      	ldrb	r3, [r7, #13]
- 8001206:	ea4f 1303 	mov.w	r3, r3, lsl #4
- 800120a:	b2db      	uxtb	r3, r3
- 800120c:	4313      	orrs	r3, r2
- 800120e:	b2da      	uxtb	r2, r3
- 8001210:	7bfb      	ldrb	r3, [r7, #15]
+ 8001200:	78da      	ldrb	r2, [r3, #3]
+ 8001202:	7b7b      	ldrb	r3, [r7, #13]
+ 8001204:	4313      	orrs	r3, r2
+ 8001206:	b2db      	uxtb	r3, r3
+ 8001208:	b2da      	uxtb	r2, r3
+ 800120a:	7bfb      	ldrb	r3, [r7, #15]
+ 800120c:	ea4f 1303 	mov.w	r3, r3, lsl #4
+ 8001210:	b2db      	uxtb	r3, r3
  8001212:	4313      	orrs	r3, r2
  8001214:	b2da      	uxtb	r2, r3
-						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (albh1 << ALBH2) | (albh2 << ALBH1) | (data_1 << ENABLE)
  8001216:	7b3b      	ldrb	r3, [r7, #12]
- 8001218:	ea4f 1343 	mov.w	r3, r3, lsl #5
+ 8001218:	ea4f 03c3 	mov.w	r3, r3, lsl #3
 		char data_1 = ((mode >> 1) & 1);
 
 //		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
 //				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
 //				| (buzina << BUZINA);
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+		data_E[3] = data_E[3] | (blah1 << BLAH2) | (blah2 << BLAH1)
  800121c:	b2db      	uxtb	r3, r3
  800121e:	4313      	orrs	r3, r2
  8001220:	b2da      	uxtb	r2, r3
-						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (albh1 << ALBH2) | (albh2 << ALBH1) | (data_1 << ENABLE)
  8001222:	7bbb      	ldrb	r3, [r7, #14]
- 8001224:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+ 8001224:	ea4f 1343 	mov.w	r3, r3, lsl #5
 		char data_1 = ((mode >> 1) & 1);
 
 //		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
 //				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
 //				| (buzina << BUZINA);
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+		data_E[3] = data_E[3] | (blah1 << BLAH2) | (blah2 << BLAH1)
  8001228:	b2db      	uxtb	r3, r3
  800122a:	4313      	orrs	r3, r2
  800122c:	b2da      	uxtb	r2, r3
-						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (albh1 << ALBH2) | (albh2 << ALBH1) | (data_1 << ENABLE)
  800122e:	78bb      	ldrb	r3, [r7, #2]
  8001230:	ea4f 0383 	mov.w	r3, r3, lsl #2
 		char data_1 = ((mode >> 1) & 1);
@@ -2564,11 +2564,11 @@ int main(void) {
 //		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
 //				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
 //				| (buzina << BUZINA);
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+		data_E[3] = data_E[3] | (blah1 << BLAH2) | (blah2 << BLAH1)
  8001234:	b2db      	uxtb	r3, r3
  8001236:	4313      	orrs	r3, r2
  8001238:	b2da      	uxtb	r2, r3
-						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (albh1 << ALBH2) | (albh2 << ALBH1) | (data_1 << ENABLE)
 						| (data_0 << BUZINA);
  800123a:	78fb      	ldrb	r3, [r7, #3]
  800123c:	ea4f 0343 	mov.w	r3, r3, lsl #1
@@ -2577,7 +2577,7 @@ int main(void) {
 //		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
 //				| (albh1 << ALBH1) | (albh2 << ALBH2) | (enable << ENABLE)
 //				| (buzina << BUZINA);
-		data_E[3] = data_E[3] | (blah1 << BLAH1) | (blah2 << BLAH2)
+		data_E[3] = data_E[3] | (blah1 << BLAH2) | (blah2 << BLAH1)
  8001240:	b2db      	uxtb	r3, r3
  8001242:	4313      	orrs	r3, r2
  8001244:	b2db      	uxtb	r3, r3
@@ -2585,7 +2585,7 @@ int main(void) {
  8001248:	f240 03d0 	movw	r3, #208	; 0xd0
  800124c:	f2c2 0300 	movt	r3, #8192	; 0x2000
  8001250:	70da      	strb	r2, [r3, #3]
-						| (albh1 << ALBH1) | (albh2 << ALBH2) | (data_1 << ENABLE)
+						| (albh1 << ALBH2) | (albh2 << ALBH1) | (data_1 << ENABLE)
 						| (data_0 << BUZINA);
 		data_E[4] = result.Result >> 4; //Resultado tem precisao de 12bits, divide por 16 para obter 8 bits = 1 byte
  8001252:	f240 03f0 	movw	r3, #240	; 0xf0

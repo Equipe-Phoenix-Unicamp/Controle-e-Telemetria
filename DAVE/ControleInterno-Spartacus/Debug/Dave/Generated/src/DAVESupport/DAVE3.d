@@ -51,7 +51,9 @@ Dave/Generated/src/DAVESupport/DAVE3.d Dave/Generated/src/DAVESupport/DAVE3.o: \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/ERU002/ERU002_Extern.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002.h \
  ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
- ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h \
+ ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/WDT001/WDT001.h
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/DAVE3.h:
 
@@ -156,3 +158,7 @@ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Controle
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
 
 ../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h:
+
+../Dave/Generated/src/DAVESupport/../../inc/DAVESupport/../../inc/WDT001/WDT001.h:

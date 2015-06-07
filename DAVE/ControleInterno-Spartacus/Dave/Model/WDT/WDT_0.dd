@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="WDT" description="Watch Dog Timer (WDT)" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="wdt" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.5"/>
+    <resourcesList name="id" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/id" isResolved="true"/>
+    <resourcesList name="ctr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/ctr" isResolved="true"/>
+    <resourcesList name="srv" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/srv" isResolved="true"/>
+    <resourcesList name="tim" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/tim" isResolved="true"/>
+    <resourcesList name="wlb" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wlb" isResolved="true"/>
+    <resourcesList name="wub" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wub" isResolved="true"/>
+    <resourcesList name="sts" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdtsts" isResolved="true"/>
+    <resourcesList name="clr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdtclr" isResolved="true"/>
+    <resourcesList name="wdt_srv_request" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt_srv_request" isResolved="true"/>
+    <resourcesList name="wdt_pre_warn" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt_pre_warn" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="wdt_srv_request" description="" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/wdt_srv_request" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.11"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="PRE" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/ctr/pre" maxValue="1" minValue="0" startPos="1" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.12"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Pre-warning</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SPW" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/ctr/spw" maxValue="255" minValue="0" startPos="8" stopPos="15" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.13"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Service Indication Pulse Width</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="ENB" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/ctr/enb" maxValue="1" minValue="0" startPos="0" stopPos="0" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.14"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Enable</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="WLB" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/wlb/wlb" maxValue="2147483647" minValue="0" startPos="0" stopPos="31" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.15"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Window Lower Bound</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="WUB" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/wub/wub" maxValue="2147483647" minValue="0" startPos="0" stopPos="31" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="ffffffff"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.16"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="ffffffff"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="ffffffff"/>
+    <toolTipHelpDescription>Window Upper Bound</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="SRV" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/srv/srv" maxValue="2147483647" minValue="0" startPos="0" stopPos="31" accessPermission="w">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.17"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Service</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="TIM" URI="http://www.infineon.com/0.1.28/peripheral/wdt/0/wdt/tim/tim" maxValue="2147483647" minValue="0" startPos="0" stopPos="31">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../WDT001/1.0.18/wdt001_0.app#//@consumed.18"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Timer Value</toolTipHelpDescription>
+  </provided>
+  <categoryDescription description="Watch Dog Timer (WDT) Device Description" name="WDT"/>
+</ResourceModel:Peripheral>

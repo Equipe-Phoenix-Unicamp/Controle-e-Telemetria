@@ -84,6 +84,8 @@ void SystemInit_DAVE3(void);
 	#include "../../inc/ERU001/ERU001.h" 
 	#include "../../inc/ERU002/ERU002.h" 
 	#include "../../inc/NVIC002/NVIC002.h" 
+	#include "../../inc/NVIC_SCU001/NVIC_SCU001.h" 
+	#include "../../inc/WDT001/WDT001.h" 
 
                          
 

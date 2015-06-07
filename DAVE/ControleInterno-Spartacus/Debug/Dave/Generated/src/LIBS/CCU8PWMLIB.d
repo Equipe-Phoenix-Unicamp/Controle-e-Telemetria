@@ -51,6 +51,8 @@ Dave/Generated/src/LIBS/CCU8PWMLIB.d Dave/Generated/src/LIBS/CCU8PWMLIB.o: \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/WDT001/WDT001.h \
  ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/DAVE3.h:
@@ -154,5 +156,9 @@ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Controle
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/WDT001/WDT001.h:
 
 ../Dave/Generated/src/LIBS/../../inc/LIBS/CCU8PWMLIB.h:

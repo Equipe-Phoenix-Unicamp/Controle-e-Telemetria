@@ -34,5 +34,8 @@
         <File genName="CLK001_Conf.h" genPath="Dave\Generated\inc\CLK001\CLK001_Conf.h" jetPath="CLK001/1.0.44/Templates/CLK001_Confh.jet" location="bin\CodeGenerator\clk001_confh_template.class"/>
         <File genName="CCU4GLOBAL_Conf.h" genPath="Dave\Generated\inc\CCU4GLOBAL\CCU4GLOBAL_Conf.h" jetPath="CCU4GLOBAL/1.0.22/Templates/CCU4Global_Confh.jet" location="bin\CodeGenerator\ccu4global_confh_template.class"/>
         <File genName="PWMSP001.c" genPath="Dave\Generated\src\PWMSP001\PWMSP001.c" jetPath="PWMSP001/1.0.34/Templates/PWMSP001c.jet" location="bin\CodeGenerator\pwmsp001c_template.class"/>
+    <File genName="WDT001.c" genPath="Dave\Generated\src\WDT001\WDT001.c" jetPath="WDT001/1.0.18/Templates/WDT001c.jet" location="bin\CodeGenerator\wdt001c_template.class"/>
+        <File genName="NVIC_SCU001.c" genPath="Dave\Generated\src\NVIC_SCU001\NVIC_SCU001.c" jetPath="NVIC_SCU001/1.0.18/Templates/NVIC_SCU001c.jet" location="bin\CodeGenerator\nvic_scu001c_template.class"/>
+        <File genName="WDT001_Conf.c" genPath="Dave\Generated\src\WDT001\WDT001_Conf.c" jetPath="WDT001/1.0.18/Templates/WDT001Confc.jet" location="bin\CodeGenerator\wdt001confc_template.class"/>
     </TemplateCaches>
 </Cache>

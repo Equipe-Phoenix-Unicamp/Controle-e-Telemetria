@@ -139,7 +139,8 @@ extern "C" {
 /**********************************************************/
 /* Macros for Internal, External and System clock Signals */
 /**********************************************************/
-#define CLK001_CCUCLK_EN 1
+#define CLK001_CCUCLK_EN 1 
+#define CLK001_WDTCLK_EN 1
 
 /*********************************************************/
 /* WDT Clock Configuration */

@@ -1,0 +1,238 @@
+<%@ jet package="CodeGenerator" class="wdt001c_template"
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+<% String AppBaseuri = "app/wdt001/";%>
+/*CODE_BLOCK_BEGIN[WDT001.c]*/
+/*******************************************************************************
+ Copyright (c) 2013, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+                                                                              **
+ Redistribution and use in source and binary forms, with or without           **
+ modification,are permitted provided that the following conditions are met:   **
+                                                                              **
+ *Redistributions of source code must retain the above copyright notice,      **
+ this list of conditions and the following disclaimer.                        **
+ *Redistributions in binary form must reproduce the above copyright notice,   **
+ this list of conditions and the following disclaimer in the documentation    **
+ and/or other materials provided with the distribution.                       **
+ *Neither the name of the copyright holders nor the names of its contributors **
+ may be used to endorse or promote products derived from this software without** 
+ specific prior written permission.                                           **
+                                                                              **
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+ ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+ LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+ SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+ CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+ POSSIBILITY OF SUCH DAMAGE.                                                  **
+                                                                              **
+ To improve the quality of the software, users are encouraged to share        **
+ modifications, enhancements or bug fixes with Infineon Technologies AG       **
+ dave@infineon.com).                                                          **
+                                                                              **
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000/XMC1000 Series                                 **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/no]: Yes                                       **
+**                                                                            **
+** MODIFICATION DATE : Apr 04, 2013                                           **
+**                                                                            **
+*******************************************************************************/
+/*******************************************************************************
+**                      Author(s) Identity                                    **
+********************************************************************************
+**                                                                            **
+** Initials     Name                                                          **
+** ---------------------------------------------------------------------------**
+** PAE        App Developer                                                   **
+*******************************************************************************/
+/**
+ * @file WDT001.c
+ *
+ * @brief  Watch Dog Timer App
+ *
+ */
+/* Revision History
+ * 11 Jan 2013 v1.0.6 Base Version for porting
+ * 04 Apr 2013 v1.0.8 device based code generation for clk gating and SCU interrupt unmasking is added
+ */
+/*******************************************************************************
+ ** INCLUDE FILES                                                             **
+ ******************************************************************************/
+#include <DAVE3.h>
+
+<% String TempApps = null;
+   String MyAppName = null;
+   ArrayList<String> apps;
+   String TempLowerApps = null; 
+   boolean DBGApp = false;   
+   apps=(ArrayList<String>)(app.getApps());
+        for (int k = 0; k < apps.size(); k++) {
+              TempApps = apps.get(k);
+//            if(app.isAppInitProvider(apps.get(k)) == true) {
+              MyAppName = TempApps.substring(TempApps.indexOf("/app/") + 5, TempApps.lastIndexOf("/"));
+              TempLowerApps = MyAppName.toLowerCase();
+              if (TempLowerApps.equalsIgnoreCase("dbg002")) {DBGApp = true;}   
+//   }  
+  } %>
+
+<% if (!DBGApp) { %>  
+/*****************************************************************************
+              DUMMY DEFINTIONS OF DEBUG LOG MACROS
+*****************************************************************************/
+/*These definitions are included here to avoid compilation errors,
+ since the DBG002 app is not part of the project. All the macros are defined
+ as empty*/ 
+#ifndef _DBG002_H_
+
+#define DBG002_RegisterCallBack(A,B,C)
+#define DBG002_I(e) 
+#define DBG002_IG(e,g) 
+#define DBG002_IH(e,h) 
+#define DBG002_IP(e,p) 
+#define DBG002_IGH(e,g,h) 
+#define DBG002_IGP(e,g,p) 
+#define DBG002_IHP(e,h,p) 
+#define DBG002_IGHP(e,g,h,p) 
+#define DBG002_N(e) 
+#define DBG002_NG(e,g) 
+#define DBG002_NH(e,h) 
+#define DBG002_NP(e,p) 
+#define DBG002_NGH(e,g,h) 
+#define DBG002_NGP(e,g,p) 
+#define DBG002_NHP(e,h,p) 
+#define DBG002_NGHP(e,g,h,p) 
+#define DBG002_ID(e) 
+#define DBG002_IS(e) 
+#define DBG002_ISG(e,g) 
+#define DBG002_SAFETY_CRITICAL(groupid,messageid,length,value)
+#define DBG002_CRITICAL(groupid,messageid,length,value)
+#define DBG002_ERROR(groupid,messageid,length,value)
+#define DBG002_WARNING(groupid,messageid,length,value)
+#define DBG002_INFO(groupid,messageid,length,value)
+#define DBG002_TRACE(groupid,messageid,length,value)
+#define DBG002_FUNCTION_ENTRY(GID, Status) 
+#define DBG002_FUNCTION_EXIT(GID, Status) 
+
+#endif/* End of definitions of dummy Debug Log macros*/
+<% } %>      
+
+
+<% int Is44Device = -1; %>
+
+<% int Is42Device = -1; %>
+
+<% int Is45Device = -1; %>
+
+<% int Is1xDevice = -1; %>
+
+<% Is45Device = ((app.getSoftwareId().substring(0,2).compareTo("45")==0)?1:0); %>
+
+<% Is44Device = ((app.getSoftwareId().substring(0,2).compareTo("44")==0)?1:0); %>
+
+<% Is42Device = ((app.getSoftwareId().substring(0,2).compareTo("42")==0)?1:0); %>
+
+<% Is1xDevice = ((app.getSoftwareId().substring(0,1).compareTo("1")==0)?1:0); %>
+/*******************************************************************************
+**                      Private Macro Definitions                             **
+*******************************************************************************/
+
+#define APP_GID DBG002_GID_WDT001
+/*******************************************************************************
+**                      Extern Declaration                                    **
+*******************************************************************************/
+<% if (app.getIntegerValue(AppBaseuri + "0/wdt001_erwPreWarnEnable/0") == 1 ){%>
+<% if (app.getIntegerValue(AppBaseuri + "0/WDT0001_Eventtrigger_prewarning/0") == 1 ){%>
+<%String PreWarnHandler = app.getStringValue(AppBaseuri + "0/wdt001_irwPreWarnCallbackFunc");
+if((PreWarnHandler != null) && (PreWarnHandler != "")) { %>
+/*User defined Event Handler function */  
+extern void <%=PreWarnHandler%>(uint32_t CbArg);
+<% }} %>
+<% } %>
+
+
+/*******************************************************************************
+**                      Public Function Definitions                           **
+*******************************************************************************/
+
+ /* Function initializes the App based on the UI configurable items  */
+void  WDT001_Init(void) 
+{
+  /*<<<DD_WDT001_API_1>>> */
+  DBG002_FUNCTION_ENTRY(DBG002_GID_WDT001,WDT001_FUN_ENTRY);
+  <% String MappedUri = null; %>
+  <% String appInst  = null; %>
+  <% ArrayList<String> appsList = (ArrayList<String>)(app.getApps("app/wdt001/"));
+  for (String appIns : appsList ) {
+  appInst = appIns.substring(appIns.lastIndexOf("/")+1);
+  MappedUri = app.getMappedUri(AppBaseuri + appInst + "/wdt"); 
+  if((MappedUri != null) && (MappedUri != "")){%>
+  <%if ((Is44Device==1)||(Is42Device==1)||(Is1xDevice==1))
+   {%>
+   /* Deassert the clock gating under SCU module to enable the WDT peripheral
+   */
+   <%if (Is1xDevice==1){ %>
+       if (!((uint32_t)SCU_CLK->CGATCLR0 & (uint32_t)SCU_CLK_CGATCLR0_WDT_Pos)){ 
+       SCU_GENERAL->PASSWD = 0x000000C0UL;
+       WR_REG(SCU_CLK->CLKCR, SCU_CLK_CLKCR_CNTADJ_Msk, SCU_CLK_CLKCR_CNTADJ_Pos,CLK002_DELAYCNT);
+       SET_BIT(SCU_CLK->CGATCLR0, SCU_CLK_CGATCLR0_WDT_Pos);
+       while ((uint32_t)SCU_CLK->CLKCR & (uint32_t)SCU_CLK_CLKCR_VDDC2LOW_Msk)
+       {
+       	    ;
+       }
+       SCU_GENERAL->PASSWD = 0x000000C3UL;
+       }
+   <%}else{%>
+   SET_BIT(SCU_CLK->CGATCLR2, SCU_CLK_CGATCLR2_WDT_Pos);
+   <%}}%>
+  <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+  {%> 
+  /* Reset the WDT Unit*/
+  RESET001_DeassertReset(PER2_WDT);
+  <%}%>
+  /* Configure Window Lower Bound*/
+  WDT->WLB = 0x<%= app.getHexValue(AppBaseuri + appInst +"/wdt001_irwLowerBoundSerWindow") %>UL;
+  /* Configure Window Upper Bound*/   
+  WDT->WUB = 0x<%= app.getHexValue(AppBaseuri + appInst +"/wdt001_irwUpperBoundSerWindow") %>UL;
+  
+  /* Configure pre-warning interrupt enable
+  and Service Indication pulse width*/
+  WDT->CTR |= (uint32_t)\
+    ((((uint32_t)<%= app.getIntegerValue(AppBaseuri + appInst +"/wdt001_irwPulseWidth") - 1%> << WDT_CTR_SPW_Pos) & WDT_CTR_SPW_Msk) | \
+	  ((uint32_t)<%= app.getIntegerValue(AppBaseuri + appInst +"/wdt001_erwPreWarnEnable/0") %> << WDT_CTR_PRE_Pos)); 
+
+  
+  <% if (app.getIntegerValue(AppBaseuri + appInst +"/wdt001_erwPreWarnEnable/0") == 1 ){%>
+  <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+  {%>
+  /* Enable Pre-warning Interrupt in SCU */
+  SCU_INTERRUPT->SRMSK |= (uint32_t)1 << SCU_INTERRUPT_SRMSK_PRWARN_Pos;
+  <%}%>
+  <% if (app.getIntegerValue(AppBaseuri + appInst +"/WDT0001_Eventtrigger_prewarning/0") == 1 ){%>
+  <%String EventHandler = app.getStringValue(AppBaseuri + appInst +"/wdt001_irwPreWarnCallbackFunc");
+    if((EventHandler != null) && (EventHandler != "")) { %>
+    <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+      {%>
+  /* Register User defined Event Handler function */  
+  NVIC_SCU001_RegisterCallback(NVIC_SCU001_PRWARN,&<%=EventHandler%>,0U);
+      <% } else {%>
+  NVIC_SR101_RegisterCallback(NVIC_SR101_PRWARN,&<%=EventHandler%>,0U);
+   <%} } %>
+  <%}}%>  
+<%}}%>
+  DBG002_FUNCTION_EXIT(DBG002_GID_WDT001,WDT001_FUN_EXIT);
+}
+
+/*CODE_BLOCK_END*/
+

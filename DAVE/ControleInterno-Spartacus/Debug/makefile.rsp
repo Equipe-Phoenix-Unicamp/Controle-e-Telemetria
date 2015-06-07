@@ -2,10 +2,13 @@ Startup/startup_XMC4500.o
 Startup/system_XMC4500.o
 Main.o
 Lib/System_LibcStubs.o
+Dave/Generated/src/WDT001/WDT001.o
+Dave/Generated/src/WDT001/WDT001_Conf.o
 Dave/Generated/src/SYSTM002/SYSTM002.o
 Dave/Generated/src/RESET001/RESET001.o
 Dave/Generated/src/PWMSP001/PWMSP001.o
 Dave/Generated/src/PWMSP001/PWMSP001_Conf.o
+Dave/Generated/src/NVIC_SCU001/NVIC_SCU001.o
 Dave/Generated/src/NVIC002/NVIC002.o
 Dave/Generated/src/NVIC002/NVIC002_Conf.o
 Dave/Generated/src/LIBS/CCU8PWMLIB.o

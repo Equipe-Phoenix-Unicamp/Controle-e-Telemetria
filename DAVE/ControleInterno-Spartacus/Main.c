@@ -117,6 +117,7 @@ void start_driver_signals(void);
 float calculateDutyCicle(char mode, unsigned char data);
 int floor(float value);
 void error(void);
+void MyFunction(void);
 
 /***************************************************/
 /**********DECLARACAO DE VARIAVEIS GLOBAIS**********/
@@ -133,6 +134,8 @@ float last_duty_right = 0;
 float last_duty_left = 0;
 char error_left = 0;
 char error_right = 0;
+uint32_t MagicWord = 0xABADCAFE;
+uint32_t count = 0;
 
 /***************************************************/
 /***********************MAIN************************/
@@ -140,29 +143,50 @@ char error_right = 0;
 
 int main(void) {
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
-
-	DAVE_Init(); // Initialization of DAVE Apps
+	teste: DAVE_Init(); // Initialization of DAVE Apps
 
 	Software_Timers_Init();
 	WakeUp();
 	configure_R();
 
-	ticks = 0;
-	status_ticks = 0;
+	ticks = 0UL;
+	status_ticks = 0UL;
 	char status = RUNNING;
 	start_driver_signals();
 
 	IO004_SetPin(Enable_LEFT);
 
+	handle_t Timerld;
+	RESET001_InfoType RESETn;
+	WDT001_Enable();
+
+	/*To get the information of the last reset*/
+	RESETn = RESET001_GetResetInfo();
+	/*Mask for WDT reset*/
+	RESETn &= WDT_RESET;
+
+	/*Service WDT in window period*/
+	//Timerld = SYSTM002_CreateTimer(2000, SYSTM001_PERIODIC, MyFunction, NULL);
+	/*Start Timer for WDT servicing*/
+	//SYSTM002_StartTimer(Timerld);
 	while (1) {
 		if (IO004_ReadPin(DR1)) {
+			if (status == FAIL) {
+				IO004_SetPin(Enable_LEFT);
+				IO004_SetPin(Enable_RIGHT);
+				WDT001_Service(MagicWord);
+				status = RUNNING;
+			}
 			status_ticks = 0;
 			read_R();
 			update_driver_signals();
 		} else {
 			if (status_ticks > 5000) { //0.5s
+				IO004_ResetPin(Enable_LEFT);
+				IO004_ResetPin(Enable_RIGHT);
 				status = FAIL;
 				start_driver_signals();
+				//goto teste;
 			}
 		}
 	}
@@ -438,12 +462,12 @@ void Tick_Handler(void) {
 //	}
 }
 
-void trata_erro(void){
+void trata_erro(void) {
 
-	if(error_left){
+	if (error_left) {
 		error_left = 0;
 		IO004_SetPin(Enable_LEFT);
-	}else{
+	} else {
 		error_right = 0;
 		IO004_SetPin(Enable_RIGHT);
 	}
@@ -473,4 +497,12 @@ void error(void) {
 		error_right = 1;
 	}
 
+}
+
+void MyFunction() {
+	if (status_ticks > 10000) {
+		/*Service WDT for 5 times and the 6th time reset should occur.*/
+		WDT001_Service(MagicWord);
+		count++;
+	}
 }

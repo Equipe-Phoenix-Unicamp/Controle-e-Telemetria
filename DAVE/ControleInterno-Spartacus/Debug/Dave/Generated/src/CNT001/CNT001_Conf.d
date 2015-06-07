@@ -50,7 +50,9 @@ Dave/Generated/src/CNT001/CNT001_Conf.d Dave/Generated/src/CNT001/CNT001_Conf.o:
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/ERU002/ERU002_Extern.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002.h \
  C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h \
- C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h \
+ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/WDT001/WDT001.h
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/DAVE3.h:
 
@@ -153,3 +155,7 @@ C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\Controle
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Conf.h:
 
 C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC002/NVIC002_Extern.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/NVIC_SCU001/NVIC_SCU001.h:
+
+C:\Users\jmass_000\Documents\Unicamp\Phoenix\Controle-e-Telemetria\DAVE\ControleInterno-Spartacus\Dave\Generated\inc\DAVESupport/../../inc/WDT001/WDT001.h:

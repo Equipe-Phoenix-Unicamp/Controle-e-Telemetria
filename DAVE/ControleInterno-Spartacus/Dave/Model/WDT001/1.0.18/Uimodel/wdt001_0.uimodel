@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ifx.davex.uimodel:UIDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ifx.davex.uimodel="com.ifx.davex.uimodel">
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="DefaultPage" displayName="Configuration" className="IfxGroupBox" controlId="1328691207448">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group46" displayName="WatchDog Config" className="IfxGroupBox" controlId="1328691210412">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group79" displayName="Lower Bound Configuration" className="IfxGroupBox" controlId="1341380090640">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwLowerBoundSerWindow" displayName="Lower bound service window" className="IntegerType" paramName="app/wdt001/0/wdt001_irwLowerBoundSerWindow:Lower bound service window" controlId="1341380104437" defaultType="hex">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>hex</conversionType>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwActualLowerBoundTime" displayName="Actual Lower Bound time" readonly="true" className="IntegerType" paramName="app/wdt001/0/wdt001_irwActualLowerBoundTime:Actual Lower Bound time" controlId="1341380115875" defaultType="msec" customControl="true">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>msec</conversionType>
+        </subControls>
+        <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group61" displayName="Upper Bound Configuration" className="IfxGroupBox" controlId="1341380137296">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwUpperBoundSerWindow" displayName="Upper bound service window" className="IntegerType" paramName="app/wdt001/0/wdt001_irwUpperBoundSerWindow:Upper bound service window" controlId="1341380146875" defaultType="hex">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>hex</conversionType>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwActualUpperBoundTime" displayName="Actual Upper Bound time" readonly="true" className="IntegerType" paramName="app/wdt001/0/wdt001_irwActualUpperBoundTime:Actual Upper Bound time" controlId="1341380157812" defaultType="msec" customControl="true">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>msec</conversionType>
+        </subControls>
+        <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group74" displayName="Pre-warning Option" className="IfxGroupBox" controlId="1341380164390">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_erwPreWarnEnable" displayName="Enable Pre-warning Event" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/wdt001/0/WDT0001_Eventtrigger_prewarning/1&quot;) == &quot;1&quot;) &#xD;&#xA;{&#xD;&#xA;CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA;{&#xD;&#xA;CM.setEnable(true);&#xD;&#xA;}" paramName="app/wdt001/0/wdt001_erwPreWarnEnable:Enable Prewarning Event" controlId="1341380188812">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/WDT0001_Eventtrigger_prewarning" displayName="Interrupt Behavior on Pre-warning Event" className="EnumerationType" paramName="app/wdt001/0/WDT0001_Eventtrigger_prewarning:Trigger for Prewarning Event" controlId="1355737974546">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/WDT001_eroString1" displayName="Pre-warning Event" readonly="true" className="StringType" paramName="app/wdt001/0/WDT001_eroString1:Pre-warning Event" controlId="1355834190105">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwPreWarnCallbackFunc" displayName="User defined Pre-warning Event Handler" className="StringType" constraint="if(CM.getParamValue(&quot;app/wdt001/0/WDT0001_Eventtrigger_prewarning/0&quot;) == &quot;1&quot;) &#xD;&#xA;{&#xD;&#xA;   if(CM.getParamValue(&quot;app/wdt001/0/wdt001_erwPreWarnEnable/0&quot;) == &quot;1&quot;)&#xD;&#xA;  {&#xD;&#xA;     CM.setVisible(true); &#xD;&#xA;     CM.setEnable(true);&#xD;&#xA;  }&#xD;&#xA;  else&#xD;&#xA;  {&#xD;&#xA;    CM.setVisible(true); &#xD;&#xA;    CM.setEnable(false); &#xD;&#xA;   }&#xD;&#xA;}&#xD;&#xA;else &#xD;&#xA;{&#xD;&#xA;    CM.setVisible(true); &#xD;&#xA;    CM.setEnable(false); &#xD;&#xA;}" paramName="app/wdt001/0/wdt001_irwPreWarnCallbackFunc:User defined PreWarning Event Handler" controlId="1341380198359">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/wdt001/0/wdt001_irwPulseWidth" displayName="Service indication pulse width" className="IntegerType" paramName="app/wdt001/0/wdt001_irwPulseWidth:Service indication pulse width" controlId="1341380214609">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+</com.ifx.davex.uimodel:UIDataModel>
